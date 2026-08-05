@@ -89,3 +89,18 @@ describe('golden: ex_job1 I-13841/26-27 (air, C&F, USD @ 95.30)', () => {
     );
   });
 });
+
+describe('golden: ex_job1 with marine open-policy percent instead of actual insurance', () => {
+  // 0.0118% of the C&F value ≈ the checklist's ₹178.52 (the printed % is a
+  // rounded display of the actual premium, so AV lands within one paisa;
+  // duty payable is identical). Actual amounts stay authoritative when known.
+  const result = computeJobDuty(
+    { ...invoice, insurance: { kind: 'percent', percent: 0.0118 } },
+    { USD: 95.3 },
+  );
+
+  it('reproduces the checklist within a paisa on AV and exactly on duty payable', () => {
+    expect(result.totalAssessableValue).toBeCloseTo(1_513_026.95, 1);
+    expect(result.dutyPayable).toBe(419_638);
+  });
+});

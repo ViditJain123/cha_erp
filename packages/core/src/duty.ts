@@ -59,14 +59,16 @@ function computeValuation(
   if (invoice.freight) additions = additions.plus(toINR(invoice.freight, rates));
   if (invoice.miscCharges) additions = additions.plus(toINR(invoice.miscCharges, rates));
   if (invoice.loadingCharges) additions = additions.plus(toINR(invoice.loadingCharges, rates));
+  if (invoice.discount) additions = additions.minus(toINR(invoice.discount, rates));
   if (invoice.insurance) {
+    // Percent-based insurance (marine open policy) applies to the C&F value:
+    // goods + freight/misc additions, before insurance itself.
     additions = additions.plus(
       invoice.insurance.kind === 'amount'
         ? toINR(invoice.insurance.value, rates)
-        : goodsValue.mul(invRate).mul(pct(invoice.insurance.percent)),
+        : goodsValue.mul(invRate).plus(additions).mul(pct(invoice.insurance.percent)),
     );
   }
-  if (invoice.discount) additions = additions.minus(toINR(invoice.discount, rates));
 
   const items = invoice.items.map((item, i) => {
     const value = itemValues[i]!;

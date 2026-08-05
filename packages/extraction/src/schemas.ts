@@ -96,6 +96,8 @@ export const BlExtractSchema = z.object({
   invoiceNumberRef: z.string().nullable(),
   freightTerms: z.string().nullable(),
   containers: z.array(ContainerSchema),
+  /** true when the document carries a DRAFT watermark/stamp or says non-negotiable draft */
+  isDraftDocument: z.boolean(),
   uncertainFields: z.array(z.string()),
 });
 

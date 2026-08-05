@@ -3,11 +3,15 @@ import {
   chaProfile,
   computeJobDuty,
   exchangeRatesOn,
+  formatForeignPort,
+  lookupForeignPort,
   lookupFtaScheme,
   lookupImporter,
   lookupTariff,
   lookupTariffByPrefix,
+  normalizeUqc,
   recallProductMemory,
+  singleWindowRuleForChapter,
   validateGstin,
   type TermsOfInvoice,
 } from '@checklist/core';
@@ -170,11 +174,22 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   if (awb?.issuingCarrierOrAgent) shipment.shippingLineOrCarrier = awb.issuingCarrierOrAgent;
   const pol = bl?.portOfLoading ?? awb?.airportOfDeparture;
   if (pol) {
-    shipment.portOfLoading = pol;
-    // "MOMBASA, KENYA" -> consignment country Kenya
-    const polParts = pol.split(',').map((s) => s.trim()).filter(Boolean);
-    const polCountry = polParts.length > 1 ? polParts.at(-1) : undefined;
-    if (polCountry && polCountry.length > 2) shipment.consCountry = polCountry;
+    const port = lookupForeignPort(pol);
+    if (port) {
+      // ICES format "Boston(USBOS)" + consignment country from the port master
+      shipment.portOfLoading = formatForeignPort(port);
+      shipment.consCountry = port.country;
+    } else {
+      shipment.portOfLoading = pol;
+      const polParts = pol.split(',').map((s) => s.trim()).filter(Boolean);
+      const polCountry = polParts.length > 1 ? polParts.at(-1) : undefined;
+      if (polCountry && polCountry.length > 2) shipment.consCountry = polCountry;
+      flags.push({
+        severity: 'info',
+        path: 'shipment.portOfLoading',
+        message: `Port "${pol}" not in the foreign-ports master — add it to get the UN/LOCODE format and consignment country automatically.`,
+      });
+    }
   }
   if (coo?.issuingCountry) shipment.countryOfOrigin = coo.issuingCountry;
   const pkgCount = bl?.packageCount ?? awb?.pieces;
@@ -184,8 +199,37 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   if (grossWeightKg != null) shipment.grossWeightKg = grossWeightKg;
 
   if (!shipment.countryOfOrigin && inv?.countryOfOrigin) shipment.countryOfOrigin = inv.countryOfOrigin;
+  const originFallback = inv?.sellerCountry ?? shipment.consCountry;
+  if (!shipment.countryOfOrigin && originFallback) {
+    shipment.countryOfOrigin = originFallback;
+    flags.push({
+      severity: 'warning',
+      path: 'shipment.countryOfOrigin',
+      message: `Country of origin assumed from ${inv?.sellerCountry ? 'supplier country' : 'port of loading country'} (${originFallback}) — no COO/invoice declaration found, verify.`,
+    });
+  }
   if (!shipment.countryOfOrigin)
     flags.push({ severity: 'warning', path: 'shipment.countryOfOrigin', message: 'Country of origin not found on COO or invoice.' });
+
+  // Marks & Nos conventions: air BEs print MAWB/HAWB; sea BEs print "AS PER BL".
+  if (transportMode === 'Air') {
+    shipment.marksAndNos = [shipment.mawbNo, shipment.hawbNo].filter(Boolean).join(' / ');
+  } else if (bl) {
+    if (shipment.marksAndNos && shipment.marksAndNos !== 'AS PER BL')
+      flags.push({
+        severity: 'info',
+        path: 'shipment.marksAndNos',
+        message: `Marks set to "AS PER BL" (BE convention); BL printed: ${shipment.marksAndNos.replace(/\s+/g, ' ').slice(0, 60)}`,
+      });
+    shipment.marksAndNos = 'AS PER BL';
+  }
+
+  if (bl?.isDraftDocument)
+    flags.push({
+      severity: 'warning',
+      path: 'shipment.blNo',
+      message: 'The bill of lading appears to be a DRAFT — confirm the final BL number and date before filing.',
+    });
 
   // Consignment country: where goods were consigned from (port of loading country).
   flags.push({
@@ -251,12 +295,22 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       path: 'invoice.termsOfInvoice',
       message: 'Invoice is Ex-Works — actual freight to port of loading must be added manually.',
     });
-  if ((effectiveToi === 'FOB' || effectiveToi === 'C&F') && !invoice.insurance)
-    flags.push({
-      severity: 'warning',
-      path: 'invoice.insurance',
-      message: `TOI is ${toi} — add actual insurance if available (else customs applies notional 1.125%).`,
-    });
+  if ((effectiveToi === 'FOB' || effectiveToi === 'C&F') && !invoice.insurance) {
+    if (master?.marineOpenPolicyRatePercent) {
+      invoice.insurance = { kind: 'percent', percent: master.marineOpenPolicyRatePercent };
+      flags.push({
+        severity: 'info',
+        path: 'invoice.insurance',
+        message: `Insurance applied at ${master.marineOpenPolicyRatePercent}% of C&F per the importer's marine open policy — replace with the actual premium when available.`,
+      });
+    } else {
+      flags.push({
+        severity: 'warning',
+        path: 'invoice.insurance',
+        message: `TOI is ${toi} — add actual insurance (or set the importer's marine open-policy rate in masters).`,
+      });
+    }
+  }
 
   // ---- Items (description+HSN from invoice; rates from masters) ----
   const ftaScheme =
@@ -323,7 +377,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       description: gi.description,
       ritc,
       quantity: gi.quantity ?? 1,
-      unit: (gi.unit ?? 'NOS').toUpperCase().startsWith('MT') ? 'KGS' : (gi.unit ?? 'NOS').toUpperCase(),
+      unit: normalizeUqc(gi.unit ?? 'NOS').uqc,
       unitPrice: gi.unitPrice ?? gi.amount,
       amount: gi.amount,
       bcdRate: tariff?.bcdRate ?? 0,
@@ -350,7 +404,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
         manufacturerName: inv.sellerName,
         manufacturerAddress: inv.sellerAddressLines.join(', '),
       }),
-      endUseCode: 'GNX100',
+      endUseCode: master?.defaultEndUseCode ?? 'GNX100',
       ...((batchNo ?? mfg ?? exp) && {
         batch: {
           ...(batchNo && { batchNo }),
@@ -362,10 +416,11 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     };
   });
 
-  // MT -> KGS quantity normalisation (invoice in metric tons, BE wants KGS)
+  // Unit normalisation to ICES UQCs, with MT -> KGS quantity conversion
   for (const [idx, gi] of goodsItems.entries()) {
     const item = items[idx]!;
-    if ((gi.unit ?? '').toUpperCase().startsWith('MT')) {
+    const rawUnit = (gi.unit ?? 'NOS').toUpperCase();
+    if (rawUnit.startsWith('MT')) {
       item.quantity = (gi.quantity ?? 0) * 1000;
       item.unitPrice = (gi.unitPrice ?? 0) / 1000;
       if (item.batch?.quantity != null) item.batch.quantity = item.quantity;
@@ -374,8 +429,52 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
         path: `items.${idx}.quantity`,
         message: 'Quantity converted MT → KGS for the BE.',
       });
+    } else if (normalizeUqc(rawUnit).changed) {
+      flags.push({
+        severity: 'info',
+        path: `items.${idx}.unit`,
+        message: `Unit "${rawUnit}" normalised to UQC ${item.unit} (ICES accepts standard unit codes only).`,
+      });
     }
   }
+
+  // Single Window: shelf life + additional-product-information rows for PGA chapters
+  const singleWindowInfo: ChecklistDraft['singleWindowInfo'] = [];
+  for (const item of items) {
+    const chapter = Number(item.ritc.slice(0, 2));
+    singleWindowInfo.push({
+      itemSlNo: item.slNo,
+      infoType: 'Item Characteristics',
+      qualifier: 'Standard UQC',
+      ...(item.unit === 'KGS' ? { measurement: item.quantity, unit: 'KGS' } : {}),
+    });
+    const swRule = chapter ? singleWindowRuleForChapter(chapter) : undefined;
+    if (swRule) {
+      for (const row of swRule.infoRows) {
+        singleWindowInfo.push({
+          itemSlNo: item.slNo,
+          infoType: row.infoType,
+          qualifier: row.qualifier,
+          ...(row.code ? { code: row.code } : {}),
+        });
+      }
+      if (item.batch?.manufactureDate && item.batch.expiryDate) {
+        const mfg = Date.parse(item.batch.manufactureDate);
+        const exp = Date.parse(item.batch.expiryDate);
+        const now = Date.parse(today);
+        if (exp > mfg && exp > now) {
+          item.residualShelfLifePercent = Math.round(((exp - now) / (exp - mfg)) * 10000) / 100;
+        }
+      }
+      const missing = swRule.expectedDocs.join(' + ');
+      flags.push({
+        severity: 'warning',
+        message: `${swRule.pga} item (chapter ${chapter}): customs will expect ${missing} as supporting documents — ensure they are available for eSanchit.`,
+      });
+    }
+  }
+  if (!docs.some((d) => d.docType === 'packing_list'))
+    flags.push({ severity: 'info', message: 'No packing list detected among the uploads — usually expected as a supporting document.' });
 
   // ---- Cross-checks ----
   if (inv && bl?.invoiceNumberRef && !bl.invoiceNumberRef.includes(inv.invoiceNumber) && !inv.invoiceNumber.includes(bl.invoiceNumberRef))
@@ -438,7 +537,9 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     supplier: {
       name: inv?.sellerName ?? '',
       addressLines: inv?.sellerAddressLines ?? [],
-      ...(inv?.sellerCountry != null && { country: inv.sellerCountry }),
+      ...((inv?.sellerCountry ?? shipment.consCountry) != null && {
+        country: inv?.sellerCountry ?? shipment.consCountry,
+      }),
     },
     shipment,
     invoiceMeta: {
@@ -457,10 +558,16 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
           cooNumber: coo.certificateNumber,
           ...(coo.issueDate != null && { cooDate: coo.issueDate }),
           ...(coo.issuingCountry != null && { countryOfIssue: coo.issuingCountry }),
-          ...(coo.originCriterion != null && { originCriterion: coo.originCriterion }),
+          ...(coo.originCriterion != null && {
+            // COO-form letter -> ICES criterion code (e.g. DFTP "A" -> COWO)
+            originCriterion:
+              ftaScheme.criterionMap?.[coo.originCriterion.replace(/[^A-Za-z0-9]/g, '').toUpperCase()] ??
+              coo.originCriterion,
+          }),
           directConsignment: true,
         },
       }),
+    singleWindowInfo,
     supportingDocs: docs.map((d) => ({ fileName: d.fileName, docType: d.docType })),
     declarations: applicableDeclarations({
       ftaClaimed: Boolean(ftaScheme),

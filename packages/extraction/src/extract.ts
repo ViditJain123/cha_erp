@@ -38,13 +38,15 @@ This is a commercial invoice. Item rules:
 - hsCode is ONLY a customs HS/HTS/RITC code (6-10 digits, sometimes labelled "HS CODE"). A seller item/part number (e.g. "880FG-UV-8LB") is NOT an HS code — keep such codes as part of the description and set hsCode null.
 - Lines that are charges (freight, handling, insurance, documentation...) are NOT goods: set isCharge=true for them and also surface freight as freightCharge when identifiable.
 - termsOfInvoice: normalise the Incoterm (CIF/C&F(CFR)/FOB/EXW/CPT). "Ex-Works" is EXW.
+- sellerAddressLines: use the seller's own/remit-to address block that identifies the selling entity, not office/plant contact addresses printed in footers.
 - Capture batch/manufacture/expiry details when printed near items.`,
     user: 'Extract the commercial invoice data.',
   },
   bill_of_lading: {
     system: `${EXTRACT_COMMON}
 This is an ocean bill of lading. isHouseBl: true only if issued by a freight forwarder/NVOCC as a House B/L; carrier (shipping line) B/Ls are master (false).
-blDate: prefer the SHIPPED ON BOARD date; also return issueDate separately. Capture all containers with size/type and seal numbers. marksAndNumbers: as printed (often "AS PER BL" style content).`,
+blDate: prefer the SHIPPED ON BOARD date; also return issueDate separately. Capture all containers with size/type and seal numbers. marksAndNumbers: as printed (often "AS PER BL" style content).
+isDraftDocument: true if the document carries a DRAFT watermark or stamp anywhere.`,
     user: 'Extract the bill of lading data.',
   },
   air_waybill: {
@@ -54,7 +56,8 @@ This is an air waybill. mawbNumber: the master AWB (11 digits, often printed as 
   },
   certificate_of_origin: {
     system: `${EXTRACT_COMMON}
-This is a certificate of origin, possibly a preferential/FTA form (GSP, DFTP, SAFTA, ASEAN...). schemeText: the scheme heading printed on the form, verbatim. originCriterion: the value in the origin criterion box (e.g. "A", "COWO", percentages).`,
+This is a certificate of origin, possibly a preferential/FTA form (GSP, DFTP, SAFTA, ASEAN...). schemeText: the scheme heading printed on the form, verbatim. originCriterion: the value in the origin criterion box (e.g. "A", "COWO", percentages).
+certificateNumber: the certificate's own serial/reference number only (e.g. "05830") — do not append year tokens or file references printed beside it.`,
     user: 'Extract the certificate of origin data.',
   },
   certificate_of_analysis: {

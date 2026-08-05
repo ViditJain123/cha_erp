@@ -1,4 +1,4 @@
-import { chaProfile } from '@checklist/core';
+import { chaProfile, END_USE_CODES, ESANCHIT_DOC_CODES } from '@checklist/core';
 import type { ChecklistDraft } from '@checklist/extraction';
 import type { JobRecord } from './store';
 
@@ -79,18 +79,51 @@ export function checklistHtml(job: JobRecord): string {
          .join('')}</tbody></table>`
     : '';
 
-  const batches = d.items.filter((it) => it.batch);
-  const singleWindow = batches.length
-    ? `<div class="section-title">SINGLE WINDOW - Production Details</div>
+  const swInfo = d.singleWindowInfo ?? [];
+  const singleWindowAdditional = swInfo.length
+    ? `<div class="section-title">SINGLE WINDOW - Additional Product Information</div>
        <table class="grid">
-         <thead><tr><th>Inv No</th><th>Item N</th><th>Batch ID</th><th>Batch Quantity</th><th>Manufacture Date</th><th>Expiry Date</th></tr></thead>
-         <tbody>${batches
+         <thead><tr><th>Inv N</th><th>Item N</th><th>Info Type</th><th>Info Qualifier</th><th>Info Code</th><th>Measurement</th><th>Unit</th></tr></thead>
+         <tbody>${swInfo
            .map(
-             (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.batch?.batchNo ?? '')}</td><td>${it.batch?.quantity ?? ''}</td><td>${dt(it.batch?.manufactureDate)}</td><td>${dt(it.batch?.expiryDate)}</td></tr>`,
+             (r) => `<tr><td>1</td><td>${r.itemSlNo}</td><td>${esc(r.infoType)}</td><td>${esc(r.qualifier)}</td><td>${esc(r.code ?? '')}</td><td class="right">${r.measurement != null ? r.measurement.toFixed(6) : ''}</td><td>${esc(r.unit ?? '')}</td></tr>`,
            )
            .join('')}</tbody>
        </table>`
     : '';
+
+  const batches = d.items.filter((it) => it.batch);
+  const singleWindow = batches.length
+    ? `<div class="section-title">SINGLE WINDOW - Production Details</div>
+       <table class="grid">
+         <thead><tr><th>Inv No</th><th>Item N</th><th>Batch ID</th><th>Batch Quantity</th><th>Manufacture Date</th><th>Expiry Date</th><th>Residual shelf life</th></tr></thead>
+         <tbody>${batches
+           .map(
+             (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.batch?.batchNo ?? '')}</td><td>${it.batch?.quantity ?? ''}</td><td>${dt(it.batch?.manufactureDate)}</td><td>${dt(it.batch?.expiryDate)}</td><td>${it.residualShelfLifePercent != null ? `${it.residualShelfLifePercent}%` : ''}</td></tr>`,
+           )
+           .join('')}</tbody>
+       </table>`
+    : '';
+
+  const endUse = `<div class="section-title">END USE INFORMATION</div>
+    <table class="grid">
+      <thead><tr><th>Inv No</th><th>Item No</th><th>Code</th><th>Description</th></tr></thead>
+      <tbody>${d.items
+        .map(
+          (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.endUseCode)}</td><td>${esc(END_USE_CODES[it.endUseCode] ?? '')}</td></tr>`,
+        )
+        .join('')}</tbody>
+    </table>`;
+
+  const generalDetails = `<div class="section-title">GENERAL DETAILS</div>
+    <table class="grid">
+      <thead><tr><th>Inv No</th><th>Item No</th><th>Generic Description</th><th>Model</th><th>Brand</th><th>Origin Countr</th></tr></thead>
+      <tbody>${d.items
+        .map(
+          (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.description.slice(0, 50))}</td><td>NA</td><td></td><td>${esc(it.originCountry ?? d.shipment.countryOfOrigin ?? '')}</td></tr>`,
+        )
+        .join('')}</tbody>
+    </table>`;
 
   const coo = d.ftaClaim
     ? `<div class="section-title">COO details for FTA benefit claimed</div>
@@ -212,6 +245,7 @@ export function checklistHtml(job: JobRecord): string {
   </table>
 
   ${coo}
+  ${singleWindowAdditional}
   ${singleWindow}
 
   <div class="section-title">DUTY Details</div>
@@ -224,6 +258,9 @@ export function checklistHtml(job: JobRecord): string {
     </tbody>
   </table>
 
+  ${endUse}
+  ${generalDetails}
+
   <div class="section-title">MANUFACTURER NAME</div>
   <table class="grid">
     <thead><tr><th>Inv No</th><th>Item No</th><th>Name</th><th>Address</th></tr></thead>
@@ -234,9 +271,12 @@ export function checklistHtml(job: JobRecord): string {
 
   <div class="section-title">SUPPORTING DOCUMENTS</div>
   <table class="grid">
-    <thead><tr><th>Sr</th><th>Document</th><th>Type</th></tr></thead>
+    <thead><tr><th>Sr</th><th>Document</th><th>Type</th><th>Doc Type Code</th><th>IRN (eSanchit)</th></tr></thead>
     <tbody>${d.supportingDocs
-      .map((s, i) => `<tr><td>${i + 1}</td><td>${esc(s.fileName)}</td><td>${esc(s.docType.replace(/_/g, ' '))}</td></tr>`)
+      .map(
+        (s, i) =>
+          `<tr><td>${i + 1}</td><td>${esc(s.fileName)}</td><td>${esc(ESANCHIT_DOC_CODES[s.docType]?.name ?? s.docType.replace(/_/g, ' '))}</td><td>${esc(ESANCHIT_DOC_CODES[s.docType]?.code ?? '')}</td><td></td></tr>`,
+      )
       .join('')}</tbody>
   </table>
 

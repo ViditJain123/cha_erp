@@ -1,10 +1,15 @@
 import {
   CHA_PROFILE,
   DECLARATIONS,
+  FOREIGN_PORTS,
   FTA_SCHEMES,
   PORTS,
+  SINGLE_WINDOW_RULES,
+  UQC_NORMALIZATION,
+  VALID_UQC,
   type ChaProfile,
   type DeclarationMaster,
+  type ForeignPortMaster,
   type FtaSchemeMaster,
   type ImporterMaster,
   type PortMaster,
@@ -35,6 +40,32 @@ export function lookupTariffByPrefix(hsPrefix: string): TariffMaster | undefined
 export function lookupPort(codeOrName: string): PortMaster | undefined {
   const q = codeOrName.trim().toLowerCase();
   return PORTS.find((p) => p.code.toLowerCase() === q || p.name.toLowerCase().includes(q));
+}
+
+/** Match a foreign port/airport from free text like "MOMBASA, KENYA" or "BOSTON". */
+export function lookupForeignPort(text: string): ForeignPortMaster | undefined {
+  const q = text.trim().toLowerCase();
+  if (!q) return undefined;
+  return FOREIGN_PORTS.find(
+    (p) =>
+      q.includes(p.name.toLowerCase()) ||
+      p.unlocode.toLowerCase() === q ||
+      (p.aliases ?? []).some((a) => q.includes(a.toLowerCase())),
+  );
+}
+
+/** ICES "Name(UNLOCODE)" display for a port, e.g. "Boston(USBOS)". */
+export function formatForeignPort(p: ForeignPortMaster): string {
+  return `${p.name}(${p.unlocode})`;
+}
+
+/** Normalize an invoice unit to an ICES-standard UQC. */
+export function normalizeUqc(unit: string): { uqc: string; changed: boolean } {
+  const raw = unit.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (VALID_UQC.has(raw)) return { uqc: raw, changed: false };
+  const mapped = UQC_NORMALIZATION[raw];
+  if (mapped) return { uqc: mapped, changed: mapped !== raw };
+  return { uqc: 'NOS', changed: true };
 }
 
 /**
@@ -109,4 +140,9 @@ export function applicableDeclarations(ctx: DeclarationContext): DeclarationMast
 
 export function chaProfile(): ChaProfile {
   return CHA_PROFILE;
+}
+
+/** Single Window / PGA rule applicable to a tariff chapter, if any. */
+export function singleWindowRuleForChapter(chapter: number) {
+  return SINGLE_WINDOW_RULES.find((r) => chapter >= r.chapters[0] && chapter <= r.chapters[1]);
 }

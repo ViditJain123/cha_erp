@@ -32,12 +32,11 @@ const EXPECTATIONS: Record<string, Expectation> = {
     invoiceNumber: 'INV00000208940',
     toi: 'C&F',
     ritc: '34039900',
-    // Without the actual insurance figure (₹178.52, not on any doc) AV/duty
-    // differ slightly from the checklist; reviewer adds insurance in the UI.
+    // Insurance now auto-applies from the importer's marine open-policy rate
+    // (0.0118% of C&F) — AV lands within a paisa, duty payable exactly.
     totalAssessableValue: null,
-    dutyPayable: null,
+    dutyPayable: 419_638,
     dutyComputed: true,
-    note: 'checklist AV 1513026.95 includes actual insurance 178.52 INR supplied outside the docs',
   },
   ex_job2: {
     transportMode: 'Sea',

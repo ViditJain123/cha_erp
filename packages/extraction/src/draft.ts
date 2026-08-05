@@ -42,6 +42,18 @@ export interface DraftItem {
   endUseCode: string;
   /** Single Window production details (food/pharma) */
   batch?: { batchNo?: string; manufactureDate?: string; expiryDate?: string; quantity?: number };
+  /** (expiry − today) / (expiry − manufacture), % — PGA shelf-life requirement */
+  residualShelfLifePercent?: number;
+}
+
+/** SINGLE WINDOW - Additional Product Information rows. */
+export interface SingleWindowInfoRow {
+  itemSlNo: number;
+  infoType: string;
+  qualifier: string;
+  code?: string;
+  measurement?: number;
+  unit?: string;
 }
 
 export interface ChecklistDraft {
@@ -109,6 +121,8 @@ export interface ChecklistDraft {
     originCriterion?: string;
     directConsignment: boolean;
   };
+
+  singleWindowInfo?: SingleWindowInfoRow[];
 
   supportingDocs: { fileName: string; docType: DocType }[];
   declarations: { code: string; text: string }[];

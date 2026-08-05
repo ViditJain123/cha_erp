@@ -19,6 +19,53 @@ export const PORTS: PortMaster[] = [
   { code: 'INMUN1', name: 'Mundra Sea', mode: 'sea' },
 ];
 
+/** Foreign load ports/airports — ICES wants "Name(UNLOCODE)" and the consignment country. */
+export interface ForeignPortMaster {
+  name: string;
+  unlocode: string;
+  country: string;
+  aliases?: string[];
+}
+
+export const FOREIGN_PORTS: ForeignPortMaster[] = [
+  { name: 'Boston', unlocode: 'USBOS', country: 'United States' },
+  { name: 'Chicago', unlocode: 'USCHI', country: 'United States', aliases: ["Chicago O'Hare", 'ORD'] },
+  { name: 'New York', unlocode: 'USNYC', country: 'United States', aliases: ['JFK'] },
+  { name: 'Mombasa', unlocode: 'KEMBA', country: 'Kenya' },
+  { name: 'Dar Es Salaam', unlocode: 'TZDAR', country: 'Tanzania' },
+  { name: 'Shanghai', unlocode: 'CNSHA', country: 'China' },
+  { name: 'Ningbo', unlocode: 'CNNGB', country: 'China' },
+  { name: 'Shenzhen', unlocode: 'CNSZX', country: 'China' },
+  { name: 'Singapore', unlocode: 'SGSIN', country: 'Singapore' },
+  { name: 'Jebel Ali', unlocode: 'AEJEA', country: 'United Arab Emirates' },
+  { name: 'Dubai', unlocode: 'AEDXB', country: 'United Arab Emirates' },
+  { name: 'Hamburg', unlocode: 'DEHAM', country: 'Germany' },
+  { name: 'Frankfurt', unlocode: 'DEFRA', country: 'Germany' },
+  { name: 'Rotterdam', unlocode: 'NLRTM', country: 'Netherlands' },
+  { name: 'Antwerp', unlocode: 'BEANR', country: 'Belgium' },
+  { name: 'Hong Kong', unlocode: 'HKHKG', country: 'Hong Kong' },
+  { name: 'Busan', unlocode: 'KRPUS', country: 'South Korea' },
+  { name: 'Colombo', unlocode: 'LKCMB', country: 'Sri Lanka' },
+  { name: 'Kampala', unlocode: 'UGKLA', country: 'Uganda' },
+];
+
+/**
+ * ICES-standard UQC normalization: packaging units seen on invoices map to
+ * the unit codes customs accepts. Unknown packaging units default to NOS.
+ */
+export const UQC_NORMALIZATION: Record<string, string> = {
+  PAIL: 'NOS', PAILS: 'NOS', CASE: 'NOS', CASES: 'NOS', DRUM: 'NOS', DRUMS: 'NOS',
+  CARTON: 'NOS', CARTONS: 'NOS', CTN: 'NOS', CTNS: 'NOS', BOX: 'NOS', BOXES: 'NOS',
+  PC: 'NOS', PCS: 'NOS', PIECE: 'NOS', PIECES: 'NOS', EA: 'NOS', EACH: 'NOS',
+  UNIT: 'NOS', UNITS: 'NOS', SET: 'SET', SETS: 'SET', PAIR: 'PRS', PAIRS: 'PRS',
+  BAG: 'BGS', BAGS: 'BGS', ROLL: 'ROL', ROLLS: 'ROL',
+  KG: 'KGS', KGS: 'KGS', LB: 'KGS', LBS: 'KGS', MT: 'KGS', TON: 'KGS', TONS: 'KGS',
+  LTR: 'LTR', L: 'LTR', LITRE: 'LTR', LITRES: 'LTR', M: 'MTR', MTR: 'MTR', MTRS: 'MTR',
+  SQM: 'SQM', M2: 'SQM', M3: 'CBM', CBM: 'CBM', NOS: 'NOS', NO: 'NOS',
+};
+
+export const VALID_UQC = new Set(['NOS', 'KGS', 'GMS', 'LTR', 'MTR', 'SQM', 'CBM', 'SET', 'PRS', 'BGS', 'ROL', 'TON', 'MTS']);
+
 export interface TariffMaster {
   /** 8-digit CTH/RITC */
   cth: string;
@@ -72,6 +119,8 @@ export interface FtaSchemeMaster {
   bcdExemptionPercent: number;
   /** ISO-ish country names this scheme covers (subset seeded). */
   countries: string[];
+  /** COO-form origin-criterion letter -> ICES criterion code (e.g. DFTP "A" -> COWO). */
+  criterionMap?: Record<string, string>;
 }
 
 export const FTA_SCHEMES: FtaSchemeMaster[] = [
@@ -82,6 +131,7 @@ export const FTA_SCHEMES: FtaSchemeMaster[] = [
     serial: '(i)',
     bcdExemptionPercent: 100,
     countries: ['Uganda', 'Tanzania', 'Ethiopia', 'Rwanda', 'Malawi', 'Mozambique', 'Zambia', 'Benin'],
+    criterionMap: { A: 'COWO', B: 'PSR' },
   },
 ];
 
@@ -162,6 +212,13 @@ export interface ImporterMaster {
   address: string[];
   city: string;
   state: string;
+  /**
+   * Importer's marine open-policy insurance rate (% of C&F value), applied
+   * when TOI is not CIF and no actual insurance figure is provided.
+   */
+  marineOpenPolicyRatePercent?: number;
+  /** Default end-use code: GNX100 trading, GNX200 manufacture/actual use. */
+  defaultEndUseCode?: string;
 }
 
 export const IMPORTERS: ImporterMaster[] = [
@@ -178,6 +235,8 @@ export const IMPORTERS: ImporterMaster[] = [
     address: ['PLOT N-69, ANAND NAGAR, AMBERNATH', 'ADDITIONAL MIDC'],
     city: 'Ambernath',
     state: 'Maharashtra',
+    marineOpenPolicyRatePercent: 0.0118,
+    defaultEndUseCode: 'GNX100',
   },
   {
     name: 'FRESHCARE INDUSTRIES PRIVATE LIMITED',
@@ -192,6 +251,47 @@ export const IMPORTERS: ImporterMaster[] = [
     address: ['C-724 F/F, NEW FRIENDS COLONY,', 'NEW DELHI,SOUTH EAST,DELHI - 110065'],
     city: 'New Delhi',
     state: 'Delhi',
+    defaultEndUseCode: 'GNX200',
+  },
+];
+
+/** End-use codes printed in the BE End Use Information table. */
+export const END_USE_CODES: Record<string, string> = {
+  GNX100: 'Generic -For Consumer use under commercial distribution (for Trading - wholesale or retail)',
+  GNX200: 'Generic -For Commercial Assembly or processing (For Manufacture/Actual use)',
+};
+
+/** eSanchit document-type codes for the supporting-documents table. */
+export const ESANCHIT_DOC_CODES: Record<string, { code: string; name: string }> = {
+  invoice: { code: '380000', name: 'Commercial Invoice' },
+  bill_of_lading: { code: '705000', name: 'Bill of Lading' },
+  air_waybill: { code: '740000', name: 'Air Waybill' },
+  packing_list: { code: '271000', name: 'Packing List' },
+  certificate_of_origin: { code: '861013', name: 'Certificate of Origin (preferential)' },
+  certificate_of_analysis: { code: '001000', name: 'Certificate of Analysis' },
+  other: { code: '', name: 'Other' },
+};
+
+/** Single Window additional-product-information rules by tariff chapter. */
+export interface SingleWindowRule {
+  chapters: [number, number];
+  pga: string;
+  infoRows: { infoType: string; qualifier: string; code?: string }[];
+  /** documents customs/PGA expects for these chapters */
+  expectedDocs: string[];
+}
+
+export const SINGLE_WINDOW_RULES: SingleWindowRule[] = [
+  {
+    chapters: [2, 22],
+    pga: 'FSSAI',
+    infoRows: [
+      { infoType: 'Item Characteristics', qualifier: 'Storage Condition', code: 'STCNR' },
+      { infoType: 'Item Category', qualifier: 'Drug Related Category', code: 'MSC' },
+      { infoType: 'Item Category', qualifier: 'Foods & Supplement Proprietry Status', code: 'FC0102' },
+      { infoType: 'Item Identification', qualifier: 'Retail Pre-pack Food Article', code: 'RFAN' },
+    ],
+    expectedDocs: ['FSSAI licence', 'test report'],
   },
 ];
 
