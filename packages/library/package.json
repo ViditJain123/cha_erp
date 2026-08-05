@@ -1,5 +1,5 @@
 {
-  "name": "@checklist/extraction",
+  "name": "@checklist/library",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,13 +9,15 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "eval": "tsx eval/run.ts"
+    "fetch-tariff": "tsx cli/fetch-tariff.ts",
+    "fetch-notification": "tsx cli/fetch-notification.ts",
+    "index-docs": "tsx cli/index-docs.ts",
+    "search": "tsx cli/search.ts"
   },
   "dependencies": {
-    "@checklist/core": "workspace:*",
-    "@checklist/library": "workspace:*",
     "openai": "^6.9.0",
-    "zod": "^3.25.0"
+    "undici": "^8.10.0",
+    "unpdf": "^1.3.2"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

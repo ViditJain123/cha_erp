@@ -10,3 +10,8 @@ export {
   type ExchangeRateParse,
   type NotificationParse,
 } from './masters-parse.js';
+export {
+  proposeTariffFromLibrary,
+  enrichDraftFromLibrary,
+  type TariffProposal,
+} from './library-propose.js';

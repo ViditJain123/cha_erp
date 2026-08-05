@@ -8,6 +8,9 @@
     "test": "corepack pnpm -r test",
     "build": "corepack pnpm -r build",
     "typecheck": "corepack pnpm -r typecheck",
-    "eval": "corepack pnpm --filter @checklist/extraction eval"
+    "eval": "corepack pnpm --filter @checklist/extraction eval",
+    "library:fetch": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library fetch-tariff",
+    "library:index": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library index-docs",
+    "library:search": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library run search"
   }
 }

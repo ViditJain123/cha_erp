@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { runPipeline } from '@checklist/extraction';
+import { enrichDraftFromLibrary, runPipeline } from '@checklist/extraction';
 import { createJob, getJob, saveJob } from '@/lib/store';
 
 export const runtime = 'nodejs';
@@ -10,7 +10,7 @@ async function process(jobId: string, files: { fileName: string; pdf: Buffer }[]
   if (!job) return;
   try {
     const { draft, docs } = await runPipeline(files);
-    job.draft = draft;
+    job.draft = await enrichDraftFromLibrary(draft);
     job.docs = docs;
     job.status = 'review';
   } catch (err) {
