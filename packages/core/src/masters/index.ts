@@ -1,11 +1,8 @@
 import {
   CHA_PROFILE,
   DECLARATIONS,
-  EXCHANGE_RATES,
   FTA_SCHEMES,
-  IMPORTERS,
   PORTS,
-  TARIFF,
   type ChaProfile,
   type DeclarationMaster,
   type FtaSchemeMaster,
@@ -13,12 +10,14 @@ import {
   type PortMaster,
   type TariffMaster,
 } from './data.js';
+import { allExchangeRates, allImporters, allTariff } from './store.js';
 import type { ExchangeRateTable } from '../types.js';
 
 export * from './data.js';
+export * from './store.js';
 
 export function lookupTariff(cth: string): TariffMaster | undefined {
-  return TARIFF.find((t) => t.cth === cth);
+  return allTariff().find((t) => t.cth === cth);
 }
 
 /**
@@ -29,7 +28,7 @@ export function lookupTariff(cth: string): TariffMaster | undefined {
 export function lookupTariffByPrefix(hsPrefix: string): TariffMaster | undefined {
   const p = hsPrefix.replace(/\D/g, '');
   if (p.length < 4) return undefined;
-  const matches = TARIFF.filter((t) => t.cth.startsWith(p));
+  const matches = allTariff().filter((t) => t.cth.startsWith(p));
   return matches.length === 1 ? matches[0] : undefined;
 }
 
@@ -54,10 +53,10 @@ export function lookupFtaScheme(cooSchemeText: string, originCountry: string): F
 
 /** Exchange rates effective on a given date (latest table not after the date). */
 export function exchangeRatesOn(isoDate: string): ExchangeRateTable {
-  const applicable = EXCHANGE_RATES.filter((e) => e.effectiveFrom <= isoDate).sort((a, b) =>
+  const applicable = allExchangeRates().filter((e) => e.effectiveFrom <= isoDate).sort((a, b) =>
     a.effectiveFrom.localeCompare(b.effectiveFrom),
   );
-  const table = applicable[applicable.length - 1] ?? EXCHANGE_RATES[0];
+  const table = applicable[applicable.length - 1] ?? allExchangeRates()[0];
   if (!table) throw new Error('no exchange rate tables seeded');
   return table.rates;
 }
@@ -75,7 +74,7 @@ function normalizeName(name: string): string {
 export function lookupImporter(name: string): ImporterMaster | undefined {
   const q = normalizeName(name);
   if (!q) return undefined;
-  return IMPORTERS.find((imp) =>
+  return allImporters().find((imp) =>
     [imp.name, ...imp.aliases].some((candidate) => {
       const c = normalizeName(candidate);
       return c === q || c.includes(q) || q.includes(c);

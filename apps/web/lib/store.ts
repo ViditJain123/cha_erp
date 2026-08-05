@@ -26,8 +26,14 @@ export interface JobRecord {
 
 const DATA_DIR = path.join(process.cwd(), 'data', 'jobs');
 
+/** Job ids are generated as short hex — reject anything else before it touches a path. */
+function safeId(id: string): string {
+  if (!/^[a-z0-9-]{1,40}$/.test(id)) throw new Error('invalid job id');
+  return id;
+}
+
 function jobDir(id: string) {
-  return path.join(DATA_DIR, id);
+  return path.join(DATA_DIR, safeId(id));
 }
 
 async function ensureDir(dir: string) {
@@ -63,6 +69,7 @@ export async function saveJob(job: JobRecord): Promise<void> {
 }
 
 export async function getJob(id: string): Promise<JobRecord | null> {
+  if (!/^[a-z0-9-]{1,40}$/.test(id)) return null;
   const p = path.join(jobDir(id), 'job.json');
   if (!existsSync(p)) return null;
   return JSON.parse(await readFile(p, 'utf8')) as JobRecord;

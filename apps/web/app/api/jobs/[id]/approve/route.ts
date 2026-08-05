@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { chromium } from 'playwright';
 import { getJob, saveJob, writeJobPdf } from '@/lib/store';
 import { checklistHtml } from '@/lib/checklist-html';
+import { learnFromApprovedJob } from '@/lib/learn';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -33,5 +34,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
   job.status = 'approved';
   job.approvedAt = new Date().toISOString();
   await saveJob(job);
-  return NextResponse.json({ ok: true });
+
+  const learned = learnFromApprovedJob(job.draft, job.jobNumber);
+  return NextResponse.json({ ok: true, learned });
 }

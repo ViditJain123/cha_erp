@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav className="flex items-center gap-4 text-sm text-slate-600">
               <Link href="/" className="hover:text-slate-900">Jobs</Link>
+              <Link href="/masters" className="hover:text-slate-900">Masters</Link>
               <Link href="/new" className="rounded-lg bg-indigo-600 px-3 py-1.5 font-medium text-white hover:bg-indigo-700">
                 New Job
               </Link>

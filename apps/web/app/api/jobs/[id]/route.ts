@@ -19,6 +19,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (job.status === 'approved') return new NextResponse('job already approved', { status: 409 });
 
   const draft = (await req.json()) as ChecklistDraft;
+  // structural sanity check before persisting reviewer edits
+  if (
+    typeof draft !== 'object' || draft === null ||
+    typeof draft.invoice !== 'object' || !Array.isArray(draft.items) ||
+    typeof draft.importer !== 'object' || typeof draft.shipment !== 'object' ||
+    draft.tenantId !== job.tenantId
+  ) {
+    return new NextResponse('malformed draft', { status: 400 });
+  }
   job.draft = recomputeDuty(draft);
   await saveJob(job);
   return NextResponse.json(job);

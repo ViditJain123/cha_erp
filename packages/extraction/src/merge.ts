@@ -7,6 +7,8 @@ import {
   lookupImporter,
   lookupTariff,
   lookupTariffByPrefix,
+  recallProductMemory,
+  validateGstin,
   type TermsOfInvoice,
 } from '@checklist/core';
 import type {
@@ -107,6 +109,16 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     sources: [fileOf(docs, bl ? 'bill_of_lading' : 'air_waybill') ?? 'unknown'],
   };
 
+  if (importer.gstin) {
+    const gstinCheck = validateGstin(importer.gstin, {
+      ...(importer.pan && { pan: importer.pan }),
+      ...(importer.gstStateCode && { stateCode: importer.gstStateCode }),
+    });
+    for (const p of gstinCheck.problems) {
+      flags.push({ severity: 'warning', path: 'importer.gstin', message: p });
+    }
+  }
+
   // ---- Shipment ----
   const grossWeights: { source: string; value: number }[] = [];
   for (const [source, value] of [
@@ -198,9 +210,16 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   if (inv && inv.termsOfInvoice === 'UNKNOWN')
     flags.push({ severity: 'warning', path: 'invoice.termsOfInvoice', message: 'Terms of invoice unclear on documents — defaulted to C&F.' });
 
-  // Freight/charge lines billed on the invoice ride as dutiable misc charges (per reference job).
-  const chargesTotal = chargeItems.reduce((a, i) => a + (i.amount ?? 0), 0);
+  // Freight/charge lines billed on the invoice ride as dutiable misc charges (per reference
+  // job). The extractor may surface freight as charge line items OR as freightCharge — use
+  // whichever is present (line items win to avoid double counting).
   const currency = inv?.currency ?? 'USD';
+  let chargesTotal = chargeItems.reduce((a, i) => a + (i.amount ?? 0), 0);
+  let chargesCurrency = currency;
+  if (chargesTotal === 0 && inv?.freightCharge && inv.freightCharge.amount > 0) {
+    chargesTotal = inv.freightCharge.amount;
+    chargesCurrency = inv.freightCharge.currency;
+  }
 
   // Ex-Works/FOB invoice that itself bills freight is effectively C&F on the BE
   // (reference job1: EXW invoice + freight line -> TOI C&F, freight as misc charges).
@@ -224,7 +243,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     termsOfInvoice: effectiveToi === 'EXW' ? 'FOB' : effectiveToi,
     currency,
     invoiceValue: goodsValue,
-    ...(chargesTotal > 0 && { miscCharges: { amount: chargesTotal, currency } }),
+    ...(chargesTotal > 0 && { miscCharges: { amount: chargesTotal, currency: chargesCurrency } }),
   };
   if (effectiveToi === 'EXW')
     flags.push({
@@ -267,6 +286,19 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
           severity: 'warning',
           path: `items.${idx}.ritc`,
           message: `RITC ${tariff.cth} completed from ${hs.length}-digit HS ${hs} on the shipping docs — verify the full CTH.`,
+        });
+      }
+    }
+    // job memory: this importer has imported this product before
+    if (!tariff && importer.name) {
+      const memory = recallProductMemory(importer.name, gi.description);
+      if (memory) {
+        ritc = memory.ritc;
+        tariff = lookupTariff(memory.ritc);
+        flags.push({
+          severity: 'info',
+          path: `items.${idx}.ritc`,
+          message: `RITC ${memory.ritc} recalled from job memory (learned from ${memory.learnedFrom}) for "${gi.description.slice(0, 40)}…" — verify.`,
         });
       }
     }

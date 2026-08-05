@@ -29,6 +29,26 @@ export function pdfInputPart(fileName: string, pdf: Buffer) {
   };
 }
 
+/** One structured-output call over plain text (no document attached). */
+export async function structuredTextCall<T extends z.ZodType>(opts: {
+  schema: T;
+  schemaName: string;
+  system: string;
+  userText: string;
+  model?: string;
+}): Promise<z.infer<T>> {
+  const response = await client().responses.parse({
+    model: opts.model ?? MODELS.classify,
+    input: [
+      { role: 'system', content: opts.system },
+      { role: 'user', content: opts.userText },
+    ],
+    text: { format: zodTextFormat(opts.schema, opts.schemaName) },
+  });
+  if (response.output_parsed == null) throw new Error(`no parsed output (${response.status})`);
+  return response.output_parsed;
+}
+
 /**
  * One structured-output call against a PDF. Tries `model`, escalates to
  * `escalateModel` when the response fails to parse/validate.

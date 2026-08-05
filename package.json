@@ -3,8 +3,11 @@
   "private": true,
   "packageManager": "pnpm@11.20.0",
   "scripts": {
-    "test": "pnpm -r test",
-    "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck"
+    "dev": "corepack pnpm --filter @checklist/web dev",
+    "start": "corepack pnpm --filter @checklist/web build && corepack pnpm --filter @checklist/web start",
+    "test": "corepack pnpm -r test",
+    "build": "corepack pnpm -r build",
+    "typecheck": "corepack pnpm -r typecheck",
+    "eval": "corepack pnpm --filter @checklist/extraction eval"
   }
 }
