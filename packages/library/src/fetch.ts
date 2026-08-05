@@ -188,8 +188,15 @@ export async function fetchConsolidatedTariff(): Promise<FetchResult> {
 
 /** Download a notification PDF from taxinformation.cbic.gov.in (or any direct PDF URL). */
 export async function fetchNotification(url: string, label: string): Promise<FetchResult> {
-  const taxinfo = url.match(/taxinformation\.cbic\.gov\.in\/view-pdf\/(\d+)/);
-  if (taxinfo) return fetchTaxinfoNotification(Number(taxinfo[1]));
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname === 'taxinformation.cbic.gov.in') {
+      const m = parsed.pathname.match(/^\/view-pdf\/(\d+)/);
+      if (m) return fetchTaxinfoNotification(Number(m[1]));
+    }
+  } catch {
+    return { id: 'notn-invalid-url', status: 'missing' };
+  }
 
   const id = `notn-${label.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()}`;
   if (getDoc(id)) return { id, status: 'exists' };

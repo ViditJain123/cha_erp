@@ -9,10 +9,29 @@ export const maxDuration = 300;
  * taxinformation.cbic.gov.in view-pdf URLs are resolved through the portal's
  * own anonymous metadata/content endpoints (handled inside fetchNotification).
  */
+/** Only official document hosts may be fetched server-side (SSRF guard). */
+const ALLOWED_HOSTS = new Set([
+  'taxinformation.cbic.gov.in',
+  'www.cbic.gov.in',
+  'cbic.gov.in',
+  'web.archive.org',
+]);
+
 export async function POST(req: NextRequest) {
   const { url, label } = (await req.json()) as { url: string; label?: string };
-  if (!url?.startsWith('https://')) return new NextResponse('need https url', { status: 400 });
-  if (!url.includes('taxinformation.cbic.gov.in') && !label?.trim())
+  let parsed: URL;
+  try {
+    parsed = new URL(url ?? '');
+  } catch {
+    return new NextResponse('invalid url', { status: 400 });
+  }
+  if (parsed.protocol !== 'https:' || !ALLOWED_HOSTS.has(parsed.hostname))
+    return new NextResponse(
+      `only official document hosts are allowed: ${[...ALLOWED_HOSTS].join(', ')}`,
+      { status: 400 },
+    );
+  const isPortal = parsed.hostname === 'taxinformation.cbic.gov.in';
+  if (!isPortal && !label?.trim())
     return new NextResponse('label required for non-portal URLs', { status: 400 });
 
   const fetched = await fetchNotification(url, label ?? '');
