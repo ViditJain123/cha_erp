@@ -1,0 +1,451 @@
+import {
+  applicableDeclarations,
+  chaProfile,
+  computeJobDuty,
+  exchangeRatesOn,
+  lookupFtaScheme,
+  lookupImporter,
+  lookupTariff,
+  lookupTariffByPrefix,
+  type TermsOfInvoice,
+} from '@checklist/core';
+import type {
+  AwbExtract,
+  BlExtract,
+  CoaExtract,
+  CooExtract,
+  ExtractedDoc,
+  InvoiceExtract,
+  PackingListExtract,
+} from './schemas.js';
+import { toInvoiceInput, type ChecklistDraft, type DraftFlag, type DraftItem, type FieldMeta } from './draft.js';
+
+function pick<T>(docs: ExtractedDoc[], type: string): T | undefined {
+  const d = docs.find((x) => x.docType === type && x.data);
+  return d?.data as T | undefined;
+}
+function fileOf(docs: ExtractedDoc[], type: string): string | undefined {
+  return docs.find((x) => x.docType === type && x.data)?.fileName;
+}
+
+function normalizeToi(t: InvoiceExtract['termsOfInvoice']): TermsOfInvoice {
+  switch (t) {
+    case 'CFR':
+      return 'C&F';
+    case 'CPT':
+    case 'UNKNOWN':
+      return 'C&F';
+    default:
+      return t;
+  }
+}
+
+const nearlyEqual = (a: number, b: number, tolerance = 0.02) =>
+  Math.abs(a - b) <= tolerance * Math.max(a, b);
+
+/**
+ * Deterministic merge of per-document extractions into a reviewable checklist
+ * draft: reconcile overlapping fields, enrich from masters, compute duty.
+ *
+ * Source-of-truth rules (from the operator's hand notes):
+ *   importer name & port of loading <- BL/AWB; country of origin <- COO;
+ *   invoice no/date, TOI, terms of payment, description & HSN <- invoice;
+ *   duty/GST/single-window data <- masters.
+ */
+export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): ChecklistDraft {
+  const flags: DraftFlag[] = [];
+  const fieldMeta: Record<string, FieldMeta> = {};
+  const today = opts?.today ?? new Date().toISOString().slice(0, 10);
+
+  const inv = pick<InvoiceExtract>(docs, 'invoice');
+  const bl = pick<BlExtract>(docs, 'bill_of_lading');
+  const awb = pick<AwbExtract>(docs, 'air_waybill');
+  const coo = pick<CooExtract>(docs, 'certificate_of_origin');
+  const coa = pick<CoaExtract>(docs, 'certificate_of_analysis');
+  const pl = pick<PackingListExtract>(docs, 'packing_list');
+
+  if (!inv) flags.push({ severity: 'error', message: 'No commercial invoice found — invoice is mandatory.' });
+  if (!bl && !awb)
+    flags.push({ severity: 'error', message: 'No transport document (BL/AWB) found — required for BE.' });
+
+  const transportMode: 'Air' | 'Sea' = awb ? 'Air' : 'Sea';
+  const customStation = awb
+    ? { code: 'INBOM4', name: 'Sahar Air Cargo' }
+    : { code: 'INNSA1', name: 'Nhava Sheva Sea' };
+  flags.push({
+    severity: 'info',
+    path: 'customStation',
+    message: `Custom station defaulted to ${customStation.name} for ${transportMode} — confirm.`,
+  });
+
+  // ---- Importer (consignee on transport doc, enriched from masters) ----
+  const consigneeName = bl?.consigneeName ?? awb?.consigneeName ?? inv?.buyerName ?? '';
+  const master = consigneeName ? lookupImporter(consigneeName) : undefined;
+  if (!master) {
+    flags.push({
+      severity: 'warning',
+      path: 'importer',
+      message: `Importer "${consigneeName}" not in importer master — IEC/GSTIN/AD code need manual entry (will be saved for next time).`,
+    });
+  }
+  const importer: ChecklistDraft['importer'] = master
+    ? {
+        name: master.name,
+        addressLines: master.address,
+        iec: master.iec,
+        pan: master.pan,
+        gstin: master.gstin,
+        gstStateCode: master.gstStateCode,
+        gstStateName: master.gstStateName,
+        adCode: master.adCode,
+        branchSno: master.branchSno,
+        matchedFromMasters: true,
+      }
+    : { name: consigneeName, addressLines: [], matchedFromMasters: false };
+  fieldMeta['importer.name'] = {
+    confidence: master ? 'high' : 'medium',
+    sources: [fileOf(docs, bl ? 'bill_of_lading' : 'air_waybill') ?? 'unknown'],
+  };
+
+  // ---- Shipment ----
+  const grossWeights: { source: string; value: number }[] = [];
+  for (const [source, value] of [
+    [fileOf(docs, 'bill_of_lading'), bl?.grossWeightKg],
+    [fileOf(docs, 'air_waybill'), awb?.grossWeightKg],
+    [fileOf(docs, 'invoice'), inv?.grossWeightKg],
+    [fileOf(docs, 'packing_list'), pl?.grossWeightKg],
+    [fileOf(docs, 'certificate_of_origin'), coo?.grossWeightKg],
+  ] as const) {
+    if (source && value != null && value > 0) grossWeights.push({ source, value });
+  }
+  const grossWeightKg = grossWeights[0]?.value;
+  const gwConflicts = grossWeights.filter((g) => grossWeightKg != null && !nearlyEqual(g.value, grossWeightKg));
+  if (gwConflicts.length) {
+    flags.push({
+      severity: 'warning',
+      path: 'shipment.grossWeightKg',
+      message: `Gross weight differs across documents: ${grossWeights.map((g) => `${g.value}kg (${g.source})`).join(', ')}.`,
+    });
+    fieldMeta['shipment.grossWeightKg'] = {
+      confidence: 'low',
+      sources: grossWeights.map((g) => g.source),
+      conflicts: gwConflicts.map((g) => ({ source: g.source, value: `${g.value} kg` })),
+    };
+  }
+
+  const shipment: ChecklistDraft['shipment'] = {
+    containers: (bl?.containers ?? []).map((c) => ({
+      number: c.number,
+      ...(c.sizeType != null ? { sizeType: c.sizeType } : {}),
+      ...(c.sealNo != null ? { sealNo: c.sealNo } : {}),
+    })),
+  };
+  if (awb?.mawbNumber) shipment.mawbNo = awb.mawbNumber;
+  if (awb?.awbDate) shipment.mawbDate = awb.awbDate;
+  if (awb?.hawbNumber) {
+    shipment.hawbNo = awb.hawbNumber;
+    if (awb.awbDate) shipment.hawbDate = awb.awbDate;
+  }
+  if (bl) {
+    shipment.blNo = bl.blNumber;
+    if (bl.blDate) shipment.blDate = bl.blDate;
+    if (bl.isHouseBl) shipment.hblNo = bl.blNumber;
+    if (bl.vesselVoyage) shipment.vesselOrFlight = bl.vesselVoyage;
+    if (bl.shippingLine) shipment.shippingLineOrCarrier = bl.shippingLine;
+    if (bl.marksAndNumbers) shipment.marksAndNos = bl.marksAndNumbers;
+  }
+  if (awb?.flightAndDate) shipment.vesselOrFlight = awb.flightAndDate;
+  if (awb?.issuingCarrierOrAgent) shipment.shippingLineOrCarrier = awb.issuingCarrierOrAgent;
+  const pol = bl?.portOfLoading ?? awb?.airportOfDeparture;
+  if (pol) {
+    shipment.portOfLoading = pol;
+    // "MOMBASA, KENYA" -> consignment country Kenya
+    const polParts = pol.split(',').map((s) => s.trim()).filter(Boolean);
+    const polCountry = polParts.length > 1 ? polParts.at(-1) : undefined;
+    if (polCountry && polCountry.length > 2) shipment.consCountry = polCountry;
+  }
+  if (coo?.issuingCountry) shipment.countryOfOrigin = coo.issuingCountry;
+  const pkgCount = bl?.packageCount ?? awb?.pieces;
+  if (pkgCount != null) shipment.packageCount = pkgCount;
+  const pkgUnit = bl?.packageUnit ?? (awb ? 'PLT' : undefined);
+  if (pkgUnit) shipment.packageUnit = pkgUnit;
+  if (grossWeightKg != null) shipment.grossWeightKg = grossWeightKg;
+
+  if (!shipment.countryOfOrigin && inv?.countryOfOrigin) shipment.countryOfOrigin = inv.countryOfOrigin;
+  if (!shipment.countryOfOrigin)
+    flags.push({ severity: 'warning', path: 'shipment.countryOfOrigin', message: 'Country of origin not found on COO or invoice.' });
+
+  // Consignment country: where goods were consigned from (port of loading country).
+  flags.push({
+    severity: 'info',
+    path: 'shipment.eta',
+    message: 'ETA not automated yet — key it from the shipping line website / arrival notice.',
+  });
+
+  // ---- Filing status suggestion ----
+  const filingStatus: ChecklistDraft['filingStatus'] = transportMode === 'Air' ? 'Prior' : 'Normal';
+  flags.push({
+    severity: 'info',
+    path: 'filingStatus',
+    message: `Filing status suggested as ${filingStatus} (${transportMode} shipment) — adjust per IGM/inward timing.`,
+  });
+
+  // ---- Invoice & valuation ----
+  const goodsItems = (inv?.items ?? []).filter((i) => !i.isCharge);
+  const chargeItems = (inv?.items ?? []).filter((i) => i.isCharge);
+  const goodsValue = goodsItems.reduce((a, i) => a + (i.amount ?? 0), 0);
+  const toi = inv ? normalizeToi(inv.termsOfInvoice) : 'CIF';
+  if (inv && inv.termsOfInvoice === 'UNKNOWN')
+    flags.push({ severity: 'warning', path: 'invoice.termsOfInvoice', message: 'Terms of invoice unclear on documents — defaulted to C&F.' });
+
+  // Freight/charge lines billed on the invoice ride as dutiable misc charges (per reference job).
+  const chargesTotal = chargeItems.reduce((a, i) => a + (i.amount ?? 0), 0);
+  const currency = inv?.currency ?? 'USD';
+
+  // Ex-Works/FOB invoice that itself bills freight is effectively C&F on the BE
+  // (reference job1: EXW invoice + freight line -> TOI C&F, freight as misc charges).
+  let effectiveToi = toi;
+  if ((toi === 'EXW' || toi === 'FOB') && chargesTotal > 0) {
+    effectiveToi = 'C&F';
+    flags.push({
+      severity: 'info',
+      path: 'invoice.termsOfInvoice',
+      message: `Invoice is ${toi} but bills freight/charges (${chargesTotal} ${currency}) — TOI set to C&F with charges as misc.`,
+    });
+  }
+
+  const rates = exchangeRatesOn(today);
+  if (!rates[currency] && currency !== 'INR')
+    flags.push({ severity: 'error', path: 'invoiceMeta.exchangeRate', message: `No customs exchange rate seeded for ${currency}.` });
+
+  const invoice: ChecklistDraft['invoice'] = {
+    invoiceNumber: inv?.invoiceNumber ?? '',
+    invoiceDate: inv?.invoiceDate ?? '',
+    termsOfInvoice: effectiveToi === 'EXW' ? 'FOB' : effectiveToi,
+    currency,
+    invoiceValue: goodsValue,
+    ...(chargesTotal > 0 && { miscCharges: { amount: chargesTotal, currency } }),
+  };
+  if (effectiveToi === 'EXW')
+    flags.push({
+      severity: 'warning',
+      path: 'invoice.termsOfInvoice',
+      message: 'Invoice is Ex-Works — actual freight to port of loading must be added manually.',
+    });
+  if ((effectiveToi === 'FOB' || effectiveToi === 'C&F') && !invoice.insurance)
+    flags.push({
+      severity: 'warning',
+      path: 'invoice.insurance',
+      message: `TOI is ${toi} — add actual insurance if available (else customs applies notional 1.125%).`,
+    });
+
+  // ---- Items (description+HSN from invoice; rates from masters) ----
+  const ftaScheme =
+    coo?.schemeText && shipment.countryOfOrigin
+      ? lookupFtaScheme(coo.schemeText, shipment.countryOfOrigin)
+      : undefined;
+
+  const items: DraftItem[] = goodsItems.map((gi, idx) => {
+    // A valid HS/RITC candidate has at least 6 digits (part numbers and noise don't).
+    const hsCandidates = [
+      gi.hsCode,
+      inv?.items.find((x) => x.hsCode)?.hsCode,
+      coo?.hsCode,
+      bl?.hsCode,
+      awb?.hsCode,
+    ]
+      .map((c) => (c ?? '').replace(/\D/g, ''))
+      .filter((c) => c.length >= 6);
+    const hs = hsCandidates[0] ?? '';
+    let tariff = hs.length >= 8 ? lookupTariff(hs.slice(0, 8)) : undefined;
+    let ritc = hs.slice(0, 8);
+    if (!tariff && hs.length >= 4 && hs.length < 8) {
+      tariff = lookupTariffByPrefix(hs);
+      if (tariff) {
+        ritc = tariff.cth;
+        flags.push({
+          severity: 'warning',
+          path: `items.${idx}.ritc`,
+          message: `RITC ${tariff.cth} completed from ${hs.length}-digit HS ${hs} on the shipping docs — verify the full CTH.`,
+        });
+      }
+    }
+    if (!tariff)
+      flags.push({
+        severity: 'error',
+        path: `items.${idx}.ritc`,
+        message: `CTH ${hs || '(missing)'} not in tariff master for "${gi.description.slice(0, 60)}" — duty rates need manual entry.`,
+      });
+    const coaProduct = coa?.products.find(
+      (p) =>
+        (gi.batchNo && p.batchNo === gi.batchNo) ||
+        gi.description.toUpperCase().includes((p.productCode ?? p.description).toUpperCase()) ||
+        p.description.toUpperCase().includes(gi.description.slice(0, 25).toUpperCase()),
+    );
+    const batchNo = gi.batchNo ?? coaProduct?.batchNo ?? undefined;
+    const mfg = gi.manufactureDate ?? coaProduct?.manufactureDate ?? undefined;
+    const exp = gi.expiryDate ?? coaProduct?.expiryDate ?? undefined;
+
+    return {
+      slNo: idx + 1,
+      description: gi.description,
+      ritc,
+      quantity: gi.quantity ?? 1,
+      unit: (gi.unit ?? 'NOS').toUpperCase().startsWith('MT') ? 'KGS' : (gi.unit ?? 'NOS').toUpperCase(),
+      unitPrice: gi.unitPrice ?? gi.amount,
+      amount: gi.amount,
+      bcdRate: tariff?.bcdRate ?? 0,
+      swsRate: 10,
+      igstRate: tariff?.igstRate ?? 0,
+      ...(tariff && {
+        igstNotification: tariff.igstNotification,
+        aidcNotification: tariff.aidcNotification,
+        compCessNotification: tariff.compCessNotification,
+      }),
+      aidcRate: tariff?.aidcRate ?? 0,
+      compCessRate: tariff?.compCessRate ?? 0,
+      ...(ftaScheme &&
+        coo && {
+          bcdExemption: {
+            notification: ftaScheme.notification,
+            serial: ftaScheme.serial,
+            percent: ftaScheme.bcdExemptionPercent,
+            scheme: ftaScheme.scheme,
+          },
+        }),
+      ...(shipment.countryOfOrigin && { originCountry: shipment.countryOfOrigin }),
+      ...(inv?.sellerName && {
+        manufacturerName: inv.sellerName,
+        manufacturerAddress: inv.sellerAddressLines.join(', '),
+      }),
+      endUseCode: 'GNX100',
+      ...((batchNo ?? mfg ?? exp) && {
+        batch: {
+          ...(batchNo && { batchNo }),
+          ...(mfg && { manufactureDate: mfg }),
+          ...(exp && { expiryDate: exp }),
+          ...(gi.quantity != null && { quantity: gi.quantity }),
+        },
+      }),
+    };
+  });
+
+  // MT -> KGS quantity normalisation (invoice in metric tons, BE wants KGS)
+  for (const [idx, gi] of goodsItems.entries()) {
+    const item = items[idx]!;
+    if ((gi.unit ?? '').toUpperCase().startsWith('MT')) {
+      item.quantity = (gi.quantity ?? 0) * 1000;
+      item.unitPrice = (gi.unitPrice ?? 0) / 1000;
+      if (item.batch?.quantity != null) item.batch.quantity = item.quantity;
+      flags.push({
+        severity: 'info',
+        path: `items.${idx}.quantity`,
+        message: 'Quantity converted MT → KGS for the BE.',
+      });
+    }
+  }
+
+  // ---- Cross-checks ----
+  if (inv && bl?.invoiceNumberRef && !bl.invoiceNumberRef.includes(inv.invoiceNumber) && !inv.invoiceNumber.includes(bl.invoiceNumberRef))
+    flags.push({
+      severity: 'warning',
+      path: 'invoice.invoiceNumber',
+      message: `Invoice number on BL ("${bl.invoiceNumberRef}") differs from invoice ("${inv.invoiceNumber}").`,
+    });
+  if (inv && coo?.invoiceNumberRef && !coo.invoiceNumberRef.replace(/\s/g, '').includes(inv.invoiceNumber.replace(/\s/g, '')))
+    flags.push({
+      severity: 'warning',
+      path: 'invoice.invoiceNumber',
+      message: `Invoice number on COO ("${coo.invoiceNumberRef}") differs from invoice ("${inv.invoiceNumber}").`,
+    });
+  const hsSources = [
+    { source: 'invoice', value: inv?.items.find((i) => i.hsCode)?.hsCode },
+    { source: 'transport doc', value: bl?.hsCode ?? awb?.hsCode },
+    { source: 'COO', value: coo?.hsCode },
+  ].filter((s): s is { source: string; value: string } => s.value != null);
+  const hsAgree = new Set(hsSources.map((s) => s.value.replace(/\D/g, '').slice(0, 6)));
+  if (hsAgree.size > 1)
+    flags.push({
+      severity: 'warning',
+      path: 'items.0.ritc',
+      message: `HS code differs across documents: ${hsSources.map((s) => `${s.value} (${s.source})`).join(', ')}.`,
+    });
+  if (coo && ftaScheme)
+    flags.push({
+      severity: 'info',
+      path: 'ftaClaim',
+      message: `FTA claim applied: ${ftaScheme.scheme} notification ${ftaScheme.notification} (${ftaScheme.bcdExemptionPercent}% BCD exemption) — verify origin criterion "${coo.originCriterion ?? '?'}".`,
+    });
+  if (coo && !ftaScheme)
+    flags.push({
+      severity: 'warning',
+      path: 'ftaClaim',
+      message: 'COO present but no FTA scheme matched in masters — preferential duty not applied.',
+    });
+  for (const doc of docs) {
+    const uncertain = (doc.data as { uncertainFields?: string[] } | null)?.uncertainFields ?? [];
+    if (uncertain.length)
+      flags.push({
+        severity: 'warning',
+        message: `${doc.fileName}: model unsure about ${uncertain.join(', ')} — verify against the document.`,
+      });
+  }
+
+  const isFood = items.some((i) => {
+    const ch = Number(i.ritc.slice(0, 2));
+    return ch >= 2 && ch <= 22;
+  });
+
+  const draft: ChecklistDraft = {
+    tenantId: chaProfile().tenantId,
+    transportMode,
+    beType: 'Home Consumption',
+    customStation,
+    filingStatus,
+    importer,
+    supplier: {
+      name: inv?.sellerName ?? '',
+      addressLines: inv?.sellerAddressLines ?? [],
+      ...(inv?.sellerCountry != null && { country: inv.sellerCountry }),
+    },
+    shipment,
+    invoiceMeta: {
+      ...(inv?.paymentTerms != null && { termsOfPayment: inv.paymentTerms }),
+      paymentMethod: 'Transaction',
+      natureOfTransaction: 'Sale',
+      relatedParty: false,
+      exchangeRate: { currency, rate: rates[currency] ?? 1 },
+    },
+    invoice,
+    items,
+    ...(ftaScheme &&
+      coo && {
+        ftaClaim: {
+          scheme: ftaScheme.scheme,
+          cooNumber: coo.certificateNumber,
+          ...(coo.issueDate != null && { cooDate: coo.issueDate }),
+          ...(coo.issuingCountry != null && { countryOfIssue: coo.issuingCountry }),
+          ...(coo.originCriterion != null && { originCriterion: coo.originCriterion }),
+          directConsignment: true,
+        },
+      }),
+    supportingDocs: docs.map((d) => ({ fileName: d.fileName, docType: d.docType })),
+    declarations: applicableDeclarations({
+      ftaClaimed: Boolean(ftaScheme),
+      isChemicalWithoutCas: items.some((i) => Number(i.ritc.slice(0, 2)) >= 28 && Number(i.ritc.slice(0, 2)) <= 38),
+      isFood,
+    }).map((d) => ({ code: d.code, text: d.text })),
+    duty: null,
+    fieldMeta,
+    flags,
+  };
+
+  // ---- Duty computation (only when we have enough to compute) ----
+  try {
+    if (items.length && goodsValue > 0) draft.duty = computeJobDuty(toInvoiceInput(draft), rates);
+  } catch (err) {
+    flags.push({ severity: 'error', message: `Duty computation failed: ${(err as Error).message}` });
+  }
+
+  return draft;
+}
