@@ -420,9 +420,14 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   for (const [idx, gi] of goodsItems.entries()) {
     const item = items[idx]!;
     const rawUnit = (gi.unit ?? 'NOS').toUpperCase();
-    if (rawUnit.startsWith('MT')) {
+    // metric tons in any spelling: MT, MTS, M TONS, M.TON, TONNE... (but not MTR/metre)
+    const compact = rawUnit.replace(/[^A-Z]/g, '');
+    const isMetricTons =
+      compact === 'MT' || compact === 'MTS' || compact.startsWith('MTON') || compact.startsWith('TON');
+    if (isMetricTons) {
       item.quantity = (gi.quantity ?? 0) * 1000;
       item.unitPrice = (gi.unitPrice ?? 0) / 1000;
+      item.unit = 'KGS';
       if (item.batch?.quantity != null) item.batch.quantity = item.quantity;
       flags.push({
         severity: 'info',

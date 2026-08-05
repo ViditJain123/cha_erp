@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { enrichDraftFromLibrary, runPipeline } from '@checklist/extraction';
 import { createJob, getJob, saveJob } from '@/lib/store';
+import { recomputeDuty } from '@/lib/recompute';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -10,7 +11,8 @@ async function process(jobId: string, files: { fileName: string; pdf: Buffer }[]
   if (!job) return;
   try {
     const { draft, docs } = await runPipeline(files);
-    job.draft = await enrichDraftFromLibrary(draft);
+    // enrichment can prefill duty rates on items — recompute so totals reflect them
+    job.draft = recomputeDuty(await enrichDraftFromLibrary(draft));
     job.docs = docs;
     job.status = 'review';
   } catch (err) {
