@@ -42,6 +42,8 @@ export const InvoiceExtractSchema = z.object({
   invoiceDate: z.string().nullable(),
   sellerName: z.string(),
   sellerAddressLines: z.array(z.string()),
+  /** City/prefecture only — the BE declares it separately from the address. */
+  sellerCity: z.string().nullable(),
   sellerCountry: z.string().nullable(),
   buyerName: z.string().nullable(),
   currency: z.string(),

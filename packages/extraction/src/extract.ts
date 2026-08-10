@@ -39,6 +39,7 @@ This is a commercial invoice. Item rules:
 - Lines that are charges (freight, handling, insurance, documentation...) are NOT goods: set isCharge=true for them and also surface freight as freightCharge when identifiable.
 - termsOfInvoice: normalise the Incoterm (CIF/C&F(CFR)/FOB/EXW/CPT). "Ex-Works" is EXW.
 - sellerAddressLines: use the seller's own/remit-to address block that identifies the selling entity, not office/plant contact addresses printed in footers.
+- sellerCity: the city (or prefecture/province where that is what the address states) from that same block, on its own — the Bill of Entry declares it in a separate field from the address. For "HAMAMATSU SHI, SHIZUOKA KEN, 430-0942 JAPAN" that is "Shizuoka".
 - Capture batch/manufacture/expiry details when printed near items.`,
     user: 'Extract the commercial invoice data.',
   },

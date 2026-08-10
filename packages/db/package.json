@@ -1,0 +1,28 @@
+{
+  "name": "@checklist/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./service": "./src/service.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "seed:admin": "tsx scripts/seed-platform-admin.ts",
+    "check:claims": "tsx scripts/check-claims.ts",
+    "test:rls": "tsx scripts/test-rls.ts"
+  },
+  "dependencies": {
+    "@checklist/config": "workspace:*",
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

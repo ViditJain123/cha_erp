@@ -1,0 +1,25 @@
+{
+  "name": "@checklist/exporter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@checklist/core": "workspace:*",
+    "@checklist/extraction": "workspace:*",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "exceljs": "^4.4.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,236 @@
+import { z } from 'zod';
+import { MODELS, structuredTextCall } from '@checklist/extraction/openai';
+
+/**
+ * The scrutiny analysis.
+ *
+ * Deliberately one model call, and deliberately text-only. Every document was
+ * already read once at ingest and its digest stored on
+ * `job_documents.classification`, so nothing is uploaded again here. Producing
+ * the missing-document list and the shipper email separately would double the
+ * cost for no benefit — the email is just the list, written out.
+ */
+
+export const ScrutinySchema = z.object({
+  /** What the CCRs require that the job does not already hold. */
+  missingDocuments: z.array(
+    z.object({
+      name: z.string(),
+      reason: z.string(),
+      ccrCode: z.string().nullable(),
+    }),
+  ),
+  /** Prose for the scrutiny user, written into the job's remarks. */
+  remarks: z.string(),
+  /** Ready to send to the shipper once a human has approved it. */
+  draftEmail: z.object({
+    subject: z.string(),
+    body: z.string(),
+  }),
+});
+
+export type ScrutinyAnalysis = z.infer<typeof ScrutinySchema>;
+
+export interface ScrutinyDocument {
+  fileName: string;
+  docType: string;
+  summary: string | null;
+  goodsDescription: string | null;
+}
+
+export interface ScrutinyRequirement {
+  code: string;
+  title: string;
+  requirementText: string;
+}
+
+export interface ScrutinyInput {
+  jobNumber: string | null;
+  importerName: string | null;
+  supplierName: string | null;
+  hsCodes: string[];
+  documents: ScrutinyDocument[];
+  requirements: ScrutinyRequirement[];
+  /** Who signs the email. */
+  senderName: string;
+  companyName: string;
+}
+
+const SYSTEM = `You work in the scrutiny desk of an Indian customs house agent.
+
+You are given the compliance requirements (CCRs) that apply to a shipment's HS codes, and a list of the documents already on file with a short description of each. Work out which documents the requirements call for that are NOT already held, then write the email asking the shipper for them.
+
+Rules for missingDocuments:
+- Only list a document if a requirement genuinely calls for it AND nothing on file already satisfies it. Match on substance, not file name: a "Certificate of Analysis" on file satisfies a requirement for a test report.
+- One entry per document. Use the name a shipper would recognise ("FSSAI import licence", "Phytosanitary certificate"), not internal jargon.
+- reason: one short sentence saying which requirement drives it.
+- ccrCode: the code of the requirement that drives it, or null if it comes from more than one.
+- If nothing is missing, return an empty array. Do not invent work.
+
+Rules for remarks:
+- A short internal note for the scrutiny user. Say what the requirements amount to and what is outstanding. Plain sentences, no headings or bullet characters.
+
+Rules for draftEmail:
+- Written to the shipper, from the customs broker handling clearance.
+- Professional, direct and short. No filler, no "I hope this email finds you well".
+- State the shipment plainly (invoice or B/L number if you have it), list exactly what is needed, and ask them to send it.
+- Do not invent deadlines, penalties, charges or regulations that are not in the requirements you were given.
+- Do not mention internal process steps, systems, or what happens after the documents arrive.
+- Plain text, not HTML or markdown. Sign off with the sender's name and the company.
+- If nothing is missing, still write a brief note confirming the documents are complete.`;
+
+function documentLine(doc: ScrutinyDocument): string {
+  const bits = [`${doc.docType}: ${doc.fileName}`];
+  if (doc.summary) bits.push(doc.summary);
+  if (doc.goodsDescription) bits.push(`Goods: ${doc.goodsDescription}`);
+  return `- ${bits.join(' — ')}`;
+}
+
+export async function analyseScrutiny(input: ScrutinyInput): Promise<ScrutinyAnalysis> {
+  const userText = [
+    `Shipment: ${input.jobNumber ?? 'unnumbered'}`,
+    `Importer: ${input.importerName ?? 'unknown'}`,
+    `Supplier / shipper: ${input.supplierName ?? 'unknown'}`,
+    `HS codes: ${input.hsCodes.length > 0 ? input.hsCodes.join(', ') : 'none recorded'}`,
+    '',
+    'Compliance requirements that apply:',
+    ...(input.requirements.length > 0
+      ? input.requirements.map((r) => `- [${r.code}] ${r.title}: ${r.requirementText}`)
+      : ['- none selected']),
+    '',
+    'Documents already on file:',
+    ...(input.documents.length > 0 ? input.documents.map(documentLine) : ['- none']),
+    '',
+    `The email is sent by ${input.senderName} at ${input.companyName}.`,
+  ].join('\n');
+
+  return structuredTextCall({
+    schema: ScrutinySchema,
+    schemaName: 'scrutiny_analysis',
+    system: SYSTEM,
+    userText,
+    // Reasoning over a page of text, not extraction from a document.
+    model: MODELS.extract,
+  });
+}
+
+// ------------------------------------------------- matching replies back ----
+
+export const RequestMatchSchema = z.object({
+  matches: z.array(
+    z.object({
+      requestName: z.string(),
+      fileName: z.string(),
+      confidence: z.enum(['high', 'medium', 'low']),
+      reason: z.string(),
+    }),
+  ),
+});
+
+export type RequestMatches = z.infer<typeof RequestMatchSchema>;
+
+const MATCH_SYSTEM = `You are reconciling documents that just arrived against the documents a customs broker asked a shipper for.
+
+For each outstanding request, decide whether one of the supplied documents satisfies it. Match on substance, not on the file name: a "Certificate of Analysis" satisfies a request for a batch test report; a scanned licence satisfies a request for that licence.
+
+- Only return a match you actually believe. An unmatched request is a normal outcome.
+- confidence: high when the document plainly is the thing asked for; medium when it probably is; low when it merely might be.
+- reason: one short sentence.
+- Never match the same document to more than one request unless it genuinely covers both.
+
+A human confirms every match before it counts, so it is better to surface a medium-confidence candidate than to stay silent.`;
+
+/**
+ * Proposes which arriving documents satisfy which outstanding requests.
+ *
+ * Runs on the stored digests only, and only when a user asks for it — not
+ * automatically on every reply. Nothing here closes a request; it fills in the
+ * suggestion a human then accepts or ignores.
+ */
+export async function suggestRequestMatches(input: {
+  requests: { name: string; reason: string | null }[];
+  documents: ScrutinyDocument[];
+}): Promise<RequestMatches> {
+  if (input.requests.length === 0 || input.documents.length === 0) return { matches: [] };
+
+  const userText = [
+    'Outstanding requests:',
+    ...input.requests.map((r) => `- ${r.name}${r.reason ? ` (${r.reason})` : ''}`),
+    '',
+    'Documents on the job:',
+    ...input.documents.map(documentLine),
+  ].join('\n');
+
+  return structuredTextCall({
+    schema: RequestMatchSchema,
+    schemaName: 'request_matches',
+    system: MATCH_SYSTEM,
+    userText,
+    model: MODELS.classify,
+  });
+}
+
+// -------------------------------------------------- the closing message ----
+
+export const FinalNoticeSchema = z.object({
+  subject: z.string(),
+  body: z.string(),
+});
+
+export type FinalNotice = z.infer<typeof FinalNoticeSchema>;
+
+const FINAL_SYSTEM = `You are writing the closing message from an Indian customs house agent to the shipper of a consignment.
+
+The documents are all in and the checklist is final. Tell them so, and that the consignment is proceeding.
+
+- Short and professional. Three or four sentences at most. No filler.
+- Identify the shipment plainly (invoice or B/L number if you have it).
+- Thank them for the documents they sent, if any were requested.
+- Say the checklist is final and is attached, if it is being attached.
+
+Absolutely do not:
+- Mention noting, assessment, filing, the bill of entry, customs procedure, or ANY internal step that happens next on our side. "Proceeding" is as specific as you may be. This is the single most important rule here.
+- Mention systems, software, reference numbers of ours, or how the work is done.
+- Invent dates, charges, duties or commitments.
+- Ask for anything further.
+
+Plain text, not HTML or markdown. Sign off with the sender's name and the company.`;
+
+/**
+ * The final note to the shipper.
+ *
+ * The prompt's hard constraint is what it must NOT say: the next internal step
+ * is noting, and the shipper is not told that. There is a test asserting the
+ * output stays clear of that vocabulary.
+ */
+export async function draftFinalNotice(input: {
+  jobNumber: string | null;
+  importerName: string | null;
+  supplierName: string | null;
+  documentsRequested: string[];
+  checklistAttached: boolean;
+  senderName: string;
+  companyName: string;
+}): Promise<FinalNotice> {
+  const userText = [
+    `Shipment: ${input.jobNumber ?? 'unnumbered'}`,
+    `Importer: ${input.importerName ?? 'unknown'}`,
+    `Shipper: ${input.supplierName ?? 'unknown'}`,
+    input.documentsRequested.length > 0
+      ? `Documents they supplied on request: ${input.documentsRequested.join(', ')}`
+      : 'No additional documents were requested from them.',
+    input.checklistAttached
+      ? 'The final checklist is attached to this email.'
+      : 'No attachment is being sent.',
+    '',
+    `Written by ${input.senderName} at ${input.companyName}.`,
+  ].join('\n');
+
+  return structuredTextCall({
+    schema: FinalNoticeSchema,
+    schemaName: 'final_notice',
+    system: FINAL_SYSTEM,
+    userText,
+    model: MODELS.classify,
+  });
+}

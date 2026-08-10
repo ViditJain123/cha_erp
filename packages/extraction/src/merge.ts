@@ -50,6 +50,37 @@ const nearlyEqual = (a: number, b: number, tolerance = 0.02) =>
   Math.abs(a - b) <= tolerance * Math.max(a, b);
 
 /**
+ * Pull the voyage number off the end of a vessel/voyage string.
+ *
+ * B/Ls state the two together in whatever shape the line prefers —
+ * "INTERASIA TENACITY S022", "WADI DUKA/02621/N", "MSC ARUSHI V.FQ525A". The
+ * BE wants them in separate columns.
+ *
+ * Returns undefined when the tail does not look like a voyage, which leaves
+ * vesselOrFlight intact and the voyage column blank. A blank cell a human
+ * fills in beats a vessel name silently truncated.
+ */
+function splitVoyage(vesselVoyage: string): string | undefined {
+  const trimmed = vesselVoyage.trim();
+  if (!trimmed) return undefined;
+
+  // Slash-delimited: "WADI DUKA/02621/N" -> "02621/N"
+  const slash = trimmed.split('/');
+  if (slash.length > 1) {
+    const tail = slash.slice(1).join('/').trim();
+    return tail || undefined;
+  }
+
+  // Space-delimited: the last token counts as a voyage only when it mixes
+  // digits in, so "MAERSK KOWLOON" does not lose "KOWLOON".
+  const tokens = trimmed.split(/\s+/);
+  if (tokens.length < 2) return undefined;
+  const last = tokens.at(-1)!;
+  const voyageShaped = /\d/.test(last) && /^[A-Z0-9.\-]{2,10}$/i.test(last);
+  return voyageShaped ? last.replace(/^V\./i, '') : undefined;
+}
+
+/**
  * Deterministic merge of per-document extractions into a reviewable checklist
  * draft: reconcile overlapping fields, enrich from masters, compute duty.
  *
@@ -135,6 +166,13 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     if (source && value != null && value > 0) grossWeights.push({ source, value });
   }
   const grossWeightKg = grossWeights[0]?.value;
+  // Net weight follows the same precedence. The BE declares both, and the
+  // packing list is usually the only document that states net explicitly.
+  const netWeightKg = [
+    bl?.netWeightKg,
+    pl?.netWeightKg,
+    inv?.netWeightKg,
+  ].find((v) => v != null && v > 0);
   const gwConflicts = grossWeights.filter((g) => grossWeightKg != null && !nearlyEqual(g.value, grossWeightKg));
   if (gwConflicts.length) {
     flags.push({
@@ -197,6 +235,15 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   const pkgUnit = bl?.packageUnit ?? (awb ? 'PLT' : undefined);
   if (pkgUnit) shipment.packageUnit = pkgUnit;
   if (grossWeightKg != null) shipment.grossWeightKg = grossWeightKg;
+  if (netWeightKg != null) shipment.netWeightKg = netWeightKg;
+
+  // Split "INTERASIA TENACITY S022" into vessel and voyage. The BE wants them
+  // in separate columns and the B/L states them as one string. Sea only —
+  // for air, vesselOrFlight holds a flight number and date, not a voyage.
+  if (transportMode === 'Sea' && shipment.vesselOrFlight) {
+    const voyage = splitVoyage(shipment.vesselOrFlight);
+    if (voyage) shipment.voyageNo = voyage;
+  }
 
   if (!shipment.countryOfOrigin && inv?.countryOfOrigin) shipment.countryOfOrigin = inv.countryOfOrigin;
   const originFallback = inv?.sellerCountry ?? shipment.consCountry;
@@ -542,6 +589,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     supplier: {
       name: inv?.sellerName ?? '',
       addressLines: inv?.sellerAddressLines ?? [],
+      ...(inv?.sellerCity != null && { city: inv.sellerCity }),
       ...((inv?.sellerCountry ?? shipment.consCountry) != null && {
         country: inv?.sellerCountry ?? shipment.consCountry,
       }),

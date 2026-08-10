@@ -47,6 +47,14 @@ export const FOREIGN_PORTS: ForeignPortMaster[] = [
   { name: 'Busan', unlocode: 'KRPUS', country: 'South Korea' },
   { name: 'Colombo', unlocode: 'LKCMB', country: 'Sri Lanka' },
   { name: 'Kampala', unlocode: 'UGKLA', country: 'Uganda' },
+  { name: 'Yokohama', unlocode: 'JPYOK', country: 'Japan' },
+  { name: 'Tokyo', unlocode: 'JPTYO', country: 'Japan', aliases: ['Narita', 'NRT'] },
+  { name: 'Nagoya', unlocode: 'JPNGO', country: 'Japan' },
+  { name: 'Kobe', unlocode: 'JPUKB', country: 'Japan' },
+  { name: 'Osaka', unlocode: 'JPOSA', country: 'Japan', aliases: ['Kansai', 'KIX'] },
+  { name: 'Shimizu', unlocode: 'JPSMZ', country: 'Japan' },
+  { name: 'Hakata', unlocode: 'JPHKT', country: 'Japan', aliases: ['Fukuoka'] },
+  { name: 'Moji', unlocode: 'JPMOJ', country: 'Japan' },
 ];
 
 /**
@@ -109,6 +117,21 @@ export const TARIFF: TariffMaster[] = [
     compCessNotification: '001/2017',
     pga: 'FSSAI',
   },
+  {
+    // Seeded from job I-13844/26-27. Standard BCD is 7.5%; that job paid 0%
+    // because it claimed India-Japan CEPA, which is an exemption on top of
+    // this row rather than a different rate.
+    cth: '39021000',
+    description: 'Polypropylene, in primary forms',
+    bcdRate: 7.5,
+    unit: 'KGS',
+    igstRate: 18,
+    igstNotification: '009/2025',
+    aidcRate: 0,
+    aidcNotification: '011/2021',
+    compCessRate: 0,
+    compCessNotification: '001/2017',
+  },
 ];
 
 export interface FtaSchemeMaster {
@@ -133,6 +156,17 @@ export const FTA_SCHEMES: FtaSchemeMaster[] = [
     bcdExemptionPercent: 100,
     countries: ['Uganda', 'Tanzania', 'Ethiopia', 'Rwanda', 'Malawi', 'Mozambique', 'Zambia', 'Benin'],
     criterionMap: { A: 'COWO', B: 'PSR' },
+  },
+  {
+    // India-Japan CEPA. Notification/serial transcribed from the Logi-Sys
+    // checklist for job I-13844/26-27, where it carried BCD to 0% on 39021000.
+    scheme: 'India-Japan CEPA',
+    cooHeadingPattern: 'Comprehensive Economic Partnership Agreement',
+    notification: '069/2011',
+    serial: '295',
+    bcdExemptionPercent: 100,
+    countries: ['Japan'],
+    criterionMap: { A: 'COWO', B: 'CTH', C: 'PSR', CTH: 'CTH', WO: 'COWO', PSR: 'PSR' },
   },
 ];
 

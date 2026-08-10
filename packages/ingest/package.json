@@ -1,0 +1,29 @@
+{
+  "name": "@checklist/ingest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test:ingest": "tsx scripts/test-ingest.ts",
+    "demo:seed": "tsx scripts/seed-demo.ts"
+  },
+  "dependencies": {
+    "@checklist/config": "workspace:*",
+    "@checklist/db": "workspace:*",
+    "@checklist/extraction": "workspace:*",
+    "@supabase/supabase-js": "^2.112.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0",
+    "tsx": "^4.19.0"
+  }
+}

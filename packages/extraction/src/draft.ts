@@ -18,6 +18,21 @@ export interface FieldMeta {
   conflicts?: { source: string; value: string }[];
 }
 
+/**
+ * A notification serial number ("II114", "295", "56").
+ *
+ * Kept alongside the notification because the Bill of Entry needs both: the
+ * Logi-Sys template has a `*_NotnSrNo` column beside every `*_Notn` one, and
+ * a notification without its serial does not identify an exemption.
+ */
+export interface NotificationSerials {
+  basic?: string;
+  sws?: string;
+  igst?: string;
+  aidc?: string;
+  compCess?: string;
+}
+
 export interface DraftItem {
   slNo: number;
   description: string;
@@ -36,9 +51,17 @@ export interface DraftItem {
   aidcNotification?: string;
   compCessRate: number;
   compCessNotification?: string;
+  /** Serial numbers for the notifications above, where known. */
+  notificationSerials?: NotificationSerials;
   originCountry?: string;
   manufacturerName?: string;
   manufacturerAddress?: string;
+  /** Manufacturer's country, separate from the address so it can be coded. */
+  manufacturerCountry?: string;
+  /** Trade description as declared, distinct from the invoice description. */
+  generalDescription?: string;
+  brand?: string;
+  model?: string;
   endUseCode: string;
   /** Single Window production details (food/pharma) */
   batch?: { batchNo?: string; manufactureDate?: string; expiryDate?: string; quantity?: number };
@@ -52,6 +75,8 @@ export interface SingleWindowInfoRow {
   infoType: string;
   qualifier: string;
   code?: string;
+  /** Free-text payload — a CAS number, an IUPAC name, a brand declaration. */
+  information?: string;
   measurement?: number;
   unit?: string;
 }
@@ -73,9 +98,13 @@ export interface ChecklistDraft {
     gstStateName?: string;
     adCode?: string;
     branchSno?: string;
+    /** Branch *name*, which the template asks for separately from branchSno. */
+    branchName?: string;
+    /** The importer's party code in Logi-Sys, when we know it. */
+    logisysPartyCode?: string;
     matchedFromMasters: boolean;
   };
-  supplier: { name: string; addressLines: string[]; country?: string };
+  supplier: { name: string; addressLines: string[]; city?: string; country?: string };
 
   shipment: {
     mawbNo?: string;
@@ -90,6 +119,8 @@ export interface ChecklistDraft {
     inwardDate?: string;
     eta?: string;
     vesselOrFlight?: string;
+    /** Voyage number on its own, so it need not be parsed back out of vesselOrFlight. */
+    voyageNo?: string;
     shippingLineOrCarrier?: string;
     portOfLoading?: string;
     consCountry?: string;
@@ -97,8 +128,16 @@ export interface ChecklistDraft {
     packageCount?: number;
     packageUnit?: string;
     grossWeightKg?: number;
+    netWeightKg?: number;
     marksAndNos?: string;
-    containers: { number: string; sizeType?: string; sealNo?: string }[];
+    containers: {
+      number: string;
+      sizeType?: string;
+      sealNo?: string;
+      /** Packages stuffed in this container, when the packing list breaks it down. */
+      packagesStuffed?: number;
+      grossWeightKg?: number;
+    }[];
   };
 
   invoiceMeta: {
@@ -120,6 +159,8 @@ export interface ChecklistDraft {
     countryOfIssue?: string;
     originCriterion?: string;
     directConsignment: boolean;
+    /** Certificate issued after shipment — declared separately on the BE. */
+    retroactiveIssuance?: boolean;
   };
 
   singleWindowInfo?: SingleWindowInfoRow[];

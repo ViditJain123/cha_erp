@@ -11,6 +11,17 @@
     "eval": "corepack pnpm --filter @checklist/extraction eval",
     "library:fetch": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library fetch-tariff",
     "library:index": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library index-docs",
-    "library:search": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library run search"
+    "library:search": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library run search",
+    "db:types": "npx supabase gen types typescript --local --schema public > packages/db/src/database.types.ts",
+    "db:reset": "npx supabase db reset",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
+    "db:seed:admin": "corepack pnpm --filter @checklist/db seed:admin",
+    "db:check:claims": "corepack pnpm --filter @checklist/db check:claims",
+    "db:test:rls": "corepack pnpm --filter @checklist/db test:rls",
+    "worker": "corepack pnpm --filter @checklist/worker start",
+    "worker:once": "corepack pnpm --filter @checklist/worker once",
+    "worker:test:claim": "corepack pnpm --filter @checklist/worker test:claim",
+    "ingest:test": "corepack pnpm --filter @checklist/ingest test:ingest"
   }
 }

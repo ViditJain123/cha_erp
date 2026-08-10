@@ -1,0 +1,47 @@
+# Deploys the mailbox watcher as a Render background worker.
+#
+#   render.com -> New -> Blueprint -> point at this repo
+#
+# Secrets are set in the Render dashboard, not here.
+services:
+  - type: worker
+    name: erp-mail-watcher
+    runtime: node
+    plan: starter
+    region: singapore
+    rootDir: .
+    buildCommand: corepack pnpm install --frozen-lockfile
+    startCommand: corepack pnpm --filter @checklist/worker start
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      # tsx lives in dependencies, not devDependencies, precisely so this
+      # survives a production install that prunes dev packages.
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: MS_CLIENT_ID
+        sync: false
+      - key: MS_CLIENT_SECRET
+        sync: false
+      - key: MS_TENANT_ID
+        value: common
+      - key: MS_REDIRECT_URI
+        sync: false
+      - key: TOKEN_ENCRYPTION_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: WORKER_MAILBOX_INTERVAL_SECONDS
+        value: "300"
+      - key: WORKER_INSTANCE_ID
+        value: render-1

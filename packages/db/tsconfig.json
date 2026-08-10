@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    // Supabase's generated Insert/Update types use `field?: T | null`, which is
+    // incompatible with the repo-wide exactOptionalPropertyTypes. Relaxed here
+    // only — every other package keeps the strict base setting.
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["src", "scripts"]
+}
