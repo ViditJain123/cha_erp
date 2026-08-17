@@ -30,7 +30,10 @@ interface RawClaims {
 }
 
 const ROLES: readonly AppRole[] = ['platform_admin', 'company_owner', 'company_admin', 'member'];
-const TEAMS: readonly TeamKind[] = ['scrutiny', 'do'];
+// Must list every value of the team_kind enum. A team missing here does not
+// error — it falls through to `team: null`, and the user silently loses their
+// queue. Adding a value to the enum means adding it here in the same change.
+const TEAMS: readonly TeamKind[] = ['scrutiny', 'do', 'customs', 'cfs', 'customer_support'];
 const STATUSES: readonly UserStatus[] = ['invited', 'active', 'disabled'];
 
 function str(v: unknown): string {

@@ -87,6 +87,12 @@ async function triageAll(message: IncomingMessage): Promise<TriagedFile[]> {
             summary: triage.summary,
             goodsDescription: triage.goodsDescription,
             hsCodes: triage.hsCodes,
+            // Read here so the delivery order desk can seed itself without the
+            // document ever going back to a model.
+            blSurrenderIndication: triage.blSurrenderIndication,
+            detentionFreeDays: triage.detentionFreeDays,
+            shippingLine: triage.shippingLine,
+            containerMode: triage.containerMode,
           },
         };
       } catch (err) {

@@ -5,6 +5,8 @@ import {
   analyseScrutiny,
   draftFinalNotice,
   hsLookupKeys,
+  hsMatchesPrefix,
+  nameRequirement,
   normaliseHsCode,
   suggestRequestMatches,
 } from '@checklist/ingest';
@@ -16,6 +18,7 @@ import {
   sendMailAsUser,
 } from '@checklist/graph';
 import { requireCompany } from '@/lib/auth';
+import { CCR_WAIVED_EVENT } from '@/lib/jobs';
 import { serviceClient } from '@/lib/supabase/admin';
 
 export interface JobActionState {
@@ -75,7 +78,7 @@ export async function suggestCcrs(jobId: string) {
   const { ctx, db, job } = await ownedJob(jobId);
 
   const keys = hsLookupKeys(job.hs_codes);
-  const [{ data: matches }, { data: applied }] = await Promise.all([
+  const [{ data: matches }, { data: applied }, { data: waivers }] = await Promise.all([
     keys.length > 0
       ? db
           .from('ccr_master')
@@ -86,13 +89,176 @@ export async function suggestCcrs(jobId: string) {
           .order('hs_code')
       : Promise.resolve({ data: [] as never[] }),
     db.from('job_ccrs').select('*').eq('job_id', jobId).eq('company_id', ctx.companyId),
+    db
+      .from('job_events')
+      .select('created_at')
+      .eq('job_id', jobId)
+      .eq('type', CCR_WAIVED_EVENT)
+      .limit(1),
   ]);
 
   return {
     hsCodes: job.hs_codes,
     suggestions: matches ?? [],
     applied: applied ?? [],
+    // Like the draft email in suggestShipper, the decision lives in the event
+    // log rather than in a column of its own.
+    waived: (waivers ?? []).length > 0,
   };
+}
+
+/**
+ * Records a requirement typed in during scrutiny, so the person assessing the
+ * job is not sent to Settings to paste CSV mid-job.
+ *
+ * It writes the tenant master, not the job: an HS code that obliged this
+ * importer once will oblige the next shipment too, and the whole point of the
+ * master is that nobody has to remember it a second time. The new row then
+ * comes back as a suggestion like any other, so the assessment that finds
+ * missing documents stays the single path onto the job.
+ */
+export async function createCcr(
+  _prev: JobActionState,
+  formData: FormData,
+): Promise<JobActionState> {
+  const jobId = String(formData.get('jobId') ?? '');
+  const { ctx, db, job } = await ownedJob(jobId);
+
+  // 2–8 digits, matching the ccr_master check constraint: a requirement filed
+  // at chapter level ('33') is as legitimate as one at full 8-digit level.
+  const hsCode = String(formData.get('hsCode') ?? '').replace(/\D/g, '');
+  const requirementText = String(formData.get('requirementText') ?? '').trim();
+
+  if (hsCode.length < 2 || hsCode.length > 8) {
+    return { error: 'Enter the HS code the requirement applies to (2–8 digits).' };
+  }
+  if (requirementText.length < 12) {
+    return { error: 'Paste what the requirement obliges the importer to hold.' };
+  }
+
+  // Saving a prefix none of the job's codes fall under would file the
+  // requirement correctly in the master and leave this job looking untouched —
+  // the one failure the operator would not spot.
+  if (!job.hs_codes.some((c: string) => hsMatchesPrefix(c, hsCode))) {
+    return {
+      error:
+        job.hs_codes.length === 0
+          ? 'Record the job’s HS codes first.'
+          : `${hsCode} does not cover any of this job's HS codes (${job.hs_codes.join(', ')}).`,
+    };
+  }
+
+  // The operator pastes the substance; the name is ours to derive. A failed
+  // call must not lose what they typed, so it falls back to the text itself.
+  let title: string;
+  let code: string;
+  try {
+    const named = await nameRequirement({ requirementText, hsCode });
+    title = named.title.trim() || firstClause(requirementText);
+    code = tidyCcrCode(named.code) || tidyCcrCode(title);
+  } catch {
+    title = firstClause(requirementText);
+    code = tidyCcrCode(title);
+  }
+
+  // (company, hs_code, code) is unique and the code is no longer typed by a
+  // human, so two unrelated requirements under one heading can derive the same
+  // handle. Upserting on that would quietly replace the first one.
+  const { data: existing } = await db
+    .from('ccr_master')
+    .select('code, requirement_text')
+    .eq('company_id', ctx.companyId)
+    .eq('hs_code', hsCode)
+    .like('code', `${code}%`);
+  const identical = (existing ?? []).find((row) => row.requirement_text === requirementText);
+  if (identical) {
+    // Same requirement typed twice: update the row it already has, whatever
+    // suffix that one ended up with.
+    code = identical.code;
+  } else if ((existing ?? []).some((row) => row.code === code)) {
+    code = `${code}-${(existing ?? []).length + 1}`;
+  }
+
+  const { data: ccr, error } = await db
+    .from('ccr_master')
+    .upsert(
+      {
+        company_id: ctx.companyId,
+        hs_code: hsCode,
+        code,
+        title,
+        requirement_text: requirementText,
+        is_active: true,
+      },
+      { onConflict: 'company_id,hs_code,code' },
+    )
+    .select()
+    .single();
+  if (error) return { error: error.message };
+
+  await db.from('job_events').insert({
+    company_id: ctx.companyId,
+    job_id: jobId,
+    actor_kind: 'user',
+    actor_user_id: ctx.userId,
+    type: 'ccr.created',
+    payload: { hsCode, code: ccr.code, title: ccr.title },
+  });
+
+  revalidatePath(`/jobs/${jobId}`);
+  revalidatePath('/settings/ccr');
+  return {
+    ok: true,
+    message: `Saved under ${hsCode}. It is ticked below — apply it to assess the job.`,
+  };
+}
+
+/**
+ * Records that no compliance requirement applies, which is a real outcome and
+ * not the same as nobody having looked. Close-out needs one or the other.
+ */
+export async function waiveCcrs(
+  _prev: JobActionState,
+  formData: FormData,
+): Promise<JobActionState> {
+  const jobId = String(formData.get('jobId') ?? '');
+  const { ctx, db, job } = await ownedJob(jobId);
+
+  await db.from('job_events').insert({
+    company_id: ctx.companyId,
+    job_id: jobId,
+    actor_kind: 'user',
+    actor_user_id: ctx.userId,
+    type: CCR_WAIVED_EVENT,
+    payload: { hsCodes: job.hs_codes },
+  });
+
+  revalidatePath(`/jobs/${jobId}`);
+  return { ok: true, message: 'Recorded — no compliance requirement applies.' };
+}
+
+/**
+ * A short code for a hand-entered requirement: the master's uniqueness key is
+ * (company, hs_code, code), so it only has to be stable and readable.
+ */
+function tidyCcrCode(raw: string): string {
+  return (
+    raw
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 16)
+      .replace(/-+$/, '') || 'CCR'
+  );
+}
+
+/** Fallback title when the model is unavailable: the opening clause, capped. */
+function firstClause(text: string): string {
+  const sentence = text.split(/(?<=[.;])\s/)[0]?.trim() ?? text.trim();
+  const clean = sentence.replace(/[.;]+$/, '');
+  if (clean.length <= 72) return clean;
+  const cut = clean.slice(0, 72);
+  return cut.slice(0, cut.lastIndexOf(' ') > 0 ? cut.lastIndexOf(' ') : 72);
 }
 
 /**
@@ -169,14 +335,33 @@ export async function applyCcrs(
     };
   }
 
+  // What the invoice's goods did to each requirement, kept against the
+  // requirement rather than only as prose in remarks.
+  const assessedAt = new Date().toISOString();
+  await Promise.all(
+    analysis.assessments.map((a) =>
+      db
+        .from('job_ccrs')
+        .update({ applies: a.applies, assessment_note: a.note, assessed_at: assessedAt })
+        .eq('company_id', ctx.companyId)
+        .eq('job_id', jobId)
+        .eq('code', a.ccrCode),
+    ),
+  );
+
   if (analysis.missingDocuments.length > 0) {
+    // The model is asked to cite the requirement that drives each document, and
+    // will happily cite one it inferred from inside a requirement's text rather
+    // than one we gave it. Anything we did not supply becomes null instead of a
+    // code that resolves to nothing.
+    const known = new Set(ccrs.map((c) => c.code));
     const { error } = await db.from('job_document_requests').upsert(
       analysis.missingDocuments.map((d) => ({
         company_id: ctx.companyId,
         job_id: jobId,
         name: d.name,
         reason: d.reason,
-        ccr_code: d.ccrCode,
+        ccr_code: d.ccrCode && known.has(d.ccrCode) ? d.ccrCode : null,
         status: 'pending' as const,
       })),
       { onConflict: 'job_id,name', ignoreDuplicates: true },
@@ -204,13 +389,18 @@ export async function applyCcrs(
     },
   });
 
+  const inapplicable = analysis.assessments.filter((a) => !a.applies).length;
   revalidatePath(`/jobs/${jobId}`);
   return {
     ok: true,
-    message:
+    message: [
       analysis.missingDocuments.length === 0
         ? 'Assessed — nothing is missing.'
         : `Assessed — ${analysis.missingDocuments.length} document(s) to request.`,
+      inapplicable > 0 ? `${inapplicable} did not apply to these goods.` : '',
+    ]
+      .filter(Boolean)
+      .join(' '),
   };
 }
 

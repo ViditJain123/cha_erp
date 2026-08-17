@@ -1,6 +1,6 @@
 import 'server-only';
 import { redirect } from 'next/navigation';
-import { getAppClaims, type AppClaims } from '@checklist/db';
+import { getAppClaims, type AppClaims, type TeamKind } from '@checklist/db';
 import { COMPANY_MANAGER_ROLES } from '@checklist/config/app';
 import { supabaseServer } from './supabase/server';
 
@@ -38,6 +38,21 @@ export async function requireCompany(): Promise<CompanyContext> {
 export async function requireCompanyManager(): Promise<CompanyContext> {
   const ctx = await requireCompany();
   if (!COMPANY_MANAGER_ROLES.includes(ctx.role)) redirect('/');
+  return ctx;
+}
+
+/**
+ * A member of one of the given teams.
+ *
+ * Managers pass regardless: an owner or admin has to be able to see and unstick
+ * a queue they are not personally on. This is the first team gate in the app
+ * outside mailbox connection, so it is deliberately narrow — it guards pages
+ * built for one desk, not the shared job tabs.
+ */
+export async function requireTeam(...teams: TeamKind[]): Promise<CompanyContext> {
+  const ctx = await requireCompany();
+  if (COMPANY_MANAGER_ROLES.includes(ctx.role)) return ctx;
+  if (!ctx.team || !teams.includes(ctx.team)) redirect('/');
   return ctx;
 }
 

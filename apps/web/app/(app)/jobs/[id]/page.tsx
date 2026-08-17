@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { missingScopes } from '@checklist/graph';
 import { requireCompany } from '@/lib/auth';
@@ -9,8 +8,6 @@ import {
   DOC_TYPE_LABELS,
   EVENT_LABELS,
   IDENTIFIER_LABELS,
-  STAGE_LABELS,
-  STAGE_STYLES,
   relativeTime,
 } from '@/lib/jobs';
 import { ChecklistUpload } from './checklist-upload';
@@ -45,7 +42,6 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
     { data: events },
     { data: exports },
     { data: branches },
-    { data: branch },
     { data: latestDraft },
   ] = await Promise.all([
     db.from('job_documents').select('*').eq('job_id', id).order('created_at'),
@@ -58,12 +54,11 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
       .eq('company_id', ctx.companyId)
       .eq('is_active', true)
       .order('name'),
-    job.branch_id
-      ? db.from('branches').select('name').eq('id', job.branch_id).maybeSingle()
-      : Promise.resolve({ data: null }),
+    // `draft` as well as `version`: the checklist upload shows the duty the
+    // engine computed as a cross-check against what Logi-Sys printed.
     db
       .from('job_drafts')
-      .select('version')
+      .select('version, draft')
       .eq('job_id', id)
       .order('version', { ascending: false })
       .limit(1)
@@ -71,6 +66,12 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
   ]);
 
   const hasChecklist = (documents ?? []).some((d) => d.doc_type === 'checklist');
+
+  // The duty engine's own figure, offered as a prefill and a sanity check. It
+  // is not what passing compares against — the checklist's printed figure is,
+  // because that is what the client was shown.
+  const engineDuty =
+    ((latestDraft?.draft as { duty?: { dutyPayable?: number } } | null)?.duty?.dutyPayable ?? null);
   // The documents branch still owns the job until the checklist arrives, and
   // owns it again while a revision is outstanding.
   const inDocumentsBranch = DOCUMENTS_STAGES.includes(job.stage);
@@ -97,44 +98,6 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
 
   return (
     <div className="space-y-6">
-      <div>
-        <Link href="/jobs" className="text-sm text-indigo-600 hover:underline">
-          ← Jobs
-        </Link>
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl font-semibold">{job.title ?? job.reference ?? 'Untitled job'}</h1>
-          <span
-            className={`rounded-full px-2 py-0.5 text-xs font-medium ${STAGE_STYLES[job.stage]}`}
-          >
-            {STAGE_LABELS[job.stage]}
-          </span>
-        </div>
-        <p className="mt-1 text-sm text-slate-500">
-          {job.source === 'email' ? 'Opened from an email' : 'Created manually'} ·{' '}
-          {relativeTime(job.created_at)}
-          {job.importer_name && ` · ${job.importer_name}`}
-        </p>
-
-        {job.job_number && (
-          <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm shadow-sm">
-            <div>
-              <dt className="text-xs uppercase tracking-wide text-slate-500">Job number</dt>
-              <dd className="mt-0.5 font-medium">{job.job_number}</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wide text-slate-500">Branch</dt>
-              <dd className="mt-0.5">{branch?.name ?? '—'}</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wide text-slate-500">ETA</dt>
-              <dd className="mt-0.5">
-                {job.eta ? new Date(`${job.eta}T00:00:00`).toLocaleDateString() : '—'}
-              </dd>
-            </div>
-          </dl>
-        )}
-      </div>
-
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <section className="rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -181,13 +144,18 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
 
           <DocumentRequests
             jobId={job.id}
-            requests={(requests ?? []).map((r) => ({
-              id: r.id,
-              name: r.name,
-              reason: r.reason,
-              ccrCode: r.ccr_code,
-              status: r.status,
-            }))}
+            requests={(requests ?? []).map((r) => {
+              const settledBy = (documents ?? []).find((d) => d.id === r.received_document_id);
+              return {
+                id: r.id,
+                name: r.name,
+                reason: r.reason,
+                ccrCode: r.ccr_code,
+                status: r.status,
+                documentId: settledBy?.id ?? null,
+                documentName: settledBy?.file_name ?? null,
+              };
+            })}
           />
 
           {inScrutiny && shipper && (
@@ -209,6 +177,9 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             <CloseOut
               jobId={job.id}
               outstanding={(requests ?? []).filter((r) => r.status === 'pending').length}
+              // Closing out without either an applied requirement or a
+              // deliberate "none applies" means nobody assessed compliance.
+              ccrsAssessed={(ccr?.applied.length ?? 0) > 0 || Boolean(ccr?.waived)}
               hasChecklist={hasChecklist}
               shipperEmail={job.shipper_email ?? shipper?.currentEmail ?? ''}
               canSend={sendBlockedReason === null}
@@ -249,7 +220,13 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
                 title: c.title,
                 requirementText: c.requirement_text,
               }))}
-              appliedCodes={ccr.applied.map((a) => a.code)}
+              applied={ccr.applied.map((a) => ({
+                code: a.code,
+                title: a.title,
+                applies: a.applies,
+                note: a.assessment_note,
+              }))}
+              waived={ccr.waived}
               remarks={job.remarks}
             />
           )}
@@ -291,6 +268,8 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
                 jobId={job.id}
                 branches={branches ?? []}
                 isRevision={job.stage === 'checklist_revision'}
+                engineDuty={engineDuty}
+                currentDuty={job.checklist_duty}
               />
             </section>
           )}

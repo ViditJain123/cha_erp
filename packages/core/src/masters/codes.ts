@@ -126,7 +126,74 @@ const COUNTRY_ALIASES: Record<string, string> = {
   'TANZANIA, UNITED REPUBLIC OF': 'TZ', 'BOLIVIA, PLURINATIONAL STATE OF': 'BO',
   'VENEZUELA, BOLIVARIAN REPUBLIC OF': 'VE', 'MOLDOVA, REPUBLIC OF': 'MD',
   'BRUNEI': 'BN', 'CONGO, THE DEMOCRATIC REPUBLIC OF THE': 'CD', 'DRC': 'CD',
+  // The two Congos and the two Chinas are never inferred from a stem (see
+  // AMBIGUOUS_STEMS), so every form we accept for them is spelled out here.
+  'DEMOCRATIC REPUBLIC OF THE CONGO': 'CD', 'DEMOCRATIC REPUBLIC OF CONGO': 'CD',
+  'CONGO KINSHASA': 'CD', 'REPUBLIC OF THE CONGO': 'CG', 'CONGO BRAZZAVILLE': 'CG',
+  "PEOPLE'S REPUBLIC OF CHINA": 'CN', "CHINA, PEOPLE'S REPUBLIC OF": 'CN',
+  'PRC': 'CN', 'P.R. CHINA': 'CN', 'PR CHINA': 'CN', 'MAINLAND CHINA': 'CN',
+  "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA": 'KP',
 };
+
+/**
+ * State forms a document may wrap a country's short name in.
+ *
+ * Certificates of origin and commercial invoices tend to print the full formal
+ * name — "The People's Republic of China", "Kingdom of Thailand", "Federative
+ * Republic of Brazil" — where the master holds the short one. Written as
+ * normalised keys (apostrophes are already spaces by then), longest first so
+ * "People's Republic of" is tried before "Republic of".
+ */
+const STATE_FORMS = [
+  'DEMOCRATIC PEOPLE S REPUBLIC OF',
+  'PEOPLE S DEMOCRATIC REPUBLIC OF',
+  'CO OPERATIVE REPUBLIC OF',
+  'BOLIVARIAN REPUBLIC OF',
+  'PLURINATIONAL STATE OF',
+  'FEDERATIVE REPUBLIC OF',
+  'SOCIALIST REPUBLIC OF',
+  'ISLAMIC REPUBLIC OF',
+  'FEDERAL REPUBLIC OF',
+  'PEOPLE S REPUBLIC OF',
+  'ORIENTAL REPUBLIC OF',
+  'UNITED REPUBLIC OF',
+  'ARAB REPUBLIC OF',
+  'GRAND DUCHY OF',
+  'COMMONWEALTH OF',
+  'PRINCIPALITY OF',
+  'SULTANATE OF',
+  'REPUBLIC OF',
+  'KINGDOM OF',
+  'STATE OF',
+  'UNION OF',
+];
+
+/**
+ * Stems where the state form *is* the distinction, so stripping it would name a
+ * different country: Republic of China is Taiwan and the People's Republic is
+ * not; Republic of Korea and the Democratic People's Republic are two states;
+ * the Congos differ only by "Democratic". These fall through to the alias list
+ * above, and anything it does not cover ends up unmapped — which the exporter
+ * turns into a blocker rather than a guess.
+ */
+const AMBIGUOUS_STEMS = new Set(['CHINA', 'KOREA', 'CONGO']);
+
+/** "Kingdom of Thailand" -> "THAILAND". Undefined when nothing was stripped. */
+function stripStateForm(key: string): string | undefined {
+  const prefix = STATE_FORMS.find((form) => key.startsWith(`${form} `));
+  const suffix = prefix ? undefined : STATE_FORMS.find((form) => key.endsWith(` ${form}`));
+
+  let stem: string;
+  if (prefix) stem = key.slice(prefix.length + 1);
+  else if (suffix) stem = key.slice(0, -(suffix.length + 1));
+  else return undefined;
+
+  // "Republic of the Sudan", "Republic of the Philippines".
+  if (stem.startsWith('THE ')) stem = stem.slice(4);
+
+  if (!stem || AMBIGUOUS_STEMS.has(stem)) return undefined;
+  return stem;
+}
 
 let countryIndex: Map<string, string> | null = null;
 
@@ -169,7 +236,20 @@ export function iso2(nameOrCode: string | undefined | null): string | undefined 
     const upper = raw.toUpperCase();
     return upper in COUNTRIES ? upper : undefined;
   }
-  return countryLookup().get(normaliseKey(raw));
+
+  const index = countryLookup();
+  const key = normaliseKey(raw);
+  const direct = index.get(key);
+  if (direct) return direct;
+
+  // A leading article is never part of a name in the master, and dropping it
+  // may expose an alias: "The People's Republic of China".
+  const bare = key.startsWith('THE ') ? key.slice(4) : key;
+  const withoutArticle = bare === key ? undefined : index.get(bare);
+  if (withoutArticle) return withoutArticle;
+
+  const stem = stripStateForm(bare);
+  return stem ? index.get(stem) : undefined;
 }
 
 /* ------------------------------------------------------------------ *
@@ -344,39 +424,52 @@ export function normalizePackageUnit(unit: string | undefined | null): string | 
 /**
  * `INVOICES.TOI` — terms of invoice.
  *
- * The collapse that matters here is C&F -> CFR: they are the same Incoterm and
- * our documents use both spellings, but the first manual attempt wrote CIF,
- * which is a *different* term (it includes insurance) and would have changed
- * the assessable value.
+ * Logi-Sys accepts exactly four values: "Expected values are FOB / CIF / C&F /
+ * C&I." So CFR is written as C&F — they are the same Incoterm and our documents
+ * use both spellings. The distinction that matters is against CIF, which the
+ * first manual attempt wrote instead: CIF includes insurance and C&F does not,
+ * so the two produce different assessable values.
+ *
+ * `null` means "no value Logi-Sys would accept". EXW is a real Incoterm the
+ * import file has no slot for, so it blocks the export rather than being
+ * silently rounded to the nearest term.
  */
-export const TOI_CODE: Record<TermsOfInvoice, string> = {
+export const TOI_CODE: Record<TermsOfInvoice, string | null> = {
   FOB: 'FOB',
   CIF: 'CIF',
-  CFR: 'CFR',
-  'C&F': 'CFR',
-  CI: 'CIF',
-  EXW: 'EXW',
+  CFR: 'C&F',
+  'C&F': 'C&F',
+  // Cost-and-insurance, no freight. Previously collapsed to CIF, which added
+  // freight to the declaration; Logi-Sys has a distinct value for it.
+  CI: 'C&I',
+  EXW: null,
 };
 
 /**
- * CONFIRM: these follow the labels the Logi-Sys UI itself shows (Transport Mode
- * "Sea", BE Type "Home", Doc Filing Status "Advance") rather than the
- * single-letter ICES forms, because those labels are the only vocabulary we
- * have actually observed in the target system.
+ * The single-letter ICES forms, as stated by the Logi-Sys upload validator:
+ *
+ *   TransportModeCode  — 'A' for Air and 'S' for Sea
+ *   BETypeCode         — 'H' Home, 'I' Inbond, 'E' Exbond, 'Z'/'M'/'T'/'V'/'S' SEZ
+ *   AdvancePriorNormal — 'A' Advance, 'P' Prior, 'N' Normal
+ *
+ * These were previously the labels the Logi-Sys *UI* shows ("SEA", "HOME",
+ * "PRIOR"), which is the vocabulary of its screens rather than of its import
+ * file; the file was rejected on all three.
  */
 export const TRANSPORT_MODE_CODE: Record<'Sea' | 'Air', string> = {
-  Sea: 'SEA',
-  Air: 'AIR',
+  Sea: 'S',
+  Air: 'A',
 };
 
+/** Only home consumption is modelled; the SEZ and bonded forms are unused. */
 export const BE_TYPE_CODE: Record<'Home Consumption', string> = {
-  'Home Consumption': 'HOME',
+  'Home Consumption': 'H',
 };
 
 export const FILING_CODE: Record<'Normal' | 'Prior' | 'Advance', string> = {
-  Normal: 'NORMAL',
-  Prior: 'PRIOR',
-  Advance: 'ADVANCE',
+  Normal: 'N',
+  Prior: 'P',
+  Advance: 'A',
 };
 
 /* ------------------------------------------------------------------ *

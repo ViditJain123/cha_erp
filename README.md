@@ -122,8 +122,100 @@ checklist attached. **That note must never mention noting, the bill of entry, or
 any internal next step**; the constraint is in the prompt and asserted in
 `e2e-phase-c.mjs`. Sending it marks scrutiny done and moves the job to `noting`.
 
-Noting itself has no system. The dashboard reports jobs sitting there and
-nothing more.
+Scrutiny hands the job to the clearance desk, which owns it from there.
+
+## Customs clearance
+
+`jobs.stage = 'noting'` no longer means "parked" — it means the clearance desk
+has it. The detail lives on `job_clearance`, a side table with its own status,
+for the same reason the delivery order does: two tracks run at once and one
+linear enum cannot describe both.
+
+Entry Inwards → **noting** (a token: a BE number, a date, done) → **RMS** routes
+the Bill of Entry → **passing** (appraiser, then AC) → the assessed duty is
+**compared against the checklist** → duty paid → goods registered → examined →
+any NOC → **out of charge** → a delivery day agreed with the CFS → delivered,
+which sets `jobs.stage = 'closed'`.
+
+**The duty comparison is what this exists for.** The figure customs assessed is
+checked against the one printed on the Logi-Sys checklist the documents desk
+uploaded (`jobs.checklist_duty`, keyed at upload — the PDF is stored but never
+parsed). They agree, it proceeds. They differ, and customs has re-classified or
+re-valued the consignment: the job goes **back to scrutiny**
+(`noting → scrutiny`, the only backwards stage move in the app), nothing can be
+paid, and it only comes forward when someone records what happened. A revised
+checklist may carry a new duty, so the upload route accepts the figure on the
+revision path too — otherwise the re-check compares against a stale number and
+the loop never closes.
+
+Tolerance is one rupee (`DUTY_MATCH_TOLERANCE`). Both figures are exact amounts
+keyed off documents, not estimates, so anything past rounding is real.
+
+A pending NOC — Pollution Control Board and anything shaped like it — blocks out
+of charge, and out of charge with no duty payment behind it raises an alert
+rather than being silently allowed.
+
+**Delivery planning is in-app, not email.** A day is put to the station, and the
+CFS answers in their own queue at `/delivery-planning`, scoped to their
+`profiles.cfs_id`. Refusing tells customer support by Resend and keeps the
+refused day on the record, so "why was this not delivered on Tuesday" has an
+answer. The email is a nudge only: **a plain-text reply is never ingested** —
+`apps/worker/src/poll.ts` selects pending messages with
+`.eq('has_attachments', true)`, so "yes, approved" would be filed in
+`mail_messages` and never reach the job. Nothing claims a notification that did
+not go out; when no one on support could be reached, it says so.
+
+Three teams joined `scrutiny` and `do`: `customs`, `cfs` and `customer_support`.
+Team was write-once at invite, which was survivable with two and is not with
+five, so `updateMemberTeam` exists. Note the trap: `team_kind` is restated in
+four places, and the one in `packages/db/src/claims.ts` fails **silently** — a
+value missing there becomes `team: null` and the user loses their queue.
+
+## Delivery orders
+
+The DO desk runs **beside** scrutiny, not after it, so it cannot live on
+`jobs.stage` — that enum is a single linear path. Each job gets a `job_do` row
+with its own status, opened lazily the first time someone visits the tab and
+seeded from documents already ingested. `/jobs/[id]` and `/jobs/[id]/do` are
+sibling tabs under a shared layout; the split also stops the DO tab paying for
+the CCR and shipper read models the scrutiny page runs on every render.
+
+The order of work is the order the shipping line asks for it: is the B/L
+surrendered or the original collected → how many detention free days and from
+when → loaded out or de-stuffed, and does a bond cover the container deposit →
+the line's papers → its proforma invoice, scrutinised and paid → the DO itself →
+delivery → the deposit back within 15 days.
+
+**Every deadline is derived, never stored** (`apps/web/lib/do.ts`). A last free
+day computed from a stale ETA is the one that costs money, so `doAlerts()` is a
+pure function over the current row and `apps/web/test/do.test.ts` pins it. The
+DO tab, the job list and the dashboard all call it, which is what stops a job
+reading amber on one screen and clear on another.
+
+Two masters feed it: `/settings/shipping-lines` (agent, DO address, whether the
+line issues by mail or on ODeX, default free days, and a deposit matrix of mode
+× container size) and `/settings/securities` (a yearly bond or standing deposit,
+held per importer per line). Both prefill; nothing they set is read-only on the
+job.
+
+There is no importer master, so a bond is matched on `jobs.importer_name` plus
+aliases — which means a misspelled importer looks exactly like a genuinely
+uncovered job. The UI therefore says *which* it found: "no bond is recorded for
+this importer" reads differently from "a bond exists but does not cover this
+mode", and both differ from silence.
+
+Detention only. Demurrage — the terminal's ground rent — runs on a separate free
+period and is not modelled.
+
+The four B/L facts the desk needs (surrender wording, free days, the carrier,
+FCL/LCL) are read at ingest by `TriageSchema` and stored on
+`job_documents.classification`, like everything else: **documents are never sent
+to the model twice**. Jobs ingested before those fields existed fall back to
+`job_drafts`, then to the line master, then to a human. Nothing is re-read.
+
+"Notify accounts" is a stamp and a timeline entry and nothing else, until there
+is an accounts module to hand off to. ODeX is not integrated either; a line set
+to `odex` swaps the compose panel for a record-what-you-did form.
 
 **Documents are never sent to the model twice.** Each attachment is read once at
 ingest, and that call also returns a digest (summary, goods description, HS
@@ -143,6 +235,8 @@ pnpm ingest:test                    # ingest against the real example PDFs *
 node apps/web/e2e-phase-a.mjs       # auth + tenancy UI walkthrough (needs pnpm dev)
 node apps/web/e2e-phase-b.mjs       # ingest → export → checklist upload *
 node apps/web/e2e-phase-c.mjs       # branches → scrutiny → CCRs → missing documents *
+node apps/web/e2e-phase-d.mjs       # delivery order: B/L → free time → DO → deposit back *
+node apps/web/e2e-phase-e.mjs       # clearance: noting → duty variance → out of charge → delivery
 ```
 
 `*` makes real OpenAI calls — a handful per run.

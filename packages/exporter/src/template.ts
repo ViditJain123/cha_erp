@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import JSZip from 'jszip';
 
@@ -33,7 +34,53 @@ export interface LoadedTemplate {
   sheets: Map<string, TemplateSheet>;
 }
 
-const TEMPLATE_URL = new URL('../templates/ImportXLSXTemplate.xlsx', import.meta.url);
+/** Where the template sits relative to the repo root. */
+const REPO_RELATIVE_PATH = 'packages/exporter/templates/ImportXLSXTemplate.xlsx';
+
+/**
+ * Assembled rather than written as a literal on purpose.
+ *
+ * webpack pattern-matches `new URL('<literal>', import.meta.url)` and rewrites
+ * it into an asset module: the file is copied to a hashed name under
+ * `.next/server/static/media/` and the URL is repointed there. The copy then
+ * did not survive into what the route could read, so every export failed with
+ * the "missing from the build" error below even though the file was checked in
+ * and traced correctly. Keeping the specifier out of a literal leaves the
+ * expression alone, so this resolves against the real file on disk.
+ */
+const MODULE_RELATIVE_PATH = ['..', 'templates', 'ImportXLSXTemplate.xlsx'].join('/');
+
+/**
+ * Every place the template might legitimately be, most specific first.
+ *
+ * Bundlers, `next dev` and a serverless trace each root the process somewhere
+ * different, so one fixed path cannot cover them: beside the module works when
+ * the package is on disk untouched, and the walk up from the working directory
+ * covers the bundled cases where it is not.
+ */
+function candidatePaths(): string[] {
+  const candidates: string[] = [];
+
+  // Escape hatch for a deployment that lays the file out differently.
+  const override = process.env.LOGISYS_TEMPLATE_PATH;
+  if (override) candidates.push(override);
+
+  try {
+    candidates.push(fileURLToPath(new URL(MODULE_RELATIVE_PATH, import.meta.url)));
+  } catch {
+    // import.meta.url is not a file URL under some bundlers; the walk covers it.
+  }
+
+  let dir = process.cwd();
+  for (let depth = 0; depth < 10; depth++) {
+    candidates.push(path.join(dir, REPO_RELATIVE_PATH));
+    const parent = path.dirname(dir);
+    if (parent === dir) break; // reached the filesystem root
+    dir = parent;
+  }
+
+  return candidates;
+}
 
 let cachedBytes: Buffer | null = null;
 let cachedTemplate: LoadedTemplate | null = null;
@@ -47,17 +94,24 @@ let cachedTemplate: LoadedTemplate | null = null;
  */
 export function templateBytes(): Buffer {
   if (cachedBytes) return cachedBytes;
-  try {
-    cachedBytes = readFileSync(fileURLToPath(TEMPLATE_URL));
-  } catch (cause) {
-    throw new Error(
-      'Logi-Sys import template is missing from the build. It lives at ' +
-        'packages/exporter/templates/ImportXLSXTemplate.xlsx; if this is a ' +
-        'serverless bundle, check outputFileTracingIncludes in next.config.ts.',
-      { cause },
-    );
+
+  const tried: string[] = [];
+  for (const candidate of candidatePaths()) {
+    tried.push(candidate);
+    try {
+      cachedBytes = readFileSync(candidate);
+      return cachedBytes;
+    } catch {
+      // Try the next one; only an exhausted list is an error.
+    }
   }
-  return cachedBytes;
+
+  throw new Error(
+    'Logi-Sys import template is missing from the build. It lives at ' +
+      `${REPO_RELATIVE_PATH}; if this is a serverless bundle, check ` +
+      'outputFileTracingIncludes in next.config.ts. Looked in:\n' +
+      tried.map((p) => `  ${p}`).join('\n'),
+  );
 }
 
 /** SHA-256 of the template, stamped into the export's template version. */

@@ -40,6 +40,9 @@ export const UNMAPPED_SHEETS = [
   'SEZ_INFO',
   'HSS', // high seas sale
   'BONDS_CERTIFICATES',
+  // eSanchit: every row needs an IRN and upload timestamp that only exist after
+  // the document is uploaded. See map/supporting-docs.ts.
+  'SUPPORTING_DOCS',
 ] as const;
 
 function safeFileNamePart(value: string): string {

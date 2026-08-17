@@ -14,6 +14,8 @@ export { normaliseHsCode, hsPrefixes, hsLookupKeys, hsMatchesPrefix } from './hs
 export {
   analyseScrutiny,
   ScrutinySchema,
+  nameRequirement,
+  RequirementNameSchema,
   suggestRequestMatches,
   RequestMatchSchema,
   draftFinalNotice,
@@ -24,6 +26,7 @@ export type {
   ScrutinyInput,
   ScrutinyDocument,
   ScrutinyRequirement,
+  RequirementName,
   RequestMatches,
   FinalNotice,
 } from './scrutiny.js';

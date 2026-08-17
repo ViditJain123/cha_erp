@@ -79,7 +79,9 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       Unit_Price: unitPrice(item.unitPrice),
       CTH: code(cth),
       RITC: code(cth),
-      CETH: BLANK,
+      // The Central Excise Tariff Heading is the same 8-digit classification as
+      // the CTH for an import, and Logi-Sys treats the column as mandatory.
+      CETH: code(cth),
       PolicyPara: BLANK,
       PolicyYear: BLANK,
 

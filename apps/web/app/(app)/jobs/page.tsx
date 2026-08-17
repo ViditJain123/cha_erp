@@ -3,6 +3,11 @@ import Link from 'next/link';
 import { requireCompany } from '@/lib/auth';
 import { serviceClient } from '@/lib/supabase/admin';
 import { STAGE_LABELS, STAGE_STYLES, relativeTime } from '@/lib/jobs';
+import { DO_STATUS_LABELS, DO_STATUS_STYLES, worstLevel } from '@/lib/do';
+import { formatDay } from '@/lib/dates';
+import { loadDoSummaries, type JobDoSummary } from '@/lib/do-read';
+import { CLEARANCE_STATUS_LABELS, CLEARANCE_STATUS_STYLES } from '@/lib/clearance';
+import { loadClearanceSummaries, type JobClearanceSummary } from '@/lib/clearance-read';
 
 export const metadata: Metadata = { title: 'Jobs' };
 export const dynamic = 'force-dynamic';
@@ -25,6 +30,11 @@ export default async function JobsPage() {
 
   const docCount = new Map<string, number>();
   for (const d of documents ?? []) docCount.set(d.job_id, (docCount.get(d.job_id) ?? 0) + 1);
+
+  const [doSummaries, clearanceSummaries] = await Promise.all([
+    loadDoSummaries(ctx.companyId, jobIds),
+    loadClearanceSummaries(ctx.companyId, jobIds),
+  ]);
 
   return (
     <div className="space-y-6">
@@ -55,9 +65,12 @@ export default async function JobsPage() {
               <tr>
                 <th className="px-4 py-3">Job</th>
                 <th className="px-4 py-3">Importer</th>
+                <th className="px-4 py-3">ETA</th>
                 <th className="px-4 py-3">Documents</th>
                 <th className="px-4 py-3">Source</th>
                 <th className="px-4 py-3">Stage</th>
+                <th className="px-4 py-3">Delivery order</th>
+                <th className="px-4 py-3">Clearance</th>
                 <th className="px-4 py-3">Updated</th>
               </tr>
             </thead>
@@ -73,6 +86,10 @@ export default async function JobsPage() {
                     </Link>
                   </td>
                   <td className="px-4 py-3">{job.importer_name ?? '—'}</td>
+                  {/* formatDay, not new Date(): jobs.eta is a calendar day, and
+                      parsing it as an instant shows the day before west of
+                      Greenwich. It renders '—' when the ETA is not known yet. */}
+                  <td className="px-4 py-3 text-slate-600">{formatDay(job.eta)}</td>
                   <td className="px-4 py-3 tabular-nums">{docCount.get(job.id) ?? 0}</td>
                   <td className="px-4 py-3 text-slate-500">
                     {job.source === 'email' ? 'Email' : 'Manual'}
@@ -84,6 +101,12 @@ export default async function JobsPage() {
                       {STAGE_LABELS[job.stage]}
                     </span>
                   </td>
+                  <td className="px-4 py-3">
+                    <DoCell summary={doSummaries.get(job.id)} jobId={job.id} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <ClearanceCell summary={clearanceSummaries.get(job.id)} jobId={job.id} />
+                  </td>
                   <td className="px-4 py-3 text-slate-500">{relativeTime(job.updated_at)}</td>
                 </tr>
               ))}
@@ -92,5 +115,79 @@ export default async function JobsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * The DO's state and whatever it is about to miss.
+ *
+ * Reads the same doAlerts() the DO tab and the dashboard read, so a job that is
+ * amber here is amber everywhere.
+ */
+function ClearanceCell({
+  summary,
+  jobId,
+}: {
+  summary: JobClearanceSummary | undefined;
+  jobId: string;
+}) {
+  if (!summary) {
+    return (
+      <Link href={`/jobs/${jobId}/clearance`} className="text-xs text-slate-400 hover:underline">
+        Not started
+      </Link>
+    );
+  }
+
+  const level = worstLevel(summary.alerts);
+  return (
+    <Link href={`/jobs/${jobId}/clearance`} className="inline-flex items-center gap-1.5">
+      <span
+        className={`rounded-full px-2 py-0.5 text-xs font-medium ${CLEARANCE_STATUS_STYLES[summary.status]}`}
+      >
+        {CLEARANCE_STATUS_LABELS[summary.status]}
+      </span>
+      {level && (
+        <span
+          title={summary.alerts[0]?.label}
+          className={`rounded-full px-1.5 py-0.5 text-xs font-medium ${
+            level === 'overdue' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800'
+          }`}
+        >
+          {summary.alerts.length}
+        </span>
+      )}
+    </Link>
+  );
+}
+
+function DoCell({ summary, jobId }: { summary: JobDoSummary | undefined; jobId: string }) {
+  if (!summary) {
+    return (
+      <Link href={`/jobs/${jobId}/do`} className="text-xs text-slate-400 hover:underline">
+        Not started
+      </Link>
+    );
+  }
+
+  const level = worstLevel(summary.alerts);
+  return (
+    <Link href={`/jobs/${jobId}/do`} className="group inline-flex items-center gap-1.5">
+      <span
+        className={`rounded-full px-2 py-0.5 text-xs font-medium ${DO_STATUS_STYLES[summary.status]}`}
+      >
+        {DO_STATUS_LABELS[summary.status]}
+      </span>
+      {level && (
+        <span
+          title={summary.alerts[0]?.label}
+          className={`rounded-full px-1.5 py-0.5 text-xs font-medium ${
+            level === 'overdue' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800'
+          }`}
+        >
+          {summary.alerts.length}
+        </span>
+      )}
+    </Link>
   );
 }

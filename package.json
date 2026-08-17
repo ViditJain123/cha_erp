@@ -3,7 +3,9 @@
   "private": true,
   "packageManager": "pnpm@11.20.0",
   "scripts": {
-    "dev": "corepack pnpm --filter @checklist/web dev",
+    "dev": "npm run dev:kill && corepack pnpm --parallel --filter @checklist/web --filter @checklist/worker dev",
+    "dev:web": "npm run dev:kill && corepack pnpm --filter @checklist/web dev",
+    "dev:kill": "lsof -ti:3040 | xargs kill -9 2>/dev/null; exit 0",
     "start": "corepack pnpm --filter @checklist/web build && corepack pnpm --filter @checklist/web start",
     "test": "corepack pnpm -r test",
     "build": "corepack pnpm -r build",

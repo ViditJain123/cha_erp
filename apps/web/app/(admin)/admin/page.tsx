@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { requirePlatformAdmin } from '@/lib/auth';
 import { serviceClient } from '@/lib/supabase/admin';
 import { CreateCompanyForm } from './create-company-form';
+import { formatStamp } from '@/lib/dates';
 
 export const metadata: Metadata = { title: 'Companies' };
 export const dynamic = 'force-dynamic';
@@ -83,7 +84,7 @@ export default async function AdminCompaniesPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-slate-500">
-                      {new Date(c.created_at).toLocaleDateString()}
+                      {formatStamp(c.created_at)}
                     </td>
                   </tr>
                 );

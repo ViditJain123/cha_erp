@@ -33,9 +33,11 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       const [row] = await readSheet(workbook, 'GENERAL');
       expect(row).toBeDefined();
       expect(row!['CustomsHouseCode']).toBe('INNSA1');
-      expect(row!['TransportModeCode']).toBe('SEA');
-      expect(row!['BETypeCode']).toBe('HOME');
-      expect(row!['AdvancePriorNormal']).toBe('ADVANCE');
+      // Single letters, not the labels the Logi-Sys screens show: its upload
+      // validator rejected SEA/HOME/ADVANCE outright.
+      expect(row!['TransportModeCode']).toBe('S');
+      expect(row!['BETypeCode']).toBe('H');
+      expect(row!['AdvancePriorNormal']).toBe('A');
       expect(row!['DutyPaymentStatus_T_D']).toBe('T');
       expect(row!['Importer_RefNo']).toBe('EP061126-1');
     });
@@ -146,10 +148,11 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
     });
 
     it('declares cost-and-freight, not CIF', async () => {
-      // The manual attempt wrote CIF. CIF includes insurance and CFR does not,
-      // so the two produce different assessable values.
+      // The manual attempt wrote CIF. CIF includes insurance and C&F does not,
+      // so the two produce different assessable values. Logi-Sys spells
+      // cost-and-freight "C&F"; it rejects CFR.
       const [row] = await readSheet(workbook, 'INVOICES');
-      expect(row!['TOI']).toBe('CFR');
+      expect(row!['TOI']).toBe('C&F');
     });
 
     it('carries insurance as a percentage, with no amount', async () => {
@@ -289,15 +292,23 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
   });
 
   describe('SUPPORTING_DOCS', () => {
-    it('lists the documents with their eSanchit codes', async () => {
+    it('lists the documents in a warning rather than on the sheet', async () => {
+      // Logi-Sys makes ten columns mandatory here, two of which (Doc_IRN,
+      // Doc_Upload_DateTime) eSanchit only issues at upload time. Filling the
+      // rest produced 33 rejections on a three-document job.
       const rows = await readSheet(workbook, 'SUPPORTING_DOCS');
-      expect(rows).toHaveLength(4);
-      const byName = Object.fromEntries(rows.map((r) => [r['Icegate_File_Name'], r]));
-      expect(rows.every((r) => r['Inv_SrNo'] === 1)).toBe(true);
-      expect(byName['COPY BL EP061126-1.pdf']!['Doc_Type']).toBe('705000');
-      expect(byName['EPA EP061126-1.pdf']!['Doc_Type']).toBe('861013');
-      expect(byName['INV EP061126-1.pdf']!['Doc_Type']).toBe('380000');
-      expect(byName['PL EP061126-1.pdf']!['Doc_Type']).toBe('271000');
+      expect(rows).toHaveLength(0);
+
+      const [warning] = warnings.filter((w) => w.startsWith('SUPPORTING_DOCS'));
+      expect(warning).toBeDefined();
+      for (const file of [
+        'COPY BL EP061126-1.pdf',
+        'EPA EP061126-1.pdf',
+        'INV EP061126-1.pdf',
+        'PL EP061126-1.pdf',
+      ]) {
+        expect(warning, `names ${file}`).toContain(file);
+      }
     });
   });
 
@@ -316,6 +327,7 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
         'HSS',
         'BONDS_CERTIFICATES',
         'SW_PRODUCTION', // no batch data: polypropylene is not a PGA commodity
+        'SUPPORTING_DOCS', // eSanchit issues the mandatory IRN, not us
       ]) {
         expect(wb.getWorksheet(name)!.rowCount, `${name} row count`).toBe(1);
       }

@@ -91,6 +91,53 @@ export type Database = {
           },
         ]
       }
+      cfs_master: {
+        Row: {
+          code: string | null
+          company_id: string
+          contact_email: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          notes: string | null
+          port: string | null
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          company_id: string
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          notes?: string | null
+          port?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          company_id?: string
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          notes?: string | null
+          port?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cfs_master_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           created_at: string
@@ -124,9 +171,84 @@ export type Database = {
         }
         Relationships: []
       }
+      importer_line_securities: {
+        Row: {
+          amount: number | null
+          company_id: string
+          covers_destuffed: boolean
+          covers_loaded: boolean
+          created_at: string
+          id: string
+          importer_aliases: string[]
+          importer_name: string
+          is_active: boolean
+          kind: string
+          notes: string | null
+          reference: string | null
+          shipping_line_id: string
+          updated_at: string
+          valid_from: string | null
+          valid_to: string | null
+        }
+        Insert: {
+          amount?: number | null
+          company_id: string
+          covers_destuffed?: boolean
+          covers_loaded?: boolean
+          created_at?: string
+          id?: string
+          importer_aliases?: string[]
+          importer_name: string
+          is_active?: boolean
+          kind: string
+          notes?: string | null
+          reference?: string | null
+          shipping_line_id: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Update: {
+          amount?: number | null
+          company_id?: string
+          covers_destuffed?: boolean
+          covers_loaded?: boolean
+          created_at?: string
+          id?: string
+          importer_aliases?: string[]
+          importer_name?: string
+          is_active?: boolean
+          kind?: string
+          notes?: string | null
+          reference?: string | null
+          shipping_line_id?: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "importer_line_securities_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "importer_line_securities_shipping_line_id_fkey"
+            columns: ["shipping_line_id"]
+            isOneToOne: false
+            referencedRelation: "shipping_lines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_ccrs: {
         Row: {
           applied_by: string | null
+          applies: boolean | null
+          assessed_at: string | null
+          assessment_note: string | null
           ccr_id: string | null
           code: string
           company_id: string
@@ -137,6 +259,9 @@ export type Database = {
         }
         Insert: {
           applied_by?: string | null
+          applies?: boolean | null
+          assessed_at?: string | null
+          assessment_note?: string | null
           ccr_id?: string | null
           code: string
           company_id: string
@@ -147,6 +272,9 @@ export type Database = {
         }
         Update: {
           applied_by?: string | null
+          applies?: boolean | null
+          assessed_at?: string | null
+          assessment_note?: string | null
           ccr_id?: string | null
           code?: string
           company_id?: string
@@ -182,6 +310,793 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_clearance: {
+        Row: {
+          ac_passed_at: string | null
+          appraiser_passed_at: string | null
+          assessed_duty: number | null
+          be_date: string | null
+          be_number: string | null
+          company_id: string
+          created_at: string
+          delivered_on: string | null
+          duty_amount: number | null
+          duty_challan_no: string | null
+          duty_checked_at: string | null
+          duty_checked_by: string | null
+          duty_paid_on: string | null
+          entry_inwards_date: string | null
+          examined_on: string | null
+          goods_registered_on: string | null
+          id: string
+          job_id: string
+          noted_at: string | null
+          noted_by: string | null
+          notes: string | null
+          ooc_reference: string | null
+          out_of_charge_on: string | null
+          rms_route: Database["public"]["Enums"]["rms_route"] | null
+          status: Database["public"]["Enums"]["clearance_status"]
+          updated_at: string
+          variance_note: string | null
+          variance_raised_at: string | null
+          variance_resolved_at: string | null
+        }
+        Insert: {
+          ac_passed_at?: string | null
+          appraiser_passed_at?: string | null
+          assessed_duty?: number | null
+          be_date?: string | null
+          be_number?: string | null
+          company_id: string
+          created_at?: string
+          delivered_on?: string | null
+          duty_amount?: number | null
+          duty_challan_no?: string | null
+          duty_checked_at?: string | null
+          duty_checked_by?: string | null
+          duty_paid_on?: string | null
+          entry_inwards_date?: string | null
+          examined_on?: string | null
+          goods_registered_on?: string | null
+          id?: string
+          job_id: string
+          noted_at?: string | null
+          noted_by?: string | null
+          notes?: string | null
+          ooc_reference?: string | null
+          out_of_charge_on?: string | null
+          rms_route?: Database["public"]["Enums"]["rms_route"] | null
+          status?: Database["public"]["Enums"]["clearance_status"]
+          updated_at?: string
+          variance_note?: string | null
+          variance_raised_at?: string | null
+          variance_resolved_at?: string | null
+        }
+        Update: {
+          ac_passed_at?: string | null
+          appraiser_passed_at?: string | null
+          assessed_duty?: number | null
+          be_date?: string | null
+          be_number?: string | null
+          company_id?: string
+          created_at?: string
+          delivered_on?: string | null
+          duty_amount?: number | null
+          duty_challan_no?: string | null
+          duty_checked_at?: string | null
+          duty_checked_by?: string | null
+          duty_paid_on?: string | null
+          entry_inwards_date?: string | null
+          examined_on?: string | null
+          goods_registered_on?: string | null
+          id?: string
+          job_id?: string
+          noted_at?: string | null
+          noted_by?: string | null
+          notes?: string | null
+          ooc_reference?: string | null
+          out_of_charge_on?: string | null
+          rms_route?: Database["public"]["Enums"]["rms_route"] | null
+          status?: Database["public"]["Enums"]["clearance_status"]
+          updated_at?: string
+          variance_note?: string | null
+          variance_raised_at?: string | null
+          variance_resolved_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_clearance_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_duty_checked_by_fkey"
+            columns: ["duty_checked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: true
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_noted_by_fkey"
+            columns: ["noted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_clearance_nocs: {
+        Row: {
+          applied_on: string | null
+          authority: string
+          company_id: string
+          created_at: string
+          document_id: string | null
+          id: string
+          job_clearance_id: string
+          job_id: string
+          received_on: string | null
+          reference: string | null
+          status: Database["public"]["Enums"]["noc_status"]
+          updated_at: string
+        }
+        Insert: {
+          applied_on?: string | null
+          authority: string
+          company_id: string
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          job_clearance_id: string
+          job_id: string
+          received_on?: string | null
+          reference?: string | null
+          status?: Database["public"]["Enums"]["noc_status"]
+          updated_at?: string
+        }
+        Update: {
+          applied_on?: string | null
+          authority?: string
+          company_id?: string
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          job_clearance_id?: string
+          job_id?: string
+          received_on?: string | null
+          reference?: string | null
+          status?: Database["public"]["Enums"]["noc_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_clearance_nocs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_nocs_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_nocs_job_clearance_id_fkey"
+            columns: ["job_clearance_id"]
+            isOneToOne: false
+            referencedRelation: "job_clearance"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_nocs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_clearance_queries: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          job_clearance_id: string
+          job_id: string
+          query_text: string
+          raised_on: string
+          replied_on: string | null
+          reply_document_id: string | null
+          reply_note: string | null
+          resolved_by: string | null
+          source: string
+          status: Database["public"]["Enums"]["clearance_query_status"]
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          job_clearance_id: string
+          job_id: string
+          query_text: string
+          raised_on: string
+          replied_on?: string | null
+          reply_document_id?: string | null
+          reply_note?: string | null
+          resolved_by?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["clearance_query_status"]
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          job_clearance_id?: string
+          job_id?: string
+          query_text?: string
+          raised_on?: string
+          replied_on?: string | null
+          reply_document_id?: string | null
+          reply_note?: string | null
+          resolved_by?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["clearance_query_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_clearance_queries_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_queries_job_clearance_id_fkey"
+            columns: ["job_clearance_id"]
+            isOneToOne: false
+            referencedRelation: "job_clearance"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_queries_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_queries_reply_document_id_fkey"
+            columns: ["reply_document_id"]
+            isOneToOne: false
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_clearance_queries_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_delivery_plans: {
+        Row: {
+          cfs_id: string | null
+          company_id: string
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          decision_note: string | null
+          id: string
+          job_clearance_id: string
+          job_id: string
+          planned_for: string
+          requested_by: string | null
+          status: Database["public"]["Enums"]["document_request_status"]
+          support_notified_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          cfs_id?: string | null
+          company_id: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_note?: string | null
+          id?: string
+          job_clearance_id: string
+          job_id: string
+          planned_for: string
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["document_request_status"]
+          support_notified_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cfs_id?: string | null
+          company_id?: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_note?: string | null
+          id?: string
+          job_clearance_id?: string
+          job_id?: string
+          planned_for?: string
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["document_request_status"]
+          support_notified_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_delivery_plans_cfs_id_fkey"
+            columns: ["cfs_id"]
+            isOneToOne: false
+            referencedRelation: "cfs_master"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_delivery_plans_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_delivery_plans_decided_by_fkey"
+            columns: ["decided_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_delivery_plans_job_clearance_id_fkey"
+            columns: ["job_clearance_id"]
+            isOneToOne: false
+            referencedRelation: "job_clearance"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_delivery_plans_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_delivery_plans_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_do: {
+        Row: {
+          bl_checked_at: string | null
+          bl_checked_by: string | null
+          bl_collected: boolean
+          bl_surrender_mode: string | null
+          bl_surrendered: boolean | null
+          company_id: string
+          created_at: string
+          delivered_at: string | null
+          delivery_mode: Database["public"]["Enums"]["do_delivery_mode"] | null
+          deposit_expected: number | null
+          do_channel: string | null
+          do_number: string | null
+          do_received_at: string | null
+          do_valid_until: string | null
+          free_days: number | null
+          free_days_source: string | null
+          free_time_from: string | null
+          hss_docs_sent_at: string | null
+          hss_flagged_at: string | null
+          id: string
+          is_high_sea_sale: boolean
+          job_id: string
+          notes: string | null
+          operations_notified_at: string | null
+          security_covers: boolean | null
+          security_id: string | null
+          shipping_line_id: string | null
+          status: Database["public"]["Enums"]["do_status"]
+          updated_at: string
+        }
+        Insert: {
+          bl_checked_at?: string | null
+          bl_checked_by?: string | null
+          bl_collected?: boolean
+          bl_surrender_mode?: string | null
+          bl_surrendered?: boolean | null
+          company_id: string
+          created_at?: string
+          delivered_at?: string | null
+          delivery_mode?: Database["public"]["Enums"]["do_delivery_mode"] | null
+          deposit_expected?: number | null
+          do_channel?: string | null
+          do_number?: string | null
+          do_received_at?: string | null
+          do_valid_until?: string | null
+          free_days?: number | null
+          free_days_source?: string | null
+          free_time_from?: string | null
+          hss_docs_sent_at?: string | null
+          hss_flagged_at?: string | null
+          id?: string
+          is_high_sea_sale?: boolean
+          job_id: string
+          notes?: string | null
+          operations_notified_at?: string | null
+          security_covers?: boolean | null
+          security_id?: string | null
+          shipping_line_id?: string | null
+          status?: Database["public"]["Enums"]["do_status"]
+          updated_at?: string
+        }
+        Update: {
+          bl_checked_at?: string | null
+          bl_checked_by?: string | null
+          bl_collected?: boolean
+          bl_surrender_mode?: string | null
+          bl_surrendered?: boolean | null
+          company_id?: string
+          created_at?: string
+          delivered_at?: string | null
+          delivery_mode?: Database["public"]["Enums"]["do_delivery_mode"] | null
+          deposit_expected?: number | null
+          do_channel?: string | null
+          do_number?: string | null
+          do_received_at?: string | null
+          do_valid_until?: string | null
+          free_days?: number | null
+          free_days_source?: string | null
+          free_time_from?: string | null
+          hss_docs_sent_at?: string | null
+          hss_flagged_at?: string | null
+          id?: string
+          is_high_sea_sale?: boolean
+          job_id?: string
+          notes?: string | null
+          operations_notified_at?: string | null
+          security_covers?: boolean | null
+          security_id?: string | null
+          shipping_line_id?: string | null
+          status?: Database["public"]["Enums"]["do_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_do_bl_checked_by_fkey"
+            columns: ["bl_checked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: true
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_security_id_fkey"
+            columns: ["security_id"]
+            isOneToOne: false
+            referencedRelation: "importer_line_securities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_shipping_line_id_fkey"
+            columns: ["shipping_line_id"]
+            isOneToOne: false
+            referencedRelation: "shipping_lines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_do_containers: {
+        Row: {
+          company_id: string
+          container_no: string
+          created_at: string
+          deposit_amount: number | null
+          deposit_claimed_on: string | null
+          deposit_paid_on: string | null
+          deposit_refunded_on: string | null
+          deposit_status: Database["public"]["Enums"]["do_deposit_status"]
+          free_days: number | null
+          free_time_from: string | null
+          gated_out_on: string | null
+          id: string
+          job_do_id: string
+          job_id: string
+          returned_on: string | null
+          size_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          container_no: string
+          created_at?: string
+          deposit_amount?: number | null
+          deposit_claimed_on?: string | null
+          deposit_paid_on?: string | null
+          deposit_refunded_on?: string | null
+          deposit_status?: Database["public"]["Enums"]["do_deposit_status"]
+          free_days?: number | null
+          free_time_from?: string | null
+          gated_out_on?: string | null
+          id?: string
+          job_do_id: string
+          job_id: string
+          returned_on?: string | null
+          size_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          container_no?: string
+          created_at?: string
+          deposit_amount?: number | null
+          deposit_claimed_on?: string | null
+          deposit_paid_on?: string | null
+          deposit_refunded_on?: string | null
+          deposit_status?: Database["public"]["Enums"]["do_deposit_status"]
+          free_days?: number | null
+          free_time_from?: string | null
+          gated_out_on?: string | null
+          id?: string
+          job_do_id?: string
+          job_id?: string
+          returned_on?: string | null
+          size_type?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_do_containers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_containers_job_do_id_fkey"
+            columns: ["job_do_id"]
+            isOneToOne: false
+            referencedRelation: "job_do"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_containers_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_do_documents: {
+        Row: {
+          company_id: string
+          created_at: string
+          document_id: string | null
+          id: string
+          job_do_id: string
+          job_id: string
+          name: string
+          required_for: string
+          resolved_at: string | null
+          resolved_by: string | null
+          status: Database["public"]["Enums"]["document_request_status"]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          job_do_id: string
+          job_id: string
+          name: string
+          required_for?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["document_request_status"]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          job_do_id?: string
+          job_id?: string
+          name?: string
+          required_for?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["document_request_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_do_documents_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_documents_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_documents_job_do_id_fkey"
+            columns: ["job_do_id"]
+            isOneToOne: false
+            referencedRelation: "job_do"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_documents_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_documents_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_do_invoices: {
+        Row: {
+          accounts_notified_at: string | null
+          amount: number | null
+          company_id: string
+          created_at: string
+          currency: string
+          document_id: string | null
+          id: string
+          invoice_date: string | null
+          invoice_number: string | null
+          job_do_id: string
+          job_id: string
+          kind: Database["public"]["Enums"]["do_invoice_kind"]
+          paid_on: string | null
+          payment_amount: number | null
+          payment_reference: string | null
+          proof_document_id: string | null
+          proof_sent_at: string | null
+          scrutinised_at: string | null
+          scrutinised_by: string | null
+          scrutiny_note: string | null
+          updated_at: string
+        }
+        Insert: {
+          accounts_notified_at?: string | null
+          amount?: number | null
+          company_id: string
+          created_at?: string
+          currency?: string
+          document_id?: string | null
+          id?: string
+          invoice_date?: string | null
+          invoice_number?: string | null
+          job_do_id: string
+          job_id: string
+          kind: Database["public"]["Enums"]["do_invoice_kind"]
+          paid_on?: string | null
+          payment_amount?: number | null
+          payment_reference?: string | null
+          proof_document_id?: string | null
+          proof_sent_at?: string | null
+          scrutinised_at?: string | null
+          scrutinised_by?: string | null
+          scrutiny_note?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accounts_notified_at?: string | null
+          amount?: number | null
+          company_id?: string
+          created_at?: string
+          currency?: string
+          document_id?: string | null
+          id?: string
+          invoice_date?: string | null
+          invoice_number?: string | null
+          job_do_id?: string
+          job_id?: string
+          kind?: Database["public"]["Enums"]["do_invoice_kind"]
+          paid_on?: string | null
+          payment_amount?: number | null
+          payment_reference?: string | null
+          proof_document_id?: string | null
+          proof_sent_at?: string | null
+          scrutinised_at?: string | null
+          scrutinised_by?: string | null
+          scrutiny_note?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_do_invoices_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_invoices_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_invoices_job_do_id_fkey"
+            columns: ["job_do_id"]
+            isOneToOne: false
+            referencedRelation: "job_do"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_invoices_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_invoices_proof_document_id_fkey"
+            columns: ["proof_document_id"]
+            isOneToOne: false
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_do_invoices_scrutinised_by_fkey"
+            columns: ["scrutinised_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -579,6 +1494,7 @@ export type Database = {
         Row: {
           assigned_to: string | null
           branch_id: string | null
+          checklist_duty: number | null
           company_id: string
           created_at: string
           created_by: string | null
@@ -600,6 +1516,7 @@ export type Database = {
         Insert: {
           assigned_to?: string | null
           branch_id?: string | null
+          checklist_duty?: number | null
           company_id: string
           created_at?: string
           created_by?: string | null
@@ -621,6 +1538,7 @@ export type Database = {
         Update: {
           assigned_to?: string | null
           branch_id?: string | null
+          checklist_duty?: number | null
           company_id?: string
           created_at?: string
           created_by?: string | null
@@ -902,6 +1820,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          cfs_id: string | null
           company_id: string | null
           created_at: string
           email: string
@@ -917,6 +1836,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          cfs_id?: string | null
           company_id?: string | null
           created_at?: string
           email: string
@@ -932,6 +1852,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          cfs_id?: string | null
           company_id?: string | null
           created_at?: string
           email?: string
@@ -947,6 +1868,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "profiles_cfs_id_fkey"
+            columns: ["cfs_id"]
+            isOneToOne: false
+            referencedRelation: "cfs_master"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profiles_company_id_fkey"
             columns: ["company_id"]
@@ -990,6 +1918,110 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "shippers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shipping_line_deposit_rates: {
+        Row: {
+          amount: number
+          company_id: string
+          container_size: string
+          created_at: string
+          currency: string
+          delivery_mode: Database["public"]["Enums"]["do_delivery_mode"]
+          id: string
+          shipping_line_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          company_id: string
+          container_size: string
+          created_at?: string
+          currency?: string
+          delivery_mode: Database["public"]["Enums"]["do_delivery_mode"]
+          id?: string
+          shipping_line_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          company_id?: string
+          container_size?: string
+          created_at?: string
+          currency?: string
+          delivery_mode?: Database["public"]["Enums"]["do_delivery_mode"]
+          id?: string
+          shipping_line_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipping_line_deposit_rates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shipping_line_deposit_rates_shipping_line_id_fkey"
+            columns: ["shipping_line_id"]
+            isOneToOne: false
+            referencedRelation: "shipping_lines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shipping_lines: {
+        Row: {
+          agent_name: string | null
+          aliases: string[]
+          company_id: string
+          created_at: string
+          default_free_days: number | null
+          do_email: string | null
+          id: string
+          is_active: boolean
+          issues_do_via: string
+          name: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          agent_name?: string | null
+          aliases?: string[]
+          company_id: string
+          created_at?: string
+          default_free_days?: number | null
+          do_email?: string | null
+          id?: string
+          is_active?: boolean
+          issues_do_via?: string
+          name: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          agent_name?: string | null
+          aliases?: string[]
+          company_id?: string
+          created_at?: string
+          default_free_days?: number | null
+          do_email?: string | null
+          id?: string
+          is_active?: boolean
+          issues_do_via?: string
+          name?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipping_lines_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
@@ -1046,8 +2078,37 @@ export type Database = {
     }
     Enums: {
       app_role: "platform_admin" | "company_owner" | "company_admin" | "member"
+      clearance_query_status: "open" | "replied" | "closed"
+      clearance_status:
+        | "noting"
+        | "passing"
+        | "duty_variance"
+        | "duty_payment"
+        | "goods_registration"
+        | "examination"
+        | "out_of_charge"
+        | "delivery_planning"
+        | "delivered"
       company_status: "active" | "suspended"
       connection_status: "active" | "needs_reauth" | "disabled"
+      do_delivery_mode: "loaded" | "destuffed"
+      do_deposit_status:
+        | "not_applicable"
+        | "pending"
+        | "paid"
+        | "claimed"
+        | "refunded"
+        | "forfeited"
+      do_invoice_kind: "proforma" | "final"
+      do_status:
+        | "open"
+        | "documents"
+        | "invoice"
+        | "payment"
+        | "awaiting_do"
+        | "do_received"
+        | "delivered"
+        | "closed"
       document_request_status: "pending" | "received" | "waived"
       document_type:
         | "invoice"
@@ -1079,7 +2140,9 @@ export type Database = {
         | "closed"
       mail_outcome: "created_job" | "attached" | "skipped" | "error"
       mail_provider: "microsoft"
-      team_kind: "scrutiny" | "do"
+      noc_status: "not_required" | "pending" | "received"
+      rms_route: "facilitated" | "assessment" | "examination"
+      team_kind: "scrutiny" | "do" | "customs" | "cfs" | "customer_support"
       user_status: "invited" | "active" | "disabled"
     }
     CompositeTypes: {
@@ -1209,8 +2272,40 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["platform_admin", "company_owner", "company_admin", "member"],
+      clearance_query_status: ["open", "replied", "closed"],
+      clearance_status: [
+        "noting",
+        "passing",
+        "duty_variance",
+        "duty_payment",
+        "goods_registration",
+        "examination",
+        "out_of_charge",
+        "delivery_planning",
+        "delivered",
+      ],
       company_status: ["active", "suspended"],
       connection_status: ["active", "needs_reauth", "disabled"],
+      do_delivery_mode: ["loaded", "destuffed"],
+      do_deposit_status: [
+        "not_applicable",
+        "pending",
+        "paid",
+        "claimed",
+        "refunded",
+        "forfeited",
+      ],
+      do_invoice_kind: ["proforma", "final"],
+      do_status: [
+        "open",
+        "documents",
+        "invoice",
+        "payment",
+        "awaiting_do",
+        "do_received",
+        "delivered",
+        "closed",
+      ],
       document_request_status: ["pending", "received", "waived"],
       document_type: [
         "invoice",
@@ -1245,7 +2340,9 @@ export const Constants = {
       ],
       mail_outcome: ["created_job", "attached", "skipped", "error"],
       mail_provider: ["microsoft"],
-      team_kind: ["scrutiny", "do"],
+      noc_status: ["not_required", "pending", "received"],
+      rms_route: ["facilitated", "assessment", "examination"],
+      team_kind: ["scrutiny", "do", "customs", "cfs", "customer_support"],
       user_status: ["invited", "active", "disabled"],
     },
   },

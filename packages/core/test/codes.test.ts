@@ -45,6 +45,31 @@ describe('iso2', () => {
     expect(iso2('Turkey')).toBe('TR');
   });
 
+  it('sees through the formal state names on a certificate of origin', () => {
+    // "The People's Republic of China" blocked a real export.
+    expect(iso2("The People's Republic of China")).toBe('CN');
+    expect(iso2("People's Republic of China")).toBe('CN');
+    expect(iso2('Kingdom of Thailand')).toBe('TH');
+    expect(iso2('Federal Republic of Germany')).toBe('DE');
+    expect(iso2('Socialist Republic of Viet Nam')).toBe('VN');
+    expect(iso2('Republic of the Philippines')).toBe('PH');
+    expect(iso2('State of Israel')).toBe('IL');
+    expect(iso2('United Republic of Tanzania')).toBe('TZ');
+    // The ISO comma-inverted form, which some masters print.
+    expect(iso2('Indonesia, Republic of')).toBe('ID');
+  });
+
+  it('refuses to infer a country whose state form is the whole distinction', () => {
+    // Republic of China is Taiwan; the People's Republic is not. Same trap for
+    // the two Koreas and the two Congos. Unmapped becomes an export blocker,
+    // which is the right outcome — a wrong origin is a misdeclaration.
+    expect(iso2('Republic of China')).toBeUndefined();
+    expect(iso2('Republic of Korea')).toBe('KR'); // spelled out in the aliases
+    expect(iso2("Democratic People's Republic of Korea")).toBe('KP');
+    expect(iso2('Republic of the Congo')).toBe('CG');
+    expect(iso2('Democratic Republic of the Congo')).toBe('CD');
+  });
+
   it('strips accents rather than failing on them', () => {
     expect(iso2('Türkiye')).toBe('TR');
     expect(iso2('Curaçao')).toBe('CW');
@@ -140,23 +165,39 @@ describe('normalizePackageUnit', () => {
 });
 
 describe('TOI_CODE', () => {
-  it('collapses C&F to CFR', () => {
-    // The manual attempt wrote CIF here. CIF includes insurance and CFR does
-    // not, so the two produce different assessable values.
-    expect(TOI_CODE['C&F']).toBe('CFR');
-    expect(TOI_CODE.CFR).toBe('CFR');
+  it('collapses CFR to C&F', () => {
+    // The manual attempt wrote CIF here. CIF includes insurance and C&F does
+    // not, so the two produce different assessable values. Logi-Sys accepts
+    // only FOB / CIF / C&F / C&I, and rejected CFR.
+    expect(TOI_CODE['C&F']).toBe('C&F');
+    expect(TOI_CODE.CFR).toBe('C&F');
     expect(TOI_CODE.CIF).toBe('CIF');
+  });
+
+  it('keeps cost-and-insurance distinct from CIF', () => {
+    // C&I carries no freight. Collapsing it to CIF declared freight that the
+    // invoice never billed.
+    expect(TOI_CODE.CI).toBe('C&I');
+  });
+
+  it('has no value for Ex-Works, so the export can refuse', () => {
+    // Not one of the four Logi-Sys accepts. mergeDraft normally rewrites EXW to
+    // FOB before this point; if one ever reaches the exporter it blocks.
+    expect(TOI_CODE.EXW).toBeNull();
   });
 });
 
 describe('enumerated header codes', () => {
-  it('covers every value the draft can hold', () => {
-    expect(TRANSPORT_MODE_CODE.Sea).toBe('SEA');
-    expect(TRANSPORT_MODE_CODE.Air).toBe('AIR');
-    expect(BE_TYPE_CODE['Home Consumption']).toBe('HOME');
-    expect(FILING_CODE.Advance).toBe('ADVANCE');
-    expect(FILING_CODE.Normal).toBe('NORMAL');
-    expect(FILING_CODE.Prior).toBe('PRIOR');
+  it('uses the single letters the Logi-Sys validator asks for', () => {
+    // "Expected values are 'A' for Air and 'S' for Sea", and so on. These were
+    // the labels its UI shows (SEA/HOME/ADVANCE) until an upload rejected all
+    // three.
+    expect(TRANSPORT_MODE_CODE.Sea).toBe('S');
+    expect(TRANSPORT_MODE_CODE.Air).toBe('A');
+    expect(BE_TYPE_CODE['Home Consumption']).toBe('H');
+    expect(FILING_CODE.Advance).toBe('A');
+    expect(FILING_CODE.Normal).toBe('N');
+    expect(FILING_CODE.Prior).toBe('P');
   });
 });
 

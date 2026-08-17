@@ -6,11 +6,15 @@ import { serviceForCompany } from '@/lib/supabase/admin';
 const NAV = [
   { href: '/', label: 'Dashboard' },
   { href: '/jobs', label: 'Jobs' },
+  { href: '/delivery-planning', label: 'Delivery planning' },
   { href: '/settings/mailbox', label: 'Mailbox' },
   { href: '/settings/team', label: 'Team' },
   { href: '/settings/branches', label: 'Branches' },
   { href: '/settings/ccr', label: 'Requirements' },
   { href: '/settings/shippers', label: 'Shippers' },
+  { href: '/settings/shipping-lines', label: 'Shipping lines' },
+  { href: '/settings/securities', label: 'Bonds & deposits' },
+  { href: '/settings/cfs', label: 'CFS' },
   { href: '/settings/company', label: 'Company' },
 ];
 
@@ -20,7 +24,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen">
-      <aside className="hidden w-56 shrink-0 border-r border-slate-200 bg-white md:block">
+      {/* Sticky rather than fixed: it stays a flex item, so the main column
+          needs no matching left padding to sit beside it. */}
+      <aside className="hidden w-56 shrink-0 border-r border-slate-200 bg-white md:sticky md:top-0 md:block md:h-screen md:overflow-y-auto">
         <div className="flex h-14 items-center px-5 text-sm font-semibold tracking-tight">
           {APP.name}
         </div>
@@ -44,7 +50,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-end gap-4 border-b border-slate-200 bg-white px-6 text-sm">
+        <header className="sticky top-0 z-20 flex h-14 items-center justify-end gap-4 border-b border-slate-200 bg-white px-6 text-sm">
           <span className="text-slate-500">{ctx.email}</span>
           <form action="/api/auth/signout" method="post">
             <button type="submit" className="text-slate-600 hover:text-slate-900">

@@ -15,7 +15,7 @@ export interface SettingsActionState {
 }
 
 const INVITABLE_ROLES: readonly AppRole[] = ['company_admin', 'member'];
-const TEAM_KINDS: readonly TeamKind[] = ['scrutiny', 'do'];
+const TEAM_KINDS: readonly TeamKind[] = ['scrutiny', 'do', 'customs', 'cfs', 'customer_support'];
 
 export async function updateCompany(
   _prev: SettingsActionState,
@@ -118,15 +118,84 @@ export async function setMemberStatus(
   return { ok: true, message: status === 'disabled' ? 'Member disabled.' : 'Member re-enabled.' };
 }
 
+/**
+ * Moves a member to another desk, and pins a CFS person to their station.
+ *
+ * Team was write-once at invite until now, which was survivable with two teams
+ * and is not with five — the CFS queue is only useful if someone can be put on
+ * it. A CFS member with no station sees an empty queue rather than everyone's,
+ * so the station is required for that team and cleared for every other.
+ */
+export async function updateMemberTeam(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const db = serviceClient();
+
+  const userId = String(formData.get('userId') ?? '');
+  const teamRaw = String(formData.get('team') ?? '');
+  const cfsId = String(formData.get('cfsId') ?? '').trim();
+
+  const team = TEAM_KINDS.includes(teamRaw as TeamKind) ? (teamRaw as TeamKind) : null;
+  if (!team) return { error: 'Choose a team.' };
+
+  const { data: target } = await db
+    .from('profiles')
+    .select('id, company_id, role')
+    .eq('id', userId)
+    .maybeSingle();
+  // Both checks matter: the service role would happily edit another tenant's row.
+  if (!target || target.company_id !== ctx.companyId) return { error: 'No such team member.' };
+  if (target.role === 'company_owner') {
+    return { error: 'The owner is not on a desk. Their access is not limited by team.' };
+  }
+
+  if (team === 'cfs' && !cfsId) return { error: 'Choose which CFS they work.' };
+  if (cfsId) {
+    const { data: cfs } = await db
+      .from('cfs_master')
+      .select('id')
+      .eq('id', cfsId)
+      .eq('company_id', ctx.companyId)
+      .maybeSingle();
+    if (!cfs) return { error: 'No such CFS.' };
+  }
+
+  const { error } = await db
+    .from('profiles')
+    .update({ team, cfs_id: team === 'cfs' ? cfsId : null })
+    .eq('id', userId)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/team');
+  return {
+    ok: true,
+    // The team is a JWT claim, stamped at login by custom_access_token_hook —
+    // it does not change under a session that is already open.
+    message: 'Team updated. They will see the change after signing in again.',
+  };
+}
+
 /** Read model for the team page. */
 export async function listTeam() {
   const ctx = await requireCompany();
-  const { data } = await serviceClient()
-    .from('profiles')
-    .select('*')
-    .eq('company_id', ctx.companyId)
-    .order('created_at', { ascending: true });
-  return { ctx, members: data ?? [] };
+  const db = serviceClient();
+  const [{ data: members }, { data: cfs }] = await Promise.all([
+    db
+      .from('profiles')
+      .select('*')
+      .eq('company_id', ctx.companyId)
+      .order('created_at', { ascending: true }),
+    db
+      .from('cfs_master')
+      .select('id, name')
+      .eq('company_id', ctx.companyId)
+      .eq('is_active', true)
+      .order('name'),
+  ]);
+  return { ctx, members: members ?? [], cfsOptions: cfs ?? [] };
 }
 
 // ---------------------------------------------------------------- branches --
@@ -307,4 +376,348 @@ export async function listShippers() {
     .eq('company_id', ctx.companyId)
     .order('name');
   return { ctx, shippers: data ?? [] };
+}
+
+// --------------------------------------------------------- shipping lines --
+
+/** Splits the comma/newline separated alias fields the master forms use. */
+function parseList(raw: FormDataEntryValue | null): string[] {
+  return String(raw ?? '')
+    .split(/[\n,;]+/)
+    .map((a) => a.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Reads an optional number out of a form field. Returns `undefined` for "leave
+ * it blank" and `null` for "not a number", so a typo cannot silently store 0 —
+ * a free-day count of 0 and an unknown one mean very different things.
+ */
+function optionalNumber(raw: FormDataEntryValue | null): number | null | undefined {
+  const text = String(raw ?? '').trim();
+  if (text.length === 0) return undefined;
+  const value = Number(text);
+  return Number.isFinite(value) ? value : null;
+}
+
+export async function createShippingLine(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const name = String(formData.get('name') ?? '').trim();
+  const agentName = String(formData.get('agentName') ?? '').trim();
+  const doEmail = String(formData.get('doEmail') ?? '').trim().toLowerCase();
+  const issuesDoVia = String(formData.get('issuesDoVia') ?? 'email');
+  const aliases = parseList(formData.get('aliases'));
+  const freeDays = optionalNumber(formData.get('defaultFreeDays'));
+
+  if (name.length < 2) return { error: 'Enter the shipping line name.' };
+  if (doEmail && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(doEmail)) {
+    return { error: 'Enter a valid DO email address, or leave it blank.' };
+  }
+  if (issuesDoVia !== 'email' && issuesDoVia !== 'odex') return { error: 'Choose how the DO is issued.' };
+  if (freeDays === null || (freeDays !== undefined && (freeDays < 0 || !Number.isInteger(freeDays)))) {
+    return { error: 'Free days must be a whole number of days.' };
+  }
+
+  const { error } = await serviceClient()
+    .from('shipping_lines')
+    .upsert(
+      {
+        company_id: ctx.companyId,
+        name,
+        aliases,
+        agent_name: agentName || null,
+        do_email: doEmail || null,
+        issues_do_via: issuesDoVia,
+        default_free_days: freeDays ?? null,
+        is_active: true,
+      },
+      { onConflict: 'company_id,name' },
+    );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/shipping-lines');
+  return { ok: true, message: `${name} saved.` };
+}
+
+export async function setShippingLineActive(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const lineId = String(formData.get('lineId') ?? '');
+  const isActive = String(formData.get('isActive') ?? '') === 'true';
+
+  const { error } = await serviceClient()
+    .from('shipping_lines')
+    .update({ is_active: isActive })
+    .eq('id', lineId)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/shipping-lines');
+  return { ok: true, message: isActive ? 'Shipping line re-enabled.' : 'Shipping line retired.' };
+}
+
+/**
+ * Adds or replaces one cell of a line's deposit matrix. An empty amount deletes
+ * the rate rather than storing zero, which would read as "no deposit due".
+ */
+export async function saveDepositRate(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const db = serviceClient();
+
+  const lineId = String(formData.get('lineId') ?? '');
+  const deliveryMode = String(formData.get('deliveryMode') ?? '');
+  const containerSize = String(formData.get('containerSize') ?? '').trim().toUpperCase();
+  const amount = optionalNumber(formData.get('amount'));
+
+  if (deliveryMode !== 'loaded' && deliveryMode !== 'destuffed') {
+    return { error: 'Choose loaded or de-stuffed.' };
+  }
+  if (containerSize.length === 0) return { error: 'Enter a container size, or * for any.' };
+  if (amount === null || (amount !== undefined && amount < 0)) {
+    return { error: 'Enter a deposit amount, or leave it blank to remove the rate.' };
+  }
+
+  // The line is re-checked against the company: the service role would happily
+  // hang a rate off another tenant's shipping line.
+  const { data: line } = await db
+    .from('shipping_lines')
+    .select('id')
+    .eq('id', lineId)
+    .eq('company_id', ctx.companyId)
+    .maybeSingle();
+  if (!line) return { error: 'No such shipping line.' };
+
+  if (amount === undefined) {
+    const { error } = await db
+      .from('shipping_line_deposit_rates')
+      .delete()
+      .eq('company_id', ctx.companyId)
+      .eq('shipping_line_id', lineId)
+      .eq('delivery_mode', deliveryMode)
+      .eq('container_size', containerSize);
+    if (error) return { error: error.message };
+
+    revalidatePath('/settings/shipping-lines');
+    return { ok: true, message: `Removed the ${deliveryMode} rate for ${containerSize}.` };
+  }
+
+  const { error } = await db.from('shipping_line_deposit_rates').upsert(
+    {
+      company_id: ctx.companyId,
+      shipping_line_id: lineId,
+      delivery_mode: deliveryMode,
+      container_size: containerSize,
+      amount,
+    },
+    { onConflict: 'shipping_line_id,delivery_mode,container_size' },
+  );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/shipping-lines');
+  return { ok: true, message: `Saved the ${deliveryMode} rate for ${containerSize}.` };
+}
+
+/** Read model for the shipping lines page — lines with their deposit matrix. */
+export async function listShippingLines() {
+  const ctx = await requireCompany();
+  const db = serviceClient();
+
+  const [{ data: lines }, { data: rates }] = await Promise.all([
+    db.from('shipping_lines').select('*').eq('company_id', ctx.companyId).order('name'),
+    db
+      .from('shipping_line_deposit_rates')
+      .select('*')
+      .eq('company_id', ctx.companyId)
+      .order('container_size'),
+  ]);
+
+  return { ctx, lines: lines ?? [], rates: rates ?? [] };
+}
+
+// ------------------------------------------------------------------ CFS --
+
+export async function createCfs(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const name = String(formData.get('name') ?? '').trim();
+  const code = String(formData.get('code') ?? '').trim();
+  const port = String(formData.get('port') ?? '').trim();
+  const contactEmail = String(formData.get('contactEmail') ?? '').trim().toLowerCase();
+
+  if (name.length < 2) return { error: 'Enter the CFS name.' };
+  if (contactEmail && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contactEmail)) {
+    return { error: 'Enter a valid contact address, or leave it blank.' };
+  }
+
+  const { error } = await serviceClient()
+    .from('cfs_master')
+    .upsert(
+      {
+        company_id: ctx.companyId,
+        name,
+        code: code || null,
+        port: port || null,
+        contact_email: contactEmail || null,
+        is_active: true,
+      },
+      { onConflict: 'company_id,name' },
+    );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/cfs');
+  revalidatePath('/settings/team');
+  return { ok: true, message: `${name} saved.` };
+}
+
+export async function setCfsActive(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const cfsId = String(formData.get('cfsId') ?? '');
+  const isActive = String(formData.get('isActive') ?? '') === 'true';
+
+  const { error } = await serviceClient()
+    .from('cfs_master')
+    .update({ is_active: isActive })
+    .eq('id', cfsId)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/cfs');
+  return { ok: true, message: isActive ? 'CFS re-enabled.' : 'CFS retired.' };
+}
+
+/** Read model for the CFS page, with a head count per station. */
+export async function listCfs() {
+  const ctx = await requireCompany();
+  const db = serviceClient();
+  const [{ data: stations }, { data: staff }] = await Promise.all([
+    db.from('cfs_master').select('*').eq('company_id', ctx.companyId).order('name'),
+    db
+      .from('profiles')
+      .select('cfs_id')
+      .eq('company_id', ctx.companyId)
+      .not('cfs_id', 'is', null),
+  ]);
+
+  const staffCount = new Map<string, number>();
+  for (const row of staff ?? []) {
+    if (row.cfs_id) staffCount.set(row.cfs_id, (staffCount.get(row.cfs_id) ?? 0) + 1);
+  }
+
+  return { ctx, stations: stations ?? [], staffCount };
+}
+
+// --------------------------------------------------- importer securities --
+
+export async function createSecurity(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const db = serviceClient();
+
+  const lineId = String(formData.get('lineId') ?? '');
+  const importerName = String(formData.get('importerName') ?? '').trim();
+  const kind = String(formData.get('kind') ?? '');
+  const reference = String(formData.get('reference') ?? '').trim();
+  const validFrom = String(formData.get('validFrom') ?? '').trim();
+  const validTo = String(formData.get('validTo') ?? '').trim();
+  const aliases = parseList(formData.get('importerAliases'));
+  const amount = optionalNumber(formData.get('amount'));
+  const covers = new Set(formData.getAll('covers').map(String));
+
+  if (importerName.length < 2) return { error: 'Enter the importer name.' };
+  if (kind !== 'yearly_bond' && kind !== 'standing_deposit') {
+    return { error: 'Choose a yearly bond or a standing deposit.' };
+  }
+  if (amount === null || (amount !== undefined && amount < 0)) {
+    return { error: 'Enter a valid amount, or leave it blank.' };
+  }
+  if (validFrom && validTo && validTo < validFrom) {
+    return { error: 'The valid-to date cannot be before the valid-from date.' };
+  }
+
+  const { data: line } = await db
+    .from('shipping_lines')
+    .select('id')
+    .eq('id', lineId)
+    .eq('company_id', ctx.companyId)
+    .maybeSingle();
+  if (!line) return { error: 'Choose a shipping line.' };
+
+  const { error } = await db.from('importer_line_securities').upsert(
+    {
+      company_id: ctx.companyId,
+      shipping_line_id: lineId,
+      importer_name: importerName,
+      importer_aliases: aliases,
+      kind,
+      reference: reference || null,
+      amount: amount ?? null,
+      valid_from: validFrom || null,
+      valid_to: validTo || null,
+      covers_loaded: covers.has('loaded'),
+      covers_destuffed: covers.has('destuffed'),
+      is_active: true,
+    },
+    { onConflict: 'company_id,shipping_line_id,importer_name,kind' },
+  );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/securities');
+  return { ok: true, message: `Security for ${importerName} saved.` };
+}
+
+export async function setSecurityActive(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const securityId = String(formData.get('securityId') ?? '');
+  const isActive = String(formData.get('isActive') ?? '') === 'true';
+
+  const { error } = await serviceClient()
+    .from('importer_line_securities')
+    .update({ is_active: isActive })
+    .eq('id', securityId)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/securities');
+  return { ok: true, message: isActive ? 'Security re-enabled.' : 'Security retired.' };
+}
+
+/** Read model for the securities page. */
+export async function listSecurities() {
+  const ctx = await requireCompany();
+  const db = serviceClient();
+
+  const [{ data: securities }, { data: lines }] = await Promise.all([
+    db
+      .from('importer_line_securities')
+      .select('*')
+      .eq('company_id', ctx.companyId)
+      .order('importer_name'),
+    // Every line, not just the active ones: a retired line still has to render
+    // its name against the securities already recorded against it.
+    db
+      .from('shipping_lines')
+      .select('id, name, is_active')
+      .eq('company_id', ctx.companyId)
+      .order('name'),
+  ]);
+
+  return { ctx, securities: securities ?? [], lines: lines ?? [] };
 }

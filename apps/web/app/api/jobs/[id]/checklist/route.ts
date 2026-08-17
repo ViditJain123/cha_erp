@@ -46,6 +46,22 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const jobNumber = String(form.get('jobNumber') ?? '').trim();
   const eta = String(form.get('eta') ?? '').trim();
 
+  // The duty printed on this checklist. Accepted on both paths, unlike the
+  // details above: a revision is what scrutiny asked for precisely because a
+  // classification or a value changed, so the figure passing compares against
+  // has to move with it. Blank on a revision means "unchanged".
+  const dutyRaw = String(form.get('checklistDuty') ?? '').trim();
+  let checklistDuty: number | null = null;
+  if (dutyRaw.length > 0) {
+    const parsed = Number(dutyRaw);
+    if (!Number.isFinite(parsed) || parsed < 0) {
+      return NextResponse.json({ error: 'Enter the duty on this checklist.' }, { status: 400 });
+    }
+    checklistDuty = parsed;
+  } else if (!isRevision) {
+    return NextResponse.json({ error: 'Enter the duty on this checklist.' }, { status: 400 });
+  }
+
   if (!isRevision) {
     if (!branchId) return NextResponse.json({ error: 'Choose the branch.' }, { status: 400 });
     if (!jobNumber) return NextResponse.json({ error: 'Enter the job number.' }, { status: 400 });
@@ -116,13 +132,34 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   });
 
   if (isRevision) {
-    // A revised checklist returns the job to scrutiny for a final look.
+    // A revised checklist returns the job to scrutiny for a final look. The
+    // stage guard and the duty are separate updates on purpose: a revision
+    // uploaded while the job sits elsewhere must still correct the figure that
+    // passing compares against, even though the stage move no-ops.
     await db
       .from('jobs')
       .update({ stage: 'scrutiny', updated_at: new Date().toISOString() })
       .eq('id', job.id)
       .eq('company_id', ctx.companyId)
       .eq('stage', 'checklist_revision');
+
+    if (checklistDuty !== null) {
+      await db
+        .from('jobs')
+        .update({ checklist_duty: checklistDuty, updated_at: new Date().toISOString() })
+        .eq('id', job.id)
+        .eq('company_id', ctx.companyId);
+
+      await db.from('job_events').insert({
+        company_id: ctx.companyId,
+        job_id: job.id,
+        actor_kind: 'user',
+        actor_user_id: ctx.userId,
+        type: 'checklist.duty_recorded',
+        payload: { checklistDuty, revision: true },
+      });
+    }
+
     return NextResponse.json({ ok: true, documentId, revision: true });
   }
 
@@ -132,6 +169,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       branch_id: branchId,
       job_number: jobNumber,
       eta,
+      checklist_duty: checklistDuty,
       stage: 'scrutiny',
       updated_at: new Date().toISOString(),
     })
@@ -146,7 +184,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     actor_kind: 'user',
     actor_user_id: ctx.userId,
     type: 'job.details_recorded',
-    payload: { jobNumber, eta },
+    payload: { jobNumber, eta, checklistDuty },
   });
 
   return NextResponse.json({ ok: true, documentId });

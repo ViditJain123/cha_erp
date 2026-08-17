@@ -49,6 +49,15 @@ export const TriageSchema = z.object({
   summary: z.string(),
   goodsDescription: z.string().nullable(),
   hsCodes: z.array(z.string()),
+
+  // What the delivery order desk needs off the face of a B/L. Captured here for
+  // the same reason as everything else: the document is in front of the model
+  // exactly once, and the DO desk needs these days before anyone builds a
+  // checklist draft. Null on every document that is not a B/L.
+  blSurrenderIndication: z.enum(['surrendered', 'original']).nullable(),
+  detentionFreeDays: z.number().nullable(),
+  shippingLine: z.string().nullable(),
+  containerMode: z.enum(['FCL', 'LCL']).nullable(),
 });
 
 export type Triage = z.infer<typeof TriageSchema>;
@@ -80,6 +89,12 @@ Digest — this is the only record of the document's contents that is kept, so m
 - summary: two or three sentences. What this document is, who issued it, what it covers, and anything a customs broker would want flagged (a certificate's validity dates, a licence number, a declared origin, a restriction).
 - goodsDescription: what is actually being imported, in the document's own words. Null on documents that do not describe goods.
 - hsCodes: every HS/CTH/RITC code printed on the document, digits only, as written. Usually only the invoice carries these. Empty array if there are none — do not infer a code from the goods description, because a guessed code pulls in the wrong compliance requirements.
+
+Delivery order fields — bills of lading only, null on everything else:
+- blSurrenderIndication: 'surrendered' only when the document itself says so — a TELEX RELEASE, EXPRESS RELEASE, SURRENDERED or SEAWAY BILL stamp or wording. 'original' when it is an original negotiable B/L with no such marking. Null if you cannot tell. Do not infer surrender from the absence of a stamp: surrender usually happens after issue and the B/L never records it.
+- detentionFreeDays: the free detention period in days, when the B/L states one — "21 DAYS FREE DETENTION AT FINAL DESTINATION" is 21, "Applicable free time 14 days detention" is 14. The number of days only. Null when no free period is printed. Do not use free time at the port of loading, and do not confuse detention (the carrier's box) with demurrage (the terminal's ground rent) — if the document only gives demurrage, return null.
+- shippingLine: the carrier issuing the B/L, as printed on it — the line itself, not its Indian agent and not the freight forwarder.
+- containerMode: 'FCL' or 'LCL' when the B/L says which. Null otherwise.
 
 Return null rather than guessing. A wrong identifier attaches documents to the wrong shipment, which is worse than no identifier at all.`;
 

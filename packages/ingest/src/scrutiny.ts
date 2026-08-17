@@ -12,6 +12,20 @@ import { MODELS, structuredTextCall } from '@checklist/extraction/openai';
  */
 
 export const ScrutinySchema = z.object({
+  /**
+   * One verdict per requirement assessed: an HS code is matched by prefix, so a
+   * heading-level requirement reaches goods it may have nothing to say about.
+   * This is where the invoice's actual products decide that.
+   */
+  assessments: z.array(
+    z.object({
+      ccrCode: z.string(),
+      /** False when the goods on the invoice fall outside what it governs. */
+      applies: z.boolean(),
+      /** One sentence: what it calls for here, or why it does not bite. */
+      note: z.string(),
+    }),
+  ),
   /** What the CCRs require that the job does not already hold. */
   missingDocuments: z.array(
     z.object({
@@ -58,9 +72,18 @@ export interface ScrutinyInput {
 
 const SYSTEM = `You work in the scrutiny desk of an Indian customs house agent.
 
-You are given the compliance requirements (CCRs) that apply to a shipment's HS codes, and a list of the documents already on file with a short description of each. Work out which documents the requirements call for that are NOT already held, then write the email asking the shipper for them.
+You are given the compliance requirements (CCRs) matched to a shipment's HS codes, and a list of the documents already on file with a short description of each. Decide what each requirement actually calls for given the goods on the invoice, work out which of those documents are NOT already held, then write the email asking the shipper for them.
+
+Rules for assessments:
+- Exactly one entry per requirement you were given, keyed by its code.
+- Requirements are matched to the shipment by HS code prefix, so one can arrive attached to goods it was never meant for. Read the goods described on the invoice and decide honestly whether it governs them.
+- applies: false when the goods fall outside what the requirement covers, or when it is conditional and the condition is not met here. Otherwise true.
+- note: one sentence naming the goods it turns on. When applies is true and the goods already hold what it asks for, say so. When applies is false, say what it governs instead.
+- A requirement that applies but needs no further document is a normal outcome — say that in the note rather than inventing a document for it.
+- Judge only from the goods described. If the documents on file say nothing about what the goods are, set applies true and say the goods could not be identified.
 
 Rules for missingDocuments:
+- Never raise a document for a requirement you marked applies:false.
 - Only list a document if a requirement genuinely calls for it AND nothing on file already satisfies it. Match on substance, not file name: a "Certificate of Analysis" on file satisfies a requirement for a test report.
 - One entry per document. Use the name a shipper would recognise ("FSSAI import licence", "Phytosanitary certificate"), not internal jargon.
 - reason: one short sentence saying which requirement drives it.
@@ -68,7 +91,7 @@ Rules for missingDocuments:
 - If nothing is missing, return an empty array. Do not invent work.
 
 Rules for remarks:
-- A short internal note for the scrutiny user. Say what the requirements amount to and what is outstanding. Plain sentences, no headings or bullet characters.
+- A short internal note for the scrutiny user. Say what the requirements amount to for these particular goods, which of them do not bite and why, and what is outstanding. Plain sentences, no headings or bullet characters.
 
 Rules for draftEmail:
 - Written to the shipper, from the customs broker handling clearance.
@@ -111,6 +134,47 @@ export async function analyseScrutiny(input: ScrutinyInput): Promise<ScrutinyAna
     userText,
     // Reasoning over a page of text, not extraction from a document.
     model: MODELS.extract,
+  });
+}
+
+// --------------------------------------------- naming a typed-in CCR ----
+
+export const RequirementNameSchema = z.object({
+  /** What a broker would call this requirement in a list. */
+  title: z.string(),
+  /** Short uppercase handle, e.g. FSSAI-REG. */
+  code: z.string(),
+});
+
+export type RequirementName = z.infer<typeof RequirementNameSchema>;
+
+const NAME_SYSTEM = `You are naming a compliance requirement for an Indian customs broker's requirements master.
+
+You are given the requirement as someone typed it. Produce a title and a short code.
+
+- title: what a broker would call it in a list — the instrument or permission itself, not a sentence. "FSSAI import registration", "BIS certificate of conformity", "Phytosanitary certificate". Six words at most. No trailing full stop.
+- code: an uppercase handle derived from the title, words joined by hyphens, 16 characters at most. "FSSAI-REG", "BIS-COC", "PHYTO-CERT".
+- Name only what the text actually says. Do not infer a regulation that is not mentioned.`;
+
+/**
+ * Titles a requirement typed in during scrutiny.
+ *
+ * The operator pastes the substance and should not also have to invent a name
+ * for it — but the title is what every later screen and every prompt shows, so
+ * it needs to read like the instrument, not like the first line of a paragraph.
+ */
+export async function nameRequirement(input: {
+  requirementText: string;
+  hsCode: string;
+}): Promise<RequirementName> {
+  return structuredTextCall({
+    schema: RequirementNameSchema,
+    schemaName: 'requirement_name',
+    system: NAME_SYSTEM,
+    userText: [`HS code: ${input.hsCode}`, '', 'Requirement as typed:', input.requirementText].join(
+      '\n',
+    ),
+    model: MODELS.classify,
   });
 }
 

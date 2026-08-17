@@ -19,10 +19,17 @@ export type Cell =
 
 export const BLANK: Cell = { kind: 'blank' };
 
-/** Free text. Empty and whitespace-only values collapse to blank. */
+/**
+ * Free text. Empty and whitespace-only values collapse to blank.
+ *
+ * Internal runs of whitespace collapse to a single space, because extracted
+ * values carry the line breaks of the document they came from — a carrier name
+ * read off an air waybill arrived as "DSV AIR & SEA INC\nBOSTON", and a newline
+ * inside a cell is not something to put on a declaration.
+ */
 export function text(value: string | number | null | undefined): Cell {
   if (value === null || value === undefined) return BLANK;
-  const s = String(value).trim();
+  const s = String(value).replace(/\s+/g, ' ').trim();
   return s ? { kind: 'text', value: s } : BLANK;
 }
 

@@ -23,6 +23,19 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
     ctx.warn('INVOICES.Supplier_City', 'Supplier city was not extracted from the invoice.');
   }
 
+  // C&F and CFR are the same Incoterm; CIF is not. Keying this by hand turned a
+  // cost-and-freight invoice into cost-insurance-freight, which would have
+  // changed the assessable value.
+  const toi = TOI_CODE[invoice.termsOfInvoice];
+  if (!toi) {
+    ctx.blocker(
+      'INVOICES.TOI',
+      `Terms of invoice "${invoice.termsOfInvoice}" has no Logi-Sys equivalent — the import file ` +
+        'accepts only FOB, CIF, C&F and C&I. Terms of invoice decides which charges are already ' +
+        'in the invoice value, so it cannot be rounded to the nearest one.',
+    );
+  }
+
   // Insurance is either a stated amount or a notional percentage of value.
   // The template has both, and they are mutually exclusive.
   let insurancePercent: Cell = BLANK;
@@ -40,10 +53,7 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       InvSrNo: num(1),
       Invoice_No: text(invoice.invoiceNumber),
       Invoice_Date: isoDate(invoice.invoiceDate),
-      // C&F and CFR are the same Incoterm; CIF is not. Keying this by hand
-      // turned a cost-and-freight invoice into cost-insurance-freight, which
-      // would have changed the assessable value.
-      TOI: code(TOI_CODE[invoice.termsOfInvoice]),
+      TOI: code(toi),
       TOI_Place: BLANK,
       Inv_Currency: code(invoice.currency),
       Product_Value: money(invoice.invoiceValue),

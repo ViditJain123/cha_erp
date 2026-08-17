@@ -333,6 +333,191 @@ async function main() {
       .select('id');
     check('an ordinary user cannot write the shipper master directly', insertShipper.error !== null);
 
+    // Negotiated deposit rates and bond terms are exactly what a competitor
+    // would want: they say what a rival pays a line, and what credit it holds.
+    const { data: bLine } = await db
+      .from('shipping_lines')
+      .insert({ company_id: b.companyId, name: "B's line", do_email: 'b-line@example.test' })
+      .select('id')
+      .single();
+
+    const crossLines = await a.client.from('shipping_lines').select('id, do_email');
+    check("another tenant's shipping lines are invisible", (crossLines.data?.length ?? 0) === 0);
+
+    const insertLine = await a.client
+      .from('shipping_lines')
+      .insert({ company_id: a.companyId, name: 'rogue' })
+      .select('id');
+    check(
+      'an ordinary user cannot write the shipping line master directly',
+      insertLine.error !== null,
+    );
+
+    await db.from('shipping_line_deposit_rates').insert({
+      company_id: b.companyId,
+      shipping_line_id: bLine!.id,
+      delivery_mode: 'loaded',
+      container_size: '40',
+      amount: 42_000,
+    });
+    const crossRates = await a.client.from('shipping_line_deposit_rates').select('id, amount');
+    check("another tenant's deposit rates are invisible", (crossRates.data?.length ?? 0) === 0);
+
+    await db.from('importer_line_securities').insert({
+      company_id: b.companyId,
+      shipping_line_id: bLine!.id,
+      importer_name: "B's importer",
+      kind: 'yearly_bond',
+      reference: 'BOND-B-001',
+    });
+    const crossSecurities = await a.client
+      .from('importer_line_securities')
+      .select('id, reference');
+    check(
+      "another tenant's bonds and deposits are invisible",
+      (crossSecurities.data?.length ?? 0) === 0,
+    );
+
+    // The delivery order carries the same shipment, plus what was paid for it.
+    const { data: bDo } = await db
+      .from('job_do')
+      .insert({ company_id: b.companyId, job_id: bJob2!.id, do_number: 'DO-B-001' })
+      .select('id')
+      .single();
+
+    const crossDo = await a.client.from('job_do').select('id, do_number');
+    check("another tenant's delivery orders are invisible", (crossDo.data?.length ?? 0) === 0);
+
+    const updateDo = await a.client
+      .from('job_do')
+      .update({ do_number: 'HIJACKED' })
+      .eq('id', bDo!.id)
+      .select('id');
+    check(
+      "an ordinary user cannot edit another tenant's delivery order",
+      updateDo.error !== null || (updateDo.data?.length ?? 0) === 0,
+    );
+
+    await db.from('job_do_containers').insert({
+      company_id: b.companyId,
+      job_do_id: bDo!.id,
+      job_id: bJob2!.id,
+      container_no: 'BCLU1234567',
+    });
+    const crossContainers = await a.client.from('job_do_containers').select('id, container_no');
+    check("another tenant's DO containers are invisible", (crossContainers.data?.length ?? 0) === 0);
+
+    await db.from('job_do_invoices').insert({
+      company_id: b.companyId,
+      job_do_id: bDo!.id,
+      job_id: bJob2!.id,
+      kind: 'proforma',
+      amount: 123_456,
+    });
+    const crossInvoices = await a.client.from('job_do_invoices').select('id, amount');
+    check(
+      "another tenant's shipping line invoices are invisible",
+      (crossInvoices.data?.length ?? 0) === 0,
+    );
+
+    await db.from('job_do_documents').insert({
+      company_id: b.companyId,
+      job_do_id: bDo!.id,
+      job_id: bJob2!.id,
+      name: "B's DO undertaking",
+    });
+    const crossDoDocs = await a.client.from('job_do_documents').select('id, name');
+    check("another tenant's DO document list is invisible", (crossDoDocs.data?.length ?? 0) === 0);
+
+    // A CFS list says where a rival's cargo lands and who handles it.
+    const { data: bCfs } = await db
+      .from('cfs_master')
+      .insert({ company_id: b.companyId, name: "B's CFS", contact_email: 'b-cfs@example.test' })
+      .select('id')
+      .single();
+
+    const crossCfs = await a.client.from('cfs_master').select('id, contact_email');
+    check("another tenant's CFS list is invisible", (crossCfs.data?.length ?? 0) === 0);
+
+    const insertCfs = await a.client
+      .from('cfs_master')
+      .insert({ company_id: a.companyId, name: 'rogue' })
+      .select('id');
+    check('an ordinary user cannot write the CFS master directly', insertCfs.error !== null);
+
+    // The clearance row carries the Bill of Entry number and the duty assessed
+    // on it — the whole commercial shape of a consignment.
+    const { data: bClearance } = await db
+      .from('job_clearance')
+      .insert({
+        company_id: b.companyId,
+        job_id: bJob2!.id,
+        be_number: 'BE-B-99887',
+        assessed_duty: 452318,
+      })
+      .select('id')
+      .single();
+
+    const crossClearance = await a.client.from('job_clearance').select('id, be_number, assessed_duty');
+    check("another tenant's clearance is invisible", (crossClearance.data?.length ?? 0) === 0);
+
+    const updateClearance = await a.client
+      .from('job_clearance')
+      .update({ be_number: 'HIJACKED' })
+      .eq('id', bClearance!.id)
+      .select('id');
+    check(
+      "an ordinary user cannot edit another tenant's clearance",
+      updateClearance.error !== null || (updateClearance.data?.length ?? 0) === 0,
+    );
+
+    await db.from('job_clearance_queries').insert({
+      company_id: b.companyId,
+      job_clearance_id: bClearance!.id,
+      job_id: bJob2!.id,
+      raised_on: '2026-08-01',
+      query_text: "B's valuation query",
+    });
+    const crossQueries = await a.client.from('job_clearance_queries').select('id, query_text');
+    check("another tenant's customs queries are invisible", (crossQueries.data?.length ?? 0) === 0);
+
+    await db.from('job_clearance_nocs').insert({
+      company_id: b.companyId,
+      job_clearance_id: bClearance!.id,
+      job_id: bJob2!.id,
+      authority: 'Pollution Control Board',
+    });
+    const crossNocs = await a.client.from('job_clearance_nocs').select('id, authority');
+    check("another tenant's agency clearances are invisible", (crossNocs.data?.length ?? 0) === 0);
+
+    // A delivery plan says where and when a competitor's cargo moves.
+    const { data: bPlan } = await db
+      .from('job_delivery_plans')
+      .insert({
+        company_id: b.companyId,
+        job_clearance_id: bClearance!.id,
+        job_id: bJob2!.id,
+        planned_for: '2026-08-20',
+        cfs_id: bCfs!.id,
+      })
+      .select('id')
+      .single();
+
+    const crossPlans = await a.client.from('job_delivery_plans').select('id, planned_for');
+    check("another tenant's delivery plans are invisible", (crossPlans.data?.length ?? 0) === 0);
+
+    // The one that would actually cause damage: approving someone else's
+    // delivery day.
+    const decidePlan = await a.client
+      .from('job_delivery_plans')
+      .update({ status: 'received' })
+      .eq('id', bPlan!.id)
+      .select('id');
+    check(
+      "an ordinary user cannot decide another tenant's delivery plan",
+      decidePlan.error !== null || (decidePlan.data?.length ?? 0) === 0,
+    );
+
     // A checklist draft is the whole Bill of Entry: values, supplier, tariff
     // codes, origin. It is the most commercially sensitive row we hold.
     await db.from('job_drafts').insert({

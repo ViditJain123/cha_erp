@@ -19,10 +19,16 @@ export function ChecklistUpload({
   jobId,
   branches,
   isRevision,
+  engineDuty,
+  currentDuty,
 }: {
   jobId: string;
   branches: BranchOption[];
   isRevision: boolean;
+  /** What the duty engine computed from the invoice, shown as a cross-check. */
+  engineDuty: number | null;
+  /** What is already recorded, so a revision does not have to retype it. */
+  currentDuty: number | null;
 }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -119,6 +125,32 @@ export function ChecklistUpload({
           </div>
         </>
       )}
+
+      {/* Outside the details block on purpose: branch, job number and ETA are
+          settled by the first upload, but the duty is exactly what a revision
+          changes — and passing compares the assessed figure against it. */}
+      <div>
+        <label htmlFor="checklistDuty" className="mb-1 block text-xs font-medium text-slate-600">
+          Duty on this checklist{' '}
+          {isRevision && <span className="text-slate-400">(leave blank if unchanged)</span>}
+        </label>
+        <input
+          id="checklistDuty"
+          name="checklistDuty"
+          type="number"
+          min={0}
+          step="0.01"
+          required={!isRevision}
+          defaultValue={currentDuty ?? engineDuty ?? ''}
+          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+        />
+        {engineDuty !== null && (
+          <p className="mt-1 text-xs text-slate-500">
+            This system computed ₹{engineDuty.toLocaleString('en-IN')} from the invoice. Key what
+            the checklist actually prints — customs is compared against that, not against us.
+          </p>
+        )}
+      </div>
 
       <div>
         <label htmlFor="file" className="mb-1 block text-xs font-medium text-slate-600">

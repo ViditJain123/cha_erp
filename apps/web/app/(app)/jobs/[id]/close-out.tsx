@@ -33,12 +33,14 @@ function Note({ state }: { state: JobActionState }) {
 export function CloseOut({
   jobId,
   outstanding,
+  ccrsAssessed,
   hasChecklist,
   shipperEmail,
   canSend,
 }: {
   jobId: string;
   outstanding: number;
+  ccrsAssessed: boolean;
   hasChecklist: boolean;
   shipperEmail: string;
   canSend: boolean;
@@ -50,6 +52,21 @@ export function CloseOut({
   const [finalState, finalAction, sending] = useActionState(sendFinalNotice, EMPTY);
   const [draftState, draftAction, drafting] = useActionState(prepareFinalNotice, EMPTY);
   const draft = draftState.draft;
+
+  // Nothing outstanding is not the same as nothing required: with an empty
+  // master this section used to offer the final notice on a job nobody had
+  // assessed for compliance at all.
+  if (!ccrsAssessed) {
+    return (
+      <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="text-sm font-semibold">Closing out</h2>
+        <p className="mt-1 text-xs text-amber-700">
+          No compliance requirement has been recorded for this job. Add the CCR under Compliance
+          requirements — or record that none applies — before closing out.
+        </p>
+      </section>
+    );
+  }
 
   if (outstanding > 0) {
     return (

@@ -5,6 +5,7 @@ import { TEAMS, ROLES } from '@checklist/config/app';
 import { requirePlatformAdmin } from '@/lib/auth';
 import { serviceClient } from '@/lib/supabase/admin';
 import { UserRow } from './user-row';
+import { formatStamp } from '@/lib/dates';
 
 export const metadata: Metadata = { title: 'Company' };
 export const dynamic = 'force-dynamic';
@@ -35,7 +36,7 @@ export default async function AdminCompanyPage({
         </Link>
         <h1 className="mt-2 text-2xl font-semibold">{company.name}</h1>
         <p className="mt-1 text-sm text-slate-500">
-          {company.slug} · created {new Date(company.created_at).toLocaleDateString()}
+          {company.slug} · created {formatStamp(company.created_at)}
         </p>
       </div>
 

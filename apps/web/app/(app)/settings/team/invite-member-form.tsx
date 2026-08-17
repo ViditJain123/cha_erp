@@ -50,8 +50,11 @@ export function InviteMemberForm({ canAddAdmins }: { canAddAdmins: boolean }) {
             defaultValue="scrutiny"
             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           >
-            <option value="scrutiny">{TEAMS.scrutiny.label}</option>
-            <option value="do">{TEAMS.do.label}</option>
+            {Object.values(TEAMS).map((team) => (
+              <option key={team.key} value={team.key}>
+                {team.label}
+              </option>
+            ))}
           </select>
         </div>
         <div>

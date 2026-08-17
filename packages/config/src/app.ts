@@ -30,7 +30,22 @@ export const TEAMS = {
   do: {
     key: 'do',
     label: 'DO',
-    description: 'Delivery Order desk. Scope to be defined.',
+    description: 'Delivery Order desk. Chases the delivery order and the container deposit.',
+  },
+  customs: {
+    key: 'customs',
+    label: 'Customs',
+    description: 'Gets the Bill of Entry noted, passed, paid and out of charge.',
+  },
+  cfs: {
+    key: 'cfs',
+    label: 'CFS',
+    description: 'Approves or refuses the delivery days proposed at their container freight station.',
+  },
+  customer_support: {
+    key: 'customer_support',
+    label: 'Customer support',
+    description: 'Tells the customer when a delivery is not going ahead.',
   },
 } as const;
 
