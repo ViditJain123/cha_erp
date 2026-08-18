@@ -2,6 +2,11 @@ node_modules/
 dist/
 .env
 .env.*
-!.env.example
 *.tsbuildinfo
 .DS_Store
+.vercel
+.env*
+# Must stay last: a later pattern wins, and `.env*` above would otherwise
+# re-ignore this file. `vercel link` appends `.env*` on every run, so if this
+# negation stops being the final line, move it back down here.
+!.env.example

@@ -1,0 +1,51 @@
+# systemd unit for the mailbox watcher.
+#
+#   sudo cp deploy/ec2/erp-mail-watcher.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now erp-mail-watcher
+#
+# Adjust ExecStart if node is not at /usr/bin/node (`command -v node`).
+
+[Unit]
+Description=ERP mailbox watcher
+Documentation=https://github.com/ViditJain123/cha_erp
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=erp
+Group=erp
+WorkingDirectory=/opt/erp/checklist-app/apps/worker
+
+# node is invoked directly on the tsx CLI rather than through corepack/pnpm.
+# Wrapper processes become the unit's main PID, so systemd would signal the
+# wrapper and not the worker -- the 25s drain in index.ts:52 would never run.
+ExecStart=/usr/bin/node /opt/erp/checklist-app/apps/worker/node_modules/tsx/dist/cli.mjs src/index.ts
+
+Restart=always
+RestartSec=5s
+
+# index.ts:52 drains the in-flight poll for up to 25s on SIGTERM. Killing it
+# earlier leaves that mailbox's claim held until the 10-minute staleness window
+# in claim_mail_connection expires.
+KillSignal=SIGTERM
+TimeoutStopSec=45
+
+# load-env reads .env.local from the repo root itself, so no EnvironmentFile is
+# needed. Real environment variables win over the file if you later switch to
+# SSM/Secrets Manager -- see README.
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=erp-mail-watcher
+
+# Modest hardening. If the worker ever needs to write outside its own tree,
+# widen ReadWritePaths rather than dropping ProtectSystem.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/erp/checklist-app
+
+[Install]
+WantedBy=multi-user.target

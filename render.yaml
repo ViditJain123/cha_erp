@@ -2,6 +2,9 @@
 #
 #   render.com -> New -> Blueprint -> point at this repo
 #
+# This file MUST stay at the repository root -- Render only discovers a
+# blueprint named render.yaml there, and `rootDir: .` below assumes it.
+#
 # Secrets are set in the Render dashboard, not here.
 services:
   - type: worker
@@ -10,7 +13,9 @@ services:
     plan: starter
     region: singapore
     rootDir: .
-    buildCommand: corepack pnpm install --frozen-lockfile
+    # The filter installs only the worker's dependency graph. @checklist/web is
+    # excluded, so playwright never downloads browser binaries during the build.
+    buildCommand: corepack pnpm install --filter "@checklist/worker..." --frozen-lockfile
     startCommand: corepack pnpm --filter @checklist/worker start
     envVars:
       - key: NODE_VERSION

@@ -249,7 +249,7 @@ stored OAuth state is unreadable by anyone.
 ## Deployment
 
 The web app deploys anywhere Next.js runs. The worker is a long-lived process,
-so it needs its own service — `apps/worker/render.yaml` describes it as a Render
+so it needs its own service — `render.yaml` describes it as a Render
 background worker. Point Supabase at a hosted project with
 `supabase link` + `supabase db push`, and **remember to enable the access-token
 hook in Dashboard → Authentication → Hooks**; the `config.toml` setting only
