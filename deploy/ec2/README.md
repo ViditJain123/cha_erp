@@ -37,7 +37,15 @@ sudo bash deploy/ec2/setup.sh
 
 The script installs Node 24 via NodeSource, creates an `erp` system user, clones to `/opt/erp/checklist-app`, runs a **filtered** install (`--filter "@checklist/worker..."`, which excludes `@checklist/web` so playwright never downloads browsers), installs the systemd unit with the correct node path, and seeds `.env.local` at mode 600.
 
-Then fill in `/opt/erp/checklist-app/.env.local` — the template at `deploy/windows/env.local.template` documents every field — and:
+Then populate `/opt/erp/checklist-app/.env.local`. From your Mac:
+
+```bash
+./deploy/ec2/push-env.sh ~/keys/erp.pem <public-ip>
+```
+
+That reads your local `.env.local`, applies the production overrides (`GRAPH_TRANSPORT=graph`, the real app URL and redirect URI, a distinct `WORKER_INSTANCE_ID`), drops the vars the worker never reads (`RESEND_*`, `MAIL_*`, `SEED_ADMIN_*`, `VERCEL_OIDC_TOKEN`), and pipes the result over SSH. Values are never printed — only names. Or edit it by hand on the box; `deploy/windows/env.local.template` documents every field.
+
+Then:
 
 ```bash
 sudo systemctl enable --now erp-mail-watcher
