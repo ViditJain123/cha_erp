@@ -20,13 +20,32 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# A fresh Ubuntu cloud image runs apt-daily / unattended-upgrades on boot, which
+# holds the apt locks for the first few minutes. Failing here is the single most
+# likely way this script dies on a brand-new instance, so wait it out.
+wait_for_apt() {
+  local waited=0
+  while fuser /var/lib/apt/lists/lock /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+    if (( waited == 0 )); then echo "waiting for another apt process to finish..."; fi
+    if (( waited >= 600 )); then
+      echo "ERROR: apt still locked after 10 minutes. Check: pgrep -a apt" >&2
+      exit 1
+    fi
+    sleep 5; waited=$((waited + 5))
+  done
+  (( waited > 0 )) && echo "apt lock released after ${waited}s"
+  return 0
+}
+
 echo "=== packages ==="
+wait_for_apt
 apt-get update -qq
 apt-get install -y -qq git curl ca-certificates
 
 if ! command -v node >/dev/null 2>&1 || [[ "$(node -v)" != v${NODE_MAJOR}.* ]]; then
   echo "=== node ${NODE_MAJOR} ==="
   curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | bash -
+  wait_for_apt
   apt-get install -y -qq nodejs
 fi
 node -v
