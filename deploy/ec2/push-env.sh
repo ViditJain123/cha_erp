@@ -31,7 +31,9 @@ set -a; . "$ENV_FILE"; set +a
 GRAPH_TRANSPORT=graph
 NEXT_PUBLIC_APP_URL="$APP_URL"
 MS_REDIRECT_URI="$APP_URL/api/integrations/microsoft/callback"
-WORKER_INSTANCE_ID="${WORKER_INSTANCE_ID:-ec2-mumbai-1}"
+# Region-neutral: it lands in claim_mail_connection.locked_by, so a wrong
+# region baked into the name misleads whoever debugs a stuck lock later.
+WORKER_INSTANCE_ID="${WORKER_INSTANCE_ID:-ec2-1}"
 WORKER_TICK_SECONDS="${WORKER_TICK_SECONDS:-60}"
 WORKER_MAILBOX_INTERVAL_SECONDS="${WORKER_MAILBOX_INTERVAL_SECONDS:-300}"
 LOG_LEVEL="${LOG_LEVEL:-info}"
