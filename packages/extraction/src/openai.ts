@@ -29,6 +29,28 @@ export function pdfInputPart(fileName: string, pdf: Buffer) {
   };
 }
 
+/**
+ * One document as model input, whatever form it arrived in.
+ *
+ * PDFs go in as files; a photographed or scanned document — routine once people
+ * start dropping whatever the shipper sent them on WhatsApp — has to go in as an
+ * image instead, because the file part only speaks PDF. Anything else throws
+ * rather than being sent as a PDF that is not one.
+ */
+export function documentInputPart(fileName: string, data: Buffer, mimeType: string) {
+  if (mimeType === 'application/pdf') return pdfInputPart(fileName, data);
+  if (mimeType.startsWith('image/')) {
+    return {
+      type: 'input_image' as const,
+      // Scans of shipping documents are dense small print; 'low' detail
+      // downsamples them past the point a B/L number is legible.
+      detail: 'high' as const,
+      image_url: `data:${mimeType};base64,${data.toString('base64')}`,
+    };
+  }
+  throw new Error(`${mimeType || 'That file type'} cannot be read by the model`);
+}
+
 /** One structured-output call over plain text (no document attached). */
 export async function structuredTextCall<T extends z.ZodType>(opts: {
   schema: T;
@@ -60,10 +82,13 @@ export async function structuredPdfCall<T extends z.ZodType>(opts: {
   userText: string;
   fileName: string;
   pdf: Buffer;
+  /** Defaults to PDF; images are sent as images. */
+  mimeType?: string;
   model?: string;
   escalateModel?: string | null;
 }): Promise<{ data: z.infer<T>; model: string }> {
   const model = opts.model ?? MODELS.extract;
+  const part = documentInputPart(opts.fileName, opts.pdf, opts.mimeType ?? 'application/pdf');
   const run = async (m: string) => {
     const response = await client().responses.parse({
       model: m,
@@ -71,10 +96,7 @@ export async function structuredPdfCall<T extends z.ZodType>(opts: {
         { role: 'system', content: opts.system },
         {
           role: 'user',
-          content: [
-            pdfInputPart(opts.fileName, opts.pdf),
-            { type: 'input_text', text: opts.userText },
-          ],
+          content: [part, { type: 'input_text', text: opts.userText }],
         },
       ],
       text: { format: zodTextFormat(opts.schema, opts.schemaName) },

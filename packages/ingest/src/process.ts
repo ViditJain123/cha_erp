@@ -35,6 +35,38 @@ export interface ProcessResult {
   documentsDuplicate: number;
 }
 
+/** A batch of documents handed over by a person rather than arriving by mail. */
+export interface UploadBatch {
+  companyId: string;
+  /** The profile dropping the files. Recorded on every row it creates. */
+  uploadedBy: string | null;
+  files: IncomingAttachment[];
+}
+
+export type UploadOutcome = 'created_job' | 'attached' | 'ambiguous';
+
+/** What one dropped file turned out to be, so the drop zone can show it back. */
+export interface UploadedFileResult {
+  fileName: string;
+  docType: DocumentType;
+  /** True when these exact bytes were already on a job and were not stored again. */
+  duplicate: boolean;
+}
+
+export interface UploadResult {
+  outcome: UploadOutcome;
+  /** Absent only when the outcome is `ambiguous` — nothing was written then. */
+  jobId?: string;
+  created: boolean;
+  matchScore?: number;
+  matchedOn?: { kind: Identifier['kind']; value: string }[];
+  documentsAdded: number;
+  documentsDuplicate: number;
+  files: UploadedFileResult[];
+  /** The jobs the documents matched equally well, when the call was too close. */
+  candidateJobIds?: string[];
+}
+
 interface TriagedFile {
   attachment: IncomingAttachment;
   docType: DocumentType;
@@ -56,11 +88,15 @@ function storagePath(companyId: string, jobId: string, documentId: string, fileN
   return `${companyId}/${jobId}/${documentId}-${safe}`;
 }
 
-async function triageAll(message: IncomingMessage): Promise<TriagedFile[]> {
+async function triageAll(attachments: IncomingAttachment[]): Promise<TriagedFile[]> {
   return Promise.all(
-    message.attachments.map(async (attachment): Promise<TriagedFile> => {
+    attachments.map(async (attachment): Promise<TriagedFile> => {
       try {
-        const triage = await triageDocument(attachment.fileName, attachment.data);
+        const triage = await triageDocument(
+          attachment.fileName,
+          attachment.data,
+          attachment.contentType,
+        );
         const identifiers = dedupeIdentifiers(
           [
             makeIdentifier('bl', triage.blNumber),
@@ -141,6 +177,31 @@ async function findCandidates(
   return results.flat() as CandidateIdentifier[];
 }
 
+/**
+ * The documents already holding these exact bytes, keyed by digest.
+ *
+ * `job_documents` is unique on (company_id, sha256), so this is both the
+ * duplicate check and — for a hand-dropped batch — a second way of telling
+ * which job the files belong to.
+ */
+async function findByDigest(
+  db: Db,
+  companyId: string,
+  digests: string[],
+): Promise<Map<string, { id: string; jobId: string }>> {
+  const found = new Map<string, { id: string; jobId: string }>();
+  if (digests.length === 0) return found;
+
+  const { data } = await db
+    .from('job_documents')
+    .select('id, job_id, sha256')
+    .eq('company_id', companyId)
+    .in('sha256', [...new Set(digests)]);
+
+  for (const row of data ?? []) found.set(row.sha256, { id: row.id, jobId: row.job_id });
+  return found;
+}
+
 /** Every valid HS code across a message's attachments, deduplicated. */
 function collectHsCodes(files: TriagedFile[]): string[] {
   const codes = new Set<string>();
@@ -153,12 +214,111 @@ function collectHsCodes(files: TriagedFile[]): string[] {
   return [...codes];
 }
 
-function jobTitle(files: TriagedFile[], subject: string | null): string {
+function jobTitle(files: TriagedFile[], fallback: string | null): string {
   const invoice = files.flatMap((f) => f.identifiers).find((i) => i.kind === 'invoice');
   const transport = files.flatMap((f) => f.identifiers).find((i) => i.kind === 'bl' || i.kind === 'awb');
   if (transport) return `${transport.kind.toUpperCase()} ${transport.raw}`;
   if (invoice) return `Invoice ${invoice.raw}`;
-  return subject?.slice(0, 120) ?? 'Untitled job';
+  return fallback?.slice(0, 120) ?? 'Untitled job';
+}
+
+interface StoreOptions {
+  companyId: string;
+  jobId: string;
+  files: TriagedFile[];
+  source: 'email' | 'upload';
+  mailMessageId?: string | null;
+  uploadedBy?: string | null;
+  /** Digests already in the company, mutated as this batch stores its own. */
+  seen: Map<string, { id: string; jobId: string }>;
+}
+
+/**
+ * Puts each new document in storage and records it against the job.
+ *
+ * Shared by the mail watcher and the manual drop zone so both end in exactly
+ * the same rows — only `source` and who to credit differ.
+ */
+async function storeDocuments(db: Db, opts: StoreOptions) {
+  let added = 0;
+  let duplicate = 0;
+  const results: UploadedFileResult[] = [];
+
+  for (const file of opts.files) {
+    // The same document resent across several emails — or dropped twice in one
+    // batch — should not pile up.
+    if (opts.seen.has(file.sha256)) {
+      duplicate++;
+      results.push({ fileName: file.attachment.fileName, docType: file.docType, duplicate: true });
+      continue;
+    }
+
+    const documentId = crypto.randomUUID();
+    const path = storagePath(opts.companyId, opts.jobId, documentId, file.attachment.fileName);
+
+    const { error: uploadError } = await db.storage
+      .from('job-documents')
+      .upload(path, file.attachment.data, {
+        contentType: file.attachment.contentType,
+        upsert: false,
+      });
+    if (uploadError) throw new Error(`Could not store ${file.attachment.fileName}: ${uploadError.message}`);
+
+    const { error: rowError } = await db.from('job_documents').insert({
+      id: documentId,
+      company_id: opts.companyId,
+      job_id: opts.jobId,
+      mail_message_id: opts.mailMessageId ?? null,
+      doc_type: file.docType,
+      file_name: file.attachment.fileName,
+      storage_path: path,
+      mime_type: file.attachment.contentType,
+      size_bytes: file.attachment.data.byteLength,
+      sha256: file.sha256,
+      classification: file.classification as never,
+      classified_at: new Date().toISOString(),
+      source: opts.source,
+      uploaded_by: opts.uploadedBy ?? null,
+    });
+    if (rowError) throw new Error(`Could not record ${file.attachment.fileName}: ${rowError.message}`);
+
+    opts.seen.set(file.sha256, { id: documentId, jobId: opts.jobId });
+    added++;
+    results.push({ fileName: file.attachment.fileName, docType: file.docType, duplicate: false });
+  }
+
+  return { added, duplicate, results };
+}
+
+/**
+ * Folds what a fresh batch of documents says into a job that already existed.
+ *
+ * A later document — often the invoice — can carry HS codes the first batch did
+ * not, so the codes merge rather than replace.
+ */
+async function refreshJobFromDocuments(db: Db, companyId: string, jobId: string, files: TriagedFile[]) {
+  const { data: existingJob } = await db
+    .from('jobs')
+    .select('hs_codes')
+    .eq('id', jobId)
+    .eq('company_id', companyId)
+    .maybeSingle();
+
+  const merged = [...new Set([...(existingJob?.hs_codes ?? []), ...collectHsCodes(files)])];
+
+  await db
+    .from('jobs')
+    .update({ hs_codes: merged, updated_at: new Date().toISOString() })
+    .eq('id', jobId)
+    .eq('company_id', companyId);
+
+  await db
+    .from('jobs')
+    .update({ stage: 'documents_received', updated_at: new Date().toISOString() })
+    .eq('id', jobId)
+    .eq('company_id', companyId)
+    // Do not drag a job that has moved on back to an earlier stage.
+    .in('stage', ['new', 'documents_received']);
 }
 
 /**
@@ -174,7 +334,7 @@ export async function processMessage(db: Db, message: IncomingMessage): Promise<
     return { outcome: 'skipped', skipReason: 'no_attachments', documentsAdded: 0, documentsDuplicate: 0 };
   }
 
-  const files = await triageAll(message);
+  const files = await triageAll(message.attachments);
 
   const identifiers = dedupeIdentifiers([
     ...files.flatMap((f) => f.identifiers),
@@ -237,67 +397,16 @@ export async function processMessage(db: Db, message: IncomingMessage): Promise<
     jobId = job.id;
   }
 
-  // Identifiers are unique per (company, kind, value): a conflict means another
-  // job already owns it, which is the same signal the matcher uses. Ignore it
-  // rather than failing the whole message.
-  if (identifiers.length > 0) {
-    await db.from('job_identifiers').upsert(
-      identifiers.map((i) => ({
-        company_id: message.companyId,
-        job_id: jobId as string,
-        kind: i.kind,
-        value: i.value,
-        value_raw: i.raw,
-      })),
-      { onConflict: 'company_id,kind,value', ignoreDuplicates: true },
-    );
-  }
+  await recordIdentifiers(db, message.companyId, jobId, identifiers);
 
-  let added = 0;
-  let duplicate = 0;
-
-  for (const file of files) {
-    // The same document resent across several emails should not pile up.
-    const { data: existing } = await db
-      .from('job_documents')
-      .select('id')
-      .eq('company_id', message.companyId)
-      .eq('sha256', file.sha256)
-      .maybeSingle();
-    if (existing) {
-      duplicate++;
-      continue;
-    }
-
-    const documentId = crypto.randomUUID();
-    const path = storagePath(message.companyId, jobId, documentId, file.attachment.fileName);
-
-    const { error: uploadError } = await db.storage
-      .from('job-documents')
-      .upload(path, file.attachment.data, {
-        contentType: file.attachment.contentType,
-        upsert: false,
-      });
-    if (uploadError) throw new Error(`Could not store ${file.attachment.fileName}: ${uploadError.message}`);
-
-    const { error: rowError } = await db.from('job_documents').insert({
-      id: documentId,
-      company_id: message.companyId,
-      job_id: jobId,
-      mail_message_id: message.mailMessageId,
-      doc_type: file.docType,
-      file_name: file.attachment.fileName,
-      storage_path: path,
-      mime_type: file.attachment.contentType,
-      size_bytes: file.attachment.data.byteLength,
-      sha256: file.sha256,
-      classification: file.classification as never,
-      classified_at: new Date().toISOString(),
-      source: 'email',
-    });
-    if (rowError) throw new Error(`Could not record ${file.attachment.fileName}: ${rowError.message}`);
-    added++;
-  }
+  const { added, duplicate } = await storeDocuments(db, {
+    companyId: message.companyId,
+    jobId,
+    files,
+    source: 'email',
+    mailMessageId: message.mailMessageId,
+    seen: await findByDigest(db, message.companyId, files.map((f) => f.sha256)),
+  });
 
   await db.from('job_events').insert({
     company_id: message.companyId,
@@ -317,30 +426,7 @@ export async function processMessage(db: Db, message: IncomingMessage): Promise<
   });
 
   if (!created && added > 0) {
-    // A later document — often the invoice — can carry HS codes the first mail
-    // did not, so merge rather than replace.
-    const { data: existingJob } = await db
-      .from('jobs')
-      .select('hs_codes')
-      .eq('id', jobId)
-      .eq('company_id', message.companyId)
-      .maybeSingle();
-
-    const merged = [...new Set([...(existingJob?.hs_codes ?? []), ...collectHsCodes(files)])];
-
-    await db
-      .from('jobs')
-      .update({ hs_codes: merged, updated_at: new Date().toISOString() })
-      .eq('id', jobId)
-      .eq('company_id', message.companyId);
-
-    await db
-      .from('jobs')
-      .update({ stage: 'documents_received', updated_at: new Date().toISOString() })
-      .eq('id', jobId)
-      .eq('company_id', message.companyId)
-      // Do not drag a job that has moved on back to an earlier stage.
-      .in('stage', ['new', 'documents_received']);
+    await refreshJobFromDocuments(db, message.companyId, jobId, files);
   }
 
   return {
@@ -349,5 +435,163 @@ export async function processMessage(db: Db, message: IncomingMessage): Promise<
     matchScore: match.score,
     documentsAdded: added,
     documentsDuplicate: duplicate,
+  };
+}
+
+/**
+ * Identifiers are unique per (company, kind, value): a conflict means another
+ * job already owns it, which is the same signal the matcher uses. Ignore it
+ * rather than failing the whole batch.
+ */
+async function recordIdentifiers(db: Db, companyId: string, jobId: string, identifiers: Identifier[]) {
+  if (identifiers.length === 0) return;
+  await db.from('job_identifiers').upsert(
+    identifiers.map((i) => ({
+      company_id: companyId,
+      job_id: jobId,
+      kind: i.kind,
+      value: i.value,
+      value_raw: i.raw,
+    })),
+    { onConflict: 'company_id,kind,value', ignoreDuplicates: true },
+  );
+}
+
+/**
+ * Opens a job from documents dropped in by hand.
+ *
+ * The same triage, matching and storage as the mail path, with one deliberate
+ * difference: a person dropping files has *said* they want a job, so a batch
+ * whose documents are all unrecognised still opens one instead of being
+ * skipped. Matching is kept because it is not optional — `job_identifiers` is
+ * unique per company, so a second job over the same B/L would silently end up
+ * with no identifiers at all and never match another email again.
+ *
+ * Ambiguity is still handed back to the person rather than guessed at, for the
+ * same reason the mail path refuses it: merging two shipments cannot be undone.
+ */
+export async function processUpload(db: Db, batch: UploadBatch): Promise<UploadResult> {
+  if (batch.files.length === 0) throw new Error('Drop at least one document.');
+
+  const files = await triageAll(batch.files);
+  const identifiers = dedupeIdentifiers(files.flatMap((f) => f.identifiers));
+  const seen = await findByDigest(db, batch.companyId, files.map((f) => f.sha256));
+  const readBack = files.map((f) => ({
+    fileName: f.attachment.fileName,
+    docType: f.docType,
+    duplicate: seen.has(f.sha256),
+  }));
+
+  const match = scoreMatches(identifiers, await findCandidates(db, batch.companyId, identifiers));
+
+  if (match.decision === 'ambiguous') {
+    await db.from('job_events').insert({
+      company_id: batch.companyId,
+      job_id: null,
+      actor_kind: 'user',
+      actor_user_id: batch.uploadedBy,
+      type: 'upload.ambiguous',
+      payload: {
+        fileNames: files.map((f) => f.attachment.fileName),
+        candidates: match.tiedJobIds,
+        score: match.score,
+      },
+    });
+    return {
+      outcome: 'ambiguous',
+      created: false,
+      matchScore: match.score,
+      documentsAdded: 0,
+      documentsDuplicate: 0,
+      files: readBack,
+      candidateJobIds: match.tiedJobIds,
+    };
+  }
+
+  let jobId = match.jobId;
+
+  // Nothing matched on identifiers, but every file is already stored. Dropping
+  // the same folder twice must land back on the job it made the first time
+  // rather than opening an empty one beside it. Compared over distinct digests,
+  // not the file count: a batch holding the same document under two names would
+  // otherwise fall through and open a job with nothing in it.
+  const digests = new Set(files.map((f) => f.sha256));
+  if (!jobId && seen.size === digests.size) {
+    const owners = [...new Set([...seen.values()].map((d) => d.jobId))];
+    if (owners.length === 1) {
+      jobId = owners[0] as string;
+    } else if (owners.length > 1) {
+      return {
+        outcome: 'ambiguous',
+        created: false,
+        documentsAdded: 0,
+        documentsDuplicate: files.length,
+        files: readBack,
+        candidateJobIds: owners,
+      } satisfies UploadResult;
+    }
+  }
+
+  const created = !jobId;
+
+  if (!jobId) {
+    const { data: job, error } = await db
+      .from('jobs')
+      .insert({
+        company_id: batch.companyId,
+        title: jobTitle(files, files[0]?.attachment.fileName ?? null),
+        stage: 'documents_received',
+        source: 'manual',
+        created_by: batch.uploadedBy,
+        importer_name: files.find((f) => f.importerName)?.importerName ?? null,
+        supplier_name: files.find((f) => f.supplierName)?.supplierName ?? null,
+        hs_codes: collectHsCodes(files),
+      })
+      .select('id')
+      .single();
+    if (error || !job) throw new Error(`Could not create a job: ${error?.message}`);
+    jobId = job.id;
+  }
+
+  await recordIdentifiers(db, batch.companyId, jobId, identifiers);
+
+  const { added, duplicate, results } = await storeDocuments(db, {
+    companyId: batch.companyId,
+    jobId,
+    files,
+    source: 'upload',
+    uploadedBy: batch.uploadedBy,
+    seen,
+  });
+
+  await db.from('job_events').insert({
+    company_id: batch.companyId,
+    job_id: jobId,
+    actor_kind: 'user',
+    actor_user_id: batch.uploadedBy,
+    type: created ? 'job.created_from_upload' : 'upload.attached',
+    payload: {
+      fileNames: files.map((f) => f.attachment.fileName),
+      documentsAdded: added,
+      documentsDuplicate: duplicate,
+      matchScore: match.score ?? null,
+      matchedOn: match.matched ?? null,
+      documentTypes: files.map((f) => f.docType),
+    },
+  });
+
+  if (!created && added > 0) {
+    await refreshJobFromDocuments(db, batch.companyId, jobId, files);
+  }
+
+  return {
+    outcome: created ? 'created_job' : 'attached',
+    jobId,
+    created,
+    matchScore: match.score,
+    matchedOn: match.matched,
+    documentsAdded: added,
+    documentsDuplicate: duplicate,
+    files: results,
   };
 }

@@ -33,10 +33,14 @@ export type {
 export type { MatchOutcome, CandidateIdentifier } from './match.js';
 export { triageDocument, TRIAGE_DOC_TYPES, TRADE_DOCUMENT_TYPES, TriageSchema } from './triage.js';
 export type { Triage, TriageResult, DocumentType } from './triage.js';
-export { processMessage } from './process.js';
+export { processMessage, processUpload } from './process.js';
 export type {
   IncomingMessage,
   IncomingAttachment,
   ProcessResult,
   ProcessOutcome,
+  UploadBatch,
+  UploadOutcome,
+  UploadResult,
+  UploadedFileResult,
 } from './process.js';

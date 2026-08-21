@@ -8,6 +8,7 @@ import { formatDay } from '@/lib/dates';
 import { loadDoSummaries, type JobDoSummary } from '@/lib/do-read';
 import { CLEARANCE_STATUS_LABELS, CLEARANCE_STATUS_STYLES } from '@/lib/clearance';
 import { loadClearanceSummaries, type JobClearanceSummary } from '@/lib/clearance-read';
+import { NewJobDropzone } from './new-job-dropzone';
 
 export const metadata: Metadata = { title: 'Jobs' };
 export const dynamic = 'force-dynamic';
@@ -16,12 +17,21 @@ export default async function JobsPage() {
   const ctx = await requireCompany();
   const db = serviceClient();
 
-  const { data: jobs } = await db
-    .from('jobs')
-    .select('*')
-    .eq('company_id', ctx.companyId)
-    .order('updated_at', { ascending: false })
-    .limit(200);
+  const [{ data: jobs }, { count: mailboxes }] = await Promise.all([
+    db
+      .from('jobs')
+      .select('*')
+      .eq('company_id', ctx.companyId)
+      .order('updated_at', { ascending: false })
+      .limit(200),
+    db
+      .from('mail_connections')
+      .select('id', { count: 'exact', head: true })
+      .eq('company_id', ctx.companyId)
+      .eq('status', 'active'),
+  ]);
+
+  const mailboxConnected = (mailboxes ?? 0) > 0;
 
   const jobIds = (jobs ?? []).map((j) => j.id);
   const { data: documents } = jobIds.length
@@ -42,20 +52,30 @@ export default async function JobsPage() {
         <div>
           <h1 className="text-2xl font-semibold">Jobs</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Opened automatically when shipment documents arrive in a connected mailbox.
+            {mailboxConnected
+              ? 'Opened automatically when shipment documents arrive in a connected mailbox, or from documents dropped in here.'
+              : 'No mailbox is connected yet — drop a job\u2019s documents in below to open one by hand.'}
           </p>
         </div>
       </div>
+
+      {/* Open by default until a mailbox is doing this automatically, and on an
+          empty list: those are the two moments when it is the way in rather
+          than the exception. */}
+      <NewJobDropzone
+        mailboxConnected={mailboxConnected}
+        startOpen={!mailboxConnected || (jobs ?? []).length === 0}
+      />
 
       {(jobs ?? []).length === 0 ? (
         <div className="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center text-sm text-slate-500">
           <div className="font-medium text-slate-700">No jobs yet</div>
           <p className="mx-auto mt-1 max-w-md">
-            Connect a mailbox from{' '}
+            Drop the documents above, or connect a mailbox from{' '}
             <Link href="/settings/mailbox" className="text-indigo-600 underline">
               Mailbox settings
-            </Link>
-            . Emails carrying an invoice, bill of lading or air waybill open a job on their own.
+            </Link>{' '}
+            so emails carrying an invoice, bill of lading or air waybill open a job on their own.
           </p>
         </div>
       ) : (

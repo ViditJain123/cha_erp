@@ -3,7 +3,11 @@ import type { Tables } from '@checklist/db';
 import { formatStamp } from './dates';
 
 export type JobStage = Tables<'jobs'>['stage'];
-export type DocumentType = Tables<'job_documents'>['doc_type'];
+
+// Document labels live in their own module so client components can read them
+// without dragging `server-only` in behind them.
+export { DOC_TYPE_LABELS } from './document-types';
+export type { DocumentType } from './document-types';
 
 export const STAGE_LABELS: Record<JobStage, string> = {
   new: 'New',
@@ -49,19 +53,6 @@ export const DOCUMENTS_STAGES: readonly JobStage[] = [
   'checklist_revision',
 ];
 
-export const DOC_TYPE_LABELS: Record<DocumentType, string> = {
-  invoice: 'Invoice',
-  bill_of_lading: 'Bill of Lading',
-  air_waybill: 'Air Waybill',
-  packing_list: 'Packing List',
-  certificate_of_origin: 'Certificate of Origin',
-  certificate_of_analysis: 'Certificate of Analysis',
-  license: 'Licence',
-  svb_order: 'SVB Order',
-  checklist: 'Checklist (from Logi-Sys)',
-  unknown: 'Unrecognised',
-};
-
 export const IDENTIFIER_LABELS: Record<Tables<'job_identifiers'>['kind'], string> = {
   bl: 'B/L',
   awb: 'AWB',
@@ -83,6 +74,9 @@ export const EVENT_LABELS: Record<string, string> = {
   'job.created_manually': 'Job created',
   'mail.attached': 'Documents attached from an email',
   'mail.ambiguous': 'An email matched more than one job',
+  'job.created_from_upload': 'Job opened from dropped documents',
+  'upload.attached': 'Dropped documents attached',
+  'upload.ambiguous': 'Dropped documents matched more than one job',
   'draft.generated': 'Documents read into a checklist draft',
   'export.generated': 'Logi-Sys spreadsheet exported',
   'checklist.uploaded': 'Checklist PDF uploaded',

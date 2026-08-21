@@ -2,6 +2,17 @@ import 'server-only';
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 
+/**
+ * Ceilings for a whole dropped batch.
+ *
+ * The batch crosses the wire as one multipart request, so the total matters as
+ * much as any single file. The file count is a cost and latency bound rather
+ * than a transport one: every document in the batch is read by a model, and a
+ * job rarely arrives with more than a dozen.
+ */
+export const MAX_BATCH_FILES = 15;
+export const MAX_BATCH_BYTES = 40 * 1024 * 1024;
+
 const OOXML = 'application/vnd.openxmlformats-officedocument';
 
 /** Must stay a subset of the `job-documents` bucket's allowed_mime_types. */

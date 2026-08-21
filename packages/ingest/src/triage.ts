@@ -109,17 +109,25 @@ export interface TriageResult extends Triage {
  * inbound attachment would cost an order of magnitude more and add minutes of
  * latency per tick, and none of the line-item detail is needed to answer
  * "which job does this belong to?".
+ *
+ * PDFs and photographs are both readable. A Word or Excel attachment is not, and
+ * throws — the caller records it as `unknown` rather than losing the file.
  */
-export async function triageDocument(fileName: string, pdf: Buffer): Promise<TriageResult> {
-  const { data, model } = await structuredPdfCall({
+export async function triageDocument(
+  fileName: string,
+  data: Buffer,
+  mimeType = 'application/pdf',
+): Promise<TriageResult> {
+  const { data: triage, model } = await structuredPdfCall({
     schema: TriageSchema,
     schemaName: 'document_triage',
     system: SYSTEM,
     userText: `Triage this attachment. File name: ${fileName}`,
     fileName,
-    pdf,
+    pdf: data,
+    mimeType,
     model: MODELS.classify,
     escalateModel: MODELS.extract,
   });
-  return { ...data, model };
+  return { ...triage, model };
 }

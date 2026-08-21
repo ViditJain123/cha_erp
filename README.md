@@ -64,6 +64,20 @@ email thread alone is not, because reply-all chains drift onto unrelated
 shipments. Two jobs tying above the threshold are parked as ambiguous rather
 than merged — that is unrecoverable, so a human decides.
 
+## Opening a job by hand
+
+The watcher is the intended way in, but not the only one: `/jobs` carries a drop
+zone (`POST /api/jobs` -> `processUpload`) for a company that has not connected
+Outlook yet, or that was handed a folder of scans. It runs the same triage,
+matching and storage the watcher runs, so a job started there is
+indistinguishable from one an email opened.
+
+Two deliberate differences from the mail path. A batch whose documents are all
+unrecognised still opens a job — the person dropping them has said they want
+one, where an email that happens to carry a signature image has not. And an
+ambiguous match is handed back to that person with the candidate jobs named,
+rather than parked in the log for someone to find later.
+
 ## Exporting to Logi-Sys
 
 A job's documents are read into a `ChecklistDraft` (`packages/extraction`) and
