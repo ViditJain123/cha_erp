@@ -21,6 +21,7 @@ import type { ExchangeRateTable } from '../types.js';
 export * from './data.js';
 export * from './store.js';
 export * from './codes.js';
+export * from './party-name.js';
 
 export function lookupTariff(cth: string): TariffMaster | undefined {
   return allTariff().find((t) => t.cth === cth);

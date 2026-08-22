@@ -29,7 +29,9 @@ afterAll(() => {
 describe('masters overlay store', () => {
   it('serves seed data when the overlay is empty', () => {
     expect(lookupTariff('17021110')?.bcdRate).toBe(25);
-    expect(lookupImporter('FRESHCARE INDUSTRIES PRIVATE LIMITED')?.gstin).toBe('07AAFCF4316C1Z3');
+    // The importer seed is deliberately empty: the party master is the
+    // uploaded organization repository, not a list in the source tree.
+    expect(lookupImporter('FRESHCARE INDUSTRIES PRIVATE LIMITED')).toBeUndefined();
   });
 
   it('overlay tariff rows win over seed rows and add new CTHs', () => {

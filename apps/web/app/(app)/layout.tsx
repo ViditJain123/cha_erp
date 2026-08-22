@@ -11,6 +11,7 @@ const NAV = [
   { href: '/settings/team', label: 'Team' },
   { href: '/settings/branches', label: 'Branches' },
   { href: '/settings/ccr', label: 'Requirements' },
+  { href: '/settings/organizations', label: 'Organizations' },
   { href: '/settings/shippers', label: 'Shippers' },
   { href: '/settings/shipping-lines', label: 'Shipping lines' },
   { href: '/settings/securities', label: 'Bonds & deposits' },

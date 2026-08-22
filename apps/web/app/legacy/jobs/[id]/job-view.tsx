@@ -266,7 +266,10 @@ export default function JobView({ initialJob }: { initialJob: JobRecord }) {
               <Field label="AD Code" value={draft.importer.adCode} onChange={editStr('importer.adCode')} flagged={flag('importer')} />
             </div>
             {!draft.importer.matchedFromMasters && (
-              <p className="mt-2 text-xs text-amber-700">Importer was not found in masters — the details entered here will seed the importer directory.</p>
+              <p className="mt-2 text-xs text-amber-700">
+                Importer was not matched to a party master. The tenant app resolves this against
+                the uploaded organization repository; here the details have to be typed.
+              </p>
             )}
           </Card>
 

@@ -336,9 +336,12 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
 
   describe('reporting', () => {
     it('names the columns it could not fill instead of failing silently', async () => {
-      // Branch name is the known gap for this job: the draft carries the
-      // branch serial ("0") but not the branch's name.
-      expect(warnings.some((w) => w.startsWith('GENERAL.Branch Name'))).toBe(true);
+      // The known gap for this job: the draft was built before there was an
+      // organization repository to bind the parties to, so `Importer` and
+      // `Supplier_Name` are the names off the shipping documents. Logi-Sys
+      // keys its parties on exactly those two strings, so both must say so.
+      expect(warnings.some((w) => w.startsWith('GENERAL.Importer'))).toBe(true);
+      expect(warnings.some((w) => w.startsWith('INVOICES.Supplier_Name'))).toBe(true);
     });
 
     it('produces no blockers for a complete draft', async () => {

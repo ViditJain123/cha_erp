@@ -1,4 +1,4 @@
-import { TOI_CODE, iso2 } from '@checklist/core';
+import { TOI_CODE, branchNameForExport, iso2 } from '@checklist/core';
 import { BLANK, code, isoDate, money, num, text, yn } from '../cell.js';
 import type { Cell } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
@@ -22,6 +22,21 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
   if (!supplier.city) {
     ctx.warn('INVOICES.Supplier_City', 'Supplier city was not extracted from the invoice.');
   }
+
+  // Logi-Sys resolves the supplier from its own repository on name and branch,
+  // exactly as it does the importer. An unbound supplier is the name printed
+  // on the invoice, which is routinely an abbreviation of the one Logi-Sys
+  // holds — "ASIA SHIGEN INTERNATIONAL" against
+  // "ASIA SHIGEN INTERNATIONAL CO., LTD".
+  if (!supplier.organizationId) {
+    ctx.warn(
+      'INVOICES.Supplier_Name',
+      `Supplier "${supplier.name}" is not bound to a row in the organization repository, so this is the ` +
+        'name off the invoice rather than the one Logi-Sys holds. Pick the right organization on the job, ' +
+        'or add the party in Logi-Sys and re-upload the repository.',
+    );
+  }
+  const supplierBranch = branchNameForExport(supplier.branchName);
 
   // C&F and CFR are the same Incoterm; CIF is not. Keying this by hand turned a
   // cost-and-freight invoice into cost-insurance-freight, which would have
@@ -83,6 +98,9 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       Supplier_Address: text(supplier.addressLines.join(', ').replace(/,\s*,/g, ',').replace(/,\s*$/, '')),
       Supplier_City: text(supplier.city),
       Supplier_Country_Code: code(supplierCountry),
+      // A supplier with several branches in the repository is a different
+      // party per branch, so leaving this empty can bind the wrong one.
+      Supplier_Branch: text(supplierBranch),
       Is_Related: yn(invoiceMeta.relatedParty),
 
       Custom_House_Code: code(customStation.code),

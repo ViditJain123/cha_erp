@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { ChecklistDraft } from '@checklist/extraction';
 import { missingScopes } from '@checklist/graph';
 import { requireCompany } from '@/lib/auth';
 import { serviceClient } from '@/lib/supabase/admin';
@@ -12,6 +13,7 @@ import {
 } from '@/lib/jobs';
 import { ChecklistUpload } from './checklist-upload';
 import { LogisysExport } from './logisys-export';
+import { PartiesPanel, type PartyState } from './parties-panel';
 import { ScrutinyPanel } from './scrutiny-panel';
 import { DocumentRequests } from './document-requests';
 import { ShipperRequest } from './shipper-request';
@@ -72,6 +74,17 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
   // because that is what the client was shown.
   const engineDuty =
     ((latestDraft?.draft as { duty?: { dutyPayable?: number } } | null)?.duty?.dutyPayable ?? null);
+
+  // The two parties Logi-Sys resolves from its own repository. Read off the
+  // draft rather than off `jobs`, because the draft is what the workbook is
+  // built from and so is what has to be right.
+  const draft = latestDraft?.draft as unknown as ChecklistDraft | null;
+  const parties: PartyState[] = draft
+    ? [
+        partyState('importer', 'consignee', 'Importer', draft.importer),
+        partyState('supplier', 'shipper', 'Supplier', draft.supplier),
+      ]
+    : [];
   // The documents branch still owns the job until the checklist arrives, and
   // owns it again while a revision is outstanding.
   const inDocumentsBranch = DOCUMENTS_STAGES.includes(job.stage);
@@ -231,6 +244,8 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             />
           )}
 
+          {parties.length > 0 && <PartiesPanel jobId={job.id} parties={parties} />}
+
           {inDocumentsBranch && (
             <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
               <h2 className="mb-3 text-sm font-semibold">Export to Logi-Sys</h2>
@@ -316,4 +331,32 @@ function EventDetail({ payload }: { payload: unknown }) {
 
   if (bits.length === 0) return null;
   return <div className="mt-0.5 text-xs text-slate-500">{bits.join(' · ')}</div>;
+}
+
+/**
+ * A draft party flattened for the panel. The draft holds a little more than
+ * the panel shows (address lines, PAN); what is here is what tells two
+ * repository rows of the same name apart.
+ */
+function partyState(
+  slot: PartyState['slot'],
+  role: PartyState['role'],
+  label: string,
+  party: ChecklistDraft['importer'] | ChecklistDraft['supplier'],
+): PartyState {
+  const adCode = 'adCode' in party ? party.adCode : undefined;
+  return {
+    slot,
+    role,
+    label,
+    name: party.name,
+    ...(party.branchName ? { branchName: party.branchName } : {}),
+    ...(party.city ? { city: party.city } : {}),
+    ...(party.iec ? { iec: party.iec } : {}),
+    ...(party.gstin ? { gstin: party.gstin } : {}),
+    ...(adCode ? { adCode } : {}),
+    // A draft written before the repository existed has no status at all,
+    // which is different from having been looked for and not found.
+    ...(party.matchStatus ? { status: party.matchStatus } : {}),
+  };
 }

@@ -2,6 +2,7 @@ import {
   BE_TYPE_CODE,
   FILING_CODE,
   TRANSPORT_MODE_CODE,
+  branchNameForExport,
   iso2,
   unlocodeOf,
 } from '@checklist/core';
@@ -16,6 +17,14 @@ import type { MapContext } from './context.js';
  * all in the same way: the template asks for a code and a person types the
  * name. `CountryOfOriginCode`, `PortOfShipmentCode` and `CountryOfShipmentCode`
  * became JAPAN, YOKOHAMA and JAPAN.
+ *
+ * `Importer`, `Branch Name` and `AD_Code` go wrong differently. Logi-Sys
+ * resolves the party from its own repository on those three values and there
+ * is no IEC or GSTIN column to fall back on, so a name that is merely correct
+ * is not enough — it has to be the string Logi-Sys holds. They come from the
+ * organization repository the CHA uploaded, bound to the job by
+ * applyPartyResolution(); an unbound importer is a name off a bill of lading
+ * and is warned about.
  */
 export function generalRows(ctx: MapContext): SheetRow[] {
   const { draft } = ctx;
@@ -46,15 +55,22 @@ export function generalRows(ctx: MapContext): SheetRow[] {
     );
   }
 
+  if (!draft.importer.organizationId) {
+    ctx.warn(
+      'GENERAL.Importer',
+      `Importer "${draft.importer.name}" is not bound to a row in the organization repository, so this is ` +
+        'the name off the shipping documents rather than the one Logi-Sys holds. Logi-Sys keys the party ' +
+        'on it: pick the right organization on the job, or add the party in Logi-Sys and re-upload the repository.',
+    );
+  }
+
   if (!draft.importer.adCode) {
     ctx.warn('GENERAL.AD_Code', 'No AD code on the importer — Logi-Sys needs it to file.');
   }
 
-  if (!draft.importer.branchName) {
-    // branchSno ("0") is a different field from the branch's name, and the
-    // draft only carries the serial.
-    ctx.warn('GENERAL.Branch Name', 'Importer branch name is not known; only the branch serial is.');
-  }
+  // "0", "." and "NA" are how the repository spells "no branch", and the
+  // workbook that imported cleanly left this column empty for such a party.
+  const branchName = branchNameForExport(draft.importer.branchName);
 
   return [
     {
@@ -63,7 +79,7 @@ export function generalRows(ctx: MapContext): SheetRow[] {
       BETypeCode: code(BE_TYPE_CODE[draft.beType]),
       // CONFIRM: Logi-Sys may want its own party code here rather than a name.
       Importer: text(draft.importer.logisysPartyCode ?? draft.importer.name),
-      'Branch Name': text(draft.importer.branchName),
+      'Branch Name': text(branchName),
       AD_Code: code(draft.importer.adCode),
       Importer_RefNo: text(ctx.job.reference),
       CountryOfOriginCode: code(originCode),

@@ -72,7 +72,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
 
   let draft: ChecklistDraft;
   try {
-    ({ draft } = await buildDraftFromDocuments(files));
+    ({ draft } = await buildDraftFromDocuments(files, ctx.companyId));
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }

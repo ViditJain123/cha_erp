@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { END_USE_CODES } from '@checklist/core';
 import type { AppRole, TeamKind } from '@checklist/db';
 import { requireCompany, requireCompanyManager } from '@/lib/auth';
 import { serviceClient } from '@/lib/supabase/admin';
@@ -720,4 +721,88 @@ export async function listSecurities() {
   ]);
 
   return { ctx, securities: securities ?? [], lines: lines ?? [] };
+}
+
+// --------------------------------------------------- organization repository --
+
+/**
+ * Read model for the organizations page.
+ *
+ * Five thousand parties is not a table anyone scrolls, so the list is a search
+ * result rather than the whole master. An empty query still returns rows —
+ * seeing something on arrival is what tells the operator the upload worked.
+ */
+/** How many rows the organizations page shows for one search. */
+const ORGANIZATION_PAGE_SIZE = 50;
+
+export async function listOrganizations(query: string) {
+  const ctx = await requireCompany();
+  const db = serviceClient();
+
+  const [{ data: organizations }, { count }, { data: imports }] = await Promise.all([
+    db.rpc('search_organizations', {
+      p_company: ctx.companyId,
+      p_query: query.trim(),
+      p_limit: ORGANIZATION_PAGE_SIZE,
+    }),
+    db
+      .from('organizations')
+      .select('id', { count: 'exact', head: true })
+      .eq('company_id', ctx.companyId)
+      .eq('is_active', true),
+    db
+      .from('organization_imports')
+      .select('*')
+      .eq('company_id', ctx.companyId)
+      .order('created_at', { ascending: false })
+      .limit(1),
+  ]);
+
+  return {
+    ctx,
+    organizations: organizations ?? [],
+    activeCount: count ?? 0,
+    lastImport: imports?.[0] ?? null,
+    pageSize: ORGANIZATION_PAGE_SIZE,
+  };
+}
+
+/**
+ * The two per-importer settings the repository does not carry.
+ *
+ * Everything else on an organization comes from Logi-Sys and is overwritten by
+ * the next upload, so these are the only editable fields — and they survive an
+ * upload because the import never writes them.
+ */
+export async function updateOrganizationDefaults(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const id = String(formData.get('id') ?? '');
+  const endUse = String(formData.get('defaultEndUseCode') ?? '').trim().toUpperCase();
+  const rate = optionalNumber(formData.get('marineOpenPolicyRatePercent'));
+
+  if (!id) return { error: 'No organization to update.' };
+  if (endUse && !(endUse in END_USE_CODES)) {
+    return { error: `End-use code must be one of ${Object.keys(END_USE_CODES).join(', ')}.` };
+  }
+  if (rate === null) return { error: 'Marine open-policy rate must be a number, or blank.' };
+  if (rate !== undefined && (rate < 0 || rate > 100)) {
+    return { error: 'Marine open-policy rate is a percentage of C&F value.' };
+  }
+
+  const { error } = await serviceClient()
+    .from('organizations')
+    .update({
+      default_end_use_code: endUse || null,
+      marine_open_policy_rate_percent: rate ?? null,
+    })
+    .eq('id', id)
+    .eq('company_id', ctx.companyId);
+
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/organizations');
+  return { ok: true, message: 'Saved.' };
 }

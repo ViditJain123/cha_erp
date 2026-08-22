@@ -256,39 +256,18 @@ export interface ImporterMaster {
   defaultEndUseCode?: string;
 }
 
-export const IMPORTERS: ImporterMaster[] = [
-  {
-    name: 'FUCHS LUBRICANTS (INDIA) PRIVATE LIMITED',
-    aliases: ['FUCHS LUBRICANTS (INDIA) PVT. LTD.', 'FUCHS LUBRICANTS INDIA'],
-    iec: '0394065816',
-    pan: 'AABCB0983D',
-    gstin: '27AABCB0983D1ZY',
-    gstStateCode: '27',
-    gstStateName: 'MAHARASHTRA',
-    adCode: '6550001',
-    branchSno: '8',
-    address: ['PLOT N-69, ANAND NAGAR, AMBERNATH', 'ADDITIONAL MIDC'],
-    city: 'Ambernath',
-    state: 'Maharashtra',
-    marineOpenPolicyRatePercent: 0.0118,
-    defaultEndUseCode: 'GNX100',
-  },
-  {
-    name: 'FRESHCARE INDUSTRIES PRIVATE LIMITED',
-    aliases: ['FRESHCARE INDUSTRIES PVT LTD'],
-    iec: 'AAFCF4316C',
-    pan: 'AAFCF4316C',
-    gstin: '07AAFCF4316C1Z3',
-    gstStateCode: '07',
-    gstStateName: 'DELHI',
-    adCode: '6470051',
-    branchSno: '0',
-    address: ['C-724 F/F, NEW FRIENDS COLONY,', 'NEW DELHI,SOUTH EAST,DELHI - 110065'],
-    city: 'New Delhi',
-    state: 'Delhi',
-    defaultEndUseCode: 'GNX200',
-  },
-];
+/**
+ * Retired. The importer master is now `public.organizations` — the
+ * Organization Repository each company exports out of Logi-Sys and uploads,
+ * resolved by apps/web/lib/parties.ts. Party names have to be the exact
+ * strings Logi-Sys holds, and a list in this file could never be that for more
+ * than one tenant.
+ *
+ * The type and the overlay store stay for `/legacy`, the retired
+ * single-tenant generator, which still reads them. The seed is empty: nothing
+ * in the tenant app consults it.
+ */
+export const IMPORTERS: ImporterMaster[] = [];
 
 /** End-use codes printed in the BE End Use Information table. */
 export const END_USE_CODES: Record<string, string> = {

@@ -90,6 +90,7 @@ export const EVENT_LABELS: Record<string, string> = {
   'scrutiny.reconciled': 'Arrived documents checked against the requests',
   'checklist.revision_requested': 'Sent back for a revised checklist',
   'scrutiny.completed': 'Shipper told the checklist is final — scrutiny done',
+  'party.bound': 'Party set from the organization repository',
 
   // The delivery order runs beside scrutiny, but writes to the same timeline.
   'do.opened': 'Delivery order tracking started',

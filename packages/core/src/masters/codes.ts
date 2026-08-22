@@ -133,6 +133,11 @@ const COUNTRY_ALIASES: Record<string, string> = {
   "PEOPLE'S REPUBLIC OF CHINA": 'CN', "CHINA, PEOPLE'S REPUBLIC OF": 'CN',
   'PRC': 'CN', 'P.R. CHINA': 'CN', 'PR CHINA': 'CN', 'MAINLAND CHINA': 'CN',
   "DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA": 'KP',
+  // Spellings the Logi-Sys organization repository uses, typos included. They
+  // are in the customer's party master and cannot be corrected from here.
+  'CONGO, THE DEMOCRATIC REPUBLIC': 'CD',
+  'VIETNAM, DEMOCRATIC REP. OF': 'VN',
+  'GAUTEMALA': 'GT',
 };
 
 /**

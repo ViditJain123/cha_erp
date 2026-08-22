@@ -101,6 +101,49 @@ to the operator to complete in Logi-Sys.
 `packages/exporter/test/golden-ep061126-1.test.ts` pins the whole mapping against
 job I-13844/26-27, whose documents and Logi-Sys checklist are in `ex_job6/`.
 
+## The organization repository
+
+Logi-Sys resolves the parties on a Bill of Entry from its own repository, keyed
+on the name plus the branch — `GENERAL.Importer` / `Branch Name` / `AD_Code`,
+`INVOICES.Supplier_Name` / `Supplier_Branch`. There is no IEC or GSTIN column on
+those sheets to fall back on, so a party name that is merely correct is not
+enough: it has to be the exact string Logi-Sys holds. Job EP061126-1 went out
+saying `M/S. ELITE POLYPLUS` and `ASIA SHIGEN INTERNATIONAL`, where the
+repository says `ELITE POLYPLUS` and `ASIA SHIGEN INTERNATIONAL CO., LTD`.
+
+So each company exports **Organization Repository → XLSX** out of Logi-Sys and
+uploads it at `/settings/organizations`. It lands in `public.organizations` —
+one row per name × branch × branch serial, which is what makes SIEMENS LIMITED
+52 rows rather than one — and everything the workbook says about a party is read
+back out of it.
+
+- **Parsing**: `apps/web/lib/org-repository.ts`. The header row is found, not
+  assumed; `NULL`, `.` and `NA` are read as absent; the whole spreadsheet row is
+  kept in `raw`.
+- **Matching**: `partyNameKey()` in `packages/core/src/masters/party-name.ts`
+  strips honorifics, punctuation and legal suffixes so a document name and a
+  repository name reduce to the same string. It is stored on
+  `organizations.name_key`, computed only there, so there is no SQL copy to
+  drift. A near miss falls through to a `pg_trgm` search
+  (`public.search_organizations`).
+- **Binding**: `apps/web/lib/parties.ts`, run after the extraction pipeline
+  rather than inside it — the merge is synchronous and knows nothing about a
+  company. Several branches sharing a name resolve to *ambiguous*, never to a
+  guess; a Bill of Entry is not the place for a coin toss. The Parties card on
+  the job screen shows what was bound and lets someone pick a different row,
+  which marks it `manual` and survives a re-read of the documents.
+- **Re-upload** replaces the snapshot: rows in the file are upserted, rows no
+  longer in it are deactivated rather than deleted, so a job filed last month
+  still resolves. The two fields Logi-Sys does not hold — the marine
+  open-policy rate and the default end-use code — are ours, editable on the row
+  and never overwritten by an upload.
+
+An unbound party is a warning, not a blocker: the workbook still downloads and
+the operator is told which name Logi-Sys may not recognise.
+
+`apps/web/e2e-organizations.mjs` drives the whole thing against a throwaway
+company it creates and deletes.
+
 ## Scrutiny
 
 A job leaves the documents branch when the checklist comes back from Logi-Sys
@@ -212,11 +255,12 @@ line issues by mail or on ODeX, default free days, and a deposit matrix of mode
 held per importer per line). Both prefill; nothing they set is read-only on the
 job.
 
-There is no importer master, so a bond is matched on `jobs.importer_name` plus
-aliases — which means a misspelled importer looks exactly like a genuinely
-uncovered job. The UI therefore says *which* it found: "no bond is recorded for
-this importer" reads differently from "a bond exists but does not cover this
-mode", and both differ from silence.
+A bond is still matched on `jobs.importer_name` plus aliases rather than on an
+organization id — which means a misspelled importer looks exactly like a
+genuinely uncovered job. The UI therefore says *which* it found: "no bond is
+recorded for this importer" reads differently from "a bond exists but does not
+cover this mode", and both differ from silence. Now that `/settings/organizations`
+exists, `importer_line_securities` should gain an `organization_id`.
 
 Detention only. Demurrage — the terminal's ground rent — runs on a separate free
 period and is not modelled.

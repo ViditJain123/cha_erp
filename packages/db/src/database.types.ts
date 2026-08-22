@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.15"
+  }
   public: {
     Tables: {
       branches: {
@@ -1818,6 +1823,210 @@ export type Database = {
           },
         ]
       }
+      organization_imports: {
+        Row: {
+          company_id: string
+          created_at: string
+          file_name: string
+          id: string
+          imported_by: string | null
+          inserted_count: number
+          retired_count: number
+          row_count: number
+          sha256: string
+          updated_count: number
+          warnings: string[]
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          file_name: string
+          id?: string
+          imported_by?: string | null
+          inserted_count?: number
+          retired_count?: number
+          row_count?: number
+          sha256: string
+          updated_count?: number
+          warnings?: string[]
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          file_name?: string
+          id?: string
+          imported_by?: string | null
+          inserted_count?: number
+          retired_count?: number
+          row_count?: number
+          sha256?: string
+          updated_count?: number
+          warnings?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_imports_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_imports_imported_by_fkey"
+            columns: ["imported_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          ad_code: string | null
+          address1: string | null
+          address2: string | null
+          address3: string | null
+          alias: string | null
+          bin: string | null
+          branch_name: string
+          branch_sr_no: string
+          cin: string | null
+          city: string | null
+          company_id: string
+          country: string | null
+          country_code: string | null
+          created_at: string
+          default_end_use_code: string | null
+          email: string | null
+          gst_state_code: string | null
+          gstin: string | null
+          id: string
+          iec: string | null
+          is_active: boolean
+          is_agent: boolean
+          is_consignee: boolean
+          is_service_provider: boolean
+          is_shipper: boolean
+          is_transporter: boolean
+          last_import_id: string | null
+          lut_number: string | null
+          marine_open_policy_rate_percent: number | null
+          name: string
+          name_key: string
+          pan: string | null
+          postal_code: string | null
+          raw: Json
+          source_created_by: string | null
+          source_created_on: string | null
+          st_reg_no: string | null
+          state: string | null
+          telephone: string | null
+          updated_at: string
+          web_url: string | null
+        }
+        Insert: {
+          ad_code?: string | null
+          address1?: string | null
+          address2?: string | null
+          address3?: string | null
+          alias?: string | null
+          bin?: string | null
+          branch_name?: string
+          branch_sr_no?: string
+          cin?: string | null
+          city?: string | null
+          company_id: string
+          country?: string | null
+          country_code?: string | null
+          created_at?: string
+          default_end_use_code?: string | null
+          email?: string | null
+          gst_state_code?: string | null
+          gstin?: string | null
+          id?: string
+          iec?: string | null
+          is_active?: boolean
+          is_agent?: boolean
+          is_consignee?: boolean
+          is_service_provider?: boolean
+          is_shipper?: boolean
+          is_transporter?: boolean
+          last_import_id?: string | null
+          lut_number?: string | null
+          marine_open_policy_rate_percent?: number | null
+          name: string
+          name_key: string
+          pan?: string | null
+          postal_code?: string | null
+          raw?: Json
+          source_created_by?: string | null
+          source_created_on?: string | null
+          st_reg_no?: string | null
+          state?: string | null
+          telephone?: string | null
+          updated_at?: string
+          web_url?: string | null
+        }
+        Update: {
+          ad_code?: string | null
+          address1?: string | null
+          address2?: string | null
+          address3?: string | null
+          alias?: string | null
+          bin?: string | null
+          branch_name?: string
+          branch_sr_no?: string
+          cin?: string | null
+          city?: string | null
+          company_id?: string
+          country?: string | null
+          country_code?: string | null
+          created_at?: string
+          default_end_use_code?: string | null
+          email?: string | null
+          gst_state_code?: string | null
+          gstin?: string | null
+          id?: string
+          iec?: string | null
+          is_active?: boolean
+          is_agent?: boolean
+          is_consignee?: boolean
+          is_service_provider?: boolean
+          is_shipper?: boolean
+          is_transporter?: boolean
+          last_import_id?: string | null
+          lut_number?: string | null
+          marine_open_policy_rate_percent?: number | null
+          name?: string
+          name_key?: string
+          pan?: string | null
+          postal_code?: string | null
+          raw?: Json
+          source_created_by?: string | null
+          source_created_on?: string | null
+          st_reg_no?: string | null
+          state?: string | null
+          telephone?: string | null
+          updated_at?: string
+          web_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organizations_last_import_id_fkey"
+            columns: ["last_import_id"]
+            isOneToOne: false
+            referencedRelation: "organization_imports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           cfs_id: string | null
@@ -2075,6 +2284,65 @@ export type Database = {
       }
       custom_access_token_hook: { Args: { event: Json }; Returns: Json }
       is_platform_admin: { Args: never; Returns: boolean }
+      search_organizations: {
+        Args: {
+          p_company: string
+          p_limit?: number
+          p_query: string
+          p_role?: string
+        }
+        Returns: {
+          ad_code: string | null
+          address1: string | null
+          address2: string | null
+          address3: string | null
+          alias: string | null
+          bin: string | null
+          branch_name: string
+          branch_sr_no: string
+          cin: string | null
+          city: string | null
+          company_id: string
+          country: string | null
+          country_code: string | null
+          created_at: string
+          default_end_use_code: string | null
+          email: string | null
+          gst_state_code: string | null
+          gstin: string | null
+          id: string
+          iec: string | null
+          is_active: boolean
+          is_agent: boolean
+          is_consignee: boolean
+          is_service_provider: boolean
+          is_shipper: boolean
+          is_transporter: boolean
+          last_import_id: string | null
+          lut_number: string | null
+          marine_open_policy_rate_percent: number | null
+          name: string
+          name_key: string
+          pan: string | null
+          postal_code: string | null
+          raw: Json
+          source_created_by: string | null
+          source_created_on: string | null
+          st_reg_no: string | null
+          state: string | null
+          telephone: string | null
+          updated_at: string
+          web_url: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "organizations"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
     }
     Enums: {
       app_role: "platform_admin" | "company_owner" | "company_admin" | "member"
@@ -2347,4 +2615,3 @@ export const Constants = {
     },
   },
 } as const
-

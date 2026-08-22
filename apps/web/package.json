@@ -19,6 +19,7 @@
     "@checklist/ingest": "workspace:*",
     "@checklist/library": "workspace:*",
     "@checklist/mail": "workspace:*",
+    "exceljs": "^4.4.0",
     "next": "^15.5.0",
     "playwright": "^1.49.0",
     "react": "^19.0.0",

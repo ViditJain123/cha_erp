@@ -6,7 +6,6 @@ import {
   formatForeignPort,
   lookupForeignPort,
   lookupFtaScheme,
-  lookupImporter,
   lookupTariff,
   lookupTariffByPrefix,
   normalizeUqc,
@@ -115,32 +114,20 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     message: `Custom station defaulted to ${customStation.name} for ${transportMode} — confirm.`,
   });
 
-  // ---- Importer (consignee on transport doc, enriched from masters) ----
+  // ---- Importer (consignee on the transport document) ----
+  //
+  // Just the name off the paperwork. Binding it to the organization repository
+  // — the party master exported out of Logi-Sys — happens afterwards in
+  // applyPartyResolution(), which needs a company and a database and so cannot
+  // live in this synchronous, tenant-free merge.
   const consigneeName = bl?.consigneeName ?? awb?.consigneeName ?? inv?.buyerName ?? '';
-  const master = consigneeName ? lookupImporter(consigneeName) : undefined;
-  if (!master) {
-    flags.push({
-      severity: 'warning',
-      path: 'importer',
-      message: `Importer "${consigneeName}" not in importer master — IEC/GSTIN/AD code need manual entry (will be saved for next time).`,
-    });
-  }
-  const importer: ChecklistDraft['importer'] = master
-    ? {
-        name: master.name,
-        addressLines: master.address,
-        iec: master.iec,
-        pan: master.pan,
-        gstin: master.gstin,
-        gstStateCode: master.gstStateCode,
-        gstStateName: master.gstStateName,
-        adCode: master.adCode,
-        branchSno: master.branchSno,
-        matchedFromMasters: true,
-      }
-    : { name: consigneeName, addressLines: [], matchedFromMasters: false };
+  const importer: ChecklistDraft['importer'] = {
+    name: consigneeName,
+    addressLines: [],
+    matchedFromMasters: false,
+  };
   fieldMeta['importer.name'] = {
-    confidence: master ? 'high' : 'medium',
+    confidence: 'medium',
     sources: [fileOf(docs, bl ? 'bill_of_lading' : 'air_waybill') ?? 'unknown'],
   };
 
@@ -343,20 +330,14 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       message: 'Invoice is Ex-Works — actual freight to port of loading must be added manually.',
     });
   if ((effectiveToi === 'FOB' || effectiveToi === 'C&F') && !invoice.insurance) {
-    if (master?.marineOpenPolicyRatePercent) {
-      invoice.insurance = { kind: 'percent', percent: master.marineOpenPolicyRatePercent };
-      flags.push({
-        severity: 'info',
-        path: 'invoice.insurance',
-        message: `Insurance applied at ${master.marineOpenPolicyRatePercent}% of C&F per the importer's marine open policy — replace with the actual premium when available.`,
-      });
-    } else {
-      flags.push({
-        severity: 'warning',
-        path: 'invoice.insurance',
-        message: `TOI is ${toi} — add actual insurance (or set the importer's marine open-policy rate in masters).`,
-      });
-    }
+    // The importer's marine open policy is not known here — it hangs off the
+    // organization repository row, which is only bound after this merge — so
+    // applyPartyResolution() fills it in and clears this warning if it can.
+    flags.push({
+      severity: 'warning',
+      path: 'invoice.insurance',
+      message: `TOI is ${toi} — add actual insurance (or set the importer's marine open-policy rate on the organization).`,
+    });
   }
 
   // ---- Items (description+HSN from invoice; rates from masters) ----
@@ -451,7 +432,8 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
         manufacturerName: inv.sellerName,
         manufacturerAddress: inv.sellerAddressLines.join(', '),
       }),
-      endUseCode: master?.defaultEndUseCode ?? 'GNX100',
+      // Overridden per importer by applyPartyResolution(), once the party is bound.
+      endUseCode: 'GNX100',
       ...((batchNo ?? mfg ?? exp) && {
         batch: {
           ...(batchNo && { batchNo }),

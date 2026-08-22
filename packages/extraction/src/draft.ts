@@ -1,6 +1,16 @@
 import type { InvoiceInput, JobDutyResult, TermsOfInvoice } from '@checklist/core';
 import type { DocType } from './schemas.js';
 
+/**
+ * How a party on the job came to be bound to a row in the organization
+ * repository — the party master exported out of Logi-Sys.
+ *
+ * Logi-Sys resolves its parties by name, so an unbound party is a name we
+ * guessed at rather than one we looked up. 'manual' means a person chose the
+ * row, and re-reading the documents must not undo that.
+ */
+export type PartyMatchStatus = 'exact' | 'fuzzy' | 'ambiguous' | 'none' | 'manual';
+
 /** A reviewer-facing warning attached to the draft. */
 export interface DraftFlag {
   severity: 'error' | 'warning' | 'info';
@@ -100,11 +110,27 @@ export interface ChecklistDraft {
     branchSno?: string;
     /** Branch *name*, which the template asks for separately from branchSno. */
     branchName?: string;
+    city?: string;
     /** The importer's party code in Logi-Sys, when we know it. */
     logisysPartyCode?: string;
     matchedFromMasters: boolean;
+    /** Row in the uploaded organization repository this party is bound to. */
+    organizationId?: string;
+    matchStatus?: PartyMatchStatus;
   };
-  supplier: { name: string; addressLines: string[]; city?: string; country?: string };
+  supplier: {
+    name: string;
+    addressLines: string[];
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+    branchName?: string;
+    iec?: string;
+    gstin?: string;
+    organizationId?: string;
+    matchStatus?: PartyMatchStatus;
+  };
 
   shipment: {
     mawbNo?: string;

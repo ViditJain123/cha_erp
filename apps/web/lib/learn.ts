@@ -1,7 +1,6 @@
 import {
   lookupTariff,
   normalizeMemoryKeys,
-  upsertImporter,
   upsertProductMemory,
   upsertTariff,
 } from '@checklist/core';
@@ -9,30 +8,17 @@ import type { ChecklistDraft } from '@checklist/extraction';
 
 /**
  * Self-improvement: every approved job teaches the masters —
- * new importers, importer+product → RITC memory, and tariff rows the
- * reviewer had to fill by hand. The next job with the same importer or
- * product auto-fills.
+ * importer+product → RITC memory, and tariff rows the reviewer had to fill by
+ * hand. The next job with the same importer or product auto-fills.
+ *
+ * Importers are deliberately not learned. The party master is the Organization
+ * Repository the company uploads out of Logi-Sys, and Logi-Sys resolves its
+ * parties on the exact name it holds — so a row invented from a bill of lading
+ * would be a name Logi-Sys does not know, which is the problem the repository
+ * exists to solve. A missing party is added in Logi-Sys and re-uploaded.
  */
 export function learnFromApprovedJob(draft: ChecklistDraft, jobNumber: string): string[] {
   const learned: string[] = [];
-
-  if (!draft.importer.matchedFromMasters && draft.importer.name && (draft.importer.gstin || draft.importer.iec)) {
-    upsertImporter({
-      name: draft.importer.name,
-      aliases: [],
-      iec: draft.importer.iec ?? '',
-      pan: draft.importer.pan ?? '',
-      gstin: draft.importer.gstin ?? '',
-      gstStateCode: draft.importer.gstStateCode ?? (draft.importer.gstin?.slice(0, 2) ?? ''),
-      gstStateName: draft.importer.gstStateName ?? '',
-      adCode: draft.importer.adCode ?? '',
-      branchSno: draft.importer.branchSno ?? '0',
-      address: draft.importer.addressLines,
-      city: '',
-      state: draft.importer.gstStateName ?? '',
-    });
-    learned.push(`importer "${draft.importer.name}"`);
-  }
 
   for (const item of draft.items) {
     if (!/^\d{8}$/.test(item.ritc)) continue;

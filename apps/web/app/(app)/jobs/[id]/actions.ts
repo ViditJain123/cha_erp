@@ -17,8 +17,10 @@ import {
   missingScopes,
   sendMailAsUser,
 } from '@checklist/graph';
+import type { ChecklistDraft } from '@checklist/extraction';
 import { requireCompany } from '@/lib/auth';
 import { CCR_WAIVED_EVENT } from '@/lib/jobs';
+import { importerFrom, organizationById, supplierFrom } from '@/lib/parties';
 import { serviceClient } from '@/lib/supabase/admin';
 
 export interface JobActionState {
@@ -900,4 +902,86 @@ export async function sendFinalNotice(
 
   revalidatePath(`/jobs/${jobId}`);
   return { ok: true, message: 'Sent. Scrutiny is done and the job is at noting.' };
+}
+
+// ------------------------------------------------------------- parties --
+
+/**
+ * Bind a party on the job to a row in the organization repository.
+ *
+ * Logi-Sys resolves the importer and supplier from its own repository on the
+ * name and branch we send it, so this is not cosmetic: it decides which party
+ * the Bill of Entry is filed for. The chosen row is written straight onto the
+ * latest draft and marked 'manual', which stops a re-read of the documents
+ * putting the guessed name back.
+ *
+ * Called from a client component rather than a form, because the picker
+ * already knows the id it wants and has nothing else to submit.
+ */
+export async function setJobParty(
+  jobId: string,
+  slot: 'importer' | 'supplier',
+  organizationId: string,
+): Promise<JobActionState> {
+  const { ctx, db } = await ownedJob(jobId);
+
+  const org = await organizationById(ctx.companyId, organizationId);
+  if (!org) return { error: 'That organization is not in this company’s repository.' };
+
+  const { data: latest } = await db
+    .from('job_drafts')
+    .select('id, draft')
+    .eq('job_id', jobId)
+    .eq('company_id', ctx.companyId)
+    .order('version', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!latest) return { error: 'Read the documents first — there is no draft to change.' };
+
+  const draft = latest.draft as unknown as ChecklistDraft;
+  const updated: ChecklistDraft =
+    slot === 'importer'
+      ? { ...draft, importer: importerFrom(org, 'manual') }
+      : { ...draft, supplier: supplierFrom(org, 'manual') };
+
+  // The stale warning for this party is the one thing the choice invalidates.
+  updated.flags = draft.flags.filter((f) => f.path !== slot);
+
+  // Edited in place rather than versioned: this corrects the draft's party
+  // rather than superseding the draft, and a new version would read as a
+  // second reading of the documents in the timeline.
+  const { error } = await db
+    .from('job_drafts')
+    .update({ draft: updated as never })
+    .eq('id', latest.id)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  await db.from('job_events').insert({
+    company_id: ctx.companyId,
+    job_id: jobId,
+    actor_kind: 'user',
+    actor_user_id: ctx.userId,
+    type: 'party.bound',
+    payload: {
+      slot,
+      organizationId: org.id,
+      name: org.name,
+      branchName: org.branch_name,
+      previousName: slot === 'importer' ? draft.importer.name : draft.supplier.name,
+    },
+  });
+
+  if (slot === 'importer') {
+    // jobs.importer_name is what the job list and the bond matcher read.
+    await db
+      .from('jobs')
+      .update({ importer_name: org.name })
+      .eq('id', jobId)
+      .eq('company_id', ctx.companyId);
+  }
+
+  revalidatePath(`/jobs/${jobId}`);
+  return { ok: true, message: `${slot === 'importer' ? 'Importer' : 'Supplier'} set to ${org.name}.` };
 }
