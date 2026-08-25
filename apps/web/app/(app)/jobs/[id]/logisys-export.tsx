@@ -12,93 +12,185 @@ import { useRouter } from 'next/navigation';
  * For a customs filing the quiet failure is the expensive one — an incomplete
  * Bill of Entry that looks like a complete one — so the download goes through
  * fetch and reports what came back with it.
+ *
+ * It also used to offer "read documents" only until a draft existed, and the
+ * download button forever after. Both halves of the pipeline are repeatable on
+ * the server — drafts are versioned rather than overwritten, and every export
+ * builds a fresh workbook and files its own row — so that was the UI hiding a
+ * capability rather than the system lacking one. It mattered: a job read before
+ * a mapping fix could never be re-read, so the only way to pick up the fix was
+ * a new job. Both actions are now available whenever a draft exists.
  */
-export function LogisysExport({ jobId, hasDraft }: { jobId: string; hasDraft: boolean }) {
+export function LogisysExport({
+  jobId,
+  hasDraft,
+  draftVersion,
+}: {
+  jobId: string;
+  hasDraft: boolean;
+  draftVersion?: number | null;
+}) {
   const router = useRouter();
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<null | 'reading' | 'building'>(null);
+  const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[] | null>(null);
+  const [note, setNote] = useState<string | null>(null);
 
-  async function readDocuments() {
-    setBusy(true);
+  function begin(phase: 'reading' | 'building') {
+    setBusy(phase);
     setError(null);
     setWarnings(null);
-    try {
-      const res = await fetch(`/api/jobs/${jobId}/draft`, { method: 'POST' });
-      if (!res.ok) {
-        setError(((await res.json()) as { error?: string }).error ?? 'Could not read the documents.');
-        return;
-      }
-      router.refresh();
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setBusy(false);
-    }
+    setNote(null);
   }
 
+  /** Read the job's documents into a new draft version. Returns false on failure. */
+  async function readDocuments(): Promise<boolean> {
+    const res = await fetch(`/api/jobs/${jobId}/draft`, { method: 'POST' });
+    if (!res.ok) {
+      setError(((await res.json()) as { error?: string }).error ?? 'Could not read the documents.');
+      return false;
+    }
+    const { version } = (await res.json()) as { version?: number };
+    if (version) setNote(`Read the documents again — this is revision ${version} of the draft.`);
+    return true;
+  }
+
+  /** Build the workbook from the latest draft and hand it to the browser. */
+  async function downloadWorkbook(): Promise<boolean> {
+    const res = await fetch(`/api/jobs/${jobId}/export`);
+    if (!res.ok) {
+      setError(((await res.json()) as { error?: string }).error ?? 'Export failed.');
+      return false;
+    }
+
+    const header = res.headers.get('x-logisys-warnings');
+    if (header) {
+      const list = JSON.parse(decodeURIComponent(header)) as string[];
+      if (list.length) setWarnings(list);
+    }
+
+    const blob = await res.blob();
+    const name =
+      /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ??
+      'logisys.xlsx';
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    link.click();
+    URL.revokeObjectURL(url);
+    return true;
+  }
+
+  /** Just the workbook, from the draft as it stands. */
   async function download() {
-    setBusy(true);
-    setError(null);
-    setWarnings(null);
+    begin('building');
     try {
-      const res = await fetch(`/api/jobs/${jobId}/export`);
-
-      if (!res.ok) {
-        setError(((await res.json()) as { error?: string }).error ?? 'Export failed.');
-        return;
-      }
-
-      const header = res.headers.get('x-logisys-warnings');
-      if (header) {
-        const list = JSON.parse(decodeURIComponent(header)) as string[];
-        if (list.length) setWarnings(list);
-      }
-
-      const blob = await res.blob();
-      const name =
-        /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ??
-        'logisys.xlsx';
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = name;
-      link.click();
-      URL.revokeObjectURL(url);
-
+      await downloadWorkbook();
       router.refresh();
     } catch (err) {
       setError((err as Error).message);
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   }
+
+  /** The whole pipeline: read the documents afresh, then export what that gives. */
+  async function redo() {
+    setConfirming(false);
+    begin('reading');
+    try {
+      // The draft is filed either way. If the export then refuses — a tariff
+      // code the new reading could not resolve, a line that stopped
+      // reconciling — that refusal is about this new revision, and the refresh
+      // below has to happen so the page shows it.
+      if (!(await readDocuments())) return;
+      setBusy('building');
+      await downloadWorkbook();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(null);
+      router.refresh();
+    }
+  }
+
+  /** First read, for a job that has never been read. */
+  async function firstRead() {
+    begin('reading');
+    try {
+      await readDocuments();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(null);
+      router.refresh();
+    }
+  }
+
+  const primary =
+    'inline-block rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50';
+  const secondary =
+    'inline-block rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50';
 
   return (
     <div className="space-y-3">
       {hasDraft ? (
-        <button
-          type="button"
-          onClick={download}
-          disabled={busy}
-          className="inline-block rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
-        >
-          {busy ? 'Building…' : 'Download spreadsheet'}
-        </button>
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button type="button" onClick={download} disabled={busy !== null} className={primary}>
+              {busy === 'building' ? 'Building…' : 'Download spreadsheet'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirming(true)}
+              disabled={busy !== null || confirming}
+              className={secondary}
+            >
+              {busy === 'reading' ? 'Reading documents…' : 'Read and export again'}
+            </button>
+          </div>
+
+          <p className="text-xs text-slate-500">
+            Download builds the workbook again from the reading already on file
+            {draftVersion ? ` (revision ${draftVersion})` : ''}. Read and export again starts over
+            from the documents themselves.
+          </p>
+
+          {confirming && (
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+              <p className="mb-2">
+                This reads every document on the job again — one model call each — and files the
+                result as a new draft revision. Nothing is overwritten: the revision you have now
+                stays on record, so a Bill of Entry filed from it is still reconstructible.
+              </p>
+              <div className="flex gap-2">
+                <button type="button" onClick={redo} className={primary}>
+                  Read and export again
+                </button>
+                <button type="button" onClick={() => setConfirming(false)} className={secondary}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       ) : (
         <div className="space-y-2">
-          <button
-            type="button"
-            onClick={readDocuments}
-            disabled={busy}
-            className="inline-block rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
-          >
+          <button type="button" onClick={firstRead} disabled={busy !== null} className={primary}>
             {busy ? 'Reading documents…' : 'Read documents'}
           </button>
           <p className="text-xs text-slate-500">
             The spreadsheet is built from the job&rsquo;s documents. Read them once, then export.
           </p>
+        </div>
+      )}
+
+      {note && (
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+          <p>{note}</p>
         </div>
       )}
 

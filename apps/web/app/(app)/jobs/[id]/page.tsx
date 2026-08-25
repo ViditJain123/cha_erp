@@ -254,7 +254,11 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
                 import, which only accepts Visual Impex files), then bring the resulting checklist
                 PDF back here.
               </p>
-              <LogisysExport jobId={job.id} hasDraft={Boolean(latestDraft)} />
+              <LogisysExport
+                jobId={job.id}
+                hasDraft={Boolean(latestDraft)}
+                draftVersion={latestDraft?.version ?? null}
+              />
               {(exports ?? []).length > 0 && (
                 <p className="mt-3 text-xs text-slate-400">
                   Last exported {relativeTime(exports?.[0]?.created_at ?? null)} ·{' '}
