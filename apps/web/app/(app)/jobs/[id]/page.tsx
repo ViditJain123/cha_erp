@@ -258,6 +258,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
                 jobId={job.id}
                 hasDraft={Boolean(latestDraft)}
                 draftVersion={latestDraft?.version ?? null}
+                documentCount={(documents ?? []).length}
               />
               {(exports ?? []).length > 0 && (
                 <p className="mt-3 text-xs text-slate-400">

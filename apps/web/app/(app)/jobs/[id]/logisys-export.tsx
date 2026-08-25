@@ -25,10 +25,12 @@ export function LogisysExport({
   jobId,
   hasDraft,
   draftVersion,
+  documentCount,
 }: {
   jobId: string;
   hasDraft: boolean;
   draftVersion?: number | null;
+  documentCount?: number;
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState<null | 'reading' | 'building'>(null);
@@ -99,8 +101,8 @@ export function LogisysExport({
 
   /** The whole pipeline: read the documents afresh, then export what that gives. */
   async function redo() {
-    setConfirming(false);
     begin('reading');
+    setConfirming(false);
     try {
       // The draft is filed either way. If the export then refuses — a tariff
       // code the new reading could not resolve, a line that stopped
@@ -135,6 +137,41 @@ export function LogisysExport({
   const secondary =
     'inline-block rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50';
 
+  /**
+   * What the wait looks like while it happens.
+   *
+   * This is rendered in the same place the confirmation panel was, because the
+   * first version put it nowhere: confirming dismissed the panel containing the
+   * button just pressed, and the only remaining sign of life was a label swap
+   * on a greyed-out secondary button further up. Reading is one model call per
+   * document and the route allows five minutes for it, so silence for that long
+   * reads as a dead button — which is exactly how it was reported.
+   */
+  const progress = busy && (
+    <div
+      role="status"
+      aria-live="polite"
+      className="flex items-start gap-3 rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-xs text-indigo-800"
+    >
+      <span
+        aria-hidden
+        className="mt-0.5 h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-indigo-300 border-t-indigo-700"
+      />
+      <div>
+        <p className="font-medium">
+          {busy === 'reading'
+            ? `Reading ${documentCount ? `${documentCount} ` : ''}document${documentCount === 1 ? '' : 's'}…`
+            : 'Building the workbook…'}
+        </p>
+        <p className="mt-0.5 text-indigo-700">
+          {busy === 'reading'
+            ? 'One model call per document, so this usually takes a minute or two. Keep this page open — the download starts on its own when the reading is done.'
+            : 'Almost there. The file will download when it is ready.'}
+        </p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="space-y-3">
       {hasDraft ? (
@@ -159,7 +196,9 @@ export function LogisysExport({
             from the documents themselves.
           </p>
 
-          {confirming && (
+          {progress}
+
+          {confirming && !busy && (
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
               <p className="mb-2">
                 This reads every document on the job again — one model call each — and files the
@@ -185,6 +224,7 @@ export function LogisysExport({
           <p className="text-xs text-slate-500">
             The spreadsheet is built from the job&rsquo;s documents. Read them once, then export.
           </p>
+          {progress}
         </div>
       )}
 
