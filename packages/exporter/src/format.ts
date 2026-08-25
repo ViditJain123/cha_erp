@@ -41,20 +41,6 @@ export function formatLogisysDate(iso: string): string | undefined {
 }
 
 /**
- * Round to a fixed number of decimals without leaving float noise in the XML.
- *
- * `1.20757 * 1` can serialise as `1.2075699999999999`; going through toFixed
- * and back gives the number Logi-Sys expects to see.
- */
-export function roundTo(value: number, decimals: number): number {
-  return Number(value.toFixed(decimals));
-}
-
-/** Decimal places for money amounts and for unit prices. */
-export const AMOUNT_DP = 2;
-export const UNIT_PRICE_DP = 6;
-
-/**
  * XML-escape a text value, and drop characters XML cannot carry.
  *
  * Both halves matter. Supplier addresses contain `&`, and `Marks_&_Nos` values

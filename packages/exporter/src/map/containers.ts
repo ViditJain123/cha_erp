@@ -1,5 +1,5 @@
-import { parseContainerSizeType } from '@checklist/core';
-import { BLANK, code, num } from '../cell.js';
+import { iso6346Code, parseContainerSizeType } from '@checklist/core';
+import { BLANK, code, int, orElse, weight } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -18,6 +18,20 @@ export function containersRows(ctx: MapContext): SheetRow[] {
     ctx.warn('CONTAINERS', 'No containers found on the B/L for a sea shipment.');
   }
 
+  // `IGM Sr.No` is mandatory, and nothing we read carries it. Leaving it blank
+  // is what rejected job dbf3530c: Logi-Sys returned four errors, one per
+  // container, and refused the whole workbook — so the invoice and the products
+  // never landed either. Number them positionally, as Logi-Sys' own export
+  // does (1, 2, 3, 4 across its four containers), and say so out loud.
+  if (containers.length) {
+    ctx.warn(
+      'CONTAINERS.IGM Sr.No',
+      `Numbered the ${containers.length} container${containers.length === 1 ? '' : 's'} ` +
+        `1–${containers.length} in B/L order. Logi-Sys makes this column mandatory and no ` +
+        'document we read carries the IGM line number — check them against the IGM before filing.',
+    );
+  }
+
   return containers.map((container, i) => {
     const { size, typeCode } = parseContainerSizeType(container.sizeType);
 
@@ -32,18 +46,19 @@ export function containersRows(ctx: MapContext): SheetRow[] {
     }
 
     return {
-      'IGM Sr.No': BLANK,
+      'IGM Sr.No': int(i + 1),
       'Container No': code(container.number),
       'Seal No': code(container.sealNo),
       // CONFIRM: the draft does not model LCL. Every job so far is full-container,
       // and a wrong value here changes how Customs treats the consignment.
       FCL_LCL: code('FCL'),
-      ContainerTypeCode: code(typeCode),
+      ContainerTypeCode: code(iso6346Code(size, typeCode)),
       ContainerSize: code(size),
       'Truck Number': BLANK,
       EmptyContainerLocation: BLANK,
-      PackagesStuffed: num(container.packagesStuffed),
-      GrWt: num(container.grossWeightKg),
+      // Logi-Sys writes 0 rather than nothing in these two on its own export.
+      PackagesStuffed: orElse(int(container.packagesStuffed), int(0)),
+      GrWt: orElse(weight(container.grossWeightKg), weight(0)),
     };
   });
 }

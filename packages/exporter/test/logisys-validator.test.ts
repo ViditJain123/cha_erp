@@ -161,7 +161,9 @@ describe('SW_PRODUCTION when the dates are known', () => {
     const { buffer, warnings } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
     const [row] = await readSheet(buffer, 'SW_PRODUCTION');
     expect(row!['Prod_Batch_ID']).toBe('JT260407');
-    expect(row!['Prod_Batch_Quantity']).toBe(10);
+    // CONFIRM the precision: no vendor export we hold has a SW_PRODUCTION row,
+    // so this follows the 6dp the item quantity columns use.
+    expect(row!['Prod_Batch_Quantity']).toBe('10.000000');
     expect(row!['Prod_Batch_Unit']).toBe('NOS');
     expect(row!['Prod_Manufacturer_Date']).toBe('07-Apr-2026');
     expect(row!['Prod_Expiry_Date']).toBe('06-Apr-2028');
@@ -183,5 +185,49 @@ describe('terms of invoice Logi-Sys has no value for', () => {
     };
 
     await expect(buildLogisysWorkbook({ draft, job: AIR_JOB })).rejects.toThrow(/INVOICES\.TOI/);
+  });
+});
+
+describe('the Logi-Sys upload validator, as it rejected job dbf3530c', () => {
+  /**
+   * The whole workbook came back with four errors and nothing else:
+   *
+   *   CONTAINERS : IGM Sr.No : Shipment #nullContainer #1 This field is mandatory
+   *   ... and the same for containers #2, #3 and #4.
+   *
+   * Logi-Sys rejects the file entire on any error, so the invoice and the four
+   * products never landed either — which read as "the products are not being
+   * picked up" when the products were never the problem.
+   */
+  const SEA_DRAFT: ChecklistDraft = {
+    ...EP061126_1_DRAFT,
+    shipment: {
+      ...EP061126_1_DRAFT.shipment,
+      containers: [
+        { number: 'MRKU5476879', sizeType: '40HC', sealNo: 'ML-AE4514913' },
+        { number: 'GAOU7335753', sizeType: '40HC', sealNo: 'ML-AE4514917' },
+        { number: 'MRSU7310982', sizeType: '40HC', sealNo: 'ML-AE4514911' },
+        { number: 'GCXU6202790', sizeType: '40HC', sealNo: 'ML-AE4514915' },
+      ],
+    },
+  };
+
+  it('numbers every container, so none of the four errors can recur', async () => {
+    const { buffer, warnings } = await buildLogisysWorkbook({
+      draft: SEA_DRAFT,
+      job: { id: 'dbf3530c', reference: 'RAJSHREE-1' },
+    });
+    const rows = await readSheet(buffer, 'CONTAINERS');
+
+    expect(rows).toHaveLength(4);
+    expect(rows.map((r) => r['IGM Sr.No'])).toEqual(['1', '2', '3', '4']);
+    for (const row of rows) {
+      expect(row['IGM Sr.No']).toBeDefined();
+      expect(String(row['IGM Sr.No'])).not.toBe('');
+    }
+
+    // Guessed, so said out loud: the serials are positional, not read off an IGM.
+    const warning = warnings.find((w) => w.startsWith('CONTAINERS.IGM Sr.No'));
+    expect(warning).toContain('1–4');
   });
 });

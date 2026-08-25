@@ -25,11 +25,12 @@ function renderCell(ref: string, cell: Cell): string {
       // cleared"; a missing cell reads as "not supplied", which is what a blank
       // column on a Bill of Entry means.
       return '';
-    case 'number':
-      return `<c r="${ref}"><v>${cell.value}</v></c>`;
     case 'text':
       // Inline strings, not shared strings: xl/sharedStrings.xml is never
       // rewritten, so the header row's string indexes cannot be perturbed.
+      // Logi-Sys reads them: the ErrorList it returned for job FUCHS-13841
+      // enumerated our products by serial, which it could only do having
+      // parsed these cells.
       return `<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${escapeXml(cell.value)}</t></is></c>`;
   }
 }

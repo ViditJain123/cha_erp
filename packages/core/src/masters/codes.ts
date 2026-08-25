@@ -379,6 +379,41 @@ export function parseContainerSizeType(value: string | undefined | null): Contai
   };
 }
 
+/**
+ * ISO 6346 size/type code for `ContainerTypeCode`.
+ *
+ * The workbook Logi-Sys exported for job I-10793 writes `22G1` against a
+ * `ContainerSize` of `20` — an ISO 6346 code, not the two-letter group that
+ * `parseContainerSizeType` returns. Both columns are filled, so the group is
+ * not what that column wants.
+ *
+ * CONFIRM. `22G1` is the only value any vendor file has shown us; the 40- and
+ * 45-foot rows below are the standard ISO codes for those size/group pairs and
+ * are inferred. A wrong code here is a wrong container description on the Bill
+ * of Entry, so it is one table to correct when an upload says otherwise.
+ */
+const ISO_6346: Record<string, Record<string, string>> = {
+  '20': { GP: '22G1', HC: '25G1', RF: '22R1', OT: '22U1', FR: '22P1', TK: '22T1' },
+  '40': { GP: '42G1', HC: '45G1', RF: '45R1', OT: '42U1', FR: '42P1', TK: '42T1' },
+  '45': { GP: 'L5G1', HC: 'L5G1', RF: 'L5R1', OT: 'L5U1', FR: 'L5P1', TK: 'L5T1' },
+};
+
+/**
+ * Combine the size and group `parseContainerSizeType()` returns into the ISO
+ * 6346 code the template's `ContainerTypeCode` column asks for.
+ *
+ * Returns undefined when either half is unknown, rather than guessing a
+ * standard box — a container we could not read is one the operator should key.
+ */
+export function iso6346Code(
+  size: string | undefined,
+  typeCode: string | undefined,
+): string | undefined {
+  if (!size || !typeCode) return undefined;
+  return ISO_6346[size]?.[typeCode];
+}
+
+
 /* ------------------------------------------------------------------ *
  * Package units
  * ------------------------------------------------------------------ */
@@ -494,4 +529,60 @@ export function pad8(hs: string | undefined | null): string | undefined {
   if (!digits) return undefined;
   if (digits.length > 8) return undefined;
   return digits.padEnd(8, '0');
+}
+
+/* ------------------------------------------------------------------ *
+ * Single Window additional information
+ * ------------------------------------------------------------------ *
+ *
+ * SW_ADDL_INFO's `Info_Type` and `info_Qualifier` are code columns. The draft
+ * carries the prose labels the Logi-Sys UI shows — "Item Characteristics",
+ * "Standard UQC" — because that is what the screenshots and the PGA rules are
+ * written in. The workbook Logi-Sys exported for job I-10793 writes `CHR` and
+ * `SQC` in the same two columns, so the labels have to be translated on the way
+ * out. Same shape of problem as PORT/COUNTRY/TOI above, same fix: one table.
+ */
+
+/** `Info_Type` label -> code. Confirmed against the I-10793 export. */
+export const SW_INFO_TYPE_CODE: Record<string, string> = {
+  'Item Characteristics': 'CHR',
+  'Item Category': 'CTG',
+  'Item Identification': 'IDT',
+  'Product Name': 'PNM',
+};
+
+/**
+ * `info_Qualifier` label -> code.
+ *
+ * Only what the I-10793 export actually shows. The FSSAI qualifiers in
+ * SINGLE_WINDOW_RULES — Storage Condition, Drug Related Category, Foods &
+ * Supplement Proprietry Status, Retail Pre-pack Food Article — are deliberately
+ * absent: no vendor export we hold carries a food or pharma consignment, and
+ * a plausible-looking three-letter code invented here would go onto a customs
+ * declaration as fact. Those rows warn and are dropped until a real export
+ * names their codes.
+ */
+export const SW_QUALIFIER_CODE: Record<string, string> = {
+  'Standard UQC': 'SQC',
+  'Chemical Category (CPC)': 'CPC',
+  'Chemical Abstract Service registration number.': 'CAS',
+  'Name as per the IUPAC Nomenclature': 'IUP',
+};
+
+function swLookup(table: Record<string, string>, label: string | undefined): string | undefined {
+  if (!label) return undefined;
+  const trimmed = label.trim();
+  if (table[trimmed]) return table[trimmed];
+  // A label already given as its code passes through: merge.ts writes the
+  // labels today, but a hand-edited draft may hold either.
+  const key = trimmed.toUpperCase();
+  return Object.values(table).includes(key) ? key : undefined;
+}
+
+export function swInfoTypeCode(label: string | undefined): string | undefined {
+  return swLookup(SW_INFO_TYPE_CODE, label);
+}
+
+export function swQualifierCode(label: string | undefined): string | undefined {
+  return swLookup(SW_QUALIFIER_CODE, label);
 }

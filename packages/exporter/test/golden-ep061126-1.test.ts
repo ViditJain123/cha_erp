@@ -81,15 +81,17 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(typeof row!['AWB_BL_Date']).toBe('string');
     });
 
-    it('declares both weights, in numbers', async () => {
+    it('declares both weights, as text at three decimals', async () => {
+      // Logi-Sys writes "4000.000" packages and "100400.000" gross on its own
+      // export, so a package count carries three decimals like a weight does.
       const [row] = await readSheet(workbook, 'SHIPMENT');
-      expect(row!['No_of_Pkg']).toBe(6258);
+      expect(row!['No_of_Pkg']).toBe('6258.000');
       expect(row!['PkgUnitCode']).toBe('BAG');
-      expect(row!['GrWt']).toBe(157703);
+      expect(row!['GrWt']).toBe('157703.000');
       expect(row!['GrWtUnitCode']).toBe('KGS');
-      expect(row!['NtWt']).toBe(156450);
+      expect(row!['NtWt']).toBe('156450.000');
       expect(row!['NtWtUnitCode']).toBe('KGS');
-      expect(typeof row!['GrWt']).toBe('number');
+      expect(typeof row!['GrWt']).toBe('string');
     });
   });
 
@@ -109,6 +111,14 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       ]);
     });
 
+    it('numbers every container against the IGM', async () => {
+      // Mandatory, and nothing we read carries it — leaving it blank is what
+      // Logi-Sys rejected job dbf3530c on, four errors for four containers.
+      const rows = await readSheet(workbook, 'CONTAINERS');
+      expect(rows.map((r) => r['IGM Sr.No'])).toEqual(['1', '2', '3', '4', '5', '6']);
+      expect(warnings.some((w) => w.startsWith('CONTAINERS.IGM Sr.No'))).toBe(true);
+    });
+
     it('carries each container’s seal', async () => {
       const rows = await readSheet(workbook, 'CONTAINERS');
       expect(rows.map((r) => r['Seal No'])).toEqual([
@@ -125,14 +135,16 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       const rows = await readSheet(workbook, 'CONTAINERS');
       for (const row of rows) {
         expect(row['ContainerSize']).toBe('40');
-        expect(row['ContainerTypeCode']).toBe('HC');
+        // ISO 6346, not the two-letter group: Logi-Sys' own export writes
+        // "22G1" against a size of "20", so a 40' high cube is "45G1".
+        expect(row['ContainerTypeCode']).toBe('45G1');
         expect(row['FCL_LCL']).toBe('FCL');
       }
     });
 
     it('carries the packing list’s per-container stuffing', async () => {
       const rows = await readSheet(workbook, 'CONTAINERS');
-      expect(rows[0]!['PackagesStuffed']).toBe(1043);
+      expect(rows[0]!['PackagesStuffed']).toBe('1043');
       expect(rows.reduce((sum, r) => sum + Number(r['PackagesStuffed'] ?? 0), 0)).toBe(6258);
     });
   });
@@ -140,11 +152,11 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
   describe('INVOICES', () => {
     it('carries the invoice', async () => {
       const [row] = await readSheet(workbook, 'INVOICES');
-      expect(row!['InvSrNo']).toBe(1);
+      expect(row!['InvSrNo']).toBe('1');
       expect(row!['Invoice_No']).toBe('ASI-EP061126-1');
       expect(row!['Invoice_Date']).toBe('30-Jun-2026');
       expect(row!['Inv_Currency']).toBe('USD');
-      expect(row!['Product_Value']).toBe(188924.33);
+      expect(row!['Product_Value']).toBe('188924.33');
     });
 
     it('declares cost-and-freight, not CIF', async () => {
@@ -157,8 +169,13 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
 
     it('carries insurance as a percentage, with no amount', async () => {
       const [row] = await readSheet(workbook, 'INVOICES');
-      expect(row!['Ins_%']).toBe(1.125);
-      expect(row!['Ins_Amount']).toBeUndefined();
+      expect(row!['Ins_%']).toBe('1.1250');
+      // The percentage and the amount used to be mutually exclusive here, with
+      // the amount left blank. They are no longer: Logi-Sys writes the whole
+      // charge block as explicit zeros on its own export, so a percentage-insured
+      // invoice now carries "0.00" alongside it. "0.00" is not a competing
+      // amount, but the exclusivity that this test used to assert is gone.
+      expect(row!['Ins_Amount']).toBe('0.00');
     });
 
     it('carries the supplier with a coded country', async () => {
@@ -175,8 +192,8 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
     it('declares the one line', async () => {
       const rows = await readSheet(workbook, 'ITEMS');
       expect(rows).toHaveLength(1);
-      expect(rows[0]!['InvSrNo']).toBe(1);
-      expect(rows[0]!['ItemSrNo']).toBe(1);
+      expect(rows[0]!['InvSrNo']).toBe('1');
+      expect(rows[0]!['ItemSrNo']).toBe('1');
       expect(rows[0]!['Product_Description']).toBe('PP GRANULES (POLYPROPYLENE)');
     });
 
@@ -194,9 +211,9 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       // at 1.20757. Rescaling one without the other overstates the line 1000x,
       // which build.ts refuses outright.
       const [row] = await readSheet(workbook, 'ITEMS');
-      expect(row!['QTY']).toBe(156450);
+      expect(row!['QTY']).toBe('156450.000000');
       expect(row!['Unit']).toBe('KGS');
-      expect(row!['Unit_Price']).toBe(1.20757);
+      expect(row!['Unit_Price']).toBe('1.207570');
       expect(Number(row!['QTY']) * Number(row!['Unit_Price'])).toBeCloseTo(188924.33, 1);
     });
 
@@ -257,9 +274,13 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
   describe('EXCHANGE_RATE', () => {
     it('carries the CBIC rate', async () => {
       const rows = await readSheet(workbook, 'EXCHANGE_RATE');
-      expect(rows).toHaveLength(1);
-      expect(rows[0]!['CURRENCY_CODE']).toBe('USD');
-      expect(rows[0]!['EXCHANGE_RATE']).toBe(96.05);
+      // Two rows: Logi-Sys' own export leads with the rupee at parity, so the
+      // sheet states the base of the conversion rather than implying it.
+      expect(rows).toHaveLength(2);
+      expect(rows[0]!['CURRENCY_CODE']).toBe('INR');
+      expect(rows[0]!['EXCHANGE_RATE']).toBe('1.000000');
+      expect(rows[1]!['CURRENCY_CODE']).toBe('USD');
+      expect(rows[1]!['EXCHANGE_RATE']).toBe('96.050000');
     });
   });
 
@@ -268,25 +289,33 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       const rows = await readSheet(workbook, 'SW_ADDL_INFO');
       expect(rows).toHaveLength(4);
 
-      const uqc = rows.find((r) => r['info_Qualifier'] === 'Standard UQC');
-      expect(uqc!['Measure']).toBe(156450);
+      // Both columns are code columns. The draft carries the prose the
+      // Logi-Sys UI shows ("Standard UQC"); its own export writes SQC.
+      expect(rows.map((r) => r['Info_Type'])).toEqual(['CHR', 'CTG', 'IDT', 'PNM']);
+
+      const uqc = rows.find((r) => r['info_Qualifier'] === 'SQC');
+      expect(uqc!['Measure']).toBe('156450.000000');
       expect(uqc!['Measure_Unit']).toBe('KGS');
 
-      const cpc = rows.find((r) => r['info_Qualifier'] === 'Chemical Category (CPC)');
+      const cpc = rows.find((r) => r['info_Qualifier'] === 'CPC');
       expect(cpc!['Info_Code_Description']).toBe('CPCPR');
 
-      const cas = rows.find((r) => String(r['info_Qualifier']).startsWith('Chemical Abstract'));
+      const cas = rows.find((r) => r['info_Qualifier'] === 'CAS');
       expect(cas!['Information']).toBe('9003-07-0');
 
-      const iupac = rows.find((r) => String(r['info_Qualifier']).includes('IUPAC'));
+      const iupac = rows.find((r) => r['info_Qualifier'] === 'IUP');
       expect(iupac!['Information']).toBe('POLYPROPYLENE');
+
+      // The rows that carry no measurement get 0.000000, not a blank, as they
+      // do on the vendor's export.
+      for (const row of [cpc, cas, iupac]) expect(row!['Measure']).toBe('0.000000');
     });
 
     it('numbers every row against invoice 1, item 1', async () => {
       const rows = await readSheet(workbook, 'SW_ADDL_INFO');
       for (const row of rows) {
-        expect(row['Inv_SrNo']).toBe(1);
-        expect(row['Item_SrNo']).toBe(1);
+        expect(row['Inv_SrNo']).toBe('1');
+        expect(row['Item_SrNo']).toBe('1');
       }
     });
   });
@@ -312,12 +341,28 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
     });
   });
 
+  describe('STATEMENT', () => {
+    it('files the standing declarations, scoped as Logi-Sys scopes them', async () => {
+      const rows = await readSheet(workbook, 'STATEMENT');
+      expect(
+        rows.map((r) => [r['Inv_SrNo'], r['Item_SrNo'], r['StatementType'], r['StatementCode']]),
+      ).toEqual([
+        ['0', '0', 'DEC', 'CUG00'],
+        ['0', '0', 'DEC', 'CUG01'],
+        ['1', '0', 'DEC', 'CUV01'],
+        ['1', '0', 'DEC', 'CUV02'],
+        ['1', '0', 'DEC', 'CUV03'],
+        // Item-scoped, so one per line. This job has one.
+        ['1', '1', 'DEC', 'PC002'],
+      ]);
+    });
+  });
+
   describe('sheets that do not apply to a home-consumption BE', () => {
     it('leaves them header-only', async () => {
       const wb = await openWorkbook(workbook);
       for (const name of [
         'INBOND_EXBOND',
-        'STATEMENT',
         'SEC65_EXBOND_INFO',
         'RE-IMPORT',
         'LICENSE',

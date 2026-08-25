@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { code, num, text } from '../src/cell.js';
+import { code, text, weight } from '../src/cell.js';
 import { fillTemplate } from '../src/sheet-writer.js';
 import { loadTemplate, templateHash } from '../src/template.js';
 import { headersOf, openWorkbook, partNames, partText, readSheet } from './read.js';
@@ -83,7 +83,9 @@ describe('a produced workbook', () => {
         { 'Container No': code('IAAU1730986'), 'Seal No': code('IAAH479538') },
         { 'Container No': code('IAAU1868002'), 'Seal No': code('IAAH479537') },
       ],
-      SHIPMENT: [{ No_of_Pkg: num(6258), 'Marks_&_Nos': text('AS PER BL') }],
+      SHIPMENT: [
+        { No_of_Pkg: weight(6258), GrWt: weight(157703), 'Marks_&_Nos': text('AS PER BL') },
+      ],
     });
   }
 
@@ -154,10 +156,31 @@ describe('a produced workbook', () => {
     expect(rows[0]!['AD_Code']).not.toBe(510226);
   });
 
-  it('writes numbers as numbers', async () => {
+  it('writes numbers as text, at the precision the column was given', async () => {
+    // Logi-Sys' own export writes every cell as a string, numbers included:
+    // liv_job1/JobData_I-10793_25-26_20260824_114941.xlsx carries "4000.000"
+    // packages and "100400.000" gross. Both assertions are at the same 3dp on
+    // purpose — what is being checked is that the precision travels from the
+    // call site to the file, not merely that the cell is a string.
     const rows = await readSheet(await produce(), 'SHIPMENT');
-    expect(rows[0]!['No_of_Pkg']).toBe(6258);
-    expect(typeof rows[0]!['No_of_Pkg']).toBe('number');
+    expect(rows[0]!['No_of_Pkg']).toBe('6258.000');
+    expect(rows[0]!['GrWt']).toBe('157703.000');
+    expect(typeof rows[0]!['No_of_Pkg']).toBe('string');
+  });
+
+  it('emits no numeric cell anywhere in the file', async () => {
+    // The structural form of the assertion above, and the one that catches a
+    // renderCell regression: a numeric cell is `<c r="A2"><v>1</v></c>`, with
+    // no `t=` attribute. Every cell we write must carry t="inlineStr".
+    const produced = await produce();
+    for (const part of await partNames(produced)) {
+      if (!part.startsWith('xl/worksheets/')) continue;
+      const xml = (await partText(produced, part)) ?? '';
+      // Row 1 is the vendor's own header row, written as shared strings
+      // (t="s") by the vendor; only the rows we spliced in are ours.
+      const ours = xml.replace(/<row r="1"[\s\S]*?<\/row>/, '');
+      expect(ours, part).not.toMatch(/<c r="[A-Z]+\d+"><v>/);
+    }
   });
 
   it('leaves sheets it was given no rows for untouched', async () => {

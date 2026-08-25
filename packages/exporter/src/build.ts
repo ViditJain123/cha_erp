@@ -5,6 +5,7 @@ import { generalRows } from './map/general.js';
 import { invoicesRows } from './map/invoices.js';
 import { itemsRows } from './map/items.js';
 import { shipmentRows } from './map/shipment.js';
+import { statementRows } from './map/statement.js';
 import { supportingDocsRows } from './map/supporting-docs.js';
 import { swAddlInfoRows } from './map/sw-addl-info.js';
 import { swProductionRows } from './map/sw-production.js';
@@ -31,7 +32,6 @@ export function logisysTemplateVersion(): string {
  */
 export const UNMAPPED_SHEETS = [
   'INBOND_EXBOND', // warehousing — a different BE type
-  'STATEMENT',
   'SEC65_EXBOND_INFO', // in-bond manufacturing
   'RE-IMPORT',
   'LICENSE', // advance authorisation / EPCG debits
@@ -71,6 +71,7 @@ export async function buildLogisysWorkbook(
     CONTAINERS: containersRows(ctx),
     INVOICES: invoicesRows(ctx),
     ITEMS: itemsRows(ctx),
+    STATEMENT: statementRows(ctx),
     SW_ADDL_INFO: swAddlInfoRows(ctx),
     SW_PRODUCTION: swProductionRows(ctx),
     SUPPORTING_DOCS: supportingDocsRows(ctx),

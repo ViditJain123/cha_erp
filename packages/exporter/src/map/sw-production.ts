@@ -1,4 +1,4 @@
-import { isoDate, num, text } from '../cell.js';
+import { int, isoDate, qty, text } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -35,10 +35,11 @@ export function swProductionRows(ctx: MapContext): SheetRow[] {
     }
 
     rows.push({
-      Inv_SrNo: num(1),
-      Item_SrNo: num(item.slNo),
+      Inv_SrNo: int(1),
+      Item_SrNo: int(item.slNo),
       Prod_Batch_ID: text(batch.batchNo),
-      Prod_Batch_Quantity: num(batch.quantity),
+      // CONFIRM the precision: no vendor export we hold has a batch row.
+      Prod_Batch_Quantity: qty(batch.quantity),
       Prod_Batch_Unit: text(batch.quantity != null ? item.unit : undefined),
       Prod_Manufacturer_Date: isoDate(batch.manufactureDate),
       Prod_Expiry_Date: isoDate(batch.expiryDate),

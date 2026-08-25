@@ -1,5 +1,5 @@
 import { iso2, pad8 } from '@checklist/core';
-import { BLANK, code, isoDate, num, text, unitPrice, yn } from '../cell.js';
+import { BLANK, code, decimal, int, isoDate, money, qty, rate5, text, weight, yn } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -21,6 +21,36 @@ function countryFromAddress(address: string | undefined): string | undefined {
   }
   return undefined;
 }
+
+/**
+ * Columns Logi-Sys writes as an explicit zero on every ITEMS row of its own
+ * export, whether or not the duty instrument applies.
+ *
+ * They are taken verbatim from the I-10793 export, at its decimal places. Two
+ * of that file's constants are deliberately absent: `ADD_Basis` ('AV') and
+ * `CVD_CalculatedOn` ('1'), which are not zeros but assessment bases, and
+ * nothing tells us they hold for a consignment that carries no anti-dumping or
+ * countervailing duty.
+ */
+const ITEM_ZEROS = {
+  Inbond_InvSrNo: int(0),
+  Inbond_ItemSrNo: int(0),
+  Accessories_Status: int(0),
+  WH_SalePrice_INR: money(0),
+  Tarrif_Value_Qty: weight(0),
+  Tarrif_Value_Amount: money(0),
+  ADD_Qty: qty(0),
+  // A rate, not an amount — but the vendor writes it at 2dp all the same.
+  'ADD_%Rate': decimal(0, 2),
+  ADD_AmountPerUnit: rate5(0),
+  'Other_Duty_%Rate': decimal(0, 3),
+  Other_Duty_AmountPerUnit: decimal(0, 3),
+  SVB_Rate_Assessable: rate5(0),
+  SVB_Rate_Duty: rate5(0),
+  Previous_BEUnitPrice: qty(0),
+  GST_Comp_Cess_SalePrice_INR: qty(0),
+  CVD_Rate: money(0),
+} satisfies SheetRow;
 
 /**
  * ITEMS — one row per line item.
@@ -68,15 +98,15 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     const fta = draft.ftaClaim;
 
     return {
-      InvSrNo: num(1),
-      ItemSrNo: num(item.slNo),
-      Inbond_InvSrNo: BLANK,
-      Inbond_ItemSrNo: BLANK,
+      ...ITEM_ZEROS,
+
+      InvSrNo: int(1),
+      ItemSrNo: int(item.slNo),
 
       Product_Description: text(item.description),
-      QTY: num(item.quantity),
+      QTY: qty(item.quantity),
       Unit: code(item.unit),
-      Unit_Price: unitPrice(item.unitPrice),
+      Unit_Price: qty(item.unitPrice),
       CTH: code(cth),
       RITC: code(cth),
       // The Central Excise Tariff Heading is the same 8-digit classification as
@@ -90,7 +120,6 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       Model: text(item.model),
       End_Use: code(item.endUseCode),
       Country_of_Origin: code(originCountry),
-      Accessories_Status: BLANK,
       Accessories_Details: BLANK,
 
       // Preferential when an FTA exemption is claimed on this line, standard

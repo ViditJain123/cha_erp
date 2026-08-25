@@ -1,5 +1,5 @@
 import { TOI_CODE, branchNameForExport, iso2 } from '@checklist/core';
-import { BLANK, code, isoDate, money, num, text, yn } from '../cell.js';
+import { BLANK, code, int, isoDate, money, orElse, percent, text, yn } from '../cell.js';
 import type { Cell } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
@@ -57,15 +57,37 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
   let insuranceAmount: Cell = BLANK;
   let insuranceCurrency: Cell = BLANK;
   if (invoice.insurance?.kind === 'percent') {
-    insurancePercent = num(invoice.insurance.percent);
+    insurancePercent = percent(invoice.insurance.percent);
   } else if (invoice.insurance?.kind === 'amount') {
     insuranceAmount = money(invoice.insurance.value.amount);
     insuranceCurrency = code(invoice.insurance.value.currency);
   }
 
+  // Logi-Sys writes the whole charge block as explicit zeros on its own export
+  // — every percentage at 0.0000, every amount at 0.00 — and names a currency
+  // even on the rows that are zero. Charges denominated abroad follow the
+  // invoice; agency and loading are Indian services and are quoted in rupees.
+  const invoiceCurrency = code(invoice.currency);
+  const chargeZero = (
+    amount: Cell,
+    percentage: Cell,
+    currency: Cell,
+    zeroCurrency: Cell,
+  ) => ({
+    percentage: orElse(percentage, percent(0)),
+    amount: orElse(amount, money(0)),
+    currency: orElse(currency, zeroCurrency),
+  });
+
+  const frt = chargeZero(money(invoice.freight?.amount), BLANK, code(invoice.freight?.currency), invoiceCurrency);
+  const ins = chargeZero(insuranceAmount, insurancePercent, insuranceCurrency, invoiceCurrency);
+  const misc = chargeZero(money(invoice.miscCharges?.amount), BLANK, code(invoice.miscCharges?.currency), invoiceCurrency);
+  const disc = chargeZero(money(invoice.discount?.amount), BLANK, code(invoice.discount?.currency), invoiceCurrency);
+  const load = chargeZero(money(invoice.loadingCharges?.amount), BLANK, code(invoice.loadingCharges?.currency), code('INR'));
+
   return [
     {
-      InvSrNo: num(1),
+      InvSrNo: int(1),
       Invoice_No: text(invoice.invoiceNumber),
       Invoice_Date: isoDate(invoice.invoiceDate),
       TOI: code(toi),
@@ -74,25 +96,32 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       Product_Value: money(invoice.invoiceValue),
       Is_Single_Frt_Ins_Other_Chrg: yn(false),
 
-      'Frt_%': BLANK,
-      Frt_Amount: money(invoice.freight?.amount),
-      Frt_Currency: code(invoice.freight?.currency),
+      'Frt_%': frt.percentage,
+      Frt_Amount: frt.amount,
+      Frt_Currency: frt.currency,
 
-      'Ins_%': insurancePercent,
-      Ins_Amount: insuranceAmount,
-      Ins_Currency: insuranceCurrency,
+      'Ins_%': ins.percentage,
+      Ins_Amount: ins.amount,
+      Ins_Currency: ins.currency,
 
-      'Misc_Charge_%': BLANK,
-      Misc_Charge_Amount: money(invoice.miscCharges?.amount),
-      Misc_Charge_Currency: code(invoice.miscCharges?.currency),
+      'Misc_Charge_%': misc.percentage,
+      Misc_Charge_Amount: misc.amount,
+      Misc_Charge_Currency: misc.currency,
 
-      'Discount_%': BLANK,
-      Discount_Amount: money(invoice.discount?.amount),
-      Discount_Currency: code(invoice.discount?.currency),
+      'Agency_%': percent(0),
+      Agency_Amount: money(0),
+      Agency_Currency: code('INR'),
 
-      'Loading_%': BLANK,
-      Loading_Amount: money(invoice.loadingCharges?.amount),
-      Loading_Currency: code(invoice.loadingCharges?.currency),
+      'Discount_%': disc.percentage,
+      Discount_Amount: disc.amount,
+      Discount_Currency: disc.currency,
+
+      'Loading_%': load.percentage,
+      Loading_Amount: load.amount,
+      Loading_Currency: load.currency,
+
+      'HSS_%': percent(0),
+      HSS_Amount: money(0),
 
       Supplier_Name: text(supplier.name),
       Supplier_Address: text(supplier.addressLines.join(', ').replace(/,\s*,/g, ',').replace(/,\s*$/, '')),

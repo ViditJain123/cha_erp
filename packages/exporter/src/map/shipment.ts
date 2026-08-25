@@ -1,5 +1,5 @@
 import { normalizePackageUnit } from '@checklist/core';
-import { BLANK, code, isoDate, num, text } from '../cell.js';
+import { BLANK, code, isoDate, text, weight } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -51,11 +51,11 @@ export function shipmentRows(ctx: MapContext): SheetRow[] {
       AWB_BL_Date: isoDate(shipment.mawbDate ?? shipment.blDate),
       HAWB_HBL_No: code(shipment.hawbNo ?? shipment.hblNo),
       HAWB_HBL_Date: isoDate(shipment.hawbDate),
-      No_of_Pkg: num(shipment.packageCount),
+      No_of_Pkg: weight(shipment.packageCount),
       PkgUnitCode: code(pkgUnit),
-      GrWt: num(shipment.grossWeightKg),
+      GrWt: weight(shipment.grossWeightKg),
       GrWtUnitCode: code(shipment.grossWeightKg != null ? 'KGS' : undefined),
-      NtWt: num(shipment.netWeightKg),
+      NtWt: weight(shipment.netWeightKg),
       NtWtUnitCode: code(shipment.netWeightKg != null ? 'KGS' : undefined),
       'Marks_&_Nos': text(shipment.marksAndNos),
       Port_of_Reporting: code(ctx.draft.customStation.code),
