@@ -2,7 +2,16 @@
  * Global + tenant masters, seeded from the two reference jobs.
  * In production these move to Postgres tables (global vs tenant-scoped);
  * the lookup API in masters/index.ts is the stable interface.
+ *
+ * The four reference lists — foreign ports, Indian custom houses, airlines and
+ * ISO alpha-3 country codes — are generated from the source documents in
+ * `masters-source/` by `scripts/build-masters.py` and imported below rather
+ * than typed out here.
  */
+
+import { GENERATED_AIRLINES } from './generated/airlines.js';
+import { GENERATED_CUSTOM_HOUSES } from './generated/custom-houses.js';
+import { GENERATED_FOREIGN_PORTS } from './generated/foreign-ports.js';
 
 export interface PortMaster {
   code: string;
@@ -10,24 +19,83 @@ export interface PortMaster {
   mode: 'sea' | 'air' | 'icd';
 }
 
-export const PORTS: PortMaster[] = [
-  { code: 'INBOM4', name: 'Sahar Air Cargo', mode: 'air' },
-  { code: 'INNSA1', name: 'Nhava Sheva Sea', mode: 'sea' },
-  { code: 'INBOM1', name: 'Mumbai Sea', mode: 'sea' },
-  { code: 'INDEL4', name: 'Delhi Air Cargo', mode: 'air' },
-  { code: 'INTKD6', name: 'Tughlakabad ICD', mode: 'icd' },
-  { code: 'INMUN1', name: 'Mundra Sea', mode: 'sea' },
-];
+/**
+ * Indian custom houses, the full ICEGATE list.
+ *
+ * This was six hand-typed rows — the stations the two reference jobs happened
+ * to use. Anything filed anywhere else had no code at all, and
+ * `GENERAL.CustomsHouseCode` is not a column Logi-Sys will infer.
+ *
+ * Names come through truncated at 30 characters in places ("Integrated Chennai
+ * Business Pa"); that is the ICEGATE export's own limit, not ours, and the code
+ * is what the workbook carries.
+ */
+export const CUSTOM_HOUSES: CustomHouseMaster[] = GENERATED_CUSTOM_HOUSES;
+
+/**
+ * @deprecated Use {@link CUSTOM_HOUSES}. Kept as a view over it so the older
+ * shape still resolves; `mode` narrows to the three the old list knew.
+ */
+export const PORTS: PortMaster[] = CUSTOM_HOUSES.filter(
+  (h): h is CustomHouseMaster & { mode: 'sea' | 'air' | 'icd' } =>
+    h.mode === 'sea' || h.mode === 'air' || h.mode === 'icd',
+).map((h) => ({ code: h.code, name: h.name, mode: h.mode }));
+
+/** Airlines, keyed by the air waybill prefix. See {@link AirlineMaster}. */
+export const AIRLINES: AirlineMaster[] = GENERATED_AIRLINES;
 
 /** Foreign load ports/airports — ICES wants "Name(UNLOCODE)" and the consignment country. */
 export interface ForeignPortMaster {
   name: string;
   unlocode: string;
+  /** Display name, for the checklist and the job screen. */
   country: string;
+  /**
+   * ISO 3166-1 alpha-2, for `GENERAL.CountryOfShipmentCode`.
+   *
+   * Read off the UN/LOCODE rather than resolved from `country`: a LOCODE is by
+   * construction `<alpha-2><locality>`, so `CNTAO` is China by definition,
+   * where the name printed beside it in the source list is "Chinese Mainland"
+   * and resolves to nothing.
+   */
+  countryCode?: string;
   aliases?: string[];
 }
 
-export const FOREIGN_PORTS: ForeignPortMaster[] = [
+/**
+ * An Indian custom house — the station a Bill of Entry is filed at.
+ *
+ * `code` is the six-character site code Logi-Sys wants in
+ * `GENERAL.CustomsHouseCode`, `INVOICES.Custom_House_Code` and
+ * `SHIPMENT.Port_of_Reporting` (INNSA1 for Nhava Sheva). `ediCode` is the
+ * shorter legacy code ICEGATE also publishes; it is kept because documents and
+ * older Logi-Sys screens carry it.
+ */
+export interface CustomHouseMaster {
+  code: string;
+  ediCode: string;
+  name: string;
+  mode?: 'sea' | 'air' | 'icd' | 'land' | 'sez';
+  email?: string;
+}
+
+/**
+ * An airline, keyed by the three-digit IATA accounting prefix that opens every
+ * master air waybill number — `020-1234 5675` is Lufthansa.
+ *
+ * That is the only carrier identifier an AWB always carries, which is what
+ * makes it the useful key: the issuing-carrier name on the document is free
+ * text and routinely an agent's name rather than the airline's.
+ */
+export interface AirlineMaster {
+  awbPrefix: string;
+  iata: string;
+  icao?: string;
+  name: string;
+  country: string;
+}
+
+const CURATED_FOREIGN_PORTS: ForeignPortMaster[] = [
   { name: 'Boston', unlocode: 'USBOS', country: 'United States' },
   { name: 'Chicago', unlocode: 'USCHI', country: 'United States', aliases: ["Chicago O'Hare", 'ORD'] },
   { name: 'New York', unlocode: 'USNYC', country: 'United States', aliases: ['JFK'] },
@@ -56,6 +124,40 @@ export const FOREIGN_PORTS: ForeignPortMaster[] = [
   { name: 'Hakata', unlocode: 'JPHKT', country: 'Japan', aliases: ['Fukuoka'] },
   { name: 'Moji', unlocode: 'JPMOJ', country: 'Japan' },
 ];
+
+/**
+ * Foreign load ports and airports.
+ *
+ * The curated rows win over the generated ones. Two reasons they have to: the
+ * source list is a sea-port list, so it has no airports and none of the
+ * three-letter IATA aliases a house air waybill actually prints ("NRT", "JFK");
+ * and where both know a port they may name it differently — the source says
+ * Pusan, the documents say Busan. Aliases from both sides are kept, so either
+ * spelling resolves.
+ */
+export const FOREIGN_PORTS: ForeignPortMaster[] = (() => {
+  const byCode = new Map<string, ForeignPortMaster>();
+
+  for (const port of GENERATED_FOREIGN_PORTS) byCode.set(port.unlocode, port);
+
+  for (const port of CURATED_FOREIGN_PORTS) {
+    const generated = byCode.get(port.unlocode);
+    if (!generated) {
+      byCode.set(port.unlocode, port);
+      continue;
+    }
+    const aliases = new Set([...(port.aliases ?? []), ...(generated.aliases ?? [])]);
+    // The generated name is a second way to say the same place once the
+    // curated name has replaced it.
+    if (generated.name.toLowerCase() !== port.name.toLowerCase()) aliases.add(generated.name);
+    const merged: ForeignPortMaster = { ...generated, ...port };
+    if (aliases.size) merged.aliases = [...aliases];
+    else delete merged.aliases;
+    byCode.set(port.unlocode, merged);
+  }
+
+  return [...byCode.values()].sort((a, b) => a.unlocode.localeCompare(b.unlocode));
+})();
 
 /**
  * ICES-standard UQC normalization: packaging units seen on invoices map to

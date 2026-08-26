@@ -57,6 +57,25 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(row!['CountryOfShipmentCode']).toBe('JP');
     });
 
+    it('leaves the boolean flags empty, the way Logi-Sys writes them', async () => {
+      // These were "N". A workbook Logi-Sys exported itself leaves all ten
+      // empty, and so does the corrected workbook accepted for job ce9c889d.
+      const [row] = await readSheet(workbook, 'GENERAL');
+      for (const column of [
+        'IsUnderSec46',
+        'IsUnderSec48',
+        'IsFirstCheck',
+        'IsGreenChannel',
+        'IsKachchaBE',
+        'IsHSS',
+        'IsBondsCertificates',
+        'IsTranshipment',
+        'IsUnderProvisionalAssessment',
+      ]) {
+        expect(row![column] ?? '').toBe('');
+      }
+    });
+
     it('is a single row', async () => {
       expect(await readSheet(workbook, 'GENERAL')).toHaveLength(1);
     });
@@ -185,6 +204,38 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(row!['Supplier_Country_Code']).toBe('JP');
       expect(row!['Is_Related']).toBe('N');
       expect(String(row!['Supplier_Address'])).toContain('HAMAMATSU SHI');
+    });
+
+    it('names the valuation rule rather than the draft\'s bare word', async () => {
+      // The draft says "Transaction" and that was written straight through.
+      // Logi-Sys wants the rule from the Customs Valuation Rules 2007.
+      const [row] = await readSheet(workbook, 'INVOICES');
+      expect(row!['Valuation_Method']).toBe('RULE 4 (TRANSACTION VALUE)');
+    });
+
+    it('codes the terms of payment and keeps the wording in the remark', async () => {
+      // Terms_of_Payment is a dropdown in Logi-Sys. This fixture states no
+      // terms, so the coded column still has to carry a value it accepts.
+      const [row] = await readSheet(workbook, 'INVOICES');
+      expect(row!['Terms_of_Payment']).toBe('OTHERS');
+      expect(row!['Other_Terms_of_Payment_Remark'] ?? '').toBe('');
+    });
+
+    it('writes the revenue deposit pair rather than leaving it empty', async () => {
+      // "RD" is Revenue Deposit — Invoice -> Other Charges reads
+      // "Revenue Deposit __ % on [Assessable]". Two decimals, not the four the
+      // charge block above uses.
+      const [row] = await readSheet(workbook, 'INVOICES');
+      expect(row!['RD_%']).toBe('0.00');
+      expect(row!['RD_Basis']).toBe('A');
+    });
+
+    it('declares one charge block for the whole Bill of Entry', async () => {
+      // Invoice -> Other Charges, "Single Freight, Insurance & other charges
+      // for all Invoices". The draft models one invoice and one set of charges,
+      // which is what that box says; it was hardcoded N.
+      const [row] = await readSheet(workbook, 'INVOICES');
+      expect(row!['Is_Single_Frt_Ins_Other_Chrg']).toBe('Y');
     });
   });
 

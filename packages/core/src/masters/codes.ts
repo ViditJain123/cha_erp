@@ -25,6 +25,9 @@
 
 import type { TermsOfInvoice } from '../types.js';
 import { FOREIGN_PORTS, type ForeignPortMaster } from './data.js';
+import { COUNTRY_ALPHA3 } from './generated/country-alpha3.js';
+
+export { COUNTRY_ALPHA3 };
 
 /* ------------------------------------------------------------------ *
  * Countries
@@ -240,6 +243,20 @@ export function iso2(nameOrCode: string | undefined | null): string | undefined 
   if (/^[A-Za-z]{2}$/.test(raw)) {
     const upper = raw.toUpperCase();
     return upper in COUNTRIES ? upper : undefined;
+  }
+
+  // Alpha-3. Certificates of origin print "ARE" and "CHN" far more often than
+  // they print "United Arab Emirates", and before the country list was
+  // imported every one of those fell through to undefined — which on
+  // GENERAL.CountryOfOriginCode is a blocked export, not a blank cell.
+  //
+  // Guarded against the collision that makes this worth spelling out: three
+  // letters is also how a few country *names* are written, and "CHN" must not
+  // beat a name lookup that would have been right. It cannot — no ISO country
+  // name is three letters — so alpha-3 is safe to test first.
+  if (/^[A-Za-z]{3}$/.test(raw)) {
+    const mapped = COUNTRY_ALPHA3[raw.toUpperCase()];
+    if (mapped) return mapped;
   }
 
   const index = countryLookup();
@@ -511,6 +528,111 @@ export const FILING_CODE: Record<'Normal' | 'Prior' | 'Advance', string> = {
   Prior: 'P',
   Advance: 'A',
 };
+
+/* ------------------------------------------------------------------ *
+ * Invoice — the two columns that carry a vocabulary, not a value
+ * ------------------------------------------------------------------ */
+
+/**
+ * `INVOICES.Valuation_Method` — the Customs Valuation Rules 2007 method.
+ *
+ * Logi-Sys spells these as the rule plus its title, "RULE 4 (TRANSACTION
+ * VALUE)", visible on Invoice → Other Details. The draft carries the bare word
+ * ("Transaction"), which was being written straight through: the accepted
+ * workbook for job ce9c889d says RULE 4 where ours said `Transaction`.
+ *
+ * Rule 4 is the one all but a handful of filings use — a transaction value
+ * between unrelated parties. The rest are the fallback ladder, in order.
+ */
+export const VALUATION_METHOD: Record<string, string> = {
+  TRANSACTION: 'RULE 4 (TRANSACTION VALUE)',
+  'RULE 4': 'RULE 4 (TRANSACTION VALUE)',
+  IDENTICAL: 'RULE 5 (TRANSACTION VALUE OF IDENTICAL GOODS)',
+  'RULE 5': 'RULE 5 (TRANSACTION VALUE OF IDENTICAL GOODS)',
+  SIMILAR: 'RULE 6 (TRANSACTION VALUE OF SIMILAR GOODS)',
+  'RULE 6': 'RULE 6 (TRANSACTION VALUE OF SIMILAR GOODS)',
+  DEDUCTIVE: 'RULE 7 (DEDUCTIVE VALUE)',
+  'RULE 7': 'RULE 7 (DEDUCTIVE VALUE)',
+  COMPUTED: 'RULE 8 (COMPUTED VALUE)',
+  'RULE 8': 'RULE 8 (COMPUTED VALUE)',
+  RESIDUAL: 'RULE 9 (RESIDUAL METHOD)',
+  'RULE 9': 'RULE 9 (RESIDUAL METHOD)',
+};
+
+/** The method to declare when nothing on the documents says otherwise. */
+export const DEFAULT_VALUATION_METHOD = VALUATION_METHOD.TRANSACTION;
+
+/**
+ * `INVOICES.Valuation_Method` for a draft's stated method.
+ *
+ * Matches on the leading keyword so that "Transaction value", "transaction" and
+ * "RULE 4" all land on the same string. Unknown text returns undefined rather
+ * than passing through: the column is a dropdown in Logi-Sys, and free text in
+ * it is what the round trip rejected.
+ */
+export function valuationMethod(value: string | undefined | null): string | undefined {
+  if (!value) return undefined;
+  const raw = value.trim().toUpperCase();
+  if (!raw) return undefined;
+
+  const exact = VALUATION_METHOD[raw];
+  if (exact) return exact;
+
+  // Already in the target spelling.
+  if (Object.values(VALUATION_METHOD).includes(raw)) return raw;
+
+  const rule = /RULE\s*([4-9])/.exec(raw);
+  if (rule) return VALUATION_METHOD[`RULE ${rule[1]}`];
+
+  const keyword = Object.keys(VALUATION_METHOD).find(
+    (k) => !k.startsWith('RULE ') && raw.startsWith(k),
+  );
+  return keyword ? VALUATION_METHOD[keyword] : undefined;
+}
+
+/**
+ * `INVOICES.Terms_of_Payment` — a dropdown, with a free-text remark beside it
+ * (`Other_Terms_of_Payment_Remark`) that Logi-Sys enables for OTHERS.
+ *
+ * What our documents carry is never one of the dropdown's words: an invoice
+ * says "D/A 45 days from B/L Date", "100% advance TT", "LC at sight 90 days".
+ * Writing that into the dropdown column is what the export was doing, and the
+ * accepted workbook shows the operator's correction — OTHERS in the column.
+ *
+ * CONFIRM: only OTHERS is confirmed, from that accepted workbook. The dropdown
+ * was not captured open in `logi-sys-screenshots/`, so the codes a term like
+ * D/A would map to are unknown, and guessing one is exactly the class of error
+ * this table exists to stop. Everything therefore routes to OTHERS with the
+ * document's own wording preserved in the remark — which loses nothing, and is
+ * strictly better than the free text that was going into the coded column.
+ * When someone can open that dropdown, add the values here and this is the
+ * only place that changes.
+ */
+export const TERMS_OF_PAYMENT_OTHERS = 'OTHERS';
+
+export interface TermsOfPaymentCells {
+  /** The coded column. */
+  code: string;
+  /** The remark column — the wording actually printed on the invoice. */
+  remark?: string;
+}
+
+export function termsOfPayment(value: string | undefined | null): TermsOfPaymentCells {
+  const raw = value?.trim();
+  if (!raw) return { code: TERMS_OF_PAYMENT_OTHERS };
+  if (raw.toUpperCase() === TERMS_OF_PAYMENT_OTHERS) return { code: TERMS_OF_PAYMENT_OTHERS };
+  return { code: TERMS_OF_PAYMENT_OTHERS, remark: raw };
+}
+
+/**
+ * `INVOICES.RD_Basis` — what the revenue deposit is charged on.
+ *
+ * "RD" is Revenue Deposit: Invoice → Other Charges reads
+ * "Revenue Deposit __ % on [Assessable]". Logi-Sys writes the pair as 0.00 / A
+ * on its own export even when no deposit is taken, and the column was being
+ * left empty.
+ */
+export const RD_BASIS_ASSESSABLE = 'A';
 
 /* ------------------------------------------------------------------ *
  * Tariff codes

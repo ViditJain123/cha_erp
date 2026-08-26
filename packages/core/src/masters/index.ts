@@ -1,5 +1,7 @@
 import {
+  AIRLINES,
   CHA_PROFILE,
+  CUSTOM_HOUSES,
   DECLARATIONS,
   FOREIGN_PORTS,
   FTA_SCHEMES,
@@ -7,7 +9,9 @@ import {
   SINGLE_WINDOW_RULES,
   UQC_NORMALIZATION,
   VALID_UQC,
+  type AirlineMaster,
   type ChaProfile,
+  type CustomHouseMaster,
   type DeclarationMaster,
   type ForeignPortMaster,
   type FtaSchemeMaster,
@@ -42,6 +46,80 @@ export function lookupTariffByPrefix(hsPrefix: string): TariffMaster | undefined
 export function lookupPort(codeOrName: string): PortMaster | undefined {
   const q = codeOrName.trim().toLowerCase();
   return PORTS.find((p) => p.code.toLowerCase() === q || p.name.toLowerCase().includes(q));
+}
+
+/**
+ * An Indian custom house by site code, legacy EDI code, or name.
+ *
+ * Exact code matches are tried before names: "Mumbai" is a substring of several
+ * station names, where INBOM1 is one station.
+ */
+export function lookupCustomHouse(codeOrName: string): CustomHouseMaster | undefined {
+  const q = codeOrName.trim().toUpperCase();
+  if (!q) return undefined;
+
+  const byCode = CUSTOM_HOUSES.find((h) => h.code === q || h.ediCode === q);
+  if (byCode) return byCode;
+
+  const lower = q.toLowerCase();
+  const exactName = CUSTOM_HOUSES.find((h) => h.name.toLowerCase() === lower);
+  if (exactName) return exactName;
+
+  // Only when it is unambiguous — a partial name matching four stations is not
+  // an answer, and a Bill of Entry filed at the wrong custom house is rejected.
+  const partial = CUSTOM_HOUSES.filter((h) => h.name.toLowerCase().includes(lower));
+  return partial.length === 1 ? partial[0] : undefined;
+}
+
+/**
+ * An airline by air waybill prefix, IATA code, ICAO code, or name.
+ *
+ * The prefix is the useful one: `020-1234 5675` on a master air waybill names
+ * Lufthansa whatever the issuing-agent line happens to say. Pass either the
+ * bare prefix or the whole MAWB number.
+ */
+export function lookupAirline(value: string | undefined | null): AirlineMaster | undefined {
+  if (!value) return undefined;
+  const raw = value.trim();
+  if (!raw) return undefined;
+  const upper = raw.toUpperCase();
+
+  // "020-1234 5675", "020 12345675" or just "020".
+  const prefix = /^(\d{3})\b/.exec(raw.replace(/^\s+/, ''));
+  if (prefix) {
+    const byPrefix = AIRLINES.find((a) => a.awbPrefix === prefix[1]);
+    if (byPrefix) return byPrefix;
+  }
+
+  if (/^[0-9A-Z]{2}$/.test(upper)) {
+    const byIata = AIRLINES.find((a) => a.iata === upper);
+    if (byIata) return byIata;
+  }
+  if (/^[A-Z]{3}$/.test(upper)) {
+    const byIcao = AIRLINES.find((a) => a.icao === upper);
+    if (byIcao) return byIcao;
+  }
+
+  const lower = upper.toLowerCase();
+  const exact = AIRLINES.find((a) => a.name.toLowerCase() === lower);
+  if (exact) return exact;
+
+  const partial = AIRLINES.filter(
+    (a) => a.name.toLowerCase().includes(lower) || lower.includes(a.name.toLowerCase()),
+  );
+  return partial.length === 1 ? partial[0] : undefined;
+}
+
+/**
+ * A foreign port by its UN/LOCODE, exactly.
+ *
+ * Separate from the name lookups because those match on substrings, and a
+ * five-letter code is short enough to collide with one.
+ */
+export function foreignPortByUnlocode(unlocode: string | undefined | null): ForeignPortMaster | undefined {
+  if (!unlocode) return undefined;
+  const q = unlocode.trim().toUpperCase();
+  return /^[A-Z]{5}$/.test(q) ? FOREIGN_PORTS.find((p) => p.unlocode === q) : undefined;
 }
 
 /** Match a foreign port/airport from free text like "MOMBASA, KENYA" or "BOSTON". */

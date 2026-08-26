@@ -15,6 +15,8 @@ packages/config     branding config + per-feature env validation
 packages/db         Supabase clients, generated types, tenancy helpers
 packages/mail       Resend transport + credential emails
 packages/core       duty engine + masters        (legacy, unchanged)
+                    masters-source/ + scripts/build-masters.py generate
+                    src/masters/generated/ — see The reference masters
 packages/extraction OpenAI document pipeline     (legacy, unchanged)
 packages/library    CBIC document RAG            (legacy, unchanged)
 supabase/           config.toml + migrations
@@ -100,6 +102,53 @@ to the operator to complete in Logi-Sys.
 
 `packages/exporter/test/golden-ep061126-1.test.ts` pins the whole mapping against
 job I-13844/26-27, whose documents and Logi-Sys checklist are in `ex_job6/`.
+
+## The reference masters
+
+Four of the workbook's coded columns are filled from reference lists the CHA
+supplied, generated into `packages/core/src/masters/generated/` from the source
+documents kept beside them in `packages/core/masters-source/`:
+
+| List | Rows | Fills |
+|---|---|---|
+| `port-name-and-code.pdf` | 369 foreign ports | `GENERAL.PortOfShipmentCode`, `CountryOfShipmentCode` |
+| `custom-house-list.csv` | 296 ICEGATE stations | `GENERAL.CustomsHouseCode`, `INVOICES.Custom_House_Code`, `SHIPMENT.Port_of_Reporting` |
+| `major-airline-code-list.pdf` | 61 airlines | air waybill carrier resolution |
+| `country-code-list.pdf` | 238 alpha-3 codes | every `iso2()` caller |
+
+Before this, the foreign-port master was 27 hand-typed rows and the custom-house
+master was six — the stations the two reference jobs happened to use. Anything
+filed anywhere else had no code at all, and these are not columns Logi-Sys will
+infer.
+
+```bash
+pip install pymupdf
+python3 packages/core/scripts/build-masters.py     # rewrites generated/
+```
+
+The generated files are committed; the script exists so a refreshed list is one
+command rather than a hand edit, and so "where did this code come from" has an
+answer.
+
+Three things it does that are worth knowing before editing a source list:
+
+- **A country code comes out of the UN/LOCODE, never out of the name beside
+  it.** A LOCODE is by construction `<ISO alpha-2><locality>`, so `CNTAO` is CN
+  whatever the page says — and the page says "Chinese Mainland", which no ISO
+  lookup resolves. It also says "Britain" and "Columbia".
+- **The PDFs are set in a font whose `ti`, `tt` and `ff` ligatures are mapped to
+  codepoints that are not those letters.** Extracted naively, Rotterdam is
+  "RoƩerdam" and Argentina "ArgenƟna". The build undoes that from a closed set
+  and *aborts* on a character not in it, rather than shipping a misspelt port
+  into a Bill of Entry.
+- **The port list has one genuine typo of its own.** It prints Qingdao as
+  "Ingdao" — every PDF extractor agrees, because the page is wrong. It was found
+  by sorting: the list is alphabetical by intended name, so a misspelling lands
+  out of order, and over 372 rows that check turns up exactly one real
+  violation. `NAME_CORRECTIONS` fixes it and keeps the printed spelling as an
+  alias, so a document repeating the same mistake still resolves.
+
+`packages/core/test/reference-masters.test.ts` pins all four.
 
 ## The organization repository
 

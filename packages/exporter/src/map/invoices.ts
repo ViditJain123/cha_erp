@@ -1,4 +1,12 @@
-import { TOI_CODE, branchNameForExport, iso2 } from '@checklist/core';
+import {
+  DEFAULT_VALUATION_METHOD,
+  RD_BASIS_ASSESSABLE,
+  TOI_CODE,
+  branchNameForExport,
+  iso2,
+  termsOfPayment,
+  valuationMethod,
+} from '@checklist/core';
 import { BLANK, code, int, isoDate, money, orElse, percent, text, yn } from '../cell.js';
 import type { Cell } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
@@ -85,6 +93,20 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
   const disc = chargeZero(money(invoice.discount?.amount), BLANK, code(invoice.discount?.currency), invoiceCurrency);
   const load = chargeZero(money(invoice.loadingCharges?.amount), BLANK, code(invoice.loadingCharges?.currency), code('INR'));
 
+  // A dropdown column and a free-text one. The invoice's own wording goes in
+  // the remark; the coded column gets a value Logi-Sys will accept.
+  const terms = termsOfPayment(invoiceMeta.termsOfPayment);
+
+  const method = valuationMethod(invoiceMeta.paymentMethod) ?? DEFAULT_VALUATION_METHOD;
+  if (invoiceMeta.paymentMethod && !valuationMethod(invoiceMeta.paymentMethod)) {
+    ctx.warn(
+      'INVOICES.Valuation_Method',
+      `Valuation method "${invoiceMeta.paymentMethod}" is not one of the Customs Valuation Rules ` +
+        `Logi-Sys lists, so the export declares ${DEFAULT_VALUATION_METHOD}. Check it against the ` +
+        'invoice if the parties are related or the price is provisional.',
+    );
+  }
+
   return [
     {
       InvSrNo: int(1),
@@ -94,7 +116,13 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       TOI_Place: BLANK,
       Inv_Currency: code(invoice.currency),
       Product_Value: money(invoice.invoiceValue),
-      Is_Single_Frt_Ins_Other_Chrg: yn(false),
+      // Invoice → Other Charges, "Single Freight, Insurance & other charges for
+      // all Invoices". It says the charge block above applies across the whole
+      // Bill of Entry rather than being keyed per invoice — which is what the
+      // draft models, since it carries exactly one invoice and one set of
+      // charges. Logi-Sys ships the box ticked and the accepted workbook says Y;
+      // this was hardcoded N.
+      Is_Single_Frt_Ins_Other_Chrg: yn(true),
 
       'Frt_%': frt.percentage,
       Frt_Amount: frt.amount,
@@ -123,6 +151,13 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       'HSS_%': percent(0),
       HSS_Amount: money(0),
 
+      // Revenue deposit. Nothing we read ever asks for one, but Logi-Sys writes
+      // the pair rather than leaving it empty, and so does its own export.
+      // Two decimals here, not the four the charge block above uses — the
+      // accepted workbook writes `0.00`.
+      'RD_%': money(0),
+      RD_Basis: code(RD_BASIS_ASSESSABLE),
+
       Supplier_Name: text(supplier.name),
       Supplier_Address: text(supplier.addressLines.join(', ').replace(/,\s*,/g, ',').replace(/,\s*$/, '')),
       Supplier_City: text(supplier.city),
@@ -133,10 +168,13 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       Is_Related: yn(invoiceMeta.relatedParty),
 
       Custom_House_Code: code(customStation.code),
-      Terms_of_Payment: text(invoiceMeta.termsOfPayment),
-      // CONFIRM: both of these may want a code rather than the printed label.
+      Terms_of_Payment: code(terms.code),
+      Other_Terms_of_Payment_Remark: text(terms.remark),
+      // CONFIRM: this one may want a code rather than the printed label. The
+      // dropdown's words and the export's words agree for "Sale", which is
+      // every job so far, so there is nothing yet to tell them apart.
       Nature_of_Trans: text(invoiceMeta.natureOfTransaction),
-      Valuation_Method: text(invoiceMeta.paymentMethod),
+      Valuation_Method: code(method),
     },
   ];
 }

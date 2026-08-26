@@ -4,7 +4,9 @@ import {
   computeJobDuty,
   exchangeRatesOn,
   formatForeignPort,
+  lookupCustomHouse,
   lookupForeignPort,
+  lookupForeignPortLoose,
   lookupFtaScheme,
   lookupTariff,
   lookupTariffByPrefix,
@@ -105,9 +107,16 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     flags.push({ severity: 'error', message: 'No transport document (BL/AWB) found — required for BE.' });
 
   const transportMode: 'Air' | 'Sea' = awb ? 'Air' : 'Sea';
-  const customStation = awb
-    ? { code: 'INBOM4', name: 'Sahar Air Cargo' }
-    : { code: 'INNSA1', name: 'Nhava Sheva Sea' };
+  // The station is a business default, not something the documents say: which
+  // custom house a consignment is filed at is the CHA's decision. These two are
+  // where this tenant files, resolved through the master so the name and code
+  // agree with ICEGATE rather than being a matched pair typed here.
+  const defaultStation = lookupCustomHouse(awb ? 'INBOM4' : 'INNSA1');
+  const customStation = defaultStation
+    ? { code: defaultStation.code, name: defaultStation.name }
+    : awb
+      ? { code: 'INBOM4', name: 'Sahar Air Cargo' }
+      : { code: 'INNSA1', name: 'Nhava Sheva Sea' };
   flags.push({
     severity: 'info',
     path: 'customStation',
@@ -199,7 +208,9 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   if (awb?.issuingCarrierOrAgent) shipment.shippingLineOrCarrier = awb.issuingCarrierOrAgent;
   const pol = bl?.portOfLoading ?? awb?.airportOfDeparture;
   if (pol) {
-    const port = lookupForeignPort(pol);
+    // The looser matcher: a document writes "SHANGHAI, CHINA" or "Qingdao Port",
+    // not the bare name. It falls back to the exact one internally.
+    const port = lookupForeignPortLoose(pol) ?? lookupForeignPort(pol);
     if (port) {
       // ICES format "Boston(USBOS)" + consignment country from the port master
       shipment.portOfLoading = formatForeignPort(port);

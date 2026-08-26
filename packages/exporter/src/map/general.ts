@@ -3,10 +3,11 @@ import {
   FILING_CODE,
   TRANSPORT_MODE_CODE,
   branchNameForExport,
+  foreignPortByUnlocode,
   iso2,
   unlocodeOf,
 } from '@checklist/core';
-import { BLANK, code, text, yn } from '../cell.js';
+import { BLANK, code, text } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -38,20 +39,37 @@ export function generalRows(ctx: MapContext): SheetRow[] {
     );
   }
 
-  const shipmentCountryCode = iso2(draft.shipment.consCountry);
-  if (draft.shipment.consCountry && !shipmentCountryCode) {
-    ctx.warn(
-      'GENERAL.CountryOfShipmentCode',
-      `Country of shipment "${draft.shipment.consCountry}" has no ISO country code.`,
-    );
-  }
-
   const portCode = unlocodeOf(draft.shipment.portOfLoading);
   if (draft.shipment.portOfLoading && !portCode) {
     ctx.warn(
       'GENERAL.PortOfShipmentCode',
       `Port of shipment "${draft.shipment.portOfLoading}" is not in the foreign-ports master, ` +
         'so no UN/LOCODE could be emitted. Add it to packages/core/src/masters/data.ts.',
+    );
+  }
+
+  // Country of shipment, in the order the sources deserve to be trusted.
+  //
+  // The load port is the better source than the draft's own country string,
+  // because a UN/LOCODE *contains* its country: CNTAO is CN by construction,
+  // where the name printed beside it in the port list is "Chinese Mainland" and
+  // resolves to nothing. So the port decides, and `consCountry` is the fallback
+  // for a port we could not code.
+  const portCountryCode = portCode
+    ? (foreignPortByUnlocode(portCode)?.countryCode ?? iso2(portCode.slice(0, 2)))
+    : undefined;
+  const shipmentCountryCode = portCountryCode ?? iso2(draft.shipment.consCountry);
+  if (draft.shipment.consCountry && !shipmentCountryCode) {
+    ctx.warn(
+      'GENERAL.CountryOfShipmentCode',
+      `Country of shipment "${draft.shipment.consCountry}" has no ISO country code.`,
+    );
+  }
+  if (!shipmentCountryCode) {
+    ctx.warn(
+      'GENERAL.CountryOfShipmentCode',
+      'No country of shipment: neither a load port nor a consignment country was read off the ' +
+        'transport document. Customs treats this as a different question from country of origin.',
     );
   }
 
@@ -90,18 +108,27 @@ export function generalRows(ctx: MapContext): SheetRow[] {
       // duty account, so this is constant until it does.
       DutyPaymentStatus_T_D: code('T'),
       AdvancePriorNormal: code(FILING_CODE[draft.filingStatus]),
-      // None of these are modelled in the draft, and the printed checklist
-      // shows them all as "No" for every job we have seen.
-      IsUnderSec46: yn(false),
-      IsUnderSec48: yn(false),
-      IsFirstCheck: yn(false),
-      IsGreenChannel: yn(false),
-      IsKachchaBE: yn(false),
-      IsHSS: yn(false),
-      IsBondsCertificates: yn(false),
-      IsTranshipment: yn(false),
+      // Blank, not "N".
+      //
+      // None of these are modelled in the draft, and the printed checklist shows
+      // them all as "No" — which is why they were written as N. But a workbook
+      // Logi-Sys exported itself
+      // (`liv_job1/JobData_I-10793_25-26_20260824_114941.xlsx`) leaves every one
+      // of them empty, and so does the corrected workbook that was accepted for
+      // job ce9c889d. The vendor's own file is the authority on its own format,
+      // the same way it is for the explicit zeros on the INVOICES charge block —
+      // there the vendor writes 0 where we had blank, here it writes nothing
+      // where we had N.
+      IsUnderSec46: BLANK,
+      IsUnderSec48: BLANK,
+      IsFirstCheck: BLANK,
+      IsGreenChannel: BLANK,
+      IsKachchaBE: BLANK,
+      IsHSS: BLANK,
+      IsBondsCertificates: BLANK,
+      IsTranshipment: BLANK,
       ITC_Lic_details: BLANK,
-      IsUnderProvisionalAssessment: yn(false),
+      IsUnderProvisionalAssessment: BLANK,
     },
   ];
 }
