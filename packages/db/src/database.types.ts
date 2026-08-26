@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.15"
+    PostgrestVersion: "14.17"
   }
   public: {
     Tables: {
@@ -175,6 +175,63 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      deleted_jobs: {
+        Row: {
+          company_id: string
+          deleted_at: string
+          deleted_by: string | null
+          id: string
+          importer_name: string | null
+          job_id: string
+          job_number: string | null
+          reason: string | null
+          snapshot: Json
+          stage: string | null
+          title: string | null
+        }
+        Insert: {
+          company_id: string
+          deleted_at?: string
+          deleted_by?: string | null
+          id?: string
+          importer_name?: string | null
+          job_id: string
+          job_number?: string | null
+          reason?: string | null
+          snapshot?: Json
+          stage?: string | null
+          title?: string | null
+        }
+        Update: {
+          company_id?: string
+          deleted_at?: string
+          deleted_by?: string | null
+          id?: string
+          importer_name?: string | null
+          job_id?: string
+          job_number?: string | null
+          reason?: string | null
+          snapshot?: Json
+          stage?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deleted_jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deleted_jobs_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       importer_line_securities: {
         Row: {

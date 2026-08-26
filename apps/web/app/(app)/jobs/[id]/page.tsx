@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { ChecklistDraft } from '@checklist/extraction';
 import { missingScopes } from '@checklist/graph';
 import { requireCompany } from '@/lib/auth';
+import { COMPANY_MANAGER_ROLES } from '@checklist/config/app';
 import { serviceClient } from '@/lib/supabase/admin';
 import {
   DOCUMENTS_STAGES,
@@ -12,6 +13,7 @@ import {
   relativeTime,
 } from '@/lib/jobs';
 import { ChecklistUpload } from './checklist-upload';
+import { DeleteJob } from './delete-job';
 import { LogisysExport } from './logisys-export';
 import { PartiesPanel, type PartyState } from './parties-panel';
 import { ScrutinyPanel } from './scrutiny-panel';
@@ -313,6 +315,22 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               </dl>
             )}
           </section>
+
+          {/* Owners and admins only, and last on the page: it is the one action
+              here that cannot be undone. The API re-checks the role. */}
+          {COMPANY_MANAGER_ROLES.includes(ctx.role) && (
+            <DeleteJob
+              jobId={job.id}
+              // A job opened by hand may have neither a number nor a title; the
+              // id is always there and is on screen in the address bar.
+              label={job.job_number ?? job.title ?? job.id}
+              counts={{
+                documents: (documents ?? []).length,
+                drafts: latestDraft?.version ?? 0,
+                exports: (exports ?? []).length,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
