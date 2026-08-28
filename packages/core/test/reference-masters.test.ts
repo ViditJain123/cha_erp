@@ -179,15 +179,17 @@ describe('valuation method', () => {
 });
 
 describe('terms of payment', () => {
-  it('puts the invoice wording in the remark and a coded value in the column', () => {
-    // "D/A 45 days from B/L Date" was going into the dropdown column.
-    const terms = termsOfPayment('D/A 45 days from B/L Date');
-    expect(terms.code).toBe('OTHERS');
-    expect(terms.remark).toBe('D/A 45 days from B/L Date');
+  it('writes OTHERS in both columns, never the invoice wording', () => {
+    // "D/A 45 days from B/L Date" was going into the dropdown column, then
+    // into the remark. Logi-Sys' own export writes OTHERS in both.
+    expect(termsOfPayment('D/A 45 days from B/L Date')).toEqual({
+      code: 'OTHERS',
+      remark: 'OTHERS',
+    });
   });
 
-  it('does not repeat OTHERS into the remark', () => {
-    expect(termsOfPayment('OTHERS')).toEqual({ code: 'OTHERS' });
-    expect(termsOfPayment(undefined)).toEqual({ code: 'OTHERS' });
+  it('writes the pair whether or not the draft states terms', () => {
+    expect(termsOfPayment('OTHERS')).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
+    expect(termsOfPayment(undefined)).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
   });
 });

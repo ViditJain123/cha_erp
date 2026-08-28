@@ -66,8 +66,9 @@ export interface ForeignPortMaster {
  * An Indian custom house — the station a Bill of Entry is filed at.
  *
  * `code` is the six-character site code Logi-Sys wants in
- * `GENERAL.CustomsHouseCode`, `INVOICES.Custom_House_Code` and
- * `SHIPMENT.Port_of_Reporting` (INNSA1 for Nhava Sheva). `ediCode` is the
+ * `GENERAL.CustomsHouseCode` and `SHIPMENT.Port_of_Reporting` (INNSA1 for
+ * Nhava Sheva). It does not go in `INVOICES.Custom_House_Code`, which Logi-Sys
+ * leaves empty on its own export. `ediCode` is the
  * shorter legacy code ICEGATE also publishes; it is kept because documents and
  * older Logi-Sys screens carry it.
  */

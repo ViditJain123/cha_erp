@@ -21,7 +21,7 @@ import type { MapContext } from './context.js';
  * those, not zero.
  */
 export function invoicesRows(ctx: MapContext): SheetRow[] {
-  const { invoice, invoiceMeta, supplier, customStation } = ctx.draft;
+  const { invoice, invoiceMeta, supplier } = ctx.draft;
 
   const supplierCountry = iso2(supplier.country);
   if (supplier.country && !supplierCountry) {
@@ -89,7 +89,12 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
 
   const frt = chargeZero(money(invoice.freight?.amount), BLANK, code(invoice.freight?.currency), invoiceCurrency);
   const ins = chargeZero(insuranceAmount, insurancePercent, insuranceCurrency, invoiceCurrency);
-  const misc = chargeZero(money(invoice.miscCharges?.amount), BLANK, code(invoice.miscCharges?.currency), invoiceCurrency);
+  // Miscellaneous charges are always declared as nil. Logi-Sys' own export
+  // writes 0.0000 / 0.00 and leaves the currency empty even on jobs whose
+  // invoice carries other charges, so anything we extracted into
+  // `invoice.miscCharges` is deliberately not written here — a value in this
+  // block changes the assessable value.
+  const misc = { percentage: percent(0), amount: money(0), currency: BLANK };
   const disc = chargeZero(money(invoice.discount?.amount), BLANK, code(invoice.discount?.currency), invoiceCurrency);
   const load = chargeZero(money(invoice.loadingCharges?.amount), BLANK, code(invoice.loadingCharges?.currency), code('INR'));
 
@@ -167,9 +172,11 @@ export function invoicesRows(ctx: MapContext): SheetRow[] {
       Supplier_Branch: text(supplierBranch),
       Is_Related: yn(invoiceMeta.relatedParty),
 
-      Custom_House_Code: code(customStation.code),
+      // Custom_House_Code is left blank on purpose. The station belongs on
+      // GENERAL.CustomsHouseCode; Logi-Sys' own export leaves this INVOICES
+      // column empty, and filling it is a repeat mistake.
       Terms_of_Payment: code(terms.code),
-      Other_Terms_of_Payment_Remark: text(terms.remark),
+      Other_Terms_of_Payment_Remark: code(terms.remark),
       // CONFIRM: this one may want a code rather than the printed label. The
       // dropdown's words and the export's words agree for "Sale", which is
       // every job so far, so there is nothing yet to tell them apart.

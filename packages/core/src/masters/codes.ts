@@ -602,26 +602,29 @@ export function valuationMethod(value: string | undefined | null): string | unde
  * CONFIRM: only OTHERS is confirmed, from that accepted workbook. The dropdown
  * was not captured open in `logi-sys-screenshots/`, so the codes a term like
  * D/A would map to are unknown, and guessing one is exactly the class of error
- * this table exists to stop. Everything therefore routes to OTHERS with the
- * document's own wording preserved in the remark — which loses nothing, and is
- * strictly better than the free text that was going into the coded column.
- * When someone can open that dropdown, add the values here and this is the
- * only place that changes.
+ * this table exists to stop. Everything therefore routes to OTHERS, in the
+ * remark column as well as the coded one — which is what Logi-Sys' own export
+ * writes. When someone can open that dropdown, add the values here and this is
+ * the only place that changes.
  */
 export const TERMS_OF_PAYMENT_OTHERS = 'OTHERS';
 
 export interface TermsOfPaymentCells {
   /** The coded column. */
   code: string;
-  /** The remark column — the wording actually printed on the invoice. */
-  remark?: string;
+  /** The remark column — OTHERS, matching the coded column. */
+  remark: string;
 }
 
-export function termsOfPayment(value: string | undefined | null): TermsOfPaymentCells {
-  const raw = value?.trim();
-  if (!raw) return { code: TERMS_OF_PAYMENT_OTHERS };
-  if (raw.toUpperCase() === TERMS_OF_PAYMENT_OTHERS) return { code: TERMS_OF_PAYMENT_OTHERS };
-  return { code: TERMS_OF_PAYMENT_OTHERS, remark: raw };
+/**
+ * Both columns read OTHERS, whatever the invoice says.
+ *
+ * The remark used to carry the invoice's own wording ("D/A 45 days from B/L
+ * Date"). Logi-Sys' own export writes OTHERS in both columns, and that is what
+ * this returns: the free text belongs on the invoice, not in this cell.
+ */
+export function termsOfPayment(_value?: string | null): TermsOfPaymentCells {
+  return { code: TERMS_OF_PAYMENT_OTHERS, remark: TERMS_OF_PAYMENT_OTHERS };
 }
 
 /**

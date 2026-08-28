@@ -213,12 +213,24 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(row!['Valuation_Method']).toBe('RULE 4 (TRANSACTION VALUE)');
     });
 
-    it('codes the terms of payment and keeps the wording in the remark', async () => {
-      // Terms_of_Payment is a dropdown in Logi-Sys. This fixture states no
-      // terms, so the coded column still has to carry a value it accepts.
+    it('writes OTHERS in both terms-of-payment columns', async () => {
+      // Terms_of_Payment is a dropdown in Logi-Sys, and the remark beside it
+      // is not a place for the invoice's wording — the vendor's own export
+      // writes OTHERS in both.
       const [row] = await readSheet(workbook, 'INVOICES');
       expect(row!['Terms_of_Payment']).toBe('OTHERS');
-      expect(row!['Other_Terms_of_Payment_Remark'] ?? '').toBe('');
+      expect(row!['Other_Terms_of_Payment_Remark']).toBe('OTHERS');
+    });
+
+    it('declares nil miscellaneous charges and no custom house', async () => {
+      // Both are repeat mistakes. Logi-Sys' own export writes the misc block
+      // as 0.0000 / 0.00 with no currency, and leaves Custom_House_Code empty
+      // — the station belongs on GENERAL.CustomsHouseCode.
+      const [row] = await readSheet(workbook, 'INVOICES');
+      expect(row!['Misc_Charge_%']).toBe('0.0000');
+      expect(row!['Misc_Charge_Amount']).toBe('0.00');
+      expect(row!['Misc_Charge_Currency'] ?? '').toBe('');
+      expect(row!['Custom_House_Code'] ?? '').toBe('');
     });
 
     it('writes the revenue deposit pair rather than leaving it empty', async () => {

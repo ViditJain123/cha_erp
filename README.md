@@ -112,7 +112,7 @@ documents kept beside them in `packages/core/masters-source/`:
 | List | Rows | Fills |
 |---|---|---|
 | `port-name-and-code.pdf` | 369 foreign ports | `GENERAL.PortOfShipmentCode`, `CountryOfShipmentCode` |
-| `custom-house-list.csv` | 296 ICEGATE stations | `GENERAL.CustomsHouseCode`, `INVOICES.Custom_House_Code`, `SHIPMENT.Port_of_Reporting` |
+| `custom-house-list.csv` | 296 ICEGATE stations | `GENERAL.CustomsHouseCode`, `SHIPMENT.Port_of_Reporting` |
 | `major-airline-code-list.pdf` | 61 airlines | air waybill carrier resolution |
 | `country-code-list.pdf` | 238 alpha-3 codes | every `iso2()` caller |
 
