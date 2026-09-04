@@ -105,16 +105,20 @@ job I-13844/26-27, whose documents and Logi-Sys checklist are in `ex_job6/`.
 
 ## The reference masters
 
-Four of the workbook's coded columns are filled from reference lists the CHA
+The workbook's coded columns are filled from reference documents the CHA
 supplied, generated into `packages/core/src/masters/generated/` from the source
-documents kept beside them in `packages/core/masters-source/`:
+files kept beside them in `packages/core/masters-source/`:
 
-| List | Rows | Fills |
+| Source | Rows | Fills |
 |---|---|---|
 | `port-name-and-code.pdf` | 369 foreign ports | `GENERAL.PortOfShipmentCode`, `CountryOfShipmentCode` |
 | `custom-house-list.csv` | 296 ICEGATE stations | `GENERAL.CustomsHouseCode`, `SHIPMENT.Port_of_Reporting` |
 | `major-airline-code-list.pdf` | 61 airlines | air waybill carrier resolution |
 | `country-code-list.pdf` | 238 alpha-3 codes | every `iso2()` caller |
+| `igst-rate-notification-09-2025.pdf` | 1,195 IGST schedule entries | `ITEM.IGST_Rate`, `IGST_LevyNotn`, `IGST_LevyNotnSrNo` |
+| `bcd-exemption-notification-45-2025.pdf` | 539 exemptions + 125 conditions | `ITEM.BCD_Rate`, `Basic_Notn`, `Basic_NotnSrNo` |
+| `bcd-amendment-*.pdf` (6) | 100 applied, 85 omitted, 31 recorded | keeps the above in force rather than as published |
+| `igcr-rules-74-2022-nt.pdf` + `igcr-amendment-07-2025-nt.pdf` | the procedure condition 3 points at | reference for the IIN + continuity bond a claim needs |
 
 Before this, the foreign-port master was 27 hand-typed rows and the custom-house
 master was six — the stations the two reference jobs happened to use. Anything
@@ -148,7 +152,200 @@ Three things it does that are worth knowing before editing a source list:
   violation. `NAME_CORRECTIONS` fixes it and keeps the printed spelling as an
   alias, so a document repeating the same mistake still resolves.
 
-`packages/core/test/reference-masters.test.ts` pins all four.
+`packages/core/test/reference-masters.test.ts` pins the four lists;
+`packages/core/test/duty-notifications.test.ts` pins the two notifications.
+
+### The two duty notifications
+
+Both are the whole rate structure, not amendments to one:
+
+- **9/2025-Integrated Tax (Rate)**, in force 22 September 2025, supersedes
+  1/2017-IT(R). Seven schedules, one IGST rate each.
+- **45/2025-Customs**, in force 1 November 2025, supersedes 31 notifications
+  going back to 1957. Four tables of effective BCD (and where stated IGST and
+  compensation cess) rates, most of them conditional, plus the condition
+  annexures and 29 appended goods Lists.
+
+Before them the tariff master had three rows — the CTHs the two reference jobs
+used — so every other item merged with `igstRate: 0` and a flag telling the
+reviewer to type the rates in. What the lookups do with them:
+
+- `igstRateForCth(cth)` answers for any code. Column (2) of a notification is a
+  little language rather than a code (`0207 25 00, 0207 27 00`, `5004 to 5006`,
+  `0910 [other than 0910 11 10, 0910 30 10]`, `Any Chapter`), which the build
+  flattens into digit prefixes; the longest prefix that matches wins. A CTH no
+  entry names is 18% by Schedule II's own residual entry — returned with
+  `residual: true`, because goods that are *nil*-rated are exempted by a
+  companion notification that is not in these masters, so a residual answer is
+  a prompt to check rather than a conclusion.
+- `bcdExemptionMatches(cth)` returns candidates only. Every entry is bound to a
+  description and most to a condition, so nothing is auto-applied; "Any
+  Chapter" entries (diplomatic baggage, defence stores) are left out unless
+  asked for, or they bury the entries that name the chapter.
+- The rate often turns on the description, not the code: heading 1702 is 5% as
+  jaggery and 18% as lactose. Where equally specific entries disagree the
+  lookup hands back all of them, `mergeToDraft` flags it, and
+  `enrichDraftFromNotifications` (`packages/extraction`) asks the model which
+  entry describes the goods — choosing only between entries the masters
+  produced, and flagging whatever it chose.
+
+### A notification is not a document
+
+It is a document plus everything issued against it since. 45/2025 was published
+on 24 October 2025 and amended six times in the following nine months. Read from
+the base PDF alone it is **wrong about a third of its entries**:
+
+| | entries | if we trusted the base text |
+|---|---|---|
+| sunsets 02/2026 extended to 2028 | **93** | deny a concession that is live |
+| serials 02/2026 omitted | **85** | grant one that no longer exists |
+
+So the build reads the amendments too, from `masters-source/bcd-amendment-*.pdf`,
+in the order they were issued.
+
+Two properties make that safe to automate. Instructions are **numbered 1..n**,
+so none can be skipped — the build asserts the numbering and stops if a
+classified count disagrees. And each **cites the serial it acts on**, so it can
+be applied to exactly one entry, after asserting the entry exists and the text
+being replaced is really there. An amendment that does not match what we hold
+means our parse of the base notification is wrong, which is worth stopping for.
+
+Three forms are applied — a sunset date substituted in column (3), a serial
+omitted, a rate substituted in column (4). Everything else is **recorded, not
+applied**: an inserted serial or a substituted row carries new text only a
+person can read, a corrigendum edits a printed page and cannot be located by
+serial at all, and one amendment revises an appended List we do not parse.
+
+```
+45/2025 amendments: 100 applied, 85 serials omitted,
+                    31 instructions left for a human (25 entries marked stale)
+```
+
+An entry those 31 touch is marked `staleBy`, and **its rate is never applied** —
+`enrichDraftFromNotifications` proposes it and says which amendment it has not
+caught up with. `BCD_UNAPPLIED_AMENDMENTS` publishes the whole list, because the
+gap between what CBIC has notified and what these masters hold should be visible
+rather than assumed away.
+
+One trap worth knowing: an instruction can be **compound**. Instruction 62 of
+02/2026 moves S.No. 140's sunset *and* rewrites its conditions. Read as a single
+action it would apply the first and silently drop the second, leaving an entry
+that looks current and states the wrong conditions — so lettered clauses are
+split and classified one by one.
+
+`validUntil` is read out of the proviso as a date, because whether a concession
+has lapsed depends on the filing date, and `mergeToDraft` now drops a lapsed
+entry from the candidates rather than offering it. 02/2026 amended Table I only,
+so a few Table II provisos really did expire on 31 March 2026 — those entries
+stay in the master, and `isInForce(entry, date)` decides.
+
+### What a concession demands
+
+An exemption entry grants a rate, and **286 of the 539 in 45/2025 attach a
+condition to it** — an end-use undertaking, a registration, a certificate. Those
+conditions used to survive only as prose inside one flag message, so nothing
+downstream could act on them.
+
+They are now classified at build time by *what they demand*, because that is
+what decides who has to do something:
+
+| kind | conditions | entries it reaches |
+|---|---|---|
+| `igcr` — follow the IGCR Rules 2022 | 2 | **120** |
+| `certificate` — produce one from a named authority | 65 | 70 |
+| `importer-type` — only Defence, Government, a registered exporter… | 14 | 55 |
+| ten more (`bond`, `time-limit`, `export-obligation`, …) | 22 | 60 |
+| `other` — the long tail, read by a person | 32 | 34 |
+
+Three kinds cover 80% of everything conditional. `igcr` is worth naming on its
+own: Table I condition 3 and Table II condition 1 are the *same sentence*, so
+matching it is exact rather than fuzzy, and between them they gate 120 entries.
+What it means in practice is that the importer must already hold an IIN and a
+continuity bond, and **both must be declared on the Bill of Entry** — rule 5(1)
+of the Customs (Import of Goods at Concessional Rate of Duty or for Specified
+End Use) Rules, 2022 (74/2022-Cus(N.T.), amended by 07/2025 which moved the
+returns from monthly to quarterly). Both notifications are in `masters-source/`.
+
+`bcdConditions(entry)` returns the whole condition — number, kinds and text —
+where `bcdConditionTexts()` returned bare prose with no handle to record
+against. `requiresIgcr(entry, subEntry?)` answers the question that blocks a
+filing.
+
+### One serial, several end uses
+
+A serial can enumerate end uses and give each its own rate and conditions.
+S.No. 160 is the shape:
+
+```
+160.  Chapter 47   Pulp of wood … when used for the manufacture of:
+      (i)   newsprint                      Nil    conditions 3 and 19
+      (ii)  paper and paperboard           Nil    condition 3
+      (iii) adult diapers                  Nil    condition 3
+      (iv)  ch. 9619, other                2.5%   condition 3
+```
+
+Read as one row that is `bcdRateText: "Nil Nil Nil 2.5%"` and
+`condition: "3 and 19 3 3 3"` — no rate at all, so the concession cannot be
+claimed. `subEntries` now carries the four apart, and
+`bcdSubEntryConditions(entry, 'ii')` answers `[3]` rather than `[3, 19]`,
+because condition 19 — supply the newsprint to a newspaper registered with the
+Registrar of Newspapers for India — binds the newsprint branch alone.
+
+Column (6) is positional in these rows, and the dashes matter: S.No. 260 reads
+`- - - - - 3`, five unconditional looms and one conditional line of parts. A
+parser that only looked for digits would attach the 3 to the first loom.
+
+**The split refuses more often than it succeeds, and that is the design.** Of
+the 23 entries that stack rates, 9 reconcile. S.No. 130 has five rates against
+fifteen enumerated items; S.No. 103 has three rates against two, because the
+second nests `a.` and `b.` beneath it. Where rate count, sub-item count and
+condition slots disagree there is no honest correspondence, so no split is
+emitted and the entry keeps the null rate it has today, for a human. A wrong
+duty rate on a Bill of Entry is far worse than a flagged one.
+
+The parse is checked by serial number: a notification numbers its entries 1..n
+with no gaps, so a missing or duplicated serial means a row was dropped or
+split and the build aborts. Every condition an entry cites must also resolve in
+that table's annexure. Both PDFs are additionally in the RAG library
+(`notn-9-2025-igst-rate`, `notn-45-2025-customs`) for the parts no table
+carries — the appended Lists of goods.
+
+### The customs corpus
+
+The two notifications above were supplied by hand. The rest of the source data
+is now fetched from CBIC and ICEGATE directly, into `data/customs-corpus/`:
+
+```bash
+python3 packages/core/scripts/fetch-corpus.py     # tariff, notifications, masters
+```
+
+It resumes: a document already on disk is not fetched again, so a re-run costs
+only the tree walk.
+
+
+| | |
+|---|---|
+| `tariff/` | The Customs Tariff, three volumes, 370 PDFs — the **First Schedule** (98 chapters of CTH, description, standard UQC, standard and preferential BCD), 233 **General Exemptions**, and **anti-dumping duty by chapter** |
+| `notifications/` | 8,951 PDFs from a 10,706-record index — 3,924 Tariff, 4,089 Non Tariff (362 of them the fortnightly exchange rates), 715 Anti Dumping, 38 CVD, 22 Safeguards, 23 Compensation Cess |
+| `icegate-specs/` | 68 documents — the BE declaration JSON schema, the ICES 1.5 message formats, the 668-row BE error-code table, the SWIFT/PGA advisories |
+| `index/` | The parsed output, **committed** — 11,864 tariff rows, the notification index, 16,024 DGFT ITC-HS codes, 586 ICES locations, UN/LOCODE |
+
+Only `index/` is versioned; the PDFs are gitignored and come back in one
+command. `data/customs-corpus/README.md` describes each set.
+
+Why it is fetched the way it is: **CBIC rebuilt cbic.gov.in as an SPA and the
+old static repository paths all 404** — which is what broke the tariff fetcher
+in `packages/library`. The documents are still published, but addressed through
+the site's own JSON API, and the id in that URL is base64 of the decimal id.
+A chapter node often points at an *older* edition folder than its parent,
+because CBIC republishes a chapter only when it changes, so the path is taken
+from the node rather than built from an edition string. That was the old
+scraper's mistake and it is worth not repeating.
+
+The First Schedule parse is checked against goods we have already filed:
+`39021000` → Polypropylene, kg, 7.5% is job I-13844, and `29171400` → Maleic
+anhydride, 7.5% is job I-10793. It also reproduces all three rows of the
+hand-typed `TARIFF` seed exactly, which is why it is trusted to replace it.
 
 ## The organization repository
 
@@ -339,6 +536,8 @@ pnpm db:check:claims                # proves the JWT access-token hook runs
 pnpm db:test:rls                    # cross-tenant isolation (needs the local stack)
 pnpm worker:test:claim              # mailbox claim lock under concurrency
 pnpm ingest:test                    # ingest against the real example PDFs *
+pnpm --filter @checklist/library exec tsx cli/check-tariff-source.ts
+                                    # CBIC still publishes the tariff where we look
 node apps/web/e2e-phase-a.mjs       # auth + tenancy UI walkthrough (needs pnpm dev)
 node apps/web/e2e-phase-b.mjs       # ingest → export → checklist upload *
 node apps/web/e2e-phase-c.mjs       # branches → scrutiny → CCRs → missing documents *

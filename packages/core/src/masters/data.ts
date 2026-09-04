@@ -4,14 +4,24 @@
  * the lookup API in masters/index.ts is the stable interface.
  *
  * The four reference lists — foreign ports, Indian custom houses, airlines and
- * ISO alpha-3 country codes — are generated from the source documents in
- * `masters-source/` by `scripts/build-masters.py` and imported below rather
- * than typed out here.
+ * ISO alpha-3 country codes — and the two standing CBIC duty notifications are
+ * generated from the source documents in `masters-source/` by
+ * `scripts/build-masters.py` and imported below rather than typed out here.
  */
 
 import { GENERATED_AIRLINES } from './generated/airlines.js';
+import {
+  GENERATED_BCD_CONDITIONS,
+  GENERATED_BCD_EXEMPTIONS,
+  GENERATED_BCD_UNAPPLIED,
+} from './generated/bcd-exemptions.js';
+import {
+  GENERATED_COMP_CESS_SCHEDULE,
+  GENERATED_COMP_CESS_UNAPPLIED,
+} from './generated/comp-cess-schedule.js';
 import { GENERATED_CUSTOM_HOUSES } from './generated/custom-houses.js';
 import { GENERATED_FOREIGN_PORTS } from './generated/foreign-ports.js';
+import { GENERATED_IGST_SCHEDULE } from './generated/igst-schedule.js';
 
 export interface PortMaster {
   code: string;
@@ -236,6 +246,281 @@ export const TARIFF: TariffMaster[] = [
     compCessNotification: '001/2017',
   },
 ];
+
+/**
+ * Column (2) of a CBIC notification: the codes an entry covers.
+ *
+ * It is not a code but a small language — "0207 25 00, 0207 27 00",
+ * "5004 to 5006", "0910 [other than 0910 11 10, 0910 30 10]", "Any Chapter" —
+ * which the build script flattens into digit prefixes. An entry covers a CTH
+ * when one of its `include` prefixes opens that CTH and none of its `exclude`
+ * prefixes does; the longest prefix that matches is the most specific entry.
+ */
+export interface TariffCodeSpec {
+  /** Codes covered, digits only: '01', '0910', '01012100'. */
+  include: string[];
+  exclude?: string[];
+  /** "Any Chapter", or "90 or any other Chapter" — the entry is not bounded by code. */
+  anyChapter?: boolean;
+  /** Column (2) verbatim, so a reviewer can check the flattening. */
+  spec: string;
+  /** Page of the source notification, for citations. */
+  page: number;
+}
+
+/**
+ * One entry of notification 9/2025-Integrated Tax (Rate), which since
+ * 17 September 2025 is the whole IGST rate structure (it supersedes
+ * 1/2017-IT(R)). Seven schedules, one rate each.
+ */
+export interface IgstScheduleEntry extends TariffCodeSpec {
+  schedule: 'I' | 'II' | 'III' | 'IV' | 'V' | 'VI' | 'VII';
+  /** The schedule's rate, in per cent. */
+  rate: number;
+  serial: string;
+  description: string;
+}
+
+/**
+ * One entry of the Schedule to notification 1/2017-Compensation Cess (Rate).
+ *
+ * Fifty-six serials, of which fifty-five name tobacco, coal, aerated waters,
+ * motor vehicles, motorcycles, aircraft and yachts. The fifty-sixth is "any
+ * chapter, all other goods, Nil" — the answer for everything else, and so the
+ * answer for almost every consignment this system files.
+ *
+ * `rate` is the number only when column (4) states a plain percentage. Cess on
+ * cigarettes and coal is specific or compound ("Rs.400 per tonne", "5% +
+ * Rs.2126 per thousand"), which `computeItemDuty` cannot express — it applies a
+ * percentage to the IGST base and nothing else. Those entries keep `rateText`
+ * and leave `rate` null rather than flatten to a percentage that is wrong.
+ */
+export interface CompCessEntry extends TariffCodeSpec {
+  serial: string;
+  description: string;
+  /** Ad valorem per cent, or null for a specific or compound rate. */
+  rate: number | null;
+  /** Column (4) verbatim: "12%", "Nil", "Rs.400 per tonne". */
+  rateText: string;
+  /**
+   * The entry turns on whether the goods bear a brand name (Explanation (3) of
+   * the notification). Serials 5/6, 19/20 and 36/37/38 differ by nothing else,
+   * so a code lookup alone cannot separate them.
+   */
+  brandSensitive?: boolean;
+}
+
+/**
+ * One entry of notification 45/2025-Customs — the effective BCD (and where
+ * stated IGST and compensation cess) rate for goods that match its
+ * description, subject to its condition.
+ *
+ * `bcdRate` is the numeric rate when the cell states exactly one. Entries
+ * whose S.No. covers several sub-items stack a rate per sub-item in the same
+ * cell ("15% 35% 70% 70%"); those keep `bcdRateText` and leave `bcdRate` null
+ * rather than flatten to a rate that is right for one sub-item only. A rate
+ * text of "-" means no concession — the First Schedule rate stands.
+ */
+export interface BcdExemptionEntry extends TariffCodeSpec {
+  table: 'I' | 'II' | 'III' | 'IV';
+  serial: string;
+  description: string;
+  bcdRate: number | null;
+  bcdRateText: string;
+  igstRate: number | null;
+  igstRateText: string;
+  compCessRateText?: string;
+  /** Column (6)/(7) verbatim, so a reviewer can check it against the page. */
+  condition: string | null;
+  /**
+   * The condition numbers that cell cites, in first-seen order and de-duplicated.
+   *
+   * Separate from `condition` because that cell is a little language, not a
+   * number — "2 and 3", or "3 and 19 3 3 3" where one serial stacks four
+   * sub-items. Callers need something to look up, not something to re-parse.
+   */
+  conditions: string[];
+  /**
+   * The end uses a single serial enumerates, when it carries several.
+   *
+   * S.No. 160 is the shape: wood pulp is Nil for newsprint, Nil for paper and
+   * paperboard, Nil for adult diapers and 2.5% for the rest of heading 9619 —
+   * four rates and four condition sets in one row. At the entry level that has
+   * no rate (`bcdRate` is null), so the concession is unclaimable until the
+   * sub-item is chosen; which one applies turns on what the goods are for.
+   *
+   * Absent when the entry has a single rate, and absent when the counts did
+   * not reconcile — the build refuses to guess a correspondence rather than
+   * risk a wrong duty rate.
+   */
+  subEntries?: BcdSubEntry[];
+  /**
+   * Amendments already folded into this entry — a sunset date moved, a rate
+   * substituted. Recorded so the entry says where it differs from the base PDF.
+   */
+  /**
+   * The date the concession lapses, from the entry's own proviso.
+   *
+   * A fact about the entry rather than a sentence in it, because whether it
+   * has passed depends on when the Bill of Entry is filed — and because an
+   * amendment moves it. 02/2026 moved 93 of these from 2026 to 2028.
+   */
+  validUntil?: string;
+  amendedBy?: string[];
+  /**
+   * Amendments that touch this entry but could not be applied mechanically.
+   *
+   * The entry we hold is no longer what the notification says, so **its rate
+   * must not be applied**: it is a prompt to read the amendment, not an answer.
+   */
+  staleBy?: string[];
+}
+
+/**
+ * An amendment instruction that could not be applied to the masters.
+ *
+ * `kind` says why: `insert` and `replace` carry new text only a person can
+ * read; `column3` rewrites a description; `condition` changes which conditions
+ * bind; `list` amends one of the appended Lists, which are not parsed; `page`
+ * is a corrigendum against a printed page and cannot be located by serial at
+ * all.
+ */
+export interface BcdAmendmentInstruction {
+  notification: string;
+  /** ISO date the amendment was issued. */
+  date: string;
+  kind: 'insert' | 'replace' | 'column3' | 'condition' | 'list' | 'page';
+  /** The serial it names, where it names one. */
+  serial?: string;
+}
+
+/** One enumerated end use within an exemption entry, with its own rate. */
+export interface BcdSubEntry {
+  /** The roman numeral as the notification prints it: 'i', 'ii', … */
+  label: string;
+  /** The end use, e.g. 'paper and paperboard'. */
+  text: string;
+  bcdRate: number | null;
+  bcdRateText: string;
+  /** Conditions for this sub-item alone — empty where column (6) reads '-'. */
+  conditions: string[];
+}
+
+/**
+ * What a condition demands of the importer.
+ *
+ * A condition is prose, but it is prose about a small number of things, and
+ * what it demands decides who has to do something about it: `certificate`
+ * becomes a document to chase, `end-use-declaration` becomes a paragraph we
+ * draft, `igcr` becomes a registration and a bond that must already exist.
+ *
+ * Measured over 45/2025: `igcr` reaches 120 of the 286 conditional entries,
+ * `certificate` 70, `importer-type` 55 — 80% between them. `other` is the
+ * long tail and is meant to be read by a person.
+ */
+export type ConditionKind =
+  | 'igcr'
+  | 'certificate'
+  | 'registration'
+  | 'importer-type'
+  | 'end-use-declaration'
+  | 'export-obligation'
+  | 'time-limit'
+  | 'bond'
+  | 'bank-guarantee'
+  | 'quantity-value-cap'
+  | 'contract-registration'
+  | 'payment-mode'
+  | 'direct-shipment'
+  | 'other';
+
+export interface BcdConditionMaster {
+  table: 'I' | 'II' | 'III' | 'IV';
+  no: string;
+  /** What it demands. A condition can demand several things at once. */
+  kinds: ConditionKind[];
+  text: string;
+}
+
+/**
+ * Notification 9/2025-Integrated Tax (Rate) in the ICES "009/2025" form, the
+ * shape a Bill of Entry files it as. In force from 22 September 2025.
+ */
+export const IGST_RATE_NOTIFICATION = '009/2025';
+
+/**
+ * Notification 45/2025-Customs in the ICES "045/2025" form. In force from
+ * 1 November 2025; a corrigendum of 31 October 2025 corrects one condition
+ * code (C-140 to C-130) and is not otherwise reflected here.
+ */
+export const BCD_EXEMPTION_NOTIFICATION = '045/2025';
+
+/** Every entry of the seven IGST schedules, in notification order. */
+export const IGST_SCHEDULE: IgstScheduleEntry[] = GENERATED_IGST_SCHEDULE;
+
+/** Every entry of Tables I to IV of the BCD exemption notification. */
+export const BCD_EXEMPTIONS: BcdExemptionEntry[] = GENERATED_BCD_EXEMPTIONS;
+
+/** The conditions in the annexures, cited by column (6)/(7) of the tables. */
+export const BCD_CONDITIONS: BcdConditionMaster[] = GENERATED_BCD_CONDITIONS;
+
+/**
+ * Amendments to 45/2025 that these masters do not carry.
+ *
+ * Not a backlog to feel bad about — a published gap. The base notification is
+ * wrong about a third of its entries within four months of issue, so the
+ * honest position is to say which parts we have not caught up with rather than
+ * to present the base text as current.
+ */
+export const BCD_UNAPPLIED_AMENDMENTS: BcdAmendmentInstruction[] = GENERATED_BCD_UNAPPLIED;
+
+/**
+ * Schedule II's residual entry: "Goods which are not specified in Schedule I,
+ * III, IV, V, VI or VII". A CTH that no other entry names is taxed at 18% by
+ * this one, so a lookup that finds nothing has still found the answer.
+ */
+export const IGST_RESIDUAL_ENTRY: IgstScheduleEntry =
+  IGST_SCHEDULE.find(
+    (e) => e.schedule === 'II' && /^Goods which are not specified in Schedule/i.test(e.description),
+  ) ?? { schedule: 'II', rate: 18, serial: '639', include: [], anyChapter: true, spec: 'Any Chapter', description: 'Goods which are not specified in Schedule I, III, IV, V, VI or VII', page: 0 };
+
+/**
+ * Notification 1/2017-Compensation Cess (Rate) in the ICES "001/2017" form.
+ * In force from 1 July 2017.
+ */
+export const COMP_CESS_NOTIFICATION = '001/2017';
+
+/** All 56 entries of its Schedule, in notification order. */
+export const COMP_CESS_SCHEDULE: CompCessEntry[] = GENERATED_COMP_CESS_SCHEDULE;
+
+/**
+ * S.No. 56: "Any chapter — All goods other than those mentioned at S. Nos. 1 to
+ * 55 above — Nil". A CTH that none of the other fifty-five names bears no cess
+ * by this entry, so a lookup that finds nothing has still found the answer, and
+ * `001/2017` / `56` is what the Bill of Entry declares.
+ */
+export const COMP_CESS_RESIDUAL_ENTRY: CompCessEntry =
+  COMP_CESS_SCHEDULE.find((e) => e.serial === '56' && e.anyChapter === true) ?? {
+    serial: '56',
+    include: [],
+    anyChapter: true,
+    spec: 'Any chapter',
+    description: 'All goods other than those mentioned at S. Nos. 1 to 55 above',
+    rate: 0,
+    rateText: 'Nil',
+    page: 4,
+  };
+
+/**
+ * Amendments to 1/2017 that these masters do not carry.
+ *
+ * Published as a gap for the same reason `BCD_UNAPPLIED_AMENDMENTS` is: every
+ * one of the nineteen moves a rate on tobacco, coal or motor vehicles, so any
+ * named entry this master returns is a candidate to check rather than a rate to
+ * file. None of them touches S.No. 56 — an amendment cannot make unlisted goods
+ * cessable without adding a fifty-seventh serial, which the build would catch.
+ */
+export const COMP_CESS_UNAPPLIED_AMENDMENTS: string[] = GENERATED_COMP_CESS_UNAPPLIED;
 
 export interface FtaSchemeMaster {
   scheme: string;

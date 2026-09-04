@@ -52,13 +52,32 @@ const taxinfoDispatcher = new Agent({
 /**
  * Fetchers for official CBIC documents.
  *
- * Working tariff chapters live under a static repo:
+ * Working tariff chapters used to be reachable as static files:
  *   https://www.cbic.gov.in/CONTENTREPO/Customs/Tariff/Tariff(ason<EDITION>)/CUSTOMS_TARIFF_VOL-I/chap-<N>.pdf
- * CBIC republishes a chapter only when it changes, so the newest edition's
- * page links older folders for unchanged chapters — we probe editions
- * newest-first per chapter.
+ * CBIC rebuilt cbic.gov.in as a single-page app and **every one of those URLs
+ * now 404s**, for every edition. The PDFs are still published at those same
+ * repository paths; they are just no longer served directly. They come back
+ * through the site's own JSON API:
+ *
+ *   GET /api/cbic-content-msts/<base64(contentId)>
+ *       -> a content node; its cbicDocMsts[] carry filePathEn
+ *   GET /content/pdf/<filePathEn>
+ *       -> {"data": "<base64 pdf>", "fileName": "..."}
+ *
+ * The id in that first URL is base64 of the decimal id — the API rejects the
+ * bare number. Content id 172462 is "Tariff (as on 30.06.2025)", the root of
+ * the whole Customs Tariff; PART II under it is the Import Tariff, whose
+ * sections hold the 98 chapters of the First Schedule.
+ *
+ * **The path is read off the node, never constructed.** A chapter routinely
+ * points at an older edition folder than its parent, because CBIC republishes
+ * a chapter only when it changes — so "the current edition" is a property of
+ * each chapter, not of the tariff. Probing editions newest-first was the old
+ * approach and it is what the edition list below is now only kept for: naming
+ * archived copies when the live API is unreachable.
  */
 
+/** Editions the static repo used to publish under. Wayback fallback only. */
 export const TARIFF_EDITIONS = [
   '30.06.2025',
   '30.06.2024',
@@ -69,8 +88,102 @@ export const TARIFF_EDITIONS = [
 
 const UA = 'Mozilla/5.0 (compatible; checklist-app-library/1.0)';
 
+const CBIC = 'https://www.cbic.gov.in';
+
+/** "Tariff (as on 30.06.2025)" — the root of the three-volume Customs Tariff. */
+const TARIFF_ROOT_CONTENT_ID = 172462;
+
+/** PART II, the Import Tariff: the sections that hold the First Schedule. */
+const IMPORT_TARIFF_TITLE = /PART\s*-?\s*II\b/i;
+
 function chapterUrl(edition: string, chapter: number): string {
-  return `https://www.cbic.gov.in/CONTENTREPO/Customs/Tariff/Tariff(ason${edition})/CUSTOMS_TARIFF_VOL-I/chap-${chapter}.pdf`;
+  return `${CBIC}/CONTENTREPO/Customs/Tariff/Tariff(ason${edition})/CUSTOMS_TARIFF_VOL-I/chap-${chapter}.pdf`;
+}
+
+interface ContentNode {
+  id: number;
+  titleEn?: string;
+  childContentList?: ContentNode[];
+  cbicDocMsts?: { filePathEn?: string }[];
+}
+
+async function contentNode(id: number): Promise<ContentNode | null> {
+  try {
+    const encoded = Buffer.from(String(id)).toString('base64');
+    const res = await fetch(`${CBIC}/api/cbic-content-msts/${encoded}`, {
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+      signal: AbortSignal.timeout(30_000),
+    });
+    return res.ok ? ((await res.json()) as ContentNode) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetch a document CBIC addresses by repository path. The endpoint answers with
+ * the PDF base64-encoded inside a JSON envelope, and answers 200 with an empty
+ * body for a path that does not exist — so absence is length, not status.
+ */
+async function fetchRepoPdf(filePath: string): Promise<Buffer | null> {
+  try {
+    const res = await fetch(`${CBIC}/content/pdf/${filePath}`, {
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+      signal: AbortSignal.timeout(120_000),
+    });
+    if (!res.ok) return null;
+    const text = await res.text();
+    if (!text.trim()) return null;
+    const body = JSON.parse(text) as { data?: string };
+    if (!body.data) return null;
+    const pdf = Buffer.from(body.data, 'base64');
+    return pdf.length > 1000 && pdf.subarray(0, 5).toString() === '%PDF-' ? pdf : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * chapter number -> repository path, resolved once per process.
+ *
+ * Walking PART II costs one request for the part plus one per section, ~22 in
+ * all, so it is cheap enough to do eagerly and wrong to do per chapter.
+ */
+let chapterPathCache: Promise<Map<number, string>> | null = null;
+
+/**
+ * chapter number -> the repository path CBIC currently publishes it at.
+ *
+ * Exported so `cli/check-tariff-source.ts` can assert the tree still resolves.
+ * CBIC has moved this once already; the next time it moves, the failure mode
+ * without that check is a tariff master that silently stops updating.
+ */
+export function tariffChapterPaths(): Promise<Map<number, string>> {
+  chapterPathCache ??= (async () => {
+    const paths = new Map<number, string>();
+    const root = await contentNode(TARIFF_ROOT_CONTENT_ID);
+    const part = root?.childContentList?.find((c) => IMPORT_TARIFF_TITLE.test(c.titleEn ?? ''));
+    if (!part) return paths;
+
+    for (const summary of (await contentNode(part.id))?.childContentList ?? []) {
+      const section = await contentNode(summary.id);
+      for (const chapterNode of section?.childContentList ?? []) {
+        for (const doc of chapterNode.cbicDocMsts ?? []) {
+          // The chapter number is in the filename, not in the node — the node
+          // is titled by subject ("Plastics and articles thereof.").
+          const n = doc.filePathEn?.match(/chap-(\d+)\.pdf$/i);
+          if (n && doc.filePathEn) paths.set(Number(n[1]), doc.filePathEn);
+        }
+      }
+    }
+    return paths;
+  })();
+  return chapterPathCache;
+}
+
+/** Drop the memoised tree, so a long-lived process can pick up a new edition. */
+export function resetTariffChapterCache(): void {
+  chapterPathCache = null;
 }
 
 async function fetchPdf(url: string): Promise<Buffer | null> {
@@ -119,29 +232,45 @@ export interface FetchResult {
   bytes?: number;
 }
 
-/** Download one tariff chapter, probing editions newest-first. */
+/** The edition a chapter was published under, read out of its repository path. */
+function editionOf(filePath: string): string | undefined {
+  return filePath.match(/Tariff\(ason([\d.]+)\)/)?.[1];
+}
+
+/**
+ * Download one tariff chapter.
+ *
+ * The live path resolves the chapter through CBIC's content tree; the Wayback
+ * fallback below still probes the old static URLs, because that is where the
+ * archived copies were taken from.
+ */
 export async function fetchTariffChapter(chapter: number): Promise<FetchResult> {
   const id = `tariff-chap-${String(chapter).padStart(2, '0')}`;
   if (getDoc(id)) return { id, status: 'exists' };
 
-  for (const edition of TARIFF_EDITIONS) {
-    const url = chapterUrl(edition, chapter);
-    const pdf = await fetchPdf(url);
+  const filePath = (await tariffChapterPaths()).get(chapter);
+  if (filePath) {
+    const pdf = await fetchRepoPdf(filePath);
     if (pdf) {
+      const edition = editionOf(filePath);
       const meta: LibraryDocMeta = {
         id,
         kind: 'tariff-chapter',
-        title: `Customs Tariff — Chapter ${chapter} (as on ${edition})`,
-        sourceUrl: url,
+        title: `Customs Tariff — Chapter ${chapter}${edition ? ` (as on ${edition})` : ''}`,
+        // The repository path, not the API call: it is the stable identity of
+        // the document, and it says which edition this chapter came from.
+        sourceUrl: `${CBIC}/content/pdf/${filePath}`,
         chapter,
-        edition,
+        // A path CBIC has restructured before could stop carrying the edition;
+        // that is worth losing the label over, not the chapter.
+        ...(edition ? { edition } : {}),
         fetchedAt: new Date().toISOString(),
       };
       saveDoc(meta, pdf);
-      return { id, status: 'downloaded', edition, bytes: pdf.length };
+      return { id, status: 'downloaded', ...(edition ? { edition } : {}), bytes: pdf.length };
     }
   }
-  // live repo broken → archived copy of the newest edition available
+  // live API unreachable → archived copy of the newest edition available
   for (const edition of TARIFF_EDITIONS) {
     const url = chapterUrl(edition, chapter);
     const archived = await fetchViaWayback(url);

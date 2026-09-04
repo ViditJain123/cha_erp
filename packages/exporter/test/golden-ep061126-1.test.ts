@@ -284,6 +284,8 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       const [row] = await readSheet(workbook, 'ITEMS');
       expect(row!['General_Description']).toBe('PP PELLET (POLYPROPYLENE)');
       expect(row!['Brand']).toBe('UNBRANDED');
+      expect(row!['Model']).toBe('NA');
+      expect(row!['CETH']).toBe('NOEXCISE');
       expect(row!['End_Use']).toBe('GNX100');
       expect(row!['Country_of_Origin']).toBe('JP');
     });

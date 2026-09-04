@@ -1,4 +1,9 @@
-/** Download all working-tariff chapter PDFs (1–98), probing editions newest-first. */
+/**
+ * Download all working-tariff chapter PDFs (1–98).
+ *
+ * Each chapter's edition is whatever CBIC last republished it under, so the
+ * editions printed below will not all agree — that is correct, not a bug.
+ */
 import { fetchConsolidatedTariff, fetchTariffChapter } from '../src/fetch.js';
 
 const from = Number(process.argv[2] ?? 1);
@@ -24,7 +29,7 @@ for (let ch = from; ch <= to; ch++) {
     exists++;
   } else {
     missing.push(ch);
-    console.log(`⚠️  chap-${ch} not found in any edition`);
+    console.log(`⚠️  chap-${ch} could not be retrieved`);
   }
 }
 console.log(`\ndone: ${downloaded} downloaded, ${exists} already present, missing: [${missing.join(', ')}]`);

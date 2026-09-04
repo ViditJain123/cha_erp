@@ -6,6 +6,16 @@ dist/
 .DS_Store
 .vercel
 .env*
+
+# The customs corpus: ~1.3 GB of CBIC tariff volumes, notification PDFs and
+# ICEGATE specification documents. Re-downloadable with
+# `packages/core/scripts/fetch-corpus.py`, so it is not worth versioning.
+# data/customs-corpus/index/ IS committed — that is the parsed, structured
+# output the build consumes.
+data/customs-corpus/tariff/
+data/customs-corpus/notifications/
+data/customs-corpus/icegate-specs/
+
 # Must stay last: a later pattern wins, and `.env*` above would otherwise
 # re-ignore this file. `vercel link` appends `.env*` on every run, so if this
 # negation stops being the final line, move it back down here.

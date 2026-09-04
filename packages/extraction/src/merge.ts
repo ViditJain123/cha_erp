@@ -1,9 +1,15 @@
 import {
   applicableDeclarations,
+  bcdExemptionMatches,
+  bcdExemptionNotification,
+  compCessForCth,
+  compCessNotification,
+  isInForce,
   chaProfile,
   computeJobDuty,
   exchangeRatesOn,
   formatForeignPort,
+  igstRateForCth,
   lookupCustomHouse,
   lookupForeignPort,
   lookupForeignPortLoose,
@@ -13,6 +19,7 @@ import {
   normalizeUqc,
   recallProductMemory,
   singleWindowRuleForChapter,
+  tradeDescription,
   validateGstin,
   type TermsOfInvoice,
 } from '@checklist/core';
@@ -395,12 +402,156 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
         });
       }
     }
-    if (!tariff)
+    // The tariff master has a row per CTH the CHA has filed before. For
+    // everything else the two standing CBIC notifications still answer half
+    // the question: 9/2025-IT(R) gives the IGST rate outright, and
+    // 45/2025-Customs offers the BCD concessions the goods might qualify for.
+    const igst = igstRateForCth(ritc);
+    // "II114" — the schedule and serial the Bill of Entry files beside the
+    // notification number. The tariff master carries neither, but a serial
+    // only belongs to its own notification: a master row filed under some
+    // other one keeps its number bare.
+    const igstSerial =
+      igst && !igst.residual && (!tariff || tariff.igstNotification === igst.notification)
+        ? `${igst.entry.schedule}${igst.entry.serial}`
+        : undefined;
+    // Compensation cess. Every Bill of Entry declares 1/2017 and a serial,
+    // whether or not the goods bear a cess: goods no serial names are covered
+    // by S.No. 56 at nil, and that pair is what the column asks for. This used
+    // to come from the tariff master, which knows three CTHs, so the two
+    // columns were blank on every other line.
+    const cess = compCessForCth(ritc);
+    // Blank when two serials contest the CTH — cigarettes and motor vehicles
+    // are split by description at the same code, and picking the first is a
+    // rate we cannot evidence. The error flag below sends it to the reviewer,
+    // and enrichDraftFromNotifications settles it when a model is available.
+    const cessSerial =
+      cess &&
+      !cess.alternatives.length &&
+      (!tariff || tariff.compCessNotification === cess.notification)
+        ? cess.entry.serial
+        : undefined;
+    const igstNotn = tariff?.igstNotification ?? igst?.notification;
+    const cessNotn = tariff?.compCessNotification ?? cess?.notification;
+    const serials =
+      igstSerial || cessSerial
+        ? { ...(igstSerial && { igst: igstSerial }), ...(cessSerial && { compCess: cessSerial }) }
+        : undefined;
+    if (tariff && igst && !igst.residual && !igst.alternatives.length && igst.rate !== tariff.igstRate) {
+      flags.push({
+        severity: 'warning',
+        path: `items.${idx}.igstRate`,
+        message:
+          `Tariff master says IGST ${tariff.igstRate}% for CTH ${ritc}, notification ${igst.notification} ` +
+          `Schedule ${igst.entry.schedule} S.No. ${igst.entry.serial} says ${igst.rate}% ("${igst.entry.description.slice(0, 60)}"). ` +
+          'The master is being used — correct it if the notification is right.',
+      });
+    }
+    // A named cess serial is a candidate, never a conclusion: nineteen
+    // notifications amend 1/2017 and none of them is folded into the master.
+    // The residual S.No. 56 says nothing, because it is the common case, it is
+    // nil, and no amendment can reach it.
+    if (cess && !cess.residual) {
+      const alternatives = cess.alternatives
+        .map((e) => `S.No. ${e.serial} says ${e.rateText}`)
+        .join(', ');
+      flags.push({
+        severity: cess.rate == null || cess.alternatives.length ? 'error' : 'warning',
+        path: `items.${idx}.compCessRate`,
+        message:
+          `Compensation cess: notification ${cess.notification} S.No. ${cess.entry.serial} ` +
+          `covers CTH ${ritc} at "${cess.rateText}" ("${cess.entry.description.slice(0, 60)}")` +
+          (alternatives ? ` — ${alternatives} for the same CTH; the goods description decides.` : '.') +
+          (cess.rate == null
+            ? ' The rate is specific or compound, which the duty calculator cannot apply — enter the cess by hand.'
+            : '') +
+          (cess.entry.brandSensitive
+            ? ' The entry turns on whether the goods bear a brand name.'
+            : '') +
+          ` ${cess.unappliedAmendments.length} amending notifications are not folded into this master — read them before filing.`,
+      });
+    }
+    if (tariff && cess && !cess.residual && cess.rate != null && cess.rate !== tariff.compCessRate) {
+      flags.push({
+        severity: 'warning',
+        path: `items.${idx}.compCessRate`,
+        message:
+          `Tariff master says compensation cess ${tariff.compCessRate}% for CTH ${ritc}, ` +
+          `notification ${cess.notification} S.No. ${cess.entry.serial} says ${cess.rateText}. ` +
+          'The master is being used — correct it if the notification is right.',
+      });
+    }
+    if (!tariff) {
       flags.push({
         severity: 'error',
         path: `items.${idx}.ritc`,
-        message: `CTH ${hs || '(missing)'} not in tariff master for "${gi.description.slice(0, 60)}" — duty rates need manual entry.`,
+        message: `CTH ${hs || '(missing)'} not in tariff master for "${gi.description.slice(0, 60)}" — BCD rate needs manual entry.`,
       });
+    }
+    if (!tariff && igst) {
+      const cited = `notification ${igst.notification} Schedule ${igst.entry.schedule} S.No. ${igst.entry.serial} (p.${igst.entry.page})`;
+      if (igst.residual) {
+        // 9/2025 sets rates; goods that are nil-rated are exempted by the
+        // companion IGST exemption notification, which is not in the masters.
+        // So a residual answer is a prompt to check, not a conclusion.
+        flags.push({
+          severity: 'warning',
+          path: `items.${idx}.igstRate`,
+          message: `IGST ${igst.rate}% assumed for CTH ${ritc} from the residual entry of ${cited} — no schedule entry names this CTH. Check the goods are not exempt.`,
+        });
+      } else {
+        flags.push({
+          severity: igst.alternatives.length ? 'warning' : 'info',
+          path: `items.${idx}.igstRate`,
+          message:
+            `IGST ${igst.rate}% for CTH ${ritc} from ${cited}: "${igst.entry.description.slice(0, 80)}"` +
+            (igst.alternatives.length
+              ? ` — ${igst.alternatives.map((a) => `S.No. ${a.serial} says ${a.rate}%`).join(', ')} for the same CTH; the goods description decides.`
+              : '.'),
+        });
+      }
+    }
+    // A concession sits ON TOP of the tariff rate, so knowing the tariff rate
+    // tells you nothing about whether one applies. This deliberately runs for
+    // every item, including those the tariff master knows: it used to live
+    // inside the `!tariff` branch above, which was harmless only while that
+    // master held three rows. With the full First Schedule in it, that branch
+    // stops firing and every exemption would go unnoticed.
+    // A concession that has lapsed is not a candidate. The date that decides
+    // it is the filing date, not today — and it is only right because the
+    // amendments that move these provisos have been applied: 02/2026 alone
+    // pushed 93 of them from March 2026 to March 2028.
+    const covering = bcdExemptionMatches(ritc);
+    const lapsed = covering.filter((e) => !isInForce(e, today));
+    const exemptions = covering.filter((e) => isInForce(e, today)).slice(0, 3);
+    if (lapsed.length) {
+      flags.push({
+        severity: 'info',
+        path: `items.${idx}.bcdRate`,
+        message:
+          `Notification ${bcdExemptionNotification()} ` +
+          lapsed.map((e) => `Table ${e.table} S.No. ${e.serial}`).join(', ') +
+          ` covers CTH ${ritc} but lapsed on ${lapsed.map((e) => e.validUntil).join(', ')} — not available for a ${today} filing.`,
+      });
+    }
+    if (exemptions.length) {
+      flags.push({
+        severity: 'info',
+        path: `items.${idx}.bcdRate`,
+        message:
+          `Notification ${bcdExemptionNotification()} may cut BCD on CTH ${ritc}: ` +
+          exemptions
+            .map(
+              (e) =>
+                `Table ${e.table} S.No. ${e.serial} ${e.bcdRateText}` +
+                (e.condition ? ` (condition ${e.condition})` : '') +
+                (e.staleBy?.length ? ` [amended by ${e.staleBy.join(', ')}, not applied]` : '') +
+                ` "${e.description.slice(0, 50)}"`,
+            )
+            .join('; ') +
+          ' — each applies only if the goods match the description and meet the condition.',
+      });
+    }
     const coaProduct = coa?.products.find(
       (p) =>
         (gi.batchNo && p.batchNo === gi.batchNo) ||
@@ -421,14 +572,24 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       amount: gi.amount,
       bcdRate: tariff?.bcdRate ?? 0,
       swsRate: 10,
-      igstRate: tariff?.igstRate ?? 0,
-      ...(tariff && {
-        igstNotification: tariff.igstNotification,
-        aidcNotification: tariff.aidcNotification,
-        compCessNotification: tariff.compCessNotification,
-      }),
+      igstRate: tariff?.igstRate ?? igst?.rate ?? 0,
+      // Both notification numbers go on every line. The lookups always answer
+      // for a usable CTH — 9/2025 through its residual Schedule II entry,
+      // 1/2017 through S.No. 56 — so a blank here only ever meant we had not
+      // asked. The tariff master still wins where it has a row, because it
+      // records what this CHA actually filed.
+      ...(igstNotn && { igstNotification: igstNotn }),
+      ...(cessNotn && { compCessNotification: cessNotn }),
+      ...(tariff && { aidcNotification: tariff.aidcNotification }),
+      ...(serials && { notificationSerials: serials }),
       aidcRate: tariff?.aidcRate ?? 0,
-      compCessRate: tariff?.compCessRate ?? 0,
+      // A cess the calculator cannot express stays at zero rather than being
+      // flattened to a wrong percentage; the error flag above says so, and it
+      // is entered by hand. Same for a contested serial — two entries at the
+      // same code with different rates is not a rate.
+      compCessRate:
+        tariff?.compCessRate ??
+        (cess && !cess.residual && !cess.alternatives.length ? cess.rate ?? 0 : 0),
       ...(ftaScheme &&
         coo && {
           bcdExemption: {
@@ -445,6 +606,15 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       }),
       // Overridden per importer by applyPartyResolution(), once the party is bound.
       endUseCode: 'GNX100',
+      // The ITEMS sheet wants these on every line. Brand and model are
+      // constants for this trade — the goods are bulk chemicals and polymers,
+      // which carry neither — but they live on the draft rather than in the
+      // exporter so a reviewer can correct the line that does. The general
+      // description is seeded deterministically here and refined by
+      // enrichDraftDescriptions(), which may not run.
+      generalDescription: tradeDescription(gi.description),
+      brand: 'UNBRANDED',
+      model: 'NA',
       ...((batchNo ?? mfg ?? exp) && {
         batch: {
           ...(batchNo && { batchNo }),

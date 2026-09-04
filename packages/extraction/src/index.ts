@@ -15,3 +15,12 @@ export {
   enrichDraftFromLibrary,
   type TariffProposal,
 } from './library-propose.js';
+export {
+  describeGoodsGenerically,
+  enrichDraftDescriptions,
+} from './general-description.js';
+export {
+  chooseNotificationEntries,
+  enrichDraftFromNotifications,
+  type NotificationChoice,
+} from './notification-choose.js';

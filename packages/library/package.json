@@ -10,6 +10,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "fetch-tariff": "tsx cli/fetch-tariff.ts",
+    "check-tariff-source": "tsx cli/check-tariff-source.ts",
     "fetch-notification": "tsx cli/fetch-notification.ts",
     "index-docs": "tsx cli/index-docs.ts",
     "search": "tsx cli/search.ts"

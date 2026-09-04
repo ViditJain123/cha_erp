@@ -1,5 +1,11 @@
 import 'server-only';
-import { enrichDraftFromLibrary, runPipeline, type ChecklistDraft } from '@checklist/extraction';
+import {
+  enrichDraftDescriptions,
+  enrichDraftFromLibrary,
+  enrichDraftFromNotifications,
+  runPipeline,
+  type ChecklistDraft,
+} from '@checklist/extraction';
 import { applyPartyResolution } from './parties';
 import { recomputeDuty } from './recompute';
 
@@ -23,9 +29,18 @@ export interface DraftPipelineFile {
  *      document.
  *   2. `enrichDraftFromLibrary` fills tariff data the masters do not carry, by
  *      searching the CBIC tariff — this can set duty rates on items.
- *   3. `recomputeDuty` therefore has to run last, or the totals will not
+ *   3. `enrichDraftDescriptions` turns each invoice line into the general
+ *      description the ITEMS sheet asks for, dropping the manufacturer's grade
+ *      code. It runs before the notification step because that step passes the
+ *      general description to the model as context for the duty choice, so a
+ *      cleaned one makes a better choice.
+ *   4. `enrichDraftFromNotifications` settles what the notification masters
+ *      narrowed but could not decide: which IGST schedule entry describes the
+ *      goods, and whether a BCD concession in 45/2025-Customs applies. It needs
+ *      the item's CTH, so it follows the library step that can supply one.
+ *   5. `recomputeDuty` therefore has to run last, or the totals will not
  *      reflect what enrichment just added.
- *   4. `applyPartyResolution` binds the importer and supplier to the company's
+ *   6. `applyPartyResolution` binds the importer and supplier to the company's
  *      organization repository, replacing the names read off the documents
  *      with the ones Logi-Sys holds. It needs a company and a database, which
  *      is why it is here and not inside the merge. It may adjust insurance
@@ -43,7 +58,11 @@ export async function buildDraftFromDocuments(
   companyId?: string,
 ): Promise<{ draft: ChecklistDraft; docs: Awaited<ReturnType<typeof runPipeline>>['docs'] }> {
   const { draft, docs } = await runPipeline(files);
-  const enriched = recomputeDuty(await enrichDraftFromLibrary(draft));
+  const enriched = recomputeDuty(
+    await enrichDraftFromNotifications(
+      await enrichDraftDescriptions(await enrichDraftFromLibrary(draft)),
+    ),
+  );
   if (!companyId) return { draft: enriched, docs };
   return { draft: await applyPartyResolution(enriched, companyId), docs };
 }

@@ -103,13 +103,20 @@ describe('the Logi-Sys upload validator, as it rejected job FUCHS-13841', () => 
     expect(row!['TOI']).toBe('C&F');
   });
 
-  it('fills CETH on every item, with the same 8 digits as the CTH', async () => {
+  it("fills CETH on every item with NOEXCISE, not the CTH", async () => {
     // ITEMS : CETH : Invoice No. #1 Product No. #1 This field is mandatory
+    //
+    // The ErrorList said only that the column must not be empty, so this first
+    // shipped as a copy of the CTH. Both of Logi-Sys' own exports — I-10793 and
+    // the desk's corrected e4a144cd — write NOEXCISE instead, which is the
+    // truthful answer: an imported good has no Central Excise Tariff Heading,
+    // and repeating the CTH asserts an excise classification that does not
+    // exist.
     const rows = await readSheet(workbook, 'ITEMS');
     expect(rows).toHaveLength(2);
     for (const row of rows) {
-      expect(row['CETH']).toBe('34039900');
-      expect(row['CETH']).toBe(row['CTH']);
+      expect(row['CETH']).toBe('NOEXCISE');
+      expect(row['CETH']).not.toBe(row['CTH']);
     }
   });
 

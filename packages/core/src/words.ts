@@ -49,3 +49,36 @@ export function numberToIndianWords(n: number): string {
 export function rupeesInWords(amount: number): string {
   return `Rs. ${numberToIndianWords(amount)} Only`;
 }
+
+/**
+ * The goods as a general description, with the manufacturer's grade code
+ * stripped off the invoice description.
+ *
+ * The ITEMS sheet asks for `Product_Description` and `General_Description`
+ * separately, and the difference is the grade: an invoice line reads "Random
+ * Polypropylene RP2248N" and the Bill of Entry declares "Random Polypropylene"
+ * beside it. That trailing token is a catalogue reference, not a description of
+ * the goods, and customs classifies what the goods are.
+ *
+ * Deterministic and deliberately timid — it removes only trailing tokens that
+ * cannot be words, and never returns nothing. A model refines this afterwards
+ * (`describeGoodsGenerically` in @checklist/extraction) for the cases a rule
+ * cannot reach, such as "PP GRANULES" declared as "PP PELLET"; when no model is
+ * available this value stands, and it is always a legal answer because the
+ * worst it can do is repeat the invoice description.
+ */
+export function tradeDescription(description: string): string {
+  const words = description.replace(/\s+/g, ' ').trim().split(' ');
+  // A grade code mixes letters and digits ("RP2248N", "880FG-UV-8LB") or is a
+  // bare run of four or more digits. Two-token descriptions are left alone:
+  // "MEK 2000" is more likely the product than a product plus a code.
+  const isGradeCode = (word: string) => {
+    const bare = word.replace(/[()[\],.]/g, '');
+    if (!bare) return false;
+    if (/^\d{4,}$/.test(bare)) return true;
+    return /[A-Za-z]/.test(bare) && /\d/.test(bare);
+  };
+  const kept = [...words];
+  while (kept.length > 2 && isGradeCode(kept[kept.length - 1]!)) kept.pop();
+  return kept.length ? kept.join(' ') : description.trim();
+}

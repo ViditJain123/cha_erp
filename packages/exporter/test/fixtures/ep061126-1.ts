@@ -132,6 +132,7 @@ export const EP061126_1_DRAFT: ChecklistDraft = {
       notificationSerials: { basic: '295', igst: 'II114', aidc: '19', compCess: '56' },
       generalDescription: 'PP PELLET (POLYPROPYLENE)',
       brand: 'UNBRANDED',
+      model: 'NA',
       originCountry: 'Japan',
       manufacturerName: 'ASIA SHIGEN INTERNATIONAL CO., LTD',
       manufacturerAddress: '222-25-302, MOTOSHIRO-CHO, NAKA-KU, HAMAMATSU-CITY, SHIZUOKA',

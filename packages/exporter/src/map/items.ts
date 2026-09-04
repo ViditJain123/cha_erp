@@ -1,5 +1,13 @@
-import { iso2, pad8 } from '@checklist/core';
-import { BLANK, code, decimal, int, isoDate, money, qty, rate5, text, weight, yn } from '../cell.js';
+import {
+  COMP_CESS_NOTIFICATION,
+  IGST_RATE_NOTIFICATION,
+  compCessForCth,
+  igstRateForCth,
+  iso2,
+  pad8,
+  tradeDescription,
+} from '@checklist/core';
+import { BLANK, code, decimal, int, isoDate, money, orElse, qty, rate5, text, weight, yn } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
 
@@ -10,6 +18,53 @@ import type { MapContext } from './context.js';
  * unit-conversion slip (which is always a factor of 1000) cannot slip through.
  */
 const AMOUNT_TOLERANCE = 0.005;
+
+/** Logi-Sys' word for "this line carries no central excise". */
+const NO_EXCISE = 'NOEXCISE';
+
+/**
+ * Brand and model on a bulk-chemical line.
+ *
+ * Both columns are mandatory and neither has a value for goods sold by tonne
+ * under a tariff description. The vendor's own exports write these two words.
+ */
+const UNBRANDED = 'UNBRANDED';
+const NO_MODEL = 'NA';
+
+/**
+ * The IGST schedule serial for a CTH, for a draft that did not carry one.
+ *
+ * Only ever offered beside 9/2025 itself: filing this notification's serial
+ * next to some other notification number would be a worse declaration than a
+ * blank. Residual matches stay blank, deliberately — Schedule II's catch-all
+ * answers the rate but names no goods, and a serial says the notification
+ * described these goods.
+ */
+function igstSerialFor(cth: string | undefined, notification: string | undefined): string | undefined {
+  if (!cth) return undefined;
+  if (notification && notification !== IGST_RATE_NOTIFICATION) return undefined;
+  const igst = igstRateForCth(cth);
+  if (!igst || igst.residual) return undefined;
+  return `${igst.entry.schedule}${igst.entry.serial}`;
+}
+
+/**
+ * The compensation cess serial for a CTH, for a draft that did not carry one.
+ *
+ * Unlike the IGST side this does answer on a residual match, because S.No. 56
+ * is a real entry that names the goods ("all goods other than those mentioned
+ * at S. Nos. 1 to 55") rather than a catch-all rate. A contested or specific
+ * cess stays blank: the merge flags it for manual entry, and guessing one of
+ * two serials here would file past that flag.
+ */
+function compCessSerialFor(cth: string | undefined, notification: string | undefined): string | undefined {
+  if (!cth) return undefined;
+  if (notification && notification !== COMP_CESS_NOTIFICATION) return undefined;
+  const cess = compCessForCth(cth);
+  if (!cess) return undefined;
+  if (!cess.residual && cess.alternatives.length) return undefined;
+  return cess.entry.serial;
+}
 
 /** Pull a country out of the tail of a free-text address, when it names one. */
 function countryFromAddress(address: string | undefined): string | undefined {
@@ -109,15 +164,27 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       Unit_Price: qty(item.unitPrice),
       CTH: code(cth),
       RITC: code(cth),
-      // The Central Excise Tariff Heading is the same 8-digit classification as
-      // the CTH for an import, and Logi-Sys treats the column as mandatory.
-      CETH: code(cth),
+      // Imported goods have no Central Excise Tariff Heading — central excise
+      // survives only on tobacco and petroleum manufactured in India — and
+      // NOEXCISE is the word Logi-Sys puts in the column to say so. We used to
+      // repeat the CTH here, which the vendor's validator accepts (it only ever
+      // said "this field is mandatory") but which asserts an excise
+      // classification that does not exist. Both of the vendor's own exports
+      // say NOEXCISE.
+      CETH: code(NO_EXCISE),
       PolicyPara: BLANK,
       PolicyYear: BLANK,
 
-      General_Description: text(item.generalDescription),
-      Brand: text(item.brand),
-      Model: text(item.model),
+      // Defaults, not decisions: the merge sets all three on the draft, so a
+      // reviewer's edit is what normally arrives here. These fallbacks are for
+      // drafts saved before that — the export route reads the stored draft and
+      // never re-merges it, so an old draft would otherwise export three blanks.
+      General_Description: orElse(
+        text(item.generalDescription),
+        text(tradeDescription(item.description)),
+      ),
+      Brand: orElse(text(item.brand), code(UNBRANDED)),
+      Model: orElse(text(item.model), code(NO_MODEL)),
       End_Use: code(item.endUseCode),
       Country_of_Origin: code(originCountry),
       Accessories_Details: BLANK,
@@ -130,10 +197,13 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       SWS_Notn: BLANK,
       SWS_NotnSrNo: code(serials.sws),
 
-      IGST_LevyNotn: code(item.igstNotification),
-      IGST_LevyNotnSrNo: code(serials.igst),
-      IGST_CompCessNotn: code(item.compCessNotification),
-      IGST_CompCessNotnSrNo: code(serials.compCess),
+      IGST_LevyNotn: orElse(code(item.igstNotification), code(IGST_RATE_NOTIFICATION)),
+      IGST_LevyNotnSrNo: orElse(code(serials.igst), code(igstSerialFor(cth, item.igstNotification))),
+      IGST_CompCessNotn: orElse(code(item.compCessNotification), code(COMP_CESS_NOTIFICATION)),
+      IGST_CompCessNotnSrNo: orElse(
+        code(serials.compCess),
+        code(compCessSerialFor(cth, item.compCessNotification)),
+      ),
 
       AIDC_LevyNotn: code(item.aidcNotification),
       AIDC_LevyNotnSrNo: code(serials.aidc),

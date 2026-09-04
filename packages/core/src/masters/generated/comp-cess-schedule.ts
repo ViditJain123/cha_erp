@@ -1,0 +1,68 @@
+// GENERATED FILE — do not edit by hand.
+// Source: packages/core/masters-source/comp-cess-rate-notification-01-2017.pdf
+// Regenerate: python3 packages/core/scripts/build-masters.py
+
+import type { CompCessEntry } from '../data.js';
+
+/** 56 entries of notification 1/2017-Compensation Cess (Rate), 28 June 2017. */
+export const GENERATED_COMP_CESS_SCHEDULE: CompCessEntry[] = [
+  { serial: "1", include: ["21069020"], description: "Pan-masala", rate: 60, rateText: "60%", spec: "2106 90 20", page: 1 },
+  { serial: "2", include: ["22021010"], description: "Aerated waters", rate: 12, rateText: "12%", spec: "2202 10 10", page: 1 },
+  { serial: "3", include: ["22021020"], description: "Lemonade", rate: 12, rateText: "12%", spec: "2202 10 20", page: 1 },
+  { serial: "4", include: ["22021090"], description: "Others", rate: 12, rateText: "12%", spec: "2202 10 90", page: 1 },
+  { serial: "5", include: ["2401"], description: "Unmanufactured tobacco (without lime tube) - bearing a brand name", rate: 71, rateText: "71%", brandSensitive: true, spec: "2401", page: 1 },
+  { serial: "6", include: ["2401"], description: "Unmanufactured tobacco (with lime tube) - bearing a brand name", rate: 65, rateText: "65%", brandSensitive: true, spec: "2401", page: 1 },
+  { serial: "7", include: ["24013000"], description: "Tobacco refuse, bearing a brand name", rate: 61, rateText: "61%", brandSensitive: true, spec: "2401 30 00", page: 1 },
+  { serial: "8", include: ["24021010"], description: "Cigar and cheroots", rate: null, rateText: "21% or Rs. 4170 per thousand, whichever is higher", spec: "2402 10 10", page: 1 },
+  { serial: "9", include: ["24021020"], description: "Cigarillos", rate: null, rateText: "21% or Rs. 4170 per thousand, whichever is higher", spec: "2402 10 20", page: 1 },
+  { serial: "10", include: ["24022010"], description: "Cigarettes containing tobacco other than filter cigarettes, of length not exceeding 65 millimetres", rate: null, rateText: "5% + Rs.1591 per thousand", spec: "2402 20 10", page: 1 },
+  { serial: "11", include: ["24022020"], description: "Cigarettes containing tobacco other than filter cigarettes, of length exceeding 65 millimetres but not exceeding 75 millimetres", rate: null, rateText: "5% + Rs.2876 per thousand", spec: "2402 20 20", page: 1 },
+  { serial: "12", include: ["24022030"], description: "Filter cigarettes of length (including the length of the filter, the length of filter being 11 millimetres or its actual length, whichever is more) not exceeding 65 millimetres", rate: null, rateText: "5% + Rs.1591 per thousand", spec: "2402 20 30", page: 1 },
+  { serial: "13", include: ["24022040"], description: "Filter cigarettes of length (including the length of the filter, the length of filter being 11 millimetres or its actual length, whichever is more) exceeding 65 millimetres but not exceeding 70 millimetres", rate: null, rateText: "5% + Rs.2126 per thousand", spec: "2402 20 40", page: 2 },
+  { serial: "14", include: ["24022050"], description: "Filter cigarettes of length (including the length of the filter, the length of filter being 11 millimetres or its actual length, whichever is more) exceeding 70 millimetres but not exceeding 75 millimetres", rate: null, rateText: "5% + Rs.2876 per thousand", spec: "2402 20 50", page: 2 },
+  { serial: "15", include: ["24022090"], description: "Other cigarettes containing tobacco", rate: null, rateText: "5% + Rs.4170 per thousand", spec: "2402 20 90", page: 2 },
+  { serial: "16", include: ["24029010"], description: "Cigarettes of tobacco substitutes", rate: null, rateText: "Rs.4006 per thousand", spec: "2402 90 10", page: 2 },
+  { serial: "17", include: ["24029020"], description: "Cigarillos of tobacco substitutes", rate: null, rateText: "12.5% or Rs. 4,006 per thousand whichever is higher", spec: "2402 90 20", page: 2 },
+  { serial: "18", include: ["24029090"], description: "Other", rate: null, rateText: "12.5% or Rs. 4,006 per thousand whichever is higher", spec: "2402 90 90", page: 2 },
+  { serial: "19", include: ["24031110"], description: "'Hookah' or 'gudaku' tobacco bearing a brand name", rate: 72, rateText: "72%", brandSensitive: true, spec: "2403 11 10", page: 2 },
+  { serial: "20", include: ["24031110"], description: "Tobacco used for smoking 'hookah' or 'chilam' commonly known as 'hookah' tobacco or 'gudaku' not bearing a brand name", rate: 17, rateText: "17%", brandSensitive: true, spec: "2403 11 10", page: 2 },
+  { serial: "21", include: ["24031190"], description: "Other water pipe smoking tobacco not bearing a brand name.", rate: 11, rateText: "11%", brandSensitive: true, spec: "2403 11 90", page: 2 },
+  { serial: "22", include: ["24031910"], description: "Smoking mixtures for pipes and cigarettes", rate: 290, rateText: "290%", spec: "2403 19 10", page: 2 },
+  { serial: "23", include: ["24031990"], description: "Other smoking tobacco bearing a brand name", rate: 49, rateText: "49%", brandSensitive: true, spec: "2403 19 90", page: 2 },
+  { serial: "24", include: ["24031990"], description: "Other smoking tobacco not bearing a brand name", rate: 11, rateText: "11%", brandSensitive: true, spec: "2403 19 90", page: 2 },
+  { serial: "25", include: ["24039100"], description: "\"Homogenised\" or \"reconstituted\" tobacco, bearing a brand name", rate: 72, rateText: "72%", brandSensitive: true, spec: "2403 91 00", page: 2 },
+  { serial: "26", include: ["24039910"], description: "Chewing tobacco (without lime tube)", rate: 160, rateText: "160%", spec: "2403 99 10", page: 2 },
+  { serial: "27", include: ["24039910"], description: "Chewing tobacco (with lime tube)", rate: 142, rateText: "142%", spec: "2403 99 10", page: 2 },
+  { serial: "28", include: ["24039910"], description: "Filter khaini", rate: 160, rateText: "160%", spec: "2403 99 10", page: 2 },
+  { serial: "29", include: ["24039920"], description: "Preparations containing chewing tobacco", rate: 72, rateText: "72%", spec: "2403 99 20", page: 2 },
+  { serial: "30", include: ["24039930"], description: "Jarda scented tobacco", rate: 160, rateText: "160%", spec: "2403 99 30", page: 2 },
+  { serial: "31", include: ["24039940"], description: "Snuff", rate: 72, rateText: "72%", spec: "2403 99 40", page: 2 },
+  { serial: "32", include: ["24039950"], description: "Preparations containing snuff", rate: 72, rateText: "72%", spec: "2403 99 50", page: 2 },
+  { serial: "33", include: ["24039960"], description: "Tobacco extracts and essence bearing a brand name", rate: 72, rateText: "72%", brandSensitive: true, spec: "2403 99 60", page: 2 },
+  { serial: "34", include: ["24039960"], description: "Tobacco extracts and essence not bearing a brand name", rate: 65, rateText: "65%", brandSensitive: true, spec: "2403 99 60", page: 3 },
+  { serial: "35", include: ["24039970"], description: "Cut tobacco", rate: 20, rateText: "20%", spec: "2403 99 70", page: 3 },
+  { serial: "36", include: ["24039990"], description: "Pan masala containing tobacco 'Gutkha'", rate: 204, rateText: "204%", spec: "2403 99 90", page: 3 },
+  { serial: "37", include: ["24039990"], description: "All goods, other than pan masala containing tobacco 'gutkha', bearing a brand name", rate: 96, rateText: "96%", brandSensitive: true, spec: "2403 99 90", page: 3 },
+  { serial: "38", include: ["24039990"], description: "All goods, other than pan masala containing tobacco 'gutkha', not bearing a brand name", rate: 89, rateText: "89%", brandSensitive: true, spec: "2403 99 90", page: 3 },
+  { serial: "39", include: ["2701"], description: "Coal; briquettes, ovoids and similar solid fuels manufactured from coal.", rate: null, rateText: "Rs.400 per tonne", spec: "2701", page: 3 },
+  { serial: "40", include: ["2702"], description: "Lignite, whether or not agglomerated, excluding jet", rate: null, rateText: "Rs.400 per tonne", spec: "2702", page: 3 },
+  { serial: "41", include: ["2703"], description: "Peat (including peat litter), whether or not agglomerated", rate: null, rateText: "Rs.400 per tonne", spec: "2703", page: 3 },
+  { serial: "42", include: ["870210"], description: "Motor vehicles for the transport of ten or more persons, including the driver", rate: 15, rateText: "15%", spec: "8702 10", page: 3 },
+  { serial: "43", include: ["8703"], description: "Motor vehicles cleared as ambulances duly fitted with all the fitments, furniture and accessories necessary for an ambulance from the factory manufacturing such motor vehicles", rate: 0, rateText: "NIL", spec: "8703", page: 3 },
+  { serial: "44", include: ["87031010", "870380"], description: "Electrically operated vehicles, including three wheeled electric motor vehicles.", rate: 0, rateText: "NIL", spec: "8703 10 10, 8703 80", page: 3 },
+  { serial: "45", include: ["8703"], description: "Three wheeled vehicles", rate: 0, rateText: "NIL", spec: "8703", page: 3 },
+  { serial: "46", include: ["8703"], description: "Cars for physically handicapped persons, subject to the following conditions: a) an officer not below the rank of Deputy Secretary to the Government of India in the Department of Heavy Industries certifies that the said goods are capable of being used by the physically handicapped persons; and b) the buyer of the car gives an affidavit that he shall not dispose of the car for a period of five years after its purchase.", rate: 0, rateText: "NIL", spec: "8703", page: 3 },
+  { serial: "47", include: ["870340", "870350"], description: "Following Vehicles, with both spark-ignition internal combustion reciprocating piston engine and electric motor as motors for propulsion; a) Motor vehicles cleared as ambulances duly fitted with all the fitments, furniture and accessories necessary for an ambulance from the factory manufacturing such motor vehicles b) Three wheeled vehicles c) Motor vehicles of engine capacity not exceeding 1200cc and of length not exceeding 4000 mm. Explanation.- For the purposes of this entry, the specification of the motor vehicle shall be determined as per the Motor Vehicles Act, 1988 (59 of 1988) and the rules made there under.", rate: 0, rateText: "NIL", spec: "8703 40, 8703 50,", page: 3 },
+  { serial: "48", include: ["870360", "870370"], description: "Following Vehicles, with both compression -ignition internal combustion piston engine [ diesel-or semi diesel ) and electric motor as motors for propulsion; a) Motor vehicles cleared as ambulances duly fitted with all the fitments, furniture and accessories necessary for an ambulance from the factory manufacturing such motor vehicles b) Three wheeled vehicles c) Motor vehicles of engine capacity not exceeding 1500 cc and of length not exceeding 4000 mm. Explanation.- For the purposes of this entry, the specification of the motor vehicle shall be determined as per the Motor Vehicles Act, 1988 (59 of 1988) and the rules made there under.", rate: 0, rateText: "NIL", spec: "8703 60, 8703 70", page: 4 },
+  { serial: "49", include: ["8703"], description: "Hydrogen vehicles based on fuel cell tech and of length not exceeding 4000 mm. Explanation.- For the purposes of this entry, the specification of the motor vehicle shall be determined as per the Motor Vehicles Act, 1988 (59 of 1988) and the rules made there under.", rate: 0, rateText: "NIL", spec: "8703", page: 4 },
+  { serial: "50", include: ["870321", "870322"], description: "Petrol, Liquefied petroleum gases (LPG) or compressed natural gas (CNG) driven motor vehicles of engine capacity not exceeding 1200cc and of length not exceeding 4000 mm. Explanation.- For the purposes of this entry, the specification of the motor vehicle shall be determined as per the Motor Vehicles Act, 1988 (59 of 1988) and the rules made there under.", rate: 1, rateText: "1%", spec: "8703 21 or 8703 22", page: 4 },
+  { serial: "51", include: ["870331"], description: "Diesel driven motor vehicles of engine capacity not exceeding 1500 cc and of length not exceeding 4000 mm. Explanation.- For the purposes of this entry, the specification of the motor vehicle shall be determined as per the Motor Vehicles Act, 1988 (59 of 1988) and the rules made there under.", rate: 3, rateText: "3%", spec: "8703 31", page: 4 },
+  { serial: "52", include: ["8703"], description: "All goods other than those mentioned at S. Nos. 43 to 51 above", rate: 15, rateText: "15%", spec: "8703", page: 4 },
+  { serial: "53", include: ["8711"], description: "Motorcycles of engine capacity exceeding 350 cc.", rate: 3, rateText: "3%", spec: "8711", page: 4 },
+  { serial: "54", include: ["8802"], description: "Other aircraft (for example, helicopters, aeroplanes), for personal use.", rate: 3, rateText: "3%", spec: "8802", page: 4 },
+  { serial: "55", include: ["8903"], description: "Yacht and other vessels for pleasure or sports", rate: 3, rateText: "3%", spec: "8903", page: 4 },
+  { serial: "56", include: [], anyChapter: true, description: "All goods other than those mentioned at S. Nos. 1 to 55 above", rate: 0, rateText: "Nil", spec: "Any chapter", page: 4 },
+];
+
+/** The 19 notifications amending 1/2017 that this master does not carry. */
+export const GENERATED_COMP_CESS_UNAPPLIED: string[] = ["002/2017", "003/2017", "005/2017", "006/2017", "007/2017", "001/2018", "002/2018", "001/2019", "002/2019", "003/2019", "001/2021", "002/2021", "001/2023", "002/2023", "003/2023", "001/2024", "001/2025", "002/2025", "003/2025"];

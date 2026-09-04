@@ -5,6 +5,8 @@ export {
   fetchNotification,
   fetchTaxinfoNotification,
   TARIFF_EDITIONS,
+  resetTariffChapterCache,
+  tariffChapterPaths,
   type FetchResult,
 } from './fetch.js';
 export {

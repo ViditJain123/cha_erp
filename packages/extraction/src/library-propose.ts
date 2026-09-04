@@ -91,7 +91,7 @@ export async function enrichDraftFromLibrary(draft: ChecklistDraft): Promise<Che
       message:
         `Library proposal: CTH ${proposal.cth} "${proposal.tariffDescription.slice(0, 60)}" ` +
         `standard BCD ${proposal.bcdRateStandard ?? '?'}% — from ${proposal.citation.title}, p.${proposal.citation.page}. ` +
-        `Verify current effective rate/notification (schedule rates can be amended by later notifications). IGST needs manual entry.`,
+        `Verify current effective rate/notification (schedule rates can be amended by later notifications, and 45/2025-Customs may cut it further). IGST comes from the 9/2025-IT(R) masters.`,
     });
   }
   return draft;
