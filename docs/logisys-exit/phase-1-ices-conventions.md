@@ -160,11 +160,31 @@ Refresh the baseline with `--update` and record the reason — the cell is a
 screen default we now refuse. The ICES side only improves, and improvements
 never fail the gate.
 
-Worth doing, and not done here: `corpus-compare.py` classifies differences only
-by sheet and by kind, so a column we deliberately refuse and a column we simply
-missed are indistinguishable in `SCORECARD.md`. Splitting *"we refuse, they
-default"* out would stop the scorecard reporting this phase as a regression
-every night.
+`corpus-compare.py` now counts the two apart. `VENDOR_DEFAULTS` names each
+refused column **with the value the dropdown pre-selects**, and only that value
+counts as a refusal — `IGST_ExemptionNotnType` is `C` on nine corpus lines,
+which is the default, and `G` on one (ex_job21), which is a GST notification
+granting the exemption that we never found and stays on the to-do list. The
+classification is also self-correcting: it only applies to a cell we left
+blank, so the day we start writing one it becomes a match and never reaches the
+rule.
+
+On the last run, **102 of ITEMS' 202 blanks are refusals** — the sheet reads
+55.3% counted the old way and 66.9% with them apart. `agreement` itself is
+unchanged and still what the gate watches, so every baseline number stays
+comparable; `agreementRefusalsApart` sits beside it.
+
+The gate now explains itself when a drop is one of these:
+
+    liv_job1: agreement fell 77.1% -> 76.5% — but 81.1% of the columns we are
+    trying to fill still match (was 81.2%), so this is a screen default we now
+    refuse. Confirm it and re-baseline with --update.
+
+It still fails, which is right — a person confirms the decision. While fixing
+that comparison, `is < was - 0.1` turned out never to apply the tolerance it
+documents: `81.2 - 0.1` is `81.10000000000001` in binary floating point, so an
+exact one-tenth drop counted as a regression. Both comparisons are done in
+tenths now.
 
 ## Still open
 

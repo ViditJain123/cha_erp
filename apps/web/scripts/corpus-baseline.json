@@ -44,6 +44,16 @@
     "ex_job29": 51.2,
     "liv_job1": 77.1
   },
+  "agreementRefusalsApart": {
+    "ex_job6": 49.1,
+    "ex_job20": 45.7,
+    "ex_job21": 45.6,
+    "ex_job25": 43.4,
+    "ex_job26": 47.3,
+    "ex_job28": 34.7,
+    "ex_job29": 53.2,
+    "liv_job1": 81.2
+  },
   "icesCodes": {
     "ex_job1": [
       "207"

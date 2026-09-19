@@ -43,6 +43,16 @@ interface Baseline {
   status: Record<string, string>;
   /** Folder -> agreement percentage, for the jobs we hold a vendor workbook for. */
   agreement: Record<string, number>;
+  /**
+   * Folder -> the same percentage with the screen defaults we refuse taken out
+   * of the denominator.
+   *
+   * Not what the gate fails on — `agreement` is, so the threshold keeps
+   * meaning what it meant. This is here so that when agreement falls the
+   * failure can say whether refusing a default is the whole of it, which is a
+   * decision to confirm and re-baseline rather than a regression to fix.
+   */
+  agreementRefusalsApart: Record<string, number>;
   /** Folder -> the ICES error codes its workbook draws. */
   icesCodes: Record<string, string[]>;
 }
@@ -61,9 +71,9 @@ async function currentState(): Promise<Baseline> {
   const state = await readJson<Record<string, { status: string }>>(
     path.join(OUT_ROOT, 'state.json'),
   );
-  const scorecard = await readJson<{ jobs: { folder: string; agreement: number }[] }>(
-    path.join(OUT_ROOT, 'comparison', 'scorecard.json'),
-  );
+  const scorecard = await readJson<{
+    jobs: { folder: string; agreement: number; agreementRefusalsApart?: number }[];
+  }>(path.join(OUT_ROOT, 'comparison', 'scorecard.json'));
   const ices = await readJson<{ byJob?: Record<string, string[]> }>(
     path.join(OUT_ROOT, 'comparison', 'ices.json'),
   );
@@ -73,14 +83,32 @@ async function currentState(): Promise<Baseline> {
     if (s && typeof s.status === 'string') status[folder] = s.status;
 
   const agreement: Record<string, number> = {};
-  for (const j of scorecard?.jobs ?? []) agreement[j.folder] = j.agreement;
+  const agreementRefusalsApart: Record<string, number> = {};
+  for (const j of scorecard?.jobs ?? []) {
+    agreement[j.folder] = j.agreement;
+    if (j.agreementRefusalsApart !== undefined) agreementRefusalsApart[j.folder] = j.agreementRefusalsApart;
+  }
 
   return {
     takenAt: new Date().toISOString().slice(0, 10),
     status,
     agreement,
+    agreementRefusalsApart,
     icesCodes: ices?.byJob ?? {},
   };
+}
+
+/**
+ * Did `is` fall more than a tenth of a point below `was`?
+ *
+ * Both are percentages the compare script already rounded to one decimal, so
+ * the comparison is done in tenths. `is < was - 0.1` reads the same and is not:
+ * `81.2 - 0.1` is `81.10000000000001` in binary floating point, so an exact
+ * one-tenth drop counted as a regression and the tolerance in the comment
+ * above never actually applied.
+ */
+function fellBeyondTolerance(was: number, is: number): boolean {
+  return Math.round((was - is) * 10) > 1;
 }
 
 function compare(base: Baseline, now: Baseline): string[] {
@@ -103,7 +131,20 @@ function compare(base: Baseline, now: Baseline): string[] {
       continue;
     }
     // A tenth of a point is rounding in the compare script, not a regression.
-    if (is < was - 0.1) failures.push(`${folder}: agreement fell ${was}% -> ${is}%`);
+    if (fellBeyondTolerance(was, is)) {
+      // A column we start refusing because the notification does not state it
+      // leaves Logi-Sys still filling it, so agreement falls. That is a
+      // decision, not a defect — say so, and let a person confirm it with
+      // `--update` rather than guessing from a bare percentage.
+      const apartWas = base.agreementRefusalsApart?.[folder];
+      const apartIs = now.agreementRefusalsApart[folder];
+      const explained =
+        apartWas !== undefined && apartIs !== undefined && !fellBeyondTolerance(apartWas, apartIs)
+          ? ` — but ${apartIs}% of the columns we are trying to fill still match (was ${apartWas}%), ` +
+            'so this is a screen default we now refuse. Confirm it and re-baseline with --update.'
+          : '';
+      failures.push(`${folder}: agreement fell ${was}% -> ${is}%${explained}`);
+    }
   }
 
   for (const [folder, was] of Object.entries(base.icesCodes)) {
