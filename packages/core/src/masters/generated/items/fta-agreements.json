@@ -1,0 +1,2771 @@
+[
+ {
+  "key": "IN-JP-CEPA",
+  "name": "India-Japan Comprehensive Economic Partnership Agreement",
+  "partners": [
+   "JP"
+  ],
+  "inForceFrom": "2011-08-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "069/2011",
+    "date": "2011-07-29",
+    "baseText": "20/2021-Customs",
+    "amendedBy": [
+     "60/2021-Cus",
+     "23/2022",
+     "61/2022-Customs",
+     "36/2023-Customs",
+     "45/2024-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "55/2011-Customs (N.T.)",
+   "date": "2011-08-01",
+   "amendedBy": [
+    "14/2018-Customs (N.T.)",
+    "44/2022-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "COMPREHENSIVE\\s+ECONOMIC\\s+PARTNERSHIP\\s+AGREEMENT\\s+BETWEEN\\s+THE\\s+REPUBLIC\\s+OF\\s+INDIA\\s+AND\\s+JAPAN",
+   "INDIA\\s+AND\\s+JAPAN[\\s\\S]{0,80}CERTIFICATE\\s+OF\\s+ORIGIN",
+   "India[-\\s]+Japan\\s+(CEPA|Comprehensive\\s+Economic\\s+Partnership)",
+   "ECONOMIC\\s+PARTNERSHIP\\s+AGREEMENT\\s+BETWEEN\\s+JAPAN\\s+AND\\s+(THE\\s+REPUBLIC\\s+OF\\s+)?INDIA"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOP",
+    "note": "B = QVC 35% + CTSH (general rule) or the Annexure-1 PSR; the certificate does not say which. Golden ex_job6 (39021000, certificate \"B\") was filed CONWO - COOP with tariff shift CTH. Use COOG when the exporter confirms the general rule."
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'within twelve months from the date of shipment' (was nine months until 28.02.2018; 14/2018-Cus(NT)). windowDays=365 approximates calendar months.",
+    "Only 'in exceptional cases where the certificate of origin has not been issued before the time limit' (normal issuance: not later than three days from date of shipment), at the request of the exporter or its authorised agent, per exporting Party's laws.",
+    "'ISSUED RETROACTIVELY' box ticked in Box/Field 8 (Remarks) and the date of shipment (B/L or AWB date) indicated in Box 3.",
+    "Para 3(c): an importer without a COO at importation may apply for refund of excess duty on later presentation of the COO."
+   ],
+   "source": {
+    "notification": "55/2011-Customs (N.T.)",
+    "rule": "Appendix-A to Annexure-2, para 3(a)-(b); amended by 14/2018-Cus(NT)",
+    "page": 32,
+    "quote": "the certificate of origin may be issued retroactively in accordance with the laws and regulations of the exporting Party within nine months from the date of shipment, in which case it is necessary to indicate “ISSUED RETROACTIVELY” in Box 8 [the words \"nine months\" were substituted by \"twelve months\" w.e.f. 01.03.2018 by 14/2018-Customs (N.T.), p1]"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly from the other Party; or",
+    "transported through one or more non-Parties for transit or temporary storage in warehouses, provided it does not undergo operations other than unloading, reloading and any other operation to preserve it in good condition.",
+    "No 'control of customs authority' or 'geographical reason' condition in this agreement."
+   ],
+   "documentsRequired": [
+    "Customs may require: (a) copy of through bill of lading indicating port of exportation and importation; or (b) certificate/other information from customs of the non-Party or other relevant entities evidencing no operations beyond unloading/reloading/preservation (Annexure-2 para 2(3), p28).",
+    "Both (a) and (b) may be required where the container was opened, seal number changed, container number changed, or package opened (Appendix-A para 13, p35)."
+   ],
+   "source": {
+    "notification": "55/2011-Customs (N.T.)",
+    "rule": "rule 10(1)",
+    "page": 6,
+    "quote": "(b) transported through one or more non-Parties for the purpose of transit or temporary storage in warehouses in such non-Parties, subject to the condition that it does not undergo operations other than unloading, reloading and any other operation to preserve it in good condition."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "COO not refused only because the invoice is issued by a person located in a non-Party (Appendix-A para 7, p34).",
+    "Where invoice issuer differs from the exporter and is in a non-Party: tick 'Third Country Invoicing' and give full legal name and address of the invoicing person in Field 8 (p38).",
+    "If the non-Party invoice number is not known at COO issuance, Field 7 shows the exporter's invoice no./date, box ticked, invoicer named in Field 8; customs may require invoices and documents confirming the transaction (p38)."
+   ],
+   "source": {
+    "notification": "55/2011-Customs (N.T.)",
+    "rule": "Appendix-A to Annexure-2, para 7",
+    "page": 34,
+    "quote": "The customs authority of the importing Party shall not refuse to accept a certificate of origin only for the reason that the invoice is issued by either a natural person or a juridical person located in a non-Party."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "bilateral (India-Japan) accumulation, rule 7 - originating good of the other Party used as material counts as originating if last production process goes beyond rule 9 operations; marked 'ACU' in Field 5"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Certificate title observed on ex_job6: \"COMPREHENSIVE ECONOMIC PARTNERSHIP AGREEMENT BETWEEN JAPAN AND THE REPUBLIC OF INDIA\" (Japan-issued certificates put Japan first). Validity: single importation, 12 months from issuance; COO submitted after expiry due to force majeure 'shall be accepted' (p29). Lost COO: new COO marked 'CERTIFIED TRUE COPY' in Box 8, valid for original term (p33). Two or more invoices for a single shipment may be shown on one COO (para 6, p33). Goods not eligible for preference may appear on the COO; COO valid only for the eligible goods (para 8, p34). Paragraph 9 of Annexure-2 is missing in the gazette text (numbering jumps 8->10, p31). REPO DISCREPANCY: packages/core/src/masters/data.ts FTA_SCHEMES 'India-Japan CEPA' criterionMap is {A:COWO, B:CTH, C:PSR}; the form defines only A and B (plus ACU/DMI/FGM suffixes), and B is QVC35%+CTSH or PSR, not CTH; there is no 'C'. ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "IN-KR-CEPA",
+  "name": "India-Korea Comprehensive Economic Partnership Agreement",
+  "partners": [
+   "KR"
+  ],
+  "inForceFrom": "2010-01-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "152/2009",
+    "date": "2009-12-31",
+    "baseText": "66/2016-Customs",
+    "amendedBy": [
+     "95/2017-Cus",
+     "83/2018-Cus",
+     "07/2019-Cus",
+     "36/2019-Cus",
+     "29/2020-Cus",
+     "31/2020-Cus",
+     "37/2020-Cus",
+     "44/2020-Cus",
+     "01/2021-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "58/2023-Customs",
+     "45/2024-Customs"
+    ]
+   },
+   {
+    "notification": "151/2009",
+    "date": "2009-12-31",
+    "baseText": "122/2011-Customs",
+    "amendedBy": [
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "61/2022-Customs",
+     "36/2023-Customs",
+     "45/2024-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "187/2009-Customs (N.T.)",
+   "date": "2009-12-31",
+   "amendedBy": [
+    "Corrigendum G.S.R. 785(E)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "INDIA[-\\s]+KOREA\\s+COMPREHENSIVE\\s+ECONOMIC\\s+PARTNERSHIP\\s+AGREEMENT",
+   "\\bINKCEPA\\b|\\bIKCEPA\\b",
+   "KOREA[\\s\\S]{0,80}PREFERENTIAL\\s+CERTIFICATE\\s+OF\\s+ORIGIN"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "CTSH + RVC",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "RVC",
+    "ices": "CONWO - COOP"
+   },
+   {
+    "coo": "CC",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CC"
+   },
+   {
+    "coo": "CTH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "CTSH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "SP",
+    "ices": "CONWO - COOP"
+   },
+   {
+    "coo": "OP",
+    "ices": "CONWO - COOP",
+    "note": "Outward processing, rule 13; not a PSR in the ordinary sense — confirm with the officer."
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Legislated window: issuance 'not later than one year from the date of shipment'. windowDays=365 approximates.",
+    "Only 'under exceptional cases' where not issued at the time of exportation or within seven working days from the date of shipment 'due to involuntary errors or omissions or due to any other valid reasons'.",
+    "Words go in the Remarks box (Box 6) - note the Korean form uses RETROSPECTIVELY, not RETROACTIVELY (p55 instruction 8).",
+    "Certified true copy (theft/loss): 'CERTIFIED TRUE COPY' in Box 6, bears date of original, issued not later than one year from original issuance (p45)."
+   ],
+   "source": {
+    "notification": "187/2009-Customs (N.T.)",
+    "rule": "Annexure-III para 3(4) provisos (continues p45)",
+    "page": 44,
+    "quote": "such Certificate of Origin may be issued retrospectively and shall bear the words “ISSUED RETROSPECTIVELY” in Remarks box of the Certificate of Origin: Provided further that such issuance shall not be later than one year from the date of shipment of the goods."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between territories of exporting and importing State party; or transit through one or more intermediate third countries provided:",
+    "(a) goods have not entered into trade or consumption there;",
+    "(b) no operation there other than unloading and reloading or any operation required to keep it in good condition;",
+    "(c) goods remained under the control of the customs authority in the country of transit."
+   ],
+   "documentsRequired": [
+    "Customs may require (Annexure-III para 7(3), p47): (a) bills of lading or waybills indicating the shipping route and all points of shipment and transhipment prior to importation;",
+    "(b) where shipped through or transhipped in a State non-party, copy of documents indicating the good remained under control of that non-party's customs."
+   ],
+   "source": {
+    "notification": "187/2009-Customs (N.T.)",
+    "rule": "rule 14(2)",
+    "page": 10,
+    "quote": "(b) the goods have not undergone any operation there other than unloading and reloading or any operation required to keep it in good condition; and, (c) the goods have remained under the control of the customs authority in the country of transit."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Customs 'may accept' COO where sales invoice is issued by an operator located in a third country or by an exporter for the account of that operator, provided the good meets the rules.",
+    "Exporter indicates 'third country invoicing' and name, address and country of the invoicing operator; form Box 14 ticked with those details (p54-55)."
+   ],
+   "source": {
+    "notification": "187/2009-Customs (N.T.)",
+    "rule": "Annexure-III para 5(1)-(2)",
+    "page": 46,
+    "quote": "The customs authority in the importing State party may accept a Certificate of Origin in cases where the sales invoice is issued by an operator located in a third country or by an exporter for the account of the said operator, provided that, the good meets the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "bilateral (India-Korea) accumulation, rule 8",
+   "outward processing / exemption from principle of territoriality for Annexure-II listed goods (rule 13; non-originating input <= 40% FOB, originating exported materials >= 60%) - code 'OP'"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Late COO: may be accepted after 12-month validity if failure was due to exceptional circumstances, and customs may accept it in all cases where goods were imported before expiry (para 4(2), p45). One COO may cover a single shipment with multiple entries, or multiple shipments with one entry (para 4(3), p45). Defective COO: importer gets 5-30 working days to furnish corrected COO (para 7(4), p47). Title mismatch: short title of the rules says 'Preferential Trade Agreement' but the prescribed form title is 'INDIA-KOREA COMPREHENSIVE ECONOMIC PARTNERSHIP AGREEMENT PREFERENTIAL CERTIFICATE OF ORIGIN (Combined Declaration and Certificate)' (p54). Issuing bodies (Annexure-IV, p53): Korea Customs Service, Korea Chamber of Commerce and Industry; India EIC. No CBIC compilation of these rules exists in tariff/ (G.E.-193/194 are the tariff notifications 151/152-2009). No later N.T. amendment of 187/2009 found in index (CEPA upgrade negotiations have not produced new ROO notifications as of the index). ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "AIFTA",
+  "name": "ASEAN-India Trade in Goods Agreement (AIFTA)",
+  "partners": [
+   "BN",
+   "KH",
+   "ID",
+   "LA",
+   "MY",
+   "MM",
+   "SG",
+   "TH",
+   "VN"
+  ],
+  "inForceFrom": "2010-01-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "046/2011",
+    "date": "2011-06-01",
+    "baseText": "41/2019-Customs",
+    "amendedBy": [
+     "10/2020-Cus",
+     "45/2020-Customs",
+     "54/2021-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "61/2022-Customs",
+     "63/2022-Customs",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "189/2009-Customs (N.T.)",
+   "date": "2009-12-31",
+   "amendedBy": [
+    "07/2010-Customs (N.T.)",
+    "44/2010-Customs (N.T.)",
+    "87/2010-Customs (N.T.)",
+    "94/2010-Customs (N.T.)",
+    "08/2011-Customs (N.T.)",
+    "40/2011-Customs (N.T.)",
+    "52/2011-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "FORM\\s+AI\\b",
+   "ASEAN[-\\s]+INDIA\\s+FREE\\s+TRADE\\s+AREA",
+   "ASEAN[-\\s]+INDIA[\\s\\S]{0,60}PREFERENTIAL\\s+TARIFF[\\s\\S]{0,40}CERTIFICATE\\s+OF\\s+ORIGIN"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "RVC",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   },
+   {
+    "coo": "CTH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "CC",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CC"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'no longer than twelve months from the date of shipment'. windowDays=365 approximates.",
+    "Only 'in exceptional cases' where the COO was not issued at the time of exportation or within three working days from the date of shipment due to inadvertent errors or omissions or other [valid causes - the right-hand text of the gazette PDF is cut off at this point].",
+    "India's 2009 Form AI Box 13 has tick boxes only for Third Country Invoicing, Exhibition, Back-to-Back CO and Cumulation (p18); no 'Issued Retroactively' box. The words must appear on the COO. WEB-ONLY: ASEAN's revised OCP/Form AI (e.g. bruneitrade.mofe.gov.bn AIFTA OCP) has an 'ISSUED RETROACTIVELY' tick box in Box 13; later Form AI prints may use it."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "Annexure-III (OCP) para 10(b)",
+    "page": 16,
+    "quote": "AIFTA Certificate of Origin may be issued retroactively but no longer than twelve months from the date of shipment, bearing the words \"ISSUED RETROACTIVELY\"."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Considered consigned directly if (a) transported passing through the territory of any other AIFTA parties; or (b) without passing through any non-AIFTA party; or (c) transit through one or more intermediate non-parties, with or without transshipment or temporary storage, provided:",
+    "(i) transit entry is justified for geographical reason or by consideration related exclusively to transport requirements;",
+    "(ii) products have not entered into trade or consumption there;",
+    "(iii) no operation there other than unloading and reloading or any operation required to keep them in good condition."
+   ],
+   "documentsRequired": [
+    "Where transport is through one or more non-AIFTA parties (OCP para 20, p17): (a) a through Bill of Lading issued in the exporting party; (b) AIFTA COO; (c) copy of the original commercial invoice; (d) other relevant supporting documents evidencing rule 8(c) compliance."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "rule 8(c)",
+    "page": 2,
+    "quote": "(i) the transit entry is justified for geographical reason or by consideration related exclusively to transport requirements; (ii) the products have not entered into trade or consumption there; and (iii) the products have not undergone any operation there other than unloading and reloading"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Customs 'shall accept' Form AI where the sales invoice is issued by a company located in a third country or an AIFTA exporter for the account of that company, provided the product meets the rules.",
+    "Tick 'Third Country Invoicing' in Box 13 and give name and country of the invoicing company in Box 7 (overleaf note 9, p19; text partly cut off in PDF)."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "Annexure-III (OCP) para 22",
+    "page": 17,
+    "quote": "The Customs Authority in the importing party shall accept an AIFTA Certificate of Origin where the sales invoice is issued either by a company located in a third country or an AIFTA exporter for the acco"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "ASEAN-India regional cumulation (rule 6): products originating in any party used as materials in another party count as originating there; 'Cumulation' box in Box 13"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Schedule = column (4) of 46/2011, for countries in its APPENDIX I (Brunei, Cambodia [added by 68/2011], Indonesia, Lao PDR, Malaysia, Myanmar, Singapore, Thailand, Vietnam). The Philippines is in AIFTA-PH. 46/2011 took effect 1.6.2011 (it superseded 153/2009, in force 1.1.2010). PRIMARY PDF IS CLIPPED: the CBIC gazette PDF's long lines are cut at the right margin (text genuinely absent, not an extraction issue; re-extraction without mediabox clip gives the same result). Truncated passages include the tail of para 10(b), para 11(a)(v)/(vi), para 22 and overleaf notes 9-11; quotes above stop where the PDF stops. There is no CBIC 'as amended' compilation of 189/2009 in tariff/ to cross-check. Late presentation: accepted if failure was due to force majeure or other cause beyond exporter's control, and customs may accept in all cases where products were imported before expiry (para 14(c)-(d), p16). Non-accepted Form AI is marked in Box 4 and returned to the Issuing Authority within two months; customs must grant preference if the clarification is satisfactory (para 7(c)-(d), p16). All amendments listed only extend Annexure-IV member list; no OCP amendment was found in the index. WEB-ONLY: the AITIGA review is still under negotiation (13th Joint Committee, New Delhi, 6-10 July 2026, incl. Sub-Committee on ROO; pib.gov.in PRID=2282336) - no revised ROO notified as of this corpus. Note Singapore, Malaysia and Thailand goods may arrive on Form AI instead of the bilateral form; route by COO heading, not by country. ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "AIFTA-PH",
+  "name": "ASEAN-India Trade in Goods Agreement (AIFTA) — Philippines rates",
+  "partners": [
+   "PH"
+  ],
+  "inForceFrom": "2011-06-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "046/2011",
+    "date": "2011-06-01",
+    "baseText": "41/2019-Customs",
+    "amendedBy": [
+     "10/2020-Cus",
+     "45/2020-Customs",
+     "54/2021-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "61/2022-Customs",
+     "63/2022-Customs",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "189/2009-Customs (N.T.)",
+   "date": "2009-12-31",
+   "amendedBy": [
+    "07/2010-Customs (N.T.)",
+    "44/2010-Customs (N.T.)",
+    "87/2010-Customs (N.T.)",
+    "94/2010-Customs (N.T.)",
+    "08/2011-Customs (N.T.)",
+    "40/2011-Customs (N.T.)",
+    "52/2011-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "FORM\\s+AI\\b",
+   "ASEAN[-\\s]+INDIA\\s+FREE\\s+TRADE\\s+AREA",
+   "ASEAN[-\\s]+INDIA[\\s\\S]{0,60}PREFERENTIAL\\s+TARIFF[\\s\\S]{0,40}CERTIFICATE\\s+OF\\s+ORIGIN"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "RVC",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   },
+   {
+    "coo": "CTH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "CC",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CC"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'no longer than twelve months from the date of shipment'. windowDays=365 approximates.",
+    "Only 'in exceptional cases' where the COO was not issued at the time of exportation or within three working days from the date of shipment due to inadvertent errors or omissions or other [valid causes - the right-hand text of the gazette PDF is cut off at this point].",
+    "India's 2009 Form AI Box 13 has tick boxes only for Third Country Invoicing, Exhibition, Back-to-Back CO and Cumulation (p18); no 'Issued Retroactively' box. The words must appear on the COO. WEB-ONLY: ASEAN's revised OCP/Form AI (e.g. bruneitrade.mofe.gov.bn AIFTA OCP) has an 'ISSUED RETROACTIVELY' tick box in Box 13; later Form AI prints may use it."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "Annexure-III (OCP) para 10(b)",
+    "page": 16,
+    "quote": "AIFTA Certificate of Origin may be issued retroactively but no longer than twelve months from the date of shipment, bearing the words \"ISSUED RETROACTIVELY\"."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Considered consigned directly if (a) transported passing through the territory of any other AIFTA parties; or (b) without passing through any non-AIFTA party; or (c) transit through one or more intermediate non-parties, with or without transshipment or temporary storage, provided:",
+    "(i) transit entry is justified for geographical reason or by consideration related exclusively to transport requirements;",
+    "(ii) products have not entered into trade or consumption there;",
+    "(iii) no operation there other than unloading and reloading or any operation required to keep them in good condition."
+   ],
+   "documentsRequired": [
+    "Where transport is through one or more non-AIFTA parties (OCP para 20, p17): (a) a through Bill of Lading issued in the exporting party; (b) AIFTA COO; (c) copy of the original commercial invoice; (d) other relevant supporting documents evidencing rule 8(c) compliance."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "rule 8(c)",
+    "page": 2,
+    "quote": "(i) the transit entry is justified for geographical reason or by consideration related exclusively to transport requirements; (ii) the products have not entered into trade or consumption there; and (iii) the products have not undergone any operation there other than unloading and reloading"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Customs 'shall accept' Form AI where the sales invoice is issued by a company located in a third country or an AIFTA exporter for the account of that company, provided the product meets the rules.",
+    "Tick 'Third Country Invoicing' in Box 13 and give name and country of the invoicing company in Box 7 (overleaf note 9, p19; text partly cut off in PDF)."
+   ],
+   "source": {
+    "notification": "189/2009-Customs (N.T.)",
+    "rule": "Annexure-III (OCP) para 22",
+    "page": 17,
+    "quote": "The Customs Authority in the importing party shall accept an AIFTA Certificate of Origin where the sales invoice is issued either by a company located in a third country or an AIFTA exporter for the acco"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "ASEAN-India regional cumulation (rule 6): products originating in any party used as materials in another party count as originating there; 'Cumulation' box in Box 13"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Same notification and serials as AIFTA; the rate is column (5) of 46/2011 (APPENDIX II: Philippines). PRIMARY PDF IS CLIPPED: the CBIC gazette PDF's long lines are cut at the right margin (text genuinely absent, not an extraction issue; re-extraction without mediabox clip gives the same result). Truncated passages include the tail of para 10(b), para 11(a)(v)/(vi), para 22 and overleaf notes 9-11; quotes above stop where the PDF stops. There is no CBIC 'as amended' compilation of 189/2009 in tariff/ to cross-check. Late presentation: accepted if failure was due to force majeure or other cause beyond exporter's control, and customs may accept in all cases where products were imported before expiry (para 14(c)-(d), p16). Non-accepted Form AI is marked in Box 4 and returned to the Issuing Authority within two months; customs must grant preference if the clarification is satisfactory (para 7(c)-(d), p16). All amendments listed only extend Annexure-IV member list; no OCP amendment was found in the index. WEB-ONLY: the AITIGA review is still under negotiation (13th Joint Committee, New Delhi, 6-10 July 2026, incl. Sub-Committee on ROO; pib.gov.in PRID=2282336) - no revised ROO notified as of this corpus. Note Singapore, Malaysia and Thailand goods may arrive on Form AI instead of the bilateral form; route by COO heading, not by country. ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "IN-SG-CECA",
+  "name": "India-Singapore Comprehensive Economic Cooperation Agreement",
+  "partners": [
+   "SG"
+  ],
+  "inForceFrom": "2005-08-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "010/2008",
+    "date": "2008-01-15",
+    "baseText": "53/2015-Customs",
+    "amendedBy": [
+     "67/2016-Cus",
+     "61/2018-Cus",
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "45/2024-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   },
+   {
+    "notification": "073/2005",
+    "date": "2005-07-22",
+    "baseText": "33/2012-Customs",
+    "amendedBy": [
+     "67/2016-Cus",
+     "61/2018-Cus",
+     "36/2019-Cus",
+     "10/2020-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "61/2022-Customs",
+     "36/2023-Customs",
+     "45/2024-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   },
+   {
+    "notification": "074/2005",
+    "date": "2005-07-22",
+    "baseText": "34/2012-Customs",
+    "amendedBy": [
+     "67/2016-Cus",
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   },
+   {
+    "notification": "075/2005",
+    "date": "2005-07-22",
+    "baseText": "35/2012-Customs",
+    "amendedBy": [
+     "10/2013-Cus",
+     "67/2016-Cus",
+     "36/2019-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "59/2005-Customs (N.T.)",
+   "date": "2005-07-20",
+   "amendedBy": [
+    "30/2008-Customs (N.T.)",
+    "79/2018-Customs (N.T.)",
+    "20/2019-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "INDIA[-\\s]+SINGAPORE\\s+COMPREHENSIVE\\s+ECONOMIC\\s+CO-?\\s?OPERATION\\s+AGREEMENT",
+   "\\bISCECA\\b",
+   "INDIA[-\\s]+SINGAPORE[\\s\\S]{0,60}\\(Combined\\s+Declaration\\s+and\\s+Certificate\\)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "X",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PRODUCT SPECIFIC",
+    "ices": "CONWO - COOP"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'no longer than one year from the date of shipment'. windowDays=365 approximates.",
+    "Only 'in exceptional cases' where not issued at the time of exportation or within 3 working days from the date of shipment 'due to involuntary errors or omissions or other valid causes'.",
+    "Text says 'bearing the word “ISSUED RETROACTIVELY”' but names no box; the 2018 form has no tick box for it."
+   ],
+   "source": {
+    "notification": "59/2005-Customs (N.T.) Annex A, as compiled in CBIC Customs Tariff Vol. II G.E. 96 (30.06.2024)",
+    "rule": "Annex A (OCP) Rule 10(b) [CBIC compilation; Annex A absent from the primary PDF]",
+    "page": 10,
+    "quote": "the Certificate of Origin may be issued retroactively but no longer than one year from the date of shipment, bearing the word “ISSUED RETROACTIVELY”"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly from the territory of the other Party; or",
+    "through one or more non-Parties for transit or temporary storing in warehouses, products not having entered into trade or consumption there, provided (i) they do not undergo operations other than unloading, reloading or operations to preserve them in good condition; OR (ii) the transit entry is justified for geographical reason or by considerations related exclusively to transport requirements.",
+    "Note the gazette text joins (i) and (ii) with 'or', unlike AIFTA/IMCECA which require both."
+   ],
+   "documentsRequired": [
+    "Where transportation is through one or more non-parties (Annex A Rule 18, GE-96 p12): (a) through Bill of Lading issued in the exporting Party; (b) COO; (c) copy of original commercial invoice; (d) supporting documents evidencing Rule 15(b) compliance."
+   ],
+   "source": {
+    "notification": "59/2005-Customs (N.T.)",
+    "rule": "Rule 15(b)",
+    "page": 5,
+    "quote": "provided that (i) they do not undergo operations other than unloading, reloading or operations to preserve them in good condition; or (ii) the transit entry is justified for geographical reason or by considerations related exclusively to transport requirements."
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "bilateral (India-Singapore) accumulation, rule 10; declared as '% ISCECA cumulative content' in Box 8"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Four concession notifications: 10/2008 (effective rates) and 73/2005 (whole duty) file in the Basic slot; 74/2005 and 75/2005 exempt duty in excess of 90%/95% of the applied rate (a 10%/5% reduction) — their schedule lines carry slot \"SAPTA\". A percentage printed on the certificate (\"40%\", \"35%\") is the single-country or cumulative content: map to CONWO - COOG with the percentage (no originCriteria entry is given for it because it is a number, not a code). Singapore goods may alternatively claim AIFTA. SOURCE GAP: the primary 59/2005 PDF holds only rules 1-19 and ends 'Annexure A / Annexure B / Attachments >> 1 & 2' (p6) - Annex A (OCP) text is taken from the CBIC compilation G.E.-96. COMPILATION IS STALE: G.E.-96 (as on 30.06.2024) does not incorporate 79/2018 or 20/2019 - it still shows 60% / four-digit heading (p3), old Annex A rule 13 and 15, old Annex B, and the old form ('Issued in Singapore', criteria examples 40%, p52-53). Use 79/2018 for rule 5, 5A, rule 7(f)/(g), 13, 15/15A, Annex B and the form. Internal inconsistency after 79/2018: rule 5(1)(a) now allows 65% non-originating, but rule 5(2) direct/indirect formulas (>=40% / <=60%, p3 of 59/2005) were not amended. Late presentation: Rule 13(b)-(c) (compilation, pre-2018 wording) accepts after expiry for force majeure/valid causes beyond exporter's control and where goods were imported within validity; 79/2018 substituted only 13(a) and added (aa) - a claim made without a COO may be denied and a guarantee taken, refunded if the COO is later produced (p3). Singapore goods can alternatively come on AIFTA Form AI. ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit). Third-party invoicing: the rules are silent (Silent: no third-party/third-country invoicing provision in 59/2005, its Annex A (GE-96 compilation) or 79/2018; the substituted form (79/2018 p31-34) has no Third Country Invoicing box. 79/2018 rule 7(f) requires 'the number and date of the commercial invoice' in the box reserved for it.; Treat a non-party invoice as a risk requiring officer acceptance; not settled by the text.)."
+ },
+ {
+  "key": "IN-MY-CECA",
+  "name": "India-Malaysia Comprehensive Economic Cooperation Agreement",
+  "partners": [
+   "MY"
+  ],
+  "inForceFrom": "2011-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "053/2011",
+    "date": "2011-07-01",
+    "baseText": "65/2016-Customs",
+    "amendedBy": [
+     "76/2017-Cus",
+     "97/2017-Cus",
+     "84/2018-Cus",
+     "29/2019-Cus",
+     "42/2019-Cus",
+     "10/2020-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "61/2022-Customs",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "43/2011-Customs (N.T.)",
+   "date": "2011-07-01",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "FORM\\s+IMCECA",
+   "INDIA[-\\s]+MALAYSIA\\s+COMPREHENSIVE\\s+ECONOMIC\\s+COOPERATION\\s+AGREEMENT",
+   "\\bIMCECA\\b"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "QVC",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "CTH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "CTSH",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "CC",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CC"
+   },
+   {
+    "coo": "RVC",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 274,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'not later than nine months from the date of shipment'. windowDays=274 approximates nine calendar months - compare by calendar month.",
+    "Only where not issued at the time of exportation or within three working days from the date of shipment 'due to involuntary errors or omissions or other valid reasons'.",
+    "Marking = tick the 'Issued Retroactively' box in Box 13 (overleaf note 11, p8; box label p7).",
+    "The retroactive text itself (para 5(1) proviso) is cut off at the right margin of the gazette PDF; the nine-month window and box instruction are legible."
+   ],
+   "source": {
+    "notification": "43/2011-Customs (N.T.)",
+    "rule": "Annexure-III para 5(1) proviso",
+    "page": 5,
+    "quote": "may be issued retroactively but not later than nine months from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported without passing through the territory of any non-Party; or through a non-Party where ALL of:",
+    "(i) transit entry is justified for geographical reasons or transport requirements;",
+    "(ii) goods have not entered into trade or consumption in the non-Party;",
+    "(iii) no operation other than unloading and reloading or any operation required to keep the goods in good condition;",
+    "(iv) goods have remained under the control of the customs authority of such non-Party."
+   ],
+   "documentsRequired": [
+    "Annexure-III para 13 (p6): (a) through bill of lading issued in the exporting Party; (b) COO; (c) copy of the original commercial invoice; (d) any other documents as evidence that rule 9(b) has been complied with."
+   ],
+   "source": {
+    "notification": "43/2011-Customs (N.T.)",
+    "rule": "rule 9(b)",
+    "page": 2,
+    "quote": "(i) the transit entry is justified for geographical reasons or transport requirements; (ii) the goods have not entered into trade or consumption in the territory of such non-Party; (iii) the goods have not undergone any operation in the territory of such non-Party other than unloading and reloading"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Customs 'shall accept' COO where sales invoice is issued by a business entity located in a non-Party or by the exporter for the account of that entity, provided goods meet the rules.",
+    "Tick 'Third Party Invoicing' in Box 13 and give name and country of the invoicing entity in Box 1 (overleaf note 9, p8; Box 1 label p6)."
+   ],
+   "source": {
+    "notification": "43/2011-Customs (N.T.)",
+    "rule": "Annexure-III para 15",
+    "page": 6,
+    "quote": "The customs authority of the importing Party shall accept certificate of origin of the originating goods where the sales invoice is issued either by a business entity located in a non-P"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "bilateral (India-Malaysia) cumulation, rule 6; 'Cumulation' tick box in Box 13"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Malaysian goods may alternatively claim AIFTA (Form AI). Late presentation: accepted after expiry for force majeure or other valid reasons beyond exporter's control; customs may accept in all cases where goods were imported before expiry (para 7(2), p5). Denied COO: customs marks it and returns it to the Issuing Authority with grounds; Issuing Authority clarifies within two months and customs reinstates preference if satisfied (para 6(2)-(3), p5). The gazette PDF is clipped at the right margin in places (e.g. para 5(1), 7(1), 15 and some Annexure-I rule cells); page 5 also contains a garbled duplicate of para 9 that is repeated cleanly on p6. Overleaf note 3 rows (b) and (c) both cite 'clause (a) of sub-rule (1) of rule 5' - row (b) is evidently PSR (clause (a)) and row (c) the general QVC+CTSH rule (clause (b)); drafting error in the notification. No amendment to 43/2011 found in the index; web search found none. Malaysian goods may alternatively come on AIFTA Form AI (12-month retro window there vs 9 months here). ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "IN-TH-EHS",
+  "name": "India-Thailand Early Harvest Scheme",
+  "partners": [
+   "TH"
+  ],
+  "inForceFrom": "2004-09-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "085/2004",
+    "date": "2004-08-31",
+    "baseText": "85/2004-Customs",
+    "amendedBy": [
+     "79/2005-Customs",
+     "86/2006",
+     "131/2006",
+     "115/2011",
+     "38/2012-Cus",
+     "67/2016-Cus",
+     "60/2021-Cus",
+     "36/2023-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "101/2004-Customs (N.T.)",
+   "date": "2004-08-31",
+   "amendedBy": [
+    "131/2004-Customs (N.T.)",
+    "29/2012-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "FORM\\s+FTA\\b",
+   "FREE\\s+TRADE\\s+AGREEMENT\\s+CERTIFICATE\\s+OF\\s+ORIGIN[\\s\\S]{0,120}THAILAND",
+   "Form\\s+FTA\\s+India[-\\s]+Thailand"
+  ],
+  "originCriteria": [
+   {
+    "coo": "X",
+    "ices": "COWO"
+   },
+   {
+    "coo": "4 DIGIT",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "6 DIGIT",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTS"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 45,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROACTIVELY",
+   "otherConditions": [
+    "Legislated window: 'no longer than 45 days from the date of shipment'.",
+    "Normal issuance is 'at the time of exportation' only (no 3-day grace); retroactive only in exceptional cases where not issued at time of exportation 'due to involuntary errors or omissions or other valid causes'.",
+    "No box is specified for the words."
+   ],
+   "source": {
+    "notification": "101/2004-Customs (N.T.) Annexure-B, as compiled in CBIC Customs Tariff Vol. II G.E. 94 (30.06.2024)",
+    "rule": "Annexure-B (OCP) Rule 10(b) [CBIC compilation; no primary PDF of 101/2004 in notifications/]",
+    "page": 15,
+    "quote": "where a Certificate of Origin has not been issued at the time of exportation due to involuntary errors or omissions or other valid causes, the Certificate of Origin may be issued retroactively but no longer than 45 days from the date of shipment, bearing the word “ISSUED RETROACTIVELY”"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "(a) transported without passing through the territory of any country other than the Parties; or (b) transit through one or more intermediate countries, with or without transhipment or temporary storage, provided:",
+    "i. transit entry is justified for geographical reason or by consideration related exclusively to transport requirements;",
+    "ii. products have not entered into trade or consumption there;",
+    "iii. no operation there other than unloading and reloading or any operation required to keep them in good condition."
+   ],
+   "documentsRequired": [
+    "Annexure-B Rule 18 (p16): (a) through Bill of Lading issued in the exporting Party; (b) COO; (c) copy of the original commercial invoice; (d) supporting documents evidencing Rule 9(b) compliance."
+   ],
+   "source": {
+    "notification": "101/2004-Customs (N.T.) Annexure-B, as compiled in CBIC Customs Tariff Vol. II G.E. 94 (30.06.2024)",
+    "rule": "Rule 9(b)",
+    "page": 6,
+    "quote": "i. The transit entry is justified for geographical reason or by consideration related exclusively to transport requirements; ii. The products have not entered into trade or consumption there; and iii. the products have not undergone any operation there other than unloading and reloading"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "From 30.03.2012 (29/2012-Cus(NT)): customs 'shall accept' COO where sales invoice is issued by a business entity located in a third country or by an exporter for the account of that entity, provided the product meets the rules.",
+    "Exporter indicates third country invoicing and name, address and country of invoicing entity in Box 7 of the COO."
+   ],
+   "source": {
+    "notification": "29/2012-Customs (N.T.)",
+    "rule": "Annexure-B Rule 19A(a)-(b) inserted by 29/2012-Cus(NT)",
+    "page": 1,
+    "quote": "The customs authority in the importing party shall accept a certificate of origin in cases where the sales invoice is issued by a business entity located in a third country or by an exporter for the account of the said business entity, provided that the product meets the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "bilateral (India-Thailand) cumulative rule, Rule 7; issuing authority stamps 'Cumulative Rule' in Box 4"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Covers only the Early Harvest items of 85/2004 (whole duty since 1.9.2006 under 86/2006). Other Thai goods claim AIFTA. A bare percentage on the certificate is CONWO - COOG. SOURCE: no PDF of 101/2004-Customs(N.T.) exists in notifications/ (index id 1007872 has no file; Tariff__101_2004-Customs__1003816.pdf is an unrelated anti-dumping notification). All ROO/OCP text is from compilation G.E.-94. COMPILATION IS STALE: G.E.-94 (as on 30.06.2024) does NOT contain Rule 19A or item 13A (29/2012), nor item 7A (131/2004), and still prints the 82-item EHS list (p23-38) that 131/2004 deleted. Scope: the EHS covers only the Early Harvest items of tariff notification 85/2004-Cus (compilation G.E.-95); goods outside it cannot use Form FTA - Thai goods otherwise need AIFTA Form AI. Late presentation: Rule 13(b)-(c) (p15) accepts after expiry for force majeure or valid causes beyond exporter's control, and in all cases where goods were imported before expiry. The validity runs 'from the date of endorsement by the relevant Issuing Authority' (Rule 13(a), p15). Certified true copy wording: 'CERTIFIED TRUE COPY FOR THE ORIGINAL CERTIFICATE NO...DATED...' in Box 12 (Rule 11, p15). Rule 1 says these interim rules are to be superseded by FTA rules - none notified per index. ICES mapping: qfr COWO=wholly obtained, CONWO=not wholly obtained. cd COOG/COOP interpreted as general rule vs product-specific rule (our interpretation of the schema codes, not from the notification text). tariffShift CTS=change of tariff sub-heading (6-digit)."
+ },
+ {
+  "key": "IN-AE-CEPA",
+  "name": "India-UAE Comprehensive Economic Partnership Agreement",
+  "partners": [
+   "AE"
+  ],
+  "inForceFrom": "2022-05-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "022/2022",
+    "date": "2022-04-30",
+    "baseText": "09/2026-Customs",
+    "amendedBy": [
+     "14/2026-Customs",
+     "18/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "39/2022-Customs (N.T.)",
+   "date": "2022-04-30",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+UAE",
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+UAE\\s+CERTIFICATE\\s+OF\\s+ORIGIN",
+   "Format\\s+of\\s+the\\s+Certificate\\s+of\\s+Origin\\s+under\\s+the\\s+India[-\\s]UAE\\s+Trade\\s+Agreement",
+   "India[-\\s]*UAE\\s+(CEPA|Comprehensive\\s+Economic\\s+Partnership)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Normal issuance: 'prior to, at or within a period of five working days of the date of exportation'",
+    "Only 'under exceptional cases' where COO not issued at exportation or within five working days from shipment 'due to involuntary errors or omissions, or any other valid reasons'",
+    "Marking 'ISSUED RETROSPECTIVELY' must be in box 9 (Remarks) of the certificate",
+    "Issuing authority must record in writing the reasons / exceptional circumstances",
+    "'no longer than twelve months from the date of shipment' (windowDays 365 is an approximation of 12 months)"
+   ],
+   "source": {
+    "notification": "39/2022-Customs (N.T.)",
+    "rule": "15(11)",
+    "page": 9,
+    "quote": "the Certificate of Origin may be issued retrospectively, bearing the words “ISSUED RETROSPECTIVELY” in box 9 of the Certificate of Origin ... The Certificate of Origin can be issued retrospectively but no longer than twelve months from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between the Parties (rule 13(1))",
+    "If transported outside the Parties' territories, product retains origin if it remains under customs control in the non-Party and has not entered trade or consumption there (rule 13(2)(a))",
+    "No operation outside the Parties other than unloading; reloading; separation from a bulk shipment; storing; labelling or marking if required by the importing Party; or any other operation necessary to preserve it in good condition or to transport it (rule 13(2)(b))"
+   ],
+   "documentsRequired": [
+    "'appropriate evidence' that rule 13(2) conditions are fulfilled, supplied by importer upon request (rule 13(3)); no specific document listed"
+   ],
+   "source": {
+    "notification": "39/2022-Customs (N.T.)",
+    "rule": "13",
+    "page": 8,
+    "quote": "Preferential treatment shall only be granted to those originating products that are transported directly between the Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Claim not denied for the sole reason that the invoice was not issued by the exporter or producer, provided it meets the requirements of the rules (rule 16(1))",
+    "Exporter shall indicate 'third-party invoicing' and the name, address, invoice date and number, and country of the invoicing company in a separate column of the COO (rule 16(2)) = Box 10 'Third-Party Invoicing Name, Address, and Country' (Annexure-E, p37)"
+   ],
+   "source": {
+    "notification": "39/2022-Customs (N.T.)",
+    "rule": "16",
+    "page": 10,
+    "quote": "An importing Party shall not deny a claim for preferential tariff treatment for the sole reason that an invoice was not issued by the exporter or producer of a product provided that it meets the requirements in these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Bilateral cumulation only: originating products of one Party used as materials in the other Party count as originating there (rule 8(1), p6)",
+   "Last production process must go beyond minimal/insufficient operations of rule 6 (rule 8(2), p6)",
+   "COO box 6 has a 'Cumulation' sub-field (Annexure-E, p37)"
+  ],
+  "proofOfOrigin": [
+   "paper Certificate of Origin in electronic or hard copy format issued by a competent authority (rule 14(1)(a), p8)",
+   "fully digitised Certificate of Origin issued by a competent authority and exchanged by a mutually developed electronic system under rule 33 (rule 14(1)(b), p8)",
+   "origin declaration made out by an approved exporter under rule 34 (rule 14(1)(c), p8) - NOT operational: rule 34 (p18) says only that the Parties 'endeavour to negotiate, agree on, and implement' approved-exporter declarations"
+  ],
+  "notes": "Certificate prints only WO or PSR in box 6 - the tariff shift / VA must be derived from Annexure-B for the HS line. Origin declarations by approved exporters are listed but not yet operational under rule 34. Retro window counts from date of shipment (not issue), marking goes in box 9. Minor discrepancies (typing/formatting) do not invalidate COO, but signature/seal discrepancies are not minor (rule 15(13), p9). No PSR review amendment found in corpus though Annexure-B Rule 2 foresees PSR review within two years. || amendmentSearchNote: Searched index/cbic-notifications.json for any Customs (N.T.) notification amending 39/2022 (by number, 'Determination of Origin', 'UAE', 'Emirates', 'CEPA'); none found. Only tariff-side amendments to 22/2022-Customs exist (tranches, gold TRQ). Not web-verified. || cooHeadingSource: Annexure-E [see rule 15(1)], p37: form title 'AGREEMENT BETWEEN INDIA AND UAE / CERTIFICATE OF ORIGIN'; annex caption 'Format of the Certificate of Origin under the India-UAE Trade Agreement'. Last pattern is a loose fallback, not printed on the form. || psrCodesSource: Annexure-B Rule 1 definitions p21: WO, CC, CTH, CTSH, SO (specific operations), VA (value addition per rule 3(2)). || validityNotes: Twelve months from date of issue (365 is an approximation). | Valid for only one import, may cover one or more products (rule 15(5), p9). | Must be submitted within validity (rule 15(7), p9). Late acceptance allowed in exceptional cases (force majeure / valid reasons beyond exporter's control) provided goods were imported before expiry (rule 15(8), p9). | Original copy of COO to be produced (rules 15(9) p9, 21(1) p12)."
+ },
+ {
+  "key": "IN-AU-ECTA",
+  "name": "India-Australia Economic Cooperation and Trade Agreement",
+  "partners": [
+   "AU"
+  ],
+  "inForceFrom": "2022-12-29",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "062/2022",
+    "date": "2022-12-26",
+    "baseText": "50/2025-Customs",
+    "amendedBy": [
+     "38/2023-Customs",
+     "14/2026-Customs",
+     "21/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "112/2022-Customs (NT)",
+   "date": "2022-12-22",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "INDIA[-\\s]*AUSTRALIA\\s+ECONOMIC\\s+COOPERATION\\s+AND\\s+TRADE\\s+AGREEMENT",
+   "INDIA[-\\s]*AUSTRALIA\\s+ECONOMIC\\s+COOPERATION\\s+AND\\s+TRADE\\s+AGREEMENT\\s+CERTIFICATE\\s+OF\\s+ORIGIN",
+   "(AI|IA)[-\\s]?ECTA"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "CTSH + QVC",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Normal issuance: 'prior to or within five working days of the date of exportation'",
+    "Only 'under exceptional cases' where not issued at exportation or within five working days from shipment 'due to involuntary errors or omissions, or any other valid reasons'",
+    "Issuing body/authority records reasons in writing on the exceptional circumstances",
+    "'no later than twelve months from the date of shipment' (365 approximates 12 months)",
+    "Annexure-A form prints 'ISSUED RETROSPECTIVELY' in Box 9 Remarks (p23)",
+    "Box 12 'Export Document Number' is applicable only for retrospective issuance and must carry the Shipping Bill (Export Declaration) number and date, or Bill of Lading / Airway Bill number and date (Overleaf note 2, p24)"
+   ],
+   "source": {
+    "notification": "112/2022-Customs (N.T.)",
+    "rule": "17(3)",
+    "page": 13,
+    "quote": "the Certificate of Origin may be issued retrospectively, bearing the words “ISSUED RETROSPECTIVELY” in the Certificate of Origin ... The Certificate of Origin can be issued retrospectively no later than twelve months from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly from exporting Party to importing Party (rule 15(1)(a)), or",
+    "Transported through one or more non-Parties provided no subsequent production or other operation outside the Parties other than unloading, reloading, storing, repacking, relabelling in accordance with the importing Party's laws, splitting up of loads, consolidation of loads or any other operation necessary to preserve it in good condition or to transport it (rule 15(1)(b))",
+    "Good has remained under customs control in the non-Parties (rule 15(1)(b))"
+   ],
+   "documentsRequired": [
+    "Customs documents of the non-Parties, or any other appropriate documentation on request (rule 15(2))",
+    "Appropriate documentation may include airway bills, bills of lading, multimodal or combined transport documents, a copy of the original commercial invoice, financial records, a non-manipulation certificate, or other relevant supporting documents (rule 15(3))",
+    "Importer to demonstrate rule 15 satisfied if required (rule 21(2)(d), p15)"
+   ],
+   "source": {
+    "notification": "112/2022-Customs (N.T.)",
+    "rule": "15",
+    "page": 12,
+    "quote": "the good has not undergone any subsequent production or other operation outside the territories of the Parties other than unloading, reloading, storing, repacking, relabelling ... splitting up of loads, consolidation of loads ... and the good has remained under customs control in the non-Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Termed 'Non-Party Invoicing'. Claim not denied for the sole reason that the invoice was not issued by the exporter or producer, provided goods meet the requirements of the rules (rule 19(1))",
+    "Exporter shall indicate 'non-party invoicing' and the name, address and country of the invoicing company in a separate column of the COO (rule 19(2)) = Box 10 'Non-Party Invoicing Name, Address, and Country (if applicable)' (Annexure-A, p23)",
+    "A COO may indicate two or more invoices issued for a single importation (rule 16(4), p13)"
+   ],
+   "source": {
+    "notification": "112/2022-Customs (N.T.)",
+    "rule": "19",
+    "page": 14,
+    "quote": "An importing Party shall not deny a claim for preferential tariff treatment for the sole reason that an invoice was not issued by the exporter or producer: Provided that the goods meet the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Bilateral accumulation: goods/materials originating exclusively in one Party and incorporated in production in the other Party are considered originating in the other Party (rule 6, p6)",
+   "COO box 6 has 'Cumulation (if applicable)' (Annexure-A, p23)",
+   "Rules 3(a)/(b) allow WO or production 'in the territory of one or both of the Parties' (p5)"
+  ],
+  "proofOfOrigin": [
+   "Certificate of Origin issued by an issuing body or authority of the exporting Party, in writing or electronic format, signature and seal applied manually or electronically (rules 16(1)-(3), pp12-13)",
+   "Waiver: no COO required if the importing Party has waived it or does not require one under national law (rule 23, p16)"
+  ],
+  "notes": "TABLE III of 62/2022 (TRQ goods) is a %-of-applied-duty concession; its schedule lines carry slot \"SAPTA\". Only certificate-based proof of origin (no exporter self-declaration). Unlike UAE/Mauritius, ECTA has a general rule (CTSH + QVC 35 build-up / 45 build-down) for HS codes not in Annexure-B, and the certificate prints the exact general-rule text - map to CONWO/COOG/CTS with RVC 35 or 45. Retro COO also needs Box 12 Export Document Number (shipping bill or B/L/AWB). Post-importation refund claim may be required within 12 months of importation (rule 25(2), p17). Rule 31 (p22) covered goods in transit/bonded on entry into force (historic). || amendmentSearchNote: No Customs (N.T.) amendment to 112/2022 found in index/cbic-notifications.json. Tariff-side: 62/2022, 64/2022, 38/2023, 68/2023, 50/2024, 50/2025-Customs (tranches). Not web-verified. || cooHeadingSource: Annexure-A 'Minimum Required Information' [see rule 16(3)(d)], p23: title 'INDIA-AUSTRALIA ECONOMIC COOPERATION AND TRADE AGREEMENT CERTIFICATE OF ORIGIN'. Rule 16(3)(d) requires information 'presented in the same format as provided for in Annexure-A'. Last pattern is a loose abbreviation fallback, not printed on the form. || proofOfOriginNote: No origin declaration / self-certification / approved exporter provision in these rules. || validityNotes: Twelve months from completion/issue (365 approximates). Single importation of one or multiple goods (rule 16(3)(f)). | Importer must have a valid COO in possession at the time of the declaration (rule 21(2)(b), p15). | Certified true copy for theft/loss, requested within original validity, same validity as original (rule 17(4), p13). | No force-majeure late-acceptance clause (unlike UAE)."
+ },
+ {
+  "key": "IN-MU-CECPA",
+  "name": "India-Mauritius Comprehensive Economic Cooperation and Partnership Agreement",
+  "partners": [
+   "MU"
+  ],
+  "inForceFrom": "2021-04-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "025/2021",
+    "date": "2021-03-31",
+    "baseText": "10/2026-Customs",
+    "amendedBy": [
+     "23/2022",
+     "19/2023-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "38/2021-Customs (N.T.)",
+   "date": "2021-03-31",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+MAURITIUS",
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+MAURITIUS\\s+CERTIFICATE\\s+OF\\s+ORIGIN",
+   "FORMAT\\s+OF\\s+THE\\s+CERTIFICATE\\s+OF\\s+ORIGIN\\s+UNDER\\s+THE\\s+INDIA[-\\s]MAURITIUS\\s+TRADE\\s+AGREEMENT",
+   "preferential\\s+origin\\s+according\\s+to\\s+the\\s+rules\\s+of\\s+origin\\s+under\\s+the\\s+India[-\\s]Mauritius\\s+Trade\\s+Agreement",
+   "India[-\\s]*Mauritius\\s+(CECPA|Comprehensive\\s+Economic\\s+Cooperation)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "COO normally issued 'at the time of exportation'",
+    "Only 'under exceptional cases' where not issued at exportation or within five working days from shipment 'due to involuntary errors or omissions, or any other valid reasons'",
+    "Marking in box 8 (Remarks) of the COO, or on the origin declaration",
+    "Issuing authority or approved exporter records reasons in writing on the exceptional circumstances",
+    "COO or origin declaration 'can be issued or made retrospectively within twelve months from the date of shipment' (rule 14(10), p8)",
+    "Annex 2 para 5 (p31): an origin declaration 'may be completed when the products to which it relates are exported, or within 12 months of exportation'"
+   ],
+   "source": {
+    "notification": "38/2021-Customs (N.T.)",
+    "rule": "14(10)",
+    "page": 7,
+    "quote": "the Certificate of Origin may be issued retrospectively, bearing the words “ISSUED RETROSPECTIVELY’ in box 8 of the Certificate of Origin or the origin declaration ... can be issued or made retrospectively within twelve months from the date of shipment. [continues p8]"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between the Parties (rule 12(1))",
+    "May transit or be temporarily stored in warehouses in non-Parties provided it does not undergo operations other than unloading, reloading, or any operation designed to preserve it in good condition (rule 12(2)(a))",
+    "Remains under customs control and has not entered into trade or consumption in those non-Parties (rule 12(2)(b))",
+    "If conditions not met, product is not considered originating (rule 12(2))"
+   ],
+   "documentsRequired": [
+    "'appropriate evidence' that rule 12(2) conditions were fulfilled, supplied by importer upon request (rule 12(3)); no specific document listed"
+   ],
+   "source": {
+    "notification": "38/2021-Customs (N.T.)",
+    "rule": "12",
+    "page": 6,
+    "quote": "Preferential treatment in accordance with the Agreement shall only be granted to originating products that are transported directly between the Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "When goods are invoiced by a non-Party trader, the producer, manufacturer or exporter shall state in the 'Remarks' field of the COO (box 8) that the goods shall be invoiced from that non-Party trader",
+    "Reproduce from the non-Party trader's commercial invoice: name and address of the non-Party trader, invoice number and date",
+    "Rule does not say the claim 'shall not be denied' - it only prescribes the remarks-field disclosure; the COO form has no dedicated third-party box"
+   ],
+   "source": {
+    "notification": "38/2021-Customs (N.T.)",
+    "rule": "15",
+    "page": 8,
+    "quote": "When a good to be traded is invoiced by a non-Party trader, the Producer, manufacturer or exporter of the originating Party shall inform, in the field titled \"Remarks\" of the Certificate of Origin, that the goods shall be invoiced from that non-Party trader"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Bilateral cumulation: originating material of the other Party used in production counts as originating, provided its last production process goes beyond rule 6 minimal operations (rule 7, p5)",
+   "Origin declaration wording states criteria met 'with/without bilateral cumulation' (Annex 2 para 3, p31). The Annex 5 COO has no separate cumulation box."
+  ],
+  "proofOfOrigin": [
+   "origin declaration on a commercial document (e.g. commercial invoice) completed by an approved exporter with authorisation number, per Annex 2 (rule 13(1)(a), p6; Annex 2, p31)",
+   "certificate of origin in Annex 5 format, printed or other medium including electronic, issued by competent authorities listed in Annexes 3 and 4 (rule 13(1)(b), p7)",
+   "Waiver: no proof of origin required if importing Party has waived it or does not require it under national law (rule 13(2), p7)"
+  ],
+  "notes": "TABLE 2 of 25/2021 is a %-of-applied-duty concession (slot \"SAPTA\" on its lines); TABLE 3 is a whole-duty TRQ. Two proof types: authority-issued COO (light pink, Annex 5) and approved-exporter origin declaration on invoice (Annex 2, with authorisation number). Box numbering differs from UAE: origin criterion box 5, Remarks box 8 (holds both ISSUED RETROSPECTIVELY and third-party invoice details). No general rule - every non-WO good is PSR from Annex 1. Source PDF is a scan; OCR text is noisy. || amendmentSearchNote: No Customs (N.T.) amendment to 38/2021 found in index. Tariff tranches only (17/2022, 19/2023, 18/2024, 22/2025, 10/2026-Customs). PDF is a scanned/OCR document - quotes below are OCR text and contain OCR artefacts (e.g. mismatched quote mark in the retro marking). Not web-verified. || cooHeadingSource: Annex 5 [see rule 13], p34: form title 'AGREEMENT BETWEEN INDIA AND MAURITIUS / CERTIFICATE OF ORIGIN'; certificate printed in light pink (rule 14(2), p7). Pattern 4 is the mandatory origin-declaration wording on a commercial document (Annex 2 para 3, p31). Last pattern is a loose fallback. || validityNotes: Twelve months from issue (365 approximates), applies to COO and origin declaration. | COO valid for only one import, one or more goods (rule 14(4), p7). | Proof of origin must be submitted within validity (14(6)); late acceptance in exceptional circumstances (force majeure / valid reasons beyond exporter's control) if goods imported before expiry (14(7), p7). | Original copy of proof of origin to be submitted at importation (rule 20(1), p10); certified true copy within one year of original issue (14(11), p8)."
+ },
+ {
+  "key": "IN-OM-CEPA",
+  "name": "India-Oman Comprehensive Economic Partnership Agreement",
+  "partners": [
+   "OM"
+  ],
+  "inForceFrom": "2026-06-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "020/2026",
+    "date": "2026-05-31",
+    "baseText": "20/2026-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "48/2026-Customs (N.T.)",
+   "date": "2026-05-29",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "Preferential\\s+Certificate\\s+of\\s+Origin",
+   "India\\s*[–-]\\s*Oman\\s+Comprehensive\\s+Economic\\s+Partnership\\s+Agreement",
+   "Preferential\\s+Certificate\\s+of\\s+Origin\\s+India\\s*[–-]\\s*Oman\\s+Comprehensive\\s+Economic\\s+Partnership\\s+Agreement",
+   "India[-\\s–]*Oman\\s+CEPA"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Normal issuance: 'either prior to, or within five working days from the date of exportation'",
+    "Only 'under exceptional cases' due to 'involuntary errors or omissions, or any other valid reasons'",
+    "Marking in box 4 (Remarks) of the COO; template note 3 prints it as 'Issued Retrospectively' and makes it mandatory for the exporter",
+    "Box 4 must also carry the corresponding Export Documentation Number (Export Declaration Number or Bill of Lading Number) (Annexure-C note 3, p37)",
+    "Issuing authority records reasons in writing on the exceptional circumstances",
+    "'within twelve months from the date of shipment' (365 approximates 12 months)"
+   ],
+   "source": {
+    "notification": "48/2026-Customs (N.T.)",
+    "rule": "15(11)",
+    "page": 11,
+    "quote": "the Certificate of Origin may be issued retrospectively, bearing the words “ISSUED RETROSPECTIVELY” in box 4 of the Certificate of Origin ... The Certificate of Origin can be issued retrospectively within twelve months from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly from the territory of one Party to the other (rule 13(1)(a)), or",
+    "Transported through one or more non-Parties for the purpose of transit, provided: (i) products remain under customs control in the non-Party and have not entered trade or consumption there; (ii) no operations other than unloading, reloading or operations necessary to preserve them in good condition; (iii) the transit entry is justified for geographical reason and by considerations related exclusively to transport requirements (rule 13(1)(b))"
+   ],
+   "documentsRequired": [
+    "On request: bill of lading/airway bill and any other relevant transport document covering passage from exporting to importing Party, including through the country of transit (rule 13(2), p9)",
+    "On request: certificate issued by customs authorities of the country of transit giving an exact description of the products, dates of unloading and reloading and names of ships/other means of transport, and certifying the products remained under customs control and did not enter trade or commerce (rule 13(3), pp9-10)"
+   ],
+   "source": {
+    "notification": "48/2026-Customs (N.T.)",
+    "rule": "13",
+    "page": 9,
+    "quote": "the transit entry is justified for geographical reason and by considerations related exclusively to transport requirements."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Claim not denied for the sole reason that the invoice was not issued by the exporter or producer, provided it meets the requirements of the rules (rule 16(1))",
+    "Exporter indicates 'third-party invoicing' with name, address, invoice date and number and country of the invoicing company in box 7 of the COO (rule 16(2)); Annexure-C note 8 (p37): name, address and country of the third party in Box 7 in addition to Invoice No. and Date"
+   ],
+   "source": {
+    "notification": "48/2026-Customs (N.T.)",
+    "rule": "16",
+    "page": 11,
+    "quote": "An importing Party shall not deny a claim for preferential tariff treatment for the sole reason that an invoice was not issued by the exporter or producer of a product, provided that it meets the requirements in these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Bilateral cumulation: originating products of one Party used in production in the other count as originating there (rule 8(1), p8)",
+   "Last production process must be beyond minimal/insufficient operations of rule 7 (rule 8(2))",
+   "COO Box 5 'Cumulation (Yes/No)'; if used, specified by exporter (Annexure-C note 6, p37)"
+  ],
+  "proofOfOrigin": [
+   "Certificate of Origin in electronic or hard copy format issued by issuing authority, signed and stamped by the exporter electronically or otherwise; until e-signing exists exporter manually signs/stamps the printed COO; printed COO with official stamp if e-COO cannot be issued for technical difficulties (rule 14(1)(a), p10)",
+   "fully digitised Certificate of Origin (e-certificate) exchanged by a mutually developed electronic system per rule 34 (rule 14(1)(b), p10)",
+   "origin declaration 'when agreed by the Parties' per rule 35 (rule 14(1)(c), p10) - NOT operational: rule 35 (p20) says Parties 'shall endeavour to negotiate, agree on, and implement' approved-exporter declarations"
+  ],
+  "notes": "Newest template layout differs from UAE: Remarks = Box 4 (retro marking + export document number), Cumulation = Box 5, Invoice = Box 7 (also third-party invoicer), HS6 = Box 8, Origin Criteria = Box 10 (WO or PSR). Box 2 (producer) and Box 4 optional; all other boxes mandatory. Strictest transit rule of this set: transit must be justified for geographical reasons / transport requirements only, and a transit-country customs certificate may be demanded. Text extraction renders box labels 1 and 2 as Hindi numerals 'एक'/'दो'. || amendmentSearchNote: No amendment to 48/2026 found in index (index date per index record 2026-05-29; gazette date printed in the PDF not re-checked). Tariff notification: Tariff__20_2026-Customs__1010664.pdf. Not web-verified. || cooHeadingSource: Annexure-C (Certificate of Origin Template) [see rule 15(1)], p36: 'Certificate of Origin / Preferential Certificate of Origin / India – Oman Comprehensive Economic Partnership Agreement'. Note en-dash in 'India – Oman'. Last pattern is a loose fallback. || validityNotes: Twelve months from issue (365 approximates). Valid for only one import declaration (15(5), p10). | Submit within validity (15(7)); late acceptance for force majeure / valid reasons beyond exporter's control if products imported before expiry (15(8), pp10-11). | Original copy may be required only for manual issuance (15(9), p11). Refund claim within one year of importation (21(3), p14)."
+ },
+ {
+  "key": "IN-UK-CETA",
+  "name": "India-United Kingdom Comprehensive Economic and Trade Agreement",
+  "partners": [
+   "GB"
+  ],
+  "inForceFrom": "2026-07-15",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "029/2026",
+    "date": "2026-07-14",
+    "baseText": "29/2026-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "62/2026-Customs (N.T.)",
+   "date": "2026-07-03",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "Origin\\s+Declaration\\s+India\\s*[–-]\\s*United\\s+Kingdom\\s+Comprehensive\\s+Economic\\s+and\\s+Trade\\s+Agreement",
+   "India\\s*[–-]\\s*United\\s+Kingdom\\s+Comprehensive\\s+Economic\\s+and\\s+Trade\\s+Agreement",
+   "Origin\\s+Declaration",
+   "Certificate\\s+of\\s+Origin\\s+India\\s*[–-]\\s*United\\s+Kingdom\\s+Comprehensive\\s+Economic\\s+and\\s+Trade\\s+Agreement",
+   "India[-\\s–]*UK\\s+CETA"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PE",
+    "ices": "CONWO - COOG",
+    "note": "Produced entirely from originating materials; ICES code is our reading, not stated in the rules."
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 365,
+   "windowFrom": "import",
+   "marking": "completed retrospectively",
+   "otherConditions": [
+    "Default: 'a proof of origin shall be issued or completed prior to or at the time of importation' (rule 16(6))",
+    "May be completed after importation provided the good was originating at the time of importation, 'in order to qualify for a late claim as specified in rule 21' (rule 16(7))",
+    "Must bear the words 'completed retrospectively' and include an explanation why (rule 16(7)); template Box 11 tick-box '☐ Completed retrospectively - short explanation', e.g. 'because the importer did not request the origin declaration earlier' (Annexure-B note 5, p59)",
+    "A late claim shall not be rejected based on the explanation if the good was originating at importation (rule 16(8))",
+    "Late claim 'not later than one year after the date of importation or a longer period, if specified in the importing Party's laws' (rule 21(3), p14) - windowDays 365 derived from this",
+    "No 'exceptional circumstances' / involuntary-error test and no issuing authority - unlike UAE/AU/MU/OM. Retro declaration still needs Annexure-D authentication before the claim"
+   ],
+   "source": {
+    "notification": "62/2026-Customs (N.T.)",
+    "rule": "16(6)-(8) read with 21(3)",
+    "page": 11,
+    "quote": "a proof of origin may be completed after importation, provided that the good was originating at the time of importation in order to qualify for a late claim as specified in rule 21. A proof of origin completed after importation shall bear the words “completed retrospectively”"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Termed 'Non-Alteration'. Retains origin if transported without passing through a non-Party (rule 15(1))",
+    "If transported through or stored in a non-Party: remains under customs control, such as in a warehouse, and is not released to free circulation or trade (free circulation includes trade or consumption) (rule 15(2)(a))",
+    "No further production or other operation outside the Parties other than unloading, reloading, splitting up of loads, separation from bulk, storing, labelling, marking, bottling or any operation necessary to preserve it in good condition (rule 15(2)(b))",
+    "Bottling only for filling bottles from bulk of HS 2208 goods, with mere dilution with water where appropriate (rule 15(2)(b) Explanation)",
+    "Origin declaration Box 8 tick 'the good(s) will be transported through or stored in a non-party' and, for HS 2208, 'bottling has taken place in a non-Party' (Annexure-B, p58)"
+   ],
+   "documentsRequired": [
+    "Upon request: information, including documentation, demonstrating rule 15(2) conditions fulfilled (rule 15(3)(a))",
+    "Where bottling took place in a non-Party: transportation and commercial documents indicating the entire transport route and documentation that the good remained under customs control, such as a non-manipulation certificate issued by a customs authority in the non-Party (rule 15(3)(b))"
+   ],
+   "source": {
+    "notification": "62/2026-Customs (N.T.)",
+    "rule": "15",
+    "page": 10,
+    "quote": "an originating good transported through or stored in a non-Party shall retain its originating status provided it: (a) remains under customs control, such as in a warehouse, and is not released to free circulation or trade in the territory of any non-Party"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Claim not denied for the sole reason that the invoice/commercial document was issued in a non-Party or not issued by the exporter or producer, provided it meets the requirements of the rules (rule 16(5))",
+    "Proof of origin must be accompanied by an invoice or other commercial document describing the goods in sufficient detail to identify them (rule 16(2)(e))",
+    "Origin declaration Box 6(c) tick: 'the invoice was issued in a non-party or issued by a person other than the exporter or producer, as per sub-rule (5) of rule 16' (Annexure-B, p58); no invoicer name/address field"
+   ],
+   "source": {
+    "notification": "62/2026-Customs (N.T.)",
+    "rule": "16(5)",
+    "page": 11,
+    "quote": "An importing Party shall not deny a claim for preferential tariff treatment for the sole reason that an invoice or other commercial document referred to in clause (e) of sub-rule (2) was issued in a non-Party or not issued by the exporter or producer of a good"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Bilateral: an originating good or material of one Party incorporated in production in the other Party is considered originating there (rule 9, p8)",
+   "Origin criteria allow production 'in the territory of one or both of the Parties' (rule 3, p3)",
+   "Roll-up/absorption: Box 9 tick where PSR met by application of rule 7 (Materials Used in Production) (Annexure-B, p58)",
+   "Tolerance (de minimis) under rule 10 (p8)"
+  ],
+  "proofOfOrigin": [
+   "FOR IMPORTS INTO INDIA: origin declaration completed by the exporter or producer (rule 16(1)(b), p10) in Annexure-B structure - this is the ONLY proof of origin for Indian importers",
+   "Origin declaration must first be authenticated by Indian Customs under rule 17(6)-(7) and Annexure-D: exporter/producer (pre-registered with HMRC, data shared with Indian Customs) emails the declaration to Indian Customs' nodal email address and the Indian importer in the same email; only if matched does Indian Customs notify that 'a claim for preferential tariff treatment using the origin declaration may be made' (Annexure-D paras 3-5, p63); if not established 'the importer shall not be entitled to make a claim' (para 7, p64)",
+   "(UK imports only, not applicable in India: origin declaration, certificate of origin issued by an issuing authority, or importer's knowledge - rule 16(1)(a); low-value exemption up to GBP 1,000 - rule 19)"
+  ],
+  "notes": "Imports into India: the only proof is the exporter/producer origin declaration, which Indian Customs must authenticate (Annexure-D) before the claim. Fundamentally different from the certificate-based FTAs: in India the only proof is an exporter/producer ORIGIN DECLARATION (Annexure-B format, signatory reference = 'exporter reference number assigned in accordance with the laws and regulations of the United Kingdom', Annexure-B note 4(a), p59) and it must be authenticated via Annexure-D email process before claiming. No issuing authority, no seal, no 'ISSUED RETROSPECTIVELY' - marking is 'completed retrospectively' and is tied to late claims (within 1 year of importation, rule 21(3)). Origin criteria printed as tick-boxes WO / PE / PSR, with the PSR text identified on the form. Rule 20(1): claims granted for goods arriving or released from customs control on/after entry into force. Cross-reference quirk: template notes 5 refer to 'sub-rule (8) of rule 16' for retrospective completion while the operative text is sub-rule (7). || amendmentSearchNote: No amendment to 62/2026 found in index. Related: 24/2026-Customs (temporary admission of animals under CETA, not ROO). Not web-verified. || cooHeadingSource: Annexure-B (Origin Declaration Template) [see rule 16(2)(c)], p57: 'Origin Declaration / India – United Kingdom Comprehensive Economic and Trade Agreement'. Annexure-C (Certificate of Origin Template), p60: 'Certificate of Origin / India – United Kingdom Comprehensive Economic and Trade Agreement' - but Annexure-C is for Indian exports to the UK (IEC reference, importer address must be in UK), not usable for a claim in India. Bare 'Origin Declaration' pattern is too loose alone; pair with the agreement name. Last pattern is a fallback. || validityNotes: Twelve months from completion (origin declaration) - 365 approximates. | In India an origin declaration applies to a single shipment of one or more goods (16(2)(f)); multiple-shipment declarations (up to 12 months) are for UK imports only (16(3); template Box 10 'For Indian exporters and producers only'). | Force-majeure late acceptance if goods imported before expiry (16(4)). | Single origin declaration for unassembled/disassembled goods in several shipments on importer request; for India requires a single import declaration (16(9) and Explanation, pp11-12)."
+ },
+ {
+  "key": "IN-EFTA-TEPA-CH",
+  "name": "India-EFTA Trade and Economic Partnership Agreement — Switzerland (and Liechtenstein, rule 2(k))",
+  "partners": [
+   "CH",
+   "LI"
+  ],
+  "inForceFrom": "2025-10-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "041/2025",
+    "date": "2025-09-30",
+    "baseText": "51/2025-Customs",
+    "amendedBy": [
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "59/2025-Customs (N.T.)",
+   "date": "2025-09-29",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "MOVEMENT\\s+CERTIFICATE\\s+EUR\\.?\\s*1",
+   "EUR\\.?\\s*1\\s+No",
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+THE\\s+EFTA\\s+STATES\\s+FOR\\s+TRADE\\s+AND\\s+ECONOMIC\\s+PARTNERSHIP",
+   "India[-\\s]*EFTA\\s+(TEPA|Certificate\\s+of\\s+Origin)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": null,
+   "windowFrom": "exportation",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "EUR.1 may be issued after exportation if: (a) a load of originating products was split up in a non-Party according to rule 13; (b) not issued at exportation because of errors or involuntary omissions or special circumstances; or (c) a EUR.1 was issued but not accepted at importation because not issued in the prescribed manner (e.g. not stamped and signed, mandatory boxes missing, stamp not timely notified) (Annexure-D para 2(1), p156)",
+    "Exporter's application must indicate place and date of exportation and state reasons (para 2(2))",
+    "Competent authority issues retrospectively only after verifying originating status (para 2(3))",
+    "Endorsed 'ISSUED RETROSPECTIVELY' inserted in box 7 (Remarks) of the EUR.1 (para 2(4)-(5), p156)",
+    "No maximum time limit is stated for retrospective EUR.1 (windowDays null)",
+    "Origin declaration: 'may be completed when the products to which it relates are exported, or after exportation' - no marking and no time limit (Annexure-B para 7, p148)",
+    "Any proof of origin must be submitted to Indian customs within the 12-month validity from completion/issue; the period may be suspended while goods remain under customs control of India; after that, accepted only in exceptional circumstances (rule 15(4), p8)",
+    "Importer without proof at importation may claim preference at import and present proof later per domestic law (rule 15(3), pp7-8)",
+    "(India-issued COO for exports: retrospectively 'not later than one year from the date of export, bearing the words ISSUED RETROSPECTIVELY' - Annexure-C para 4(2), p151)",
+    "Transitional: goods in transit or in bonded warehouse on entry into force - proof may be completed retrospectively up to nine months after entry into force (rule 23(2), p14) - expired ~2026-07-01"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "Annexure-D para 2",
+    "page": 156,
+    "quote": "Movement certificates EUR.1 issued retrospectively, for one or more of the reason(s) provided in sub-paragraph 1, must be endorsed with the phrase “ISSUED RETROSPECTIVELY”. (5) The endorsement referred to in sub-paragraph 4 shall be inserted in box 7 of the movement certificate EUR.1."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between the Parties (rule 13(1))",
+    "May be transported through, or stored in, non-Parties provided it does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition, and remains under customs control in those non-Parties (rule 13(2))",
+    "Conditions 'shall be considered fulfilled, unless the customs authority of the importing Party has reasons to believe the contrary' (rule 13(3))",
+    "Pipelines across non-Parties allowed (rule 13(4))",
+    "Split-up of load in a non-Party is a ground for a retrospective EUR.1 (Annexure-D para 2(1)(a))"
+   ],
+   "documentsRequired": [
+    "Only on request when customs has reason to believe otherwise (rule 13(3)): (a) a single transport document covering the passage from the exporting Party through the country of transit; or (b) a statement of non-manipulation issued by the customs authority of the country of transit giving exact description of products, dates of unloading/reloading and ship/transport names, and certifying the conditions under which the products remained in transit; or (c) failing these, any substantiating documents"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "13",
+    "page": 6,
+    "quote": "an originating product may be transported through, or stored in, territories of non-Parties, provided that it,- (a) does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition; and (b) remains under customs control in those non-Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Termed 'Non-Party Invoicing': claim not denied for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided the products meet the rules (rule 17, p9)",
+    "No disclosure field or remark prescribed on EUR.1 or origin declaration",
+    "Practical caveat (our inference, not in text): an Annexure-B origin declaration must be on an invoice or other commercial document that identifies the approved exporter (para 6) - if the invoice is a third-country trader's, the declaration would normally be on the exporter's own commercial document (delivery note / packing list)"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "17",
+    "page": 9,
+    "quote": "The competent authorities of the importing Party shall not deny a claim for preferential tariff treatment for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided that the products meet the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Accumulation among all Parties (India, Iceland, Norway, Switzerland incl. Liechtenstein): product originating in a Party used as material in another Party is originating in the Party where last operations beyond rule 6(1) insufficient operations were carried out (rule 7(1), p4)",
+   "Product exported between Parties without working beyond rule 6 retains its origin (rule 7(2), p5)",
+   "If materials from two or more Parties undergo no working beyond rule 6, origin = Party of the material with highest customs value (rule 7(3), p5)",
+   "Tolerance: non-originating materials up to 10% of FOB value or ex-works price need not meet Annexure-A conditions (rule 5(2), p3)",
+   "EUR.1 and origin declaration have no cumulation field (India-issued Annexure-C COO uses 'cumulation' as a box 5 criterion code, p151)"
+  ],
+  "proofOfOrigin": [
+   "origin declaration completed by an Approved Exporter established in an EFTA State on an invoice or other commercial document (delivery note, packing list), with authorisation number (rule 14(1)(a), p7; Annexure-B, pp147-149)",
+   "movement certificate EUR.1 issued by the customs authority of an EFTA State, paper or electronically issued (rule 14(1)(b), p7; Annexure-D, pp155-163)",
+   "(India exports only: certificate of origin by authorised agencies of India or self-declared certificate of origin by an Indian exporter, Annexure-C - rule 14(1)(c)-(d))",
+   "Waiver for non-commercial low-value shipments and traveller's personal luggage per domestic law (rule 15(5), p8)"
+  ],
+  "notes": "One concession notification per EFTA State with its own serial numbering, hence one agreement key per State. An origin declaration prints no origin criterion. European-style protocol, unlike the other agreements. Proofs for imports into India: EUR.1 (EFTA customs) or approved-exporter origin declaration on invoice (not for Iceland until authentication mechanism notified). Retro EUR.1 has no stated deadline; origin declaration may be made after exportation with no marking - the effective limit is the 12-month validity/submission rule. Origin declaration prints no origin criterion. Liechtenstein goods = Swiss origin (rule 2(k)); claim under 41/2025 (Switzerland). Rule 23 transitional 9-month retro window for goods in transit at entry into force has lapsed. || amendmentSearchNote: No amendment to 59/2025 found in index. Liechtenstein: no separate tariff notification exists; ROO rule 2(k) (p2) defines 'Party' as India, Iceland, Norway or Switzerland and provides 'due to the customs union between Switzerland and Liechtenstein, a product originating in Liechtenstein shall be considered as originating in Switzerland' - so Liechtenstein-origin goods claim under the Switzerland notification 41/2025 (which itself does not mention Liechtenstein; searched full text). Not web-verified. || cooHeadingSource: EUR.1: Annexure-D specimen p159 'MOVEMENT CERTIFICATE ... EUR.1 No' (box 2 'Certificate used in preferential trade between ... and ...'). Origin declaration: mandatory wording on invoice/commercial document, Annexure-B para 4, p147. 'AGREEMENT BETWEEN INDIA AND THE EFTA STATES FOR TRADE AND ECONOMIC PARTNERSHIP / CERTIFICATE OF ORIGIN / Issued in India' is the Annexure-C form (Attachments 1-2, pp153-154) used only for Indian exports - an import into India will not carry it. Last pattern is a loose fallback. || authenticationNote: Origin declaration authenticity check before verification (rule 18(1), p9; Annexure-B paras 16-19, pp148-149): Switzerland - approved exporter endorses with an electronic signature verifiable on the Swiss governmental portal; Norway - unique reference number on the commercial document, checked on Norway's authenticity tool; Iceland - Annexure-B (origin declarations) 'shall stand suspended for Iceland until such a mechanism is established' (para 18, p149), so Icelandic goods need EUR.1 until Iceland notifies India. || validityNotes: Twelve months from completion (origin declaration) or issuance (EUR.1 date in box 11, Annexure-D para 1(6)). 365 approximates. | Submit within the 12-month period; expiry suspended while goods remain under Indian customs control; afterwards only exceptional circumstances (rule 15(4), p8). | Retrospective EUR.1 of type (c) keeps the validity 'as indicated in the movement certificate EUR.1 that was originally issued' (Annexure-D para 2(1)(c)). Duplicate EUR.1 endorsed 'DUPLICATE' in box 7 takes effect from original date (para 3, pp156-157)."
+ },
+ {
+  "key": "IN-EFTA-TEPA-NO",
+  "name": "India-EFTA Trade and Economic Partnership Agreement — Norway",
+  "partners": [
+   "NO"
+  ],
+  "inForceFrom": "2025-10-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "042/2025",
+    "date": "2025-09-30",
+    "baseText": "52/2025-Customs",
+    "amendedBy": [
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "59/2025-Customs (N.T.)",
+   "date": "2025-09-29",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "MOVEMENT\\s+CERTIFICATE\\s+EUR\\.?\\s*1",
+   "EUR\\.?\\s*1\\s+No",
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+THE\\s+EFTA\\s+STATES\\s+FOR\\s+TRADE\\s+AND\\s+ECONOMIC\\s+PARTNERSHIP",
+   "India[-\\s]*EFTA\\s+(TEPA|Certificate\\s+of\\s+Origin)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": null,
+   "windowFrom": "exportation",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "EUR.1 may be issued after exportation if: (a) a load of originating products was split up in a non-Party according to rule 13; (b) not issued at exportation because of errors or involuntary omissions or special circumstances; or (c) a EUR.1 was issued but not accepted at importation because not issued in the prescribed manner (e.g. not stamped and signed, mandatory boxes missing, stamp not timely notified) (Annexure-D para 2(1), p156)",
+    "Exporter's application must indicate place and date of exportation and state reasons (para 2(2))",
+    "Competent authority issues retrospectively only after verifying originating status (para 2(3))",
+    "Endorsed 'ISSUED RETROSPECTIVELY' inserted in box 7 (Remarks) of the EUR.1 (para 2(4)-(5), p156)",
+    "No maximum time limit is stated for retrospective EUR.1 (windowDays null)",
+    "Origin declaration: 'may be completed when the products to which it relates are exported, or after exportation' - no marking and no time limit (Annexure-B para 7, p148)",
+    "Any proof of origin must be submitted to Indian customs within the 12-month validity from completion/issue; the period may be suspended while goods remain under customs control of India; after that, accepted only in exceptional circumstances (rule 15(4), p8)",
+    "Importer without proof at importation may claim preference at import and present proof later per domestic law (rule 15(3), pp7-8)",
+    "(India-issued COO for exports: retrospectively 'not later than one year from the date of export, bearing the words ISSUED RETROSPECTIVELY' - Annexure-C para 4(2), p151)",
+    "Transitional: goods in transit or in bonded warehouse on entry into force - proof may be completed retrospectively up to nine months after entry into force (rule 23(2), p14) - expired ~2026-07-01"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "Annexure-D para 2",
+    "page": 156,
+    "quote": "Movement certificates EUR.1 issued retrospectively, for one or more of the reason(s) provided in sub-paragraph 1, must be endorsed with the phrase “ISSUED RETROSPECTIVELY”. (5) The endorsement referred to in sub-paragraph 4 shall be inserted in box 7 of the movement certificate EUR.1."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between the Parties (rule 13(1))",
+    "May be transported through, or stored in, non-Parties provided it does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition, and remains under customs control in those non-Parties (rule 13(2))",
+    "Conditions 'shall be considered fulfilled, unless the customs authority of the importing Party has reasons to believe the contrary' (rule 13(3))",
+    "Pipelines across non-Parties allowed (rule 13(4))",
+    "Split-up of load in a non-Party is a ground for a retrospective EUR.1 (Annexure-D para 2(1)(a))"
+   ],
+   "documentsRequired": [
+    "Only on request when customs has reason to believe otherwise (rule 13(3)): (a) a single transport document covering the passage from the exporting Party through the country of transit; or (b) a statement of non-manipulation issued by the customs authority of the country of transit giving exact description of products, dates of unloading/reloading and ship/transport names, and certifying the conditions under which the products remained in transit; or (c) failing these, any substantiating documents"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "13",
+    "page": 6,
+    "quote": "an originating product may be transported through, or stored in, territories of non-Parties, provided that it,- (a) does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition; and (b) remains under customs control in those non-Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Termed 'Non-Party Invoicing': claim not denied for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided the products meet the rules (rule 17, p9)",
+    "No disclosure field or remark prescribed on EUR.1 or origin declaration",
+    "Practical caveat (our inference, not in text): an Annexure-B origin declaration must be on an invoice or other commercial document that identifies the approved exporter (para 6) - if the invoice is a third-country trader's, the declaration would normally be on the exporter's own commercial document (delivery note / packing list)"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "17",
+    "page": 9,
+    "quote": "The competent authorities of the importing Party shall not deny a claim for preferential tariff treatment for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided that the products meet the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Accumulation among all Parties (India, Iceland, Norway, Switzerland incl. Liechtenstein): product originating in a Party used as material in another Party is originating in the Party where last operations beyond rule 6(1) insufficient operations were carried out (rule 7(1), p4)",
+   "Product exported between Parties without working beyond rule 6 retains its origin (rule 7(2), p5)",
+   "If materials from two or more Parties undergo no working beyond rule 6, origin = Party of the material with highest customs value (rule 7(3), p5)",
+   "Tolerance: non-originating materials up to 10% of FOB value or ex-works price need not meet Annexure-A conditions (rule 5(2), p3)",
+   "EUR.1 and origin declaration have no cumulation field (India-issued Annexure-C COO uses 'cumulation' as a box 5 criterion code, p151)"
+  ],
+  "proofOfOrigin": [
+   "origin declaration completed by an Approved Exporter established in an EFTA State on an invoice or other commercial document (delivery note, packing list), with authorisation number (rule 14(1)(a), p7; Annexure-B, pp147-149)",
+   "movement certificate EUR.1 issued by the customs authority of an EFTA State, paper or electronically issued (rule 14(1)(b), p7; Annexure-D, pp155-163)",
+   "(India exports only: certificate of origin by authorised agencies of India or self-declared certificate of origin by an Indian exporter, Annexure-C - rule 14(1)(c)-(d))",
+   "Waiver for non-commercial low-value shipments and traveller's personal luggage per domestic law (rule 15(5), p8)"
+  ],
+  "notes": "One concession notification per EFTA State with its own serial numbering, hence one agreement key per State. An origin declaration prints no origin criterion. European-style protocol, unlike the other agreements. Proofs for imports into India: EUR.1 (EFTA customs) or approved-exporter origin declaration on invoice (not for Iceland until authentication mechanism notified). Retro EUR.1 has no stated deadline; origin declaration may be made after exportation with no marking - the effective limit is the 12-month validity/submission rule. Origin declaration prints no origin criterion. Liechtenstein goods = Swiss origin (rule 2(k)); claim under 41/2025 (Switzerland). Rule 23 transitional 9-month retro window for goods in transit at entry into force has lapsed. || amendmentSearchNote: No amendment to 59/2025 found in index. Liechtenstein: no separate tariff notification exists; ROO rule 2(k) (p2) defines 'Party' as India, Iceland, Norway or Switzerland and provides 'due to the customs union between Switzerland and Liechtenstein, a product originating in Liechtenstein shall be considered as originating in Switzerland' - so Liechtenstein-origin goods claim under the Switzerland notification 41/2025 (which itself does not mention Liechtenstein; searched full text). Not web-verified. || cooHeadingSource: EUR.1: Annexure-D specimen p159 'MOVEMENT CERTIFICATE ... EUR.1 No' (box 2 'Certificate used in preferential trade between ... and ...'). Origin declaration: mandatory wording on invoice/commercial document, Annexure-B para 4, p147. 'AGREEMENT BETWEEN INDIA AND THE EFTA STATES FOR TRADE AND ECONOMIC PARTNERSHIP / CERTIFICATE OF ORIGIN / Issued in India' is the Annexure-C form (Attachments 1-2, pp153-154) used only for Indian exports - an import into India will not carry it. Last pattern is a loose fallback. || authenticationNote: Origin declaration authenticity check before verification (rule 18(1), p9; Annexure-B paras 16-19, pp148-149): Switzerland - approved exporter endorses with an electronic signature verifiable on the Swiss governmental portal; Norway - unique reference number on the commercial document, checked on Norway's authenticity tool; Iceland - Annexure-B (origin declarations) 'shall stand suspended for Iceland until such a mechanism is established' (para 18, p149), so Icelandic goods need EUR.1 until Iceland notifies India. || validityNotes: Twelve months from completion (origin declaration) or issuance (EUR.1 date in box 11, Annexure-D para 1(6)). 365 approximates. | Submit within the 12-month period; expiry suspended while goods remain under Indian customs control; afterwards only exceptional circumstances (rule 15(4), p8). | Retrospective EUR.1 of type (c) keeps the validity 'as indicated in the movement certificate EUR.1 that was originally issued' (Annexure-D para 2(1)(c)). Duplicate EUR.1 endorsed 'DUPLICATE' in box 7 takes effect from original date (para 3, pp156-157)."
+ },
+ {
+  "key": "IN-EFTA-TEPA-IS",
+  "name": "India-EFTA Trade and Economic Partnership Agreement — Iceland",
+  "partners": [
+   "IS"
+  ],
+  "inForceFrom": "2025-10-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "043/2025",
+    "date": "2025-09-30",
+    "baseText": "53/2025-Customs",
+    "amendedBy": [
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "59/2025-Customs (N.T.)",
+   "date": "2025-09-29",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "MOVEMENT\\s+CERTIFICATE\\s+EUR\\.?\\s*1",
+   "EUR\\.?\\s*1\\s+No",
+   "AGREEMENT\\s+BETWEEN\\s+INDIA\\s+AND\\s+THE\\s+EFTA\\s+STATES\\s+FOR\\s+TRADE\\s+AND\\s+ECONOMIC\\s+PARTNERSHIP",
+   "India[-\\s]*EFTA\\s+(TEPA|Certificate\\s+of\\s+Origin)"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "PSR",
+    "ices": "CONWO - COOP"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": null,
+   "windowFrom": "exportation",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "EUR.1 may be issued after exportation if: (a) a load of originating products was split up in a non-Party according to rule 13; (b) not issued at exportation because of errors or involuntary omissions or special circumstances; or (c) a EUR.1 was issued but not accepted at importation because not issued in the prescribed manner (e.g. not stamped and signed, mandatory boxes missing, stamp not timely notified) (Annexure-D para 2(1), p156)",
+    "Exporter's application must indicate place and date of exportation and state reasons (para 2(2))",
+    "Competent authority issues retrospectively only after verifying originating status (para 2(3))",
+    "Endorsed 'ISSUED RETROSPECTIVELY' inserted in box 7 (Remarks) of the EUR.1 (para 2(4)-(5), p156)",
+    "No maximum time limit is stated for retrospective EUR.1 (windowDays null)",
+    "Origin declaration: 'may be completed when the products to which it relates are exported, or after exportation' - no marking and no time limit (Annexure-B para 7, p148)",
+    "Any proof of origin must be submitted to Indian customs within the 12-month validity from completion/issue; the period may be suspended while goods remain under customs control of India; after that, accepted only in exceptional circumstances (rule 15(4), p8)",
+    "Importer without proof at importation may claim preference at import and present proof later per domestic law (rule 15(3), pp7-8)",
+    "(India-issued COO for exports: retrospectively 'not later than one year from the date of export, bearing the words ISSUED RETROSPECTIVELY' - Annexure-C para 4(2), p151)",
+    "Transitional: goods in transit or in bonded warehouse on entry into force - proof may be completed retrospectively up to nine months after entry into force (rule 23(2), p14) - expired ~2026-07-01"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "Annexure-D para 2",
+    "page": 156,
+    "quote": "Movement certificates EUR.1 issued retrospectively, for one or more of the reason(s) provided in sub-paragraph 1, must be endorsed with the phrase “ISSUED RETROSPECTIVELY”. (5) The endorsement referred to in sub-paragraph 4 shall be inserted in box 7 of the movement certificate EUR.1."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transported directly between the Parties (rule 13(1))",
+    "May be transported through, or stored in, non-Parties provided it does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition, and remains under customs control in those non-Parties (rule 13(2))",
+    "Conditions 'shall be considered fulfilled, unless the customs authority of the importing Party has reasons to believe the contrary' (rule 13(3))",
+    "Pipelines across non-Parties allowed (rule 13(4))",
+    "Split-up of load in a non-Party is a ground for a retrospective EUR.1 (Annexure-D para 2(1)(a))"
+   ],
+   "documentsRequired": [
+    "Only on request when customs has reason to believe otherwise (rule 13(3)): (a) a single transport document covering the passage from the exporting Party through the country of transit; or (b) a statement of non-manipulation issued by the customs authority of the country of transit giving exact description of products, dates of unloading/reloading and ship/transport names, and certifying the conditions under which the products remained in transit; or (c) failing these, any substantiating documents"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "13",
+    "page": 6,
+    "quote": "an originating product may be transported through, or stored in, territories of non-Parties, provided that it,- (a) does not undergo operations other than unloading, reloading, splitting-up of loads or any operation designed to preserve it in good condition; and (b) remains under customs control in those non-Parties."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Termed 'Non-Party Invoicing': claim not denied for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided the products meet the rules (rule 17, p9)",
+    "No disclosure field or remark prescribed on EUR.1 or origin declaration",
+    "Practical caveat (our inference, not in text): an Annexure-B origin declaration must be on an invoice or other commercial document that identifies the approved exporter (para 6) - if the invoice is a third-country trader's, the declaration would normally be on the exporter's own commercial document (delivery note / packing list)"
+   ],
+   "source": {
+    "notification": "59/2025-Customs (N.T.)",
+    "rule": "17",
+    "page": 9,
+    "quote": "The competent authorities of the importing Party shall not deny a claim for preferential tariff treatment for the sole reason that the invoice was not issued by an exporter in a Party or issued in a non-Party, provided that the products meet the requirements of these rules."
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Accumulation among all Parties (India, Iceland, Norway, Switzerland incl. Liechtenstein): product originating in a Party used as material in another Party is originating in the Party where last operations beyond rule 6(1) insufficient operations were carried out (rule 7(1), p4)",
+   "Product exported between Parties without working beyond rule 6 retains its origin (rule 7(2), p5)",
+   "If materials from two or more Parties undergo no working beyond rule 6, origin = Party of the material with highest customs value (rule 7(3), p5)",
+   "Tolerance: non-originating materials up to 10% of FOB value or ex-works price need not meet Annexure-A conditions (rule 5(2), p3)",
+   "EUR.1 and origin declaration have no cumulation field (India-issued Annexure-C COO uses 'cumulation' as a box 5 criterion code, p151)"
+  ],
+  "proofOfOrigin": [
+   "origin declaration completed by an Approved Exporter established in an EFTA State on an invoice or other commercial document (delivery note, packing list), with authorisation number (rule 14(1)(a), p7; Annexure-B, pp147-149)",
+   "movement certificate EUR.1 issued by the customs authority of an EFTA State, paper or electronically issued (rule 14(1)(b), p7; Annexure-D, pp155-163)",
+   "(India exports only: certificate of origin by authorised agencies of India or self-declared certificate of origin by an Indian exporter, Annexure-C - rule 14(1)(c)-(d))",
+   "Waiver for non-commercial low-value shipments and traveller's personal luggage per domestic law (rule 15(5), p8)"
+  ],
+  "notes": "One concession notification per EFTA State with its own serial numbering, hence one agreement key per State. An origin declaration prints no origin criterion. Iceland: origin declarations suspended until authentication is notified; EUR.1 needed. European-style protocol, unlike the other agreements. Proofs for imports into India: EUR.1 (EFTA customs) or approved-exporter origin declaration on invoice (not for Iceland until authentication mechanism notified). Retro EUR.1 has no stated deadline; origin declaration may be made after exportation with no marking - the effective limit is the 12-month validity/submission rule. Origin declaration prints no origin criterion. Liechtenstein goods = Swiss origin (rule 2(k)); claim under 41/2025 (Switzerland). Rule 23 transitional 9-month retro window for goods in transit at entry into force has lapsed. || amendmentSearchNote: No amendment to 59/2025 found in index. Liechtenstein: no separate tariff notification exists; ROO rule 2(k) (p2) defines 'Party' as India, Iceland, Norway or Switzerland and provides 'due to the customs union between Switzerland and Liechtenstein, a product originating in Liechtenstein shall be considered as originating in Switzerland' - so Liechtenstein-origin goods claim under the Switzerland notification 41/2025 (which itself does not mention Liechtenstein; searched full text). Not web-verified. || cooHeadingSource: EUR.1: Annexure-D specimen p159 'MOVEMENT CERTIFICATE ... EUR.1 No' (box 2 'Certificate used in preferential trade between ... and ...'). Origin declaration: mandatory wording on invoice/commercial document, Annexure-B para 4, p147. 'AGREEMENT BETWEEN INDIA AND THE EFTA STATES FOR TRADE AND ECONOMIC PARTNERSHIP / CERTIFICATE OF ORIGIN / Issued in India' is the Annexure-C form (Attachments 1-2, pp153-154) used only for Indian exports - an import into India will not carry it. Last pattern is a loose fallback. || authenticationNote: Origin declaration authenticity check before verification (rule 18(1), p9; Annexure-B paras 16-19, pp148-149): Switzerland - approved exporter endorses with an electronic signature verifiable on the Swiss governmental portal; Norway - unique reference number on the commercial document, checked on Norway's authenticity tool; Iceland - Annexure-B (origin declarations) 'shall stand suspended for Iceland until such a mechanism is established' (para 18, p149), so Icelandic goods need EUR.1 until Iceland notifies India. || validityNotes: Twelve months from completion (origin declaration) or issuance (EUR.1 date in box 11, Annexure-D para 1(6)). 365 approximates. | Submit within the 12-month period; expiry suspended while goods remain under Indian customs control; afterwards only exceptional circumstances (rule 15(4), p8). | Retrospective EUR.1 of type (c) keeps the validity 'as indicated in the movement certificate EUR.1 that was originally issued' (Annexure-D para 2(1)(c)). Duplicate EUR.1 endorsed 'DUPLICATE' in box 7 takes effect from original date (para 3, pp156-157)."
+ },
+ {
+  "key": "SAFTA-LDC",
+  "name": "Agreement on South Asian Free Trade Area (SAFTA) — LDC members",
+  "partners": [
+   "BD",
+   "BT",
+   "MV",
+   "NP",
+   "AF"
+  ],
+  "inForceFrom": "2006-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "099/2011",
+    "date": "2011-11-09",
+    "baseText": "99/2011-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "75/2006-Customs (N.T.)",
+   "date": "2006-06-30",
+   "amendedBy": [
+    "27/2013-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "SOUTH\\s+ASIAN\\s+FREE\\s+TRADE\\s+AREA",
+   "\\(?SAFTA\\)?"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "D",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 45,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Exceptional cases only: CoO not issued at time of exportation or within 3 working days of shipment",
+    "Cause must be involuntary errors or omissions or other valid causes",
+    "Marking goes in Box 4 (overleaf note III, p14)"
+   ],
+   "source": {
+    "notification": "75/2006-Customs (N.T.)",
+    "rule": "Annex-B Operational Certification Procedures, Article 10(b)",
+    "page": 11,
+    "quote": "the Certificate of Origin may be issued retrospectively but no longer than 45 days from the date of shipment, bearing the word \"ISSUED RETROSPECTIVELY\" in Box 4."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption in transit country",
+    "No operation other than unloading/reloading or keeping in good condition",
+    "Remained under customs control in the country of transit"
+   ],
+   "documentsRequired": [
+    "Through Bill of Lading / Airway bill or corresponding transport document issued in the exporting state",
+    "Certificate of Origin",
+    "Copy of the original commercial invoice",
+    "Supporting documents evidencing Rule 12 compliance"
+   ],
+   "source": {
+    "notification": "75/2006-Customs (N.T.)",
+    "rule": "Rule 12 (p3); Annex-B Article 18 documents (p12)",
+    "page": 3,
+    "quote": "(iv)     the products have remained under the customs control in the country of transit."
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 9 regional cumulation: aggregate content >=50% FOB, domestic value content >=20% FOB, plus CTH or CTSH per PSR (p2-3)",
+   "Rule 10: LDC contracting states +10 percentage points, Sri Lanka +5 on Rule 8 percentage (p3)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "99/2011: all goods other than its ANNEXURE (2203-2206, 220710, 2208, Chapter 24) exempt from the whole BCD. Certificate: light-orange original, ISO A4, English (Art 7). Box 8 must carry criterion letter + percentage (Art 8). Certified true copy marked \"CERTIFIED TRUE COPY\" in Box 13. Validity '12 months' stored as 365 days. Tariff concessions: 99/2011-Cus (LDC) and 68/2012-Cus (NLDC). Pakistan: 200% BCD (05/2019-Cus) and, per web sources, total import prohibition since 02.05.2025. WO info_cd=COOG is a convention. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Rules and Annex-B are silent on third-party/non-party invoicing)."
+ },
+ {
+  "key": "SAFTA-NLDC",
+  "name": "Agreement on South Asian Free Trade Area (SAFTA) — non-LDC members",
+  "partners": [
+   "LK"
+  ],
+  "inForceFrom": "2006-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "068/2012",
+    "date": "2012-12-31",
+    "baseText": "68/2012-Customs",
+    "amendedBy": [
+     "67/2016-Cus",
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "75/2006-Customs (N.T.)",
+   "date": "2006-06-30",
+   "amendedBy": [
+    "27/2013-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "SOUTH\\s+ASIAN\\s+FREE\\s+TRADE\\s+AREA",
+   "\\(?SAFTA\\)?"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "D",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 45,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Exceptional cases only: CoO not issued at time of exportation or within 3 working days of shipment",
+    "Cause must be involuntary errors or omissions or other valid causes",
+    "Marking goes in Box 4 (overleaf note III, p14)"
+   ],
+   "source": {
+    "notification": "75/2006-Customs (N.T.)",
+    "rule": "Annex-B Operational Certification Procedures, Article 10(b)",
+    "page": 11,
+    "quote": "the Certificate of Origin may be issued retrospectively but no longer than 45 days from the date of shipment, bearing the word \"ISSUED RETROSPECTIVELY\" in Box 4."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption in transit country",
+    "No operation other than unloading/reloading or keeping in good condition",
+    "Remained under customs control in the country of transit"
+   ],
+   "documentsRequired": [
+    "Through Bill of Lading / Airway bill or corresponding transport document issued in the exporting state",
+    "Certificate of Origin",
+    "Copy of the original commercial invoice",
+    "Supporting documents evidencing Rule 12 compliance"
+   ],
+   "source": {
+    "notification": "75/2006-Customs (N.T.)",
+    "rule": "Rule 12 (p3); Annex-B Article 18 documents (p12)",
+    "page": 3,
+    "quote": "(iv)     the products have remained under the customs control in the country of transit."
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 9 regional cumulation: aggregate content >=50% FOB, domestic value content >=20% FOB, plus CTH or CTSH per PSR (p2-3)",
+   "Rule 10: LDC contracting states +10 percentage points, Sri Lanka +5 on Rule 8 percentage (p3)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "68/2012 also lists Pakistan, which is deliberately left out of partners: 05/2019-Customs imposed 200% BCD (tariff item 9806 00 00) on all goods originating in or exported from Pakistan, and (web-only) DGFT 06/2025-26 of 02.05.2025 prohibits their import. TABLE III goods are outside the notification (para 2) and are carried as exclusions. Certificate: light-orange original, ISO A4, English (Art 7). Box 8 must carry criterion letter + percentage (Art 8). Certified true copy marked \"CERTIFIED TRUE COPY\" in Box 13. Validity '12 months' stored as 365 days. Tariff concessions: 99/2011-Cus (LDC) and 68/2012-Cus (NLDC). Pakistan: 200% BCD (05/2019-Cus) and, per web sources, total import prohibition since 02.05.2025. WO info_cd=COOG is a convention. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Rules and Annex-B are silent on third-party/non-party invoicing)."
+ },
+ {
+  "key": "APTA",
+  "name": "Asia-Pacific Trade Agreement (APTA) — Part A",
+  "partners": [
+   "BD",
+   "CN",
+   "KR",
+   "LK"
+  ],
+  "inForceFrom": "2018-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "050/2018",
+    "date": "2018-06-30",
+    "baseText": "50/2018-Customs",
+    "amendedBy": [
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "94/2006-Customs (N.T.)",
+   "date": "2006-08-31",
+   "amendedBy": [
+    "79/2009-Customs (N.T.)",
+    "59/2018-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "Asia[-\\s]?Pacific\\s+Trade\\s+Agreement",
+   "\\bAPTA\\b",
+   "Bangkok\\s+Agreement"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "D",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "E",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": {
+   "allowed": false,
+   "windowDays": null,
+   "windowFrom": "shipment",
+   "marking": null,
+   "otherConditions": [
+    "Notification allows issue only 'at the time of exportation or within three working days from the date of shipment'. No retrospective-issuance clause or marking exists in 94/2006, 79/2009 or 59/2018",
+    "WEB-ONLY (China customs/UNESCAP APTA OCP guidance): APTA does not permit retroactive issuance"
+   ],
+   "source": {
+    "notification": "79/2009-Customs (N.T.)",
+    "rule": "Annexure-B para 2(1)(3) (inserted by 79/2009)",
+    "page": 1,
+    "quote": "shall be issued manually or electronically by the Issuing Authority of the exporting APTA Participating State at the time of exportation or within three working days from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption there. Per 59/2018 footnote 10, goods under customs control in a bonded area without import clearance qualify",
+    "No operation other than unloading/reloading or keeping in good condition"
+   ],
+   "documentsRequired": [
+    "Through Bill of Lading issued in the exporting participating state",
+    "Certificate of Origin",
+    "Original commercial invoice",
+    "Supporting documents proving Rule 6(b) compliance"
+   ],
+   "source": {
+    "notification": "79/2009-Customs (N.T.)",
+    "rule": "94/2006 Rule 6 (p2); 79/2009 Annexure-B para 4 (p2); 59/2018 footnote 10 (p2 of A18)",
+    "page": 2,
+    "quote": "1. the through Bill of Lading issued in the exporting APTA Participating State; 2. the Certificate of Origin issued by the Issuing Authority of the exporting APTA Participating State; 3. the original commercial invoice in respect of the goods;"
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 5 partial cumulation: aggregate participating-state content >=60% FOB, computed as VOM1+VOM2 (59/2018 footnote 9)",
+   "Rule 11 LDC participating states: +10 percentage points (Rule 4 <=65%, Rule 5 >=50%)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Part A of 50/2018 for APPENDIX I countries. Bangladesh is also in APPENDIX II (APTA-LDC, Part B). Certified true copy: 'Certified True Copy' in Box 3 (79/2009). Box 5 is 6-digit HS (59/2018). 94/2006 Rule 8 originally referred to a sample CoO (Annexure-A). Verification: no reply within 4 months allows denial. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (No non-party invoicing rule; CoO Box 2 note: 'For third party trade, the words \"To Order\" may be typed' (consignee field) (94/2006 Annexure-A notes, p4-5); Box 10 note: invoice date should not be later than the certificate approval date (p5))."
+ },
+ {
+  "key": "APTA-LDC",
+  "name": "Asia-Pacific Trade Agreement (APTA) — Part B (LDC participating states)",
+  "partners": [
+   "BD",
+   "LA"
+  ],
+  "inForceFrom": "2018-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "050/2018",
+    "date": "2018-06-30",
+    "baseText": "50/2018-Customs",
+    "amendedBy": [
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "94/2006-Customs (N.T.)",
+   "date": "2006-08-31",
+   "amendedBy": [
+    "79/2009-Customs (N.T.)",
+    "59/2018-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "Asia[-\\s]?Pacific\\s+Trade\\s+Agreement",
+   "\\bAPTA\\b",
+   "Bangkok\\s+Agreement"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "D",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "E",
+    "ices": "CONWO - COOP",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": {
+   "allowed": false,
+   "windowDays": null,
+   "windowFrom": "shipment",
+   "marking": null,
+   "otherConditions": [
+    "Notification allows issue only 'at the time of exportation or within three working days from the date of shipment'. No retrospective-issuance clause or marking exists in 94/2006, 79/2009 or 59/2018",
+    "WEB-ONLY (China customs/UNESCAP APTA OCP guidance): APTA does not permit retroactive issuance"
+   ],
+   "source": {
+    "notification": "79/2009-Customs (N.T.)",
+    "rule": "Annexure-B para 2(1)(3) (inserted by 79/2009)",
+    "page": 1,
+    "quote": "shall be issued manually or electronically by the Issuing Authority of the exporting APTA Participating State at the time of exportation or within three working days from the date of shipment."
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption there. Per 59/2018 footnote 10, goods under customs control in a bonded area without import clearance qualify",
+    "No operation other than unloading/reloading or keeping in good condition"
+   ],
+   "documentsRequired": [
+    "Through Bill of Lading issued in the exporting participating state",
+    "Certificate of Origin",
+    "Original commercial invoice",
+    "Supporting documents proving Rule 6(b) compliance"
+   ],
+   "source": {
+    "notification": "79/2009-Customs (N.T.)",
+    "rule": "94/2006 Rule 6 (p2); 79/2009 Annexure-B para 4 (p2); 59/2018 footnote 10 (p2 of A18)",
+    "page": 2,
+    "quote": "1. the through Bill of Lading issued in the exporting APTA Participating State; 2. the Certificate of Origin issued by the Issuing Authority of the exporting APTA Participating State; 3. the original commercial invoice in respect of the goods;"
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 5 partial cumulation: aggregate participating-state content >=60% FOB, computed as VOM1+VOM2 (59/2018 footnote 9)",
+   "Rule 11 LDC participating states: +10 percentage points (Rule 4 <=65%, Rule 5 >=50%)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Part B of 50/2018 for APPENDIX II countries (Bangladesh, Lao PDR); serials restart at 1. Certified true copy: 'Certified True Copy' in Box 3 (79/2009). Box 5 is 6-digit HS (59/2018). 94/2006 Rule 8 originally referred to a sample CoO (Annexure-A). Verification: no reply within 4 months allows denial. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (No non-party invoicing rule; CoO Box 2 note: 'For third party trade, the words \"To Order\" may be typed' (consignee field) (94/2006 Annexure-A notes, p4-5); Box 10 note: invoice date should not be later than the certificate approval date (p5))."
+ },
+ {
+  "key": "ISFTA",
+  "name": "India-Sri Lanka Free Trade Agreement",
+  "partners": [
+   "LK"
+  ],
+  "inForceFrom": "2000-03-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "026/2000",
+    "date": "2000-03-01",
+    "baseText": "26/2000-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "19/2000-Customs (N.T.)",
+   "date": "2000-03-01",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "INDO[-\\s]?SRI\\s+LANKA\\s+FREE\\s+TRADE\\s+AGREEMENT",
+   "\\(?ISFTA\\)?",
+   "India[-\\s]Sri\\s+Lanka\\s+Free\\s+Trade"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": null,
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption there",
+    "No operation other than unloading/reloading or keeping in good condition"
+   ],
+   "documentsRequired": [],
+   "source": {
+    "notification": "19/2000-Customs (N.T.)",
+    "rule": "Rule 9",
+    "page": 2,
+    "quote": "(b)    the products whose transport involves transit through one or more intermediate countries with or without transhipment or temporary storage in such countries:"
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": null,
+  "cumulation": [
+   "Rule 8: exporting-party value addition >=25% FOB with aggregate India+Sri Lanka value addition >=35% FOB (bilateral)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Retroactive issuance: rule 11 of 19/2000-Customs (N.T.) defers to certification procedures \"to be devised and approved by both the Contracting Parties\", which are not in the corpus — null, not \"not allowed\". Schedule read from the CBIC compilation (see report). Certificate title 'INDO-SRI LANKA FREE TRADE AGREEMENT (ISFTA) (Combined declaration and certificate)', p3. Rule 7(d)'s list of insufficient operations includes slaughter of animals. TRQ items (tea, garments, pepper etc.) under 26/2000/60/2000/2/2007 need separate quota evidence. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Silent)."
+ },
+ {
+  "key": "DFTP",
+  "name": "Duty Free Tariff Preference Scheme for Least Developed Countries",
+  "partners": [
+   "KH",
+   "TZ",
+   "ET",
+   "MZ",
+   "MW",
+   "LA",
+   "UG",
+   "RW",
+   "MG",
+   "BJ",
+   "MM",
+   "BF",
+   "ER",
+   "GM",
+   "SD",
+   "SN",
+   "LS",
+   "ML",
+   "SO",
+   "BD",
+   "BI",
+   "TL",
+   "ZM",
+   "CF",
+   "AF",
+   "LR",
+   "KM",
+   "YE",
+   "HT",
+   "TG",
+   "TD",
+   "GW",
+   "NE",
+   "GN",
+   "SL",
+   "CD"
+  ],
+  "inForceFrom": "2008-08-13",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "096/2008",
+    "date": "2008-08-13",
+    "baseText": "08/2014-Customs",
+    "amendedBy": [
+     "39/2016-Cus",
+     "46/2016-Cus",
+     "67/2016-Cus",
+     "02/2017-Cus",
+     "68/2017-Cus",
+     "36/2019-Cus",
+     "50/2021-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "67/2023-Customs"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "29/2015-Customs (N.T.)",
+   "date": "2015-03-10",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "Duty\\s+Free\\s+Tariff\\s+Preference\\s+Scheme\\s+(by\\s+India\\s+)?for\\s+Least\\s+Developed\\s+Countries",
+   "\\bDFTP\\b"
+  ],
+  "originCriteria": [
+   {
+    "coo": "WO",
+    "ices": "COWO"
+   },
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTS",
+    "note": "Criterion C = B with accumulation of Indian inputs (rule 7)."
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 30,
+   "windowFrom": "shipment",
+   "marking": "ISSUED RETROSPECTIVELY",
+   "otherConditions": [
+    "Text says 'not later than one month from the date of shipment'. 30 days is a conservative reading of 'one month'",
+    "Normal issuance: at exportation or within seven working days of shipment",
+    "Only exceptional cases: involuntary errors or omissions, or other valid reasons",
+    "Marking in box 4. Issuing authority must record in writing the exceptional circumstances",
+    "Rule 17(1) proviso: a claim on a retrospectively issued CoO 'shall be granted subject to and in accordance with the law for the time being in force in India' (p9)"
+   ],
+   "source": {
+    "notification": "29/2015-Customs (N.T.)",
+    "rule": "Rule 15(8)",
+    "page": 9,
+    "quote": "the certificate of origin may be issued retrospectively but not later than one month from the date of shipment, bearing the words “ISSUED RETROSPECTIVELY” in box 4 of the certificate of origin"
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reasons or exclusively transport requirements",
+    "Not entered into trade or consumption there",
+    "No operation other than unloading/reloading or keeping in good condition",
+    "Remained under customs control in the country of transit"
+   ],
+   "documentsRequired": [
+    "Through bill of lading issued in the exporting country",
+    "Certificate of origin",
+    "Copy of the original commercial invoice",
+    "Supporting documents evidencing the other requirements of rule 10"
+   ],
+   "source": {
+    "notification": "29/2015-Customs (N.T.)",
+    "rule": "Rule 10(1)-(2) (p6-7)",
+    "page": 7,
+    "quote": "(iv) the products have remained under the customs control in the country of transit."
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 7 accumulation: originating material from India incorporated in the beneficiary country is treated as originating there (criterion C)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Partners: the Schedule to 96/2008 as amended (S.Nos. 5 Samoa and 21 Maldives omitted by 34/2016; DR Congo added by 67/2023). Golden ex_job2 (Uganda, certificate \"WO\") filed COWO, 096/2008 serial (i), 100%. Issuing authority for India is Export Inspection Council. CoO: one original + three copies; importer submits the original only. Certified true copy marked \"CERTIFIED TRUE COPY\" in box 4, within 1 year of original. Existing core master criterionMap {A:'COWO', B:'PSR'} (checklist-app/packages/core/src/masters/data.ts:642) does not match the rules: B is the general rule (30% VA + CTSH), not a PSR, and C is unmapped. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Silent on non-party invoicing; Rule 16(2): multiple items on a single invoice and single CoO allowed if each qualifies separately (p9))."
+ },
+ {
+  "key": "IN-CL-PTA",
+  "name": "India-Chile Preferential Trade Agreement",
+  "partners": [
+   "CL"
+  ],
+  "inForceFrom": "2007-09-11",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "101/2007",
+    "date": "2007-09-11",
+    "baseText": "19/2017-Customs",
+    "amendedBy": [
+     "10/2020-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "36/2023-Customs",
+     "45/2024-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "84/2007-Customs (N.T.)",
+   "date": "2007-08-17",
+   "amendedBy": [
+    "48/2017-Customs (N.T.)"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "Chile[-\\s]India\\s+PREFERENTIAL\\s+TRADE\\s+AGREEMENT",
+   "India[-\\s]Chile\\s+(PTA|Preferential)",
+   "CERTIFICATE\\s+OF\\s+ORIGIN[\\s\\S]{0,200}COMPETENT\\s+GOVERNMENTAL\\s+AUTHORITY"
+  ],
+  "originCriteria": [
+   {
+    "coo": "(A)",
+    "ices": "COWO"
+   },
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "(B)",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 60,
+   "windowFrom": "commercial invoice date",
+   "marking": null,
+   "otherConditions": [
+    "There is no retroactive-issuance concept in 84/2007 as amended: the certificate may not be issued before the commercial invoice date and may be issued on it or within the following sixty days (rule 16(5) as substituted by 48/2017-Customs (N.T.)). The window runs from the invoice date, not the shipment date, and no marking exists — a certificate inside it should normally be filed as Retroactive = N."
+   ],
+   "source": {
+    "notification": "48/2017-Customs (N.T.)",
+    "rule": "rule 16(5) of 84/2007-Customs (N.T.) as substituted",
+    "page": 6
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transport through territory of one or both Parties, or",
+    "Transit through non-Parties, with or without trans-shipment or temporary warehousing, under customs surveillance there",
+    "Transit justified for geographical reasons or exclusively transport requirements",
+    "Not intended for trade, consumption, use or employment in transit country",
+    "No operations other than unloading, reloading or preservation",
+    "Transit period not to exceed six months",
+    "Goods must bear proof of customs surveillance through endorsements in the relevant customs document(s)"
+   ],
+   "documentsRequired": [
+    "Relevant customs document(s) endorsed as proof of customs surveillance during transit"
+   ],
+   "source": {
+    "notification": "84/2007-Customs (N.T.)",
+    "rule": "Rule 14 (p4-5)",
+    "page": 5,
+    "quote": "(c)  the period of such transit shall not exceed six months and goods under such transit    shall bear the proof of having been under customs surveillance through necessary endorsements in the relevant customs document(s)."
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "When invoiced by a non-Party operator, the producer/exporter states in the CoO 'Observations' field that goods will be invoiced from that operator",
+    "Reproduce the operator's invoice name, address, country, number and date",
+    "Only value addition in the exporting Party's territory counts toward local value addition"
+   ],
+   "source": {
+    "notification": "48/2017-Customs (N.T.)",
+    "rule": "Rule 15(14) (substituted 2017)",
+    "page": 5,
+    "quote": "(14) When the goods to be traded is invoiced by a non-Party operator, the producer or exporter of the originating Party shall inform, in the field titled “observations” of the respective certificate of origin"
+   }
+  },
+  "cooValidityDays": 365,
+  "cumulation": [
+   "Rule 4: goods originating in either Party used as inputs in the other are considered originating in the latter (full bilateral)",
+   "Rule 10 sets: non-originating CIF <=15% of set FOB"
+  ],
+  "proofOfOrigin": null,
+  "notes": "inForceFrom is the date of 101/2007 (its text states no commencement date). The original 2007 rule 15(1) required the CoO within 30 days of clearance; the 2017 substitution replaced this with 'submitted within its validity period'. CoO issued on a producer's sworn declaration, which can be valid 1 year for regular exports. The certificate carries a Producer box (2) and Observations box (4). ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes."
+ },
+ {
+  "key": "IN-MERCOSUR-PTA",
+  "name": "India-MERCOSUR Preferential Trade Agreement",
+  "partners": [
+   "AR",
+   "BR",
+   "PY",
+   "UY"
+  ],
+  "inForceFrom": "2009-06-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "057/2009",
+    "date": "2009-05-30",
+    "baseText": "57/2009-Customs",
+    "amendedBy": [
+     "121/2011",
+     "67/2016-Cus",
+     "36/2019-Cus",
+     "60/2021-Cus",
+     "23/2022",
+     "45/2024-Customs",
+     "25/2025-Customs",
+     "14/2026-Customs"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "56/2009-Customs (N.T.)",
+   "date": "2009-05-30",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "India[-\\s]Mercosur\\s+PTA",
+   "MERCOSUR",
+   "Form\\s+Agreed\\s+upon\\s+by\\s+India\\s+and\\s+Mercosur"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG"
+   }
+  ],
+  "retroactive": {
+   "allowed": true,
+   "windowDays": 60,
+   "windowFrom": "commercial invoice date",
+   "marking": null,
+   "otherConditions": [
+    "No retroactive-issuance concept in 56/2009-Customs (N.T.): the certificate may not be issued before the commercial invoice date, only on it or within the following sixty days (rule 17(6)). Window runs from the invoice date; no marking — normally file Retroactive = N inside it.",
+    "Certificate valid 180 days (rule 17(4))."
+   ],
+   "source": {
+    "notification": "56/2009-Customs (N.T.)",
+    "rule": "rule 17(6)",
+    "page": 6
+   }
+  },
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transport through territory of one or more Signatory Parties, or",
+    "Transit through third countries with or without trans-shipment/temporary warehousing, under surveillance of customs authorities there",
+    "Transit justified for geographical reasons or exclusively transport requirements",
+    "Not intended for trade, consumption, use or employment in transit country",
+    "No operations other than unloading, reloading or preservation"
+   ],
+   "documentsRequired": [],
+   "source": {
+    "notification": "56/2009-Customs (N.T.)",
+    "rule": "Rule 14 (p4-5)",
+    "page": 5,
+    "quote": "They are in transit through one or more territories of third countries, with or without trans-shipment or temporary warehousing in such territories, under the surveillance of the customs authorities therein"
+   }
+  },
+  "thirdPartyInvoicing": {
+   "allowed": true,
+   "conditions": [
+    "Invoicing by a third-country operator (Signatory Party or not) is allowed",
+    "The final producer or exporter presents the first commercial invoice and the producer's sworn declaration",
+    "The 'Observations' box states the goods will be invoiced by a third operator, giving that operator's name, address, country, invoice number and date",
+    "If that is not possible, the commercial invoice attached to the import request must carry a sworn declaration signed by the operator that it corresponds to the CoO (CoO number and date). Otherwise customs 'shall not accept the Certificate of Origin'",
+    "Only value addition in the Signatory Party counts"
+   ],
+   "source": {
+    "notification": "56/2009-Customs (N.T.)",
+    "rule": "Rule 16",
+    "page": 5,
+    "quote": "If the traded good is invoiced by an operator from a third country, be it a Signatory Party or not, for the issue of the Origin Certificate, the final producer or exporter of the good shall present the first commercial invoice"
+   }
+  },
+  "cooValidityDays": 180,
+  "cumulation": [
+   "Rule 4: goods originating in any Signatory Party used as input in another are originating in the latter",
+   "Rule 10 sets: non-originating CIF <=15% of set FOB"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Rule 37(3): goods fractioned in a Special Economic Zone may get new CoOs based on the original. That is not a general back-to-back rule, hence backToBack.allowed=null. Box 11 'Observations'. Rule 28(1) text '(90) (65) days' is a drafting glitch. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes."
+ },
+ {
+  "key": "IN-AF-PTA",
+  "name": "India-Afghanistan Preferential Trade Agreement",
+  "partners": [
+   "AF"
+  ],
+  "inForceFrom": "2003-05-13",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "076/2003",
+    "date": "2003-05-13",
+    "baseText": "76/2003-Customs",
+    "amendedBy": [
+     "130/2006",
+     "121/2011",
+     "36/2019-Cus"
+    ]
+   }
+  ],
+  "slot": "SAPTA",
+  "rooRules": {
+   "notification": "33/2003-Customs (N.T.)",
+   "date": "2003-05-13",
+   "amendedBy": []
+  },
+  "cooHeadingPatterns": [
+   "INDIA\\s*-\\s*AFGHANISTAN\\s+PREFERENTIAL\\s+TRADING\\s+ARRANGEMENT",
+   "\\(?IAPTA\\)?"
+  ],
+  "originCriteria": [
+   {
+    "coo": "A",
+    "ices": "COWO"
+   },
+   {
+    "coo": "B",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   },
+   {
+    "coo": "C",
+    "ices": "CONWO - COOG",
+    "tariffShift": "CTH"
+   }
+  ],
+  "retroactive": null,
+  "directConsignment": {
+   "required": true,
+   "transitConditions": [
+    "Transit justified for geographical reason or exclusively transport requirements",
+    "Not entered into trade or consumption there",
+    "No operation other than unloading/reloading or keeping in good condition"
+   ],
+   "documentsRequired": [],
+   "source": {
+    "notification": "33/2003-Customs (N.T.)",
+    "rule": "Rule 9",
+    "page": 3,
+    "quote": "(b)the products whose transport involves transit through one or  more intermediate countries with or without transhipment or temporary storage in such countries:"
+   }
+  },
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": null,
+  "cumulation": [
+   "Rule 8: exporting-party value addition >=30% FOB with aggregate India+Afghanistan >=40% FOB (bilateral)"
+  ],
+  "proofOfOrigin": null,
+  "notes": "Retroactive issuance: rule 11 of 33/2003-Customs (N.T.) defers to certification procedures not in the corpus — null. Afghanistan goods can also claim SAFTA-LDC and DFTP. Afghanistan is landlocked, so transit via Pakistan/Iran/air is inherent. Rule 9(b) transit conditions are the operative test, and since 02.05.2025 India prohibits transit of goods exported from Pakistan (web-only, see SAFTA). Tariff concession list (dry fruits, fresh fruits, emeralds etc.) is in 76/2003-Cus. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Silent)."
+ },
+ {
+  "key": "IN-NP-TREATY",
+  "name": "India-Nepal Treaty of Trade",
+  "partners": [
+   "NP"
+  ],
+  "inForceFrom": "2010-10-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "104/2010",
+    "date": "2010-10-01",
+    "baseText": "104/2010-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "104/2010-Customs (tariff exemption; no separate Customs (N.T.) ROO notification exists for the Nepal Treaty; origin conditions and CoO form are in its Annexure)",
+   "date": "2010-10-01",
+   "amendedBy": [
+    "08/2022-Customs"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "Certificate\\s+of\\s+origin\\s+for\\s+exports\\s+free\\s+of\\s+Customs\\s+duties\\s+under\\s+the\\s+Treaty\\s+of\\s+Trade\\s+between\\s+the\\s+Government\\s+of\\s+Nepal\\s+and\\s+the\\s+Government\\s+of\\s+India",
+   "Treaty\\s+of\\s+Trade[\\s\\S]{0,80}Nepal"
+  ],
+  "originCriteria": [],
+  "retroactive": null,
+  "directConsignment": null,
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": null,
+  "cumulation": [
+   "Indian materials count with Nepalese materials: wholly produced 'from Nepalese materials or Indian materials or Nepalese and Indian materials', and the 70% ceiling covers only materials from countries other than Nepal or India (Condition 2(A))"
+  ],
+  "proofOfOrigin": null,
+  "notes": "No Customs (N.T.) rules of origin: the conditions and the certificate form are in the Annexure to 104/2010. S.No. 1 (primary products) needs only that goods are wholly produced in Nepal; S.Nos. 2-3 (manufactured goods) need the annexed certificate. Schedule lines are description-based (no tariff codes) — the operator picks the serial. Nepal goods can also claim SAFTA-LDC. S.No.3 quota goods (vanaspati 100,000 MT, acrylic yarn 10,000 MT, copper 10,000 MT, zinc oxide 2,500 MT per 6 March-5 March year) need both conditions 2 and 3. S.No.2 covers all manufactured goods except alcohol, cosmetics with non-Nepalese/non-Indian brands, cigarettes/tobacco and the quota goods. The corpus PDF's Annexure layout loses the condition numbers. CBIC G.E.-82 (pp1541-1543) confirms Condition 1 = 'If the goods are wholly produced in Nepal.' (S.No.1, no CoO form prescribed) and Condition 2 = (A) origin tests + (B) CoO in annexed form (S.No.2 and 3). CoO item 14 is 'For official use of Indian Customs'. ICES info_cd for wholly-obtained set to COOG (general rule) by convention; the notification does not speak to ICES codes. Third-party invoicing: the rules are silent (Silent). Direct consignment: no rule (No direct-consignment rule. Condition 3(B) restricts only the quota goods (S.No.3: vanaspati, acrylic yarn, copper products, zinc oxide) to LCS Kakarbhitta/Naxalbari, Biratnagar/Jogbani, Birganj/Raxaul, Bhairahawa/Nautanwa, Nepalgunj/Nepalgunj Road, Mahendranagar/Banbasa)."
+ },
+ {
+  "key": "IN-BT-TRADE",
+  "name": "India-Bhutan Agreement on Trade, Commerce and Transit",
+  "partners": [
+   "BT"
+  ],
+  "inForceFrom": "2017-07-01",
+  "inForceUntil": null,
+  "concessionNotifications": [
+   {
+    "notification": "040/2017",
+    "date": "2017-06-30",
+    "baseText": "40/2017-Customs",
+    "amendedBy": []
+   }
+  ],
+  "slot": "BASIC",
+  "rooRules": {
+   "notification": "40/2017-Customs (tariff exemption; no Customs (N.T.) rules of origin notification exists for the India-Bhutan Agreement on Trade, Commerce and Transit; the notification itself sets no origin criteria or proof requirement)",
+   "date": "2017-06-30",
+   "amendedBy": [
+    "08/2022-Customs",
+    "43/2017-Customs"
+   ]
+  },
+  "cooHeadingPatterns": [
+   "\\bBHUTAN\\b"
+  ],
+  "originCriteria": [],
+  "retroactive": null,
+  "directConsignment": null,
+  "thirdPartyInvoicing": null,
+  "cooValidityDays": null,
+  "cumulation": [
+   "Indian-origin goods imported from Bhutan also qualify (text 'Bhutanese or Indian origin')"
+  ],
+  "proofOfOrigin": null,
+  "notes": "40/2017-Customs S.No. 1: goods of Bhutanese or Indian origin imported from Bhutan — whole BCD (and AIDC, health cess, RIC by 08/2022). No certificate form or origin criteria is prescribed. No CoO heading pattern or origin-criterion letters exist to extract. Origin must be proven by whatever evidence satisfies the proper officer. Treat as 'no proof form prescribed', not 'no proof needed'. 40/2017 Sl.2-3 cover Bangladesh (semi-tanned hides etc.) and China border-trade routes, unrelated to Bhutan. Third-party invoicing: the rules are silent (Silent). Direct consignment: no rule (Silent; condition is only 'imported from Bhutan into India')."
+ }
+]

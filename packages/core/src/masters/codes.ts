@@ -430,6 +430,50 @@ export function iso6346Code(
   return ISO_6346[size]?.[typeCode];
 }
 
+/**
+ * A container number stripped to the 11 characters ISO 6346 defines.
+ *
+ * B/Ls print them spaced and punctuated in every combination — `CAIU 3686895`,
+ * `CAIU-3686895`, `CAIU3686895/QIN2410658` — and the same box has to compare
+ * equal however it was printed, because that comparison is what stops one
+ * container being written into the CONTAINERS sheet twice.
+ */
+export function normaliseContainerNumber(value: string): string {
+  return value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+/**
+ * Validates an ISO 6346 container number including its check digit.
+ *
+ * The check digit matters twice over. As a match key, an invalid number would
+ * merge two unrelated shipments. On the CONTAINERS sheet it is the only thing
+ * that can tell a misread box apart from a real one without a person looking at
+ * the B/L again — `IAAU1141498` and `IAAU1141499` are both plausible strings and
+ * only one of them is a container.
+ */
+export function isValidContainerNumber(value: string): boolean {
+  const v = normaliseContainerNumber(value);
+  if (!/^[A-Z]{4}[0-9]{7}$/.test(v)) return false;
+
+  // A=10, skipping every multiple of 11.
+  const letterValues: Record<string, number> = {};
+  let n = 10;
+  for (let c = 65; c <= 90; c++) {
+    if (n % 11 === 0) n++;
+    letterValues[String.fromCharCode(c)] = n;
+    n++;
+  }
+
+  let sum = 0;
+  for (let i = 0; i < 10; i++) {
+    const ch = v[i] as string;
+    const digit = i < 4 ? (letterValues[ch] as number) : Number(ch);
+    sum += digit * 2 ** i;
+  }
+  const check = (sum % 11) % 10;
+  return check === Number(v[10]);
+}
+
 
 /* ------------------------------------------------------------------ *
  * Package units
@@ -474,6 +518,101 @@ export function normalizePackageUnit(unit: string | undefined | null): string | 
   return PACKAGE_UNITS[key] ?? PACKAGE_UNITS[firstToken];
 }
 
+/**
+ * Weight units as transport documents print them, and what each one is in kg.
+ *
+ * A bill of lading does not write "KGS" because a human would. `KGM` is the
+ * UN/ECE Recommendation 20 code and is what an EDI-generated B/L prints —
+ * `ex_job6/COPY BL EP061126-1.pdf` states "157,703.000 KGM", and reading that
+ * as an unknown unit is how a gross weight goes missing. `LBS` is rarer on
+ * Indian imports but it is the dangerous one: taken as kilograms it understates
+ * the declared weight by more than half.
+ *
+ * The factor is to kilograms, which is the only unit the Bill of Entry writes —
+ * `GrWtUnitCode` and `NtWtUnitCode` are `KGS` on every vendor export we hold.
+ *
+ * CONFIRM: KGM/KGS/KG, the IATA K, and LBS/LB are attested; L (IATA pounds), MT
+ * and QTL have not been seen on a document yet. `L` is deliberately scoped to
+ * this table, which is only consulted for the weight fields of a transport
+ * document — it is not a general unit lookup, where L would be litres.
+ */
+export const WEIGHT_UNITS: Record<string, { code: string; toKg: number }> = {
+  // The IATA air waybill weight box states its unit as a single letter: K for
+  // kilograms, L for pounds. ex_job1's waybill reads "101.00 K". Without these
+  // two the figure is refused as an unreadable unit and the gross weight goes
+  // missing on every air job.
+  K: { code: 'KGS', toKg: 1 },
+  L: { code: 'KGS', toKg: 0.45359237 },
+  KG: { code: 'KGS', toKg: 1 },
+  KGS: { code: 'KGS', toKg: 1 },
+  KGM: { code: 'KGS', toKg: 1 },
+  KILO: { code: 'KGS', toKg: 1 },
+  KILOS: { code: 'KGS', toKg: 1 },
+  KILOGRAM: { code: 'KGS', toKg: 1 },
+  KILOGRAMS: { code: 'KGS', toKg: 1 },
+  KILOGRAMME: { code: 'KGS', toKg: 1 },
+  KILOGRAMMES: { code: 'KGS', toKg: 1 },
+  LB: { code: 'KGS', toKg: 0.45359237 },
+  LBS: { code: 'KGS', toKg: 0.45359237 },
+  POUND: { code: 'KGS', toKg: 0.45359237 },
+  POUNDS: { code: 'KGS', toKg: 0.45359237 },
+  MT: { code: 'KGS', toKg: 1000 },
+  TON: { code: 'KGS', toKg: 1000 },
+  TONS: { code: 'KGS', toKg: 1000 },
+  TONNE: { code: 'KGS', toKg: 1000 },
+  TONNES: { code: 'KGS', toKg: 1000 },
+  TNE: { code: 'KGS', toKg: 1000 },
+  // MTS is the ICES UQC for a metric tonne, and `VALID_UQC` already accepts it
+  // as an item unit — so a line invoiced in MTS survives normalisation with its
+  // quantity in tonnes. Without this entry it has no conversion to kilograms,
+  // and SW_ADDL_INFO's standard quantity refuses a line it could have stated.
+  // Not to be confused with MTR, the UQC for a metre.
+  MTS: { code: 'KGS', toKg: 1000 },
+  QTL: { code: 'KGS', toKg: 100 },
+  QUINTAL: { code: 'KGS', toKg: 100 },
+};
+
+/**
+ * The unit as printed -> the code the Bill of Entry writes, always `KGS`.
+ *
+ * Returns undefined for a unit that is not a weight at all — `MTQ` (cubic
+ * metres) sits in the same column as the weight on some B/Ls, and answering
+ * "KGS" for a volume would declare a measurement as a weight.
+ */
+export function normalizeWeightUnit(unit: string | undefined | null): string | undefined {
+  return lookupWeightUnit(unit)?.code;
+}
+
+/** The full entry, for callers that need the conversion factor as well. */
+export function lookupWeightUnit(
+  unit: string | undefined | null,
+): { code: string; toKg: number } | undefined {
+  if (!unit) return undefined;
+  const key = normaliseKey(unit);
+  if (!key) return undefined;
+  const firstToken = key.split(' ')[0] ?? key;
+  return WEIGHT_UNITS[key] ?? WEIGHT_UNITS[firstToken];
+}
+
+/**
+ * A weight stated in `unit`, in kilograms.
+ *
+ * Returns undefined rather than the input when the unit is unrecognised: a
+ * number whose unit nobody could read is not a weight in kilograms, and
+ * passing it through is exactly the silent mis-declaration this exists to stop.
+ */
+export function weightToKg(
+  value: number | undefined | null,
+  unit: string | undefined | null,
+): number | undefined {
+  if (value == null || !Number.isFinite(value)) return undefined;
+  // No unit printed: documents that omit it are stating kilograms.
+  if (!unit || !unit.trim()) return value;
+  const entry = lookupWeightUnit(unit);
+  if (!entry) return undefined;
+  return value * entry.toKg;
+}
+
 /* ------------------------------------------------------------------ *
  * Enumerated header fields
  * ------------------------------------------------------------------ */
@@ -513,14 +652,31 @@ export const TOI_CODE: Record<TermsOfInvoice, string | null> = {
  * "PRIOR"), which is the vocabulary of its screens rather than of its import
  * file; the file was rejected on all three.
  */
-export const TRANSPORT_MODE_CODE: Record<'Sea' | 'Air', string> = {
+/**
+ * `S` sea, `A` air, `L` land.
+ *
+ * `Land` is not a third kind of vessel — it is a sea or air consignment whose
+ * carriage into the customs station is inland, which is every consignment
+ * delivered to an ICD, CFS or land customs station. The station decides it, not
+ * the transport document: see `transportModeForStation()` in `stations.ts`.
+ */
+export const TRANSPORT_MODE_CODE: Record<'Sea' | 'Air' | 'Land', string> = {
   Sea: 'S',
   Air: 'A',
+  Land: 'L',
 };
 
-/** Only home consumption is modelled; the SEZ and bonded forms are unused. */
-export const BE_TYPE_CODE: Record<'Home Consumption', string> = {
+/**
+ * `H` home consumption, `W` into-bond (warehousing), `EX` ex-bond.
+ *
+ * Which one is the customer's instruction, not something the shipping documents
+ * say — the same goods are warehoused or cleared home on the importer's word.
+ * `W` and `EX` both make the INBOND_EXBOND sheet mandatory.
+ */
+export const BE_TYPE_CODE: Record<'Home Consumption' | 'Warehousing' | 'Ex-Bond', string> = {
   'Home Consumption': 'H',
+  Warehousing: 'W',
+  'Ex-Bond': 'EX',
 };
 
 export const FILING_CODE: Record<'Normal' | 'Prior' | 'Advance', string> = {
@@ -534,107 +690,184 @@ export const FILING_CODE: Record<'Normal' | 'Prior' | 'Advance', string> = {
  * ------------------------------------------------------------------ */
 
 /**
- * `INVOICES.Valuation_Method` — the Customs Valuation Rules 2007 method.
+ * `INVOICES.Valuation_Method` — the rule the value was determined under.
  *
- * Logi-Sys spells these as the rule plus its title, "RULE 4 (TRANSACTION
- * VALUE)", visible on Invoice → Other Details. The draft carries the bare word
- * ("Transaction"), which was being written straight through: the accepted
- * workbook for job ce9c889d says RULE 4 where ours said `Transaction`.
+ * Logi-Sys spells these as the rule plus its title and takes the whole string.
  *
- * Rule 4 is the one all but a handful of filings use — a transaction value
- * between unrelated parties. The rest are the fallback ladder, in order.
+ * **The dropdown and the export disagree, and both are here on purpose.** The
+ * dropdown photographed on the customer's workbook (`INVOICES!BD9`) is the
+ * Customs Valuation Rules **2007** ladder — Rule 3 determination of method,
+ * Rule 4 identical goods, Rule 5 similar goods, up to Rule 12 rejection, plus
+ * OTH. It contains no transaction-value entry, because under CVR 2007
+ * transaction value is Rule 3(1) itself. Logi-Sys' own export of job I-10793
+ * nonetheless writes `RULE 4 (TRANSACTION VALUE)` — the **1988** numbering —
+ * and so does the hand-corrected `final (1).xlsx`.
+ *
+ * So `TRANSACTION` is the string that round-trips and stays the default, and
+ * the eleven dropdown strings are what an operator may choose instead. See
+ * docs/boe-mapping/open-questions.md.
  */
-export const VALUATION_METHOD: Record<string, string> = {
+export const VALUATION_METHOD = {
   TRANSACTION: 'RULE 4 (TRANSACTION VALUE)',
-  'RULE 4': 'RULE 4 (TRANSACTION VALUE)',
-  IDENTICAL: 'RULE 5 (TRANSACTION VALUE OF IDENTICAL GOODS)',
-  'RULE 5': 'RULE 5 (TRANSACTION VALUE OF IDENTICAL GOODS)',
-  SIMILAR: 'RULE 6 (TRANSACTION VALUE OF SIMILAR GOODS)',
-  'RULE 6': 'RULE 6 (TRANSACTION VALUE OF SIMILAR GOODS)',
+  METHOD_DETERMINATION: 'RULE 3 (DETERMINATION OF METHOD OF VALUATION)',
+  IDENTICAL: 'RULE 4 (TRANS. VALUE OF IDENTICAL GOODS)',
+  SIMILAR: 'RULE 5 (TRANS. VALUE OF SIMILAR GOODS)',
+  DETERMINATION_OF_VALUE: 'RULE 6 (DETERMINATION OF VALUE)',
   DEDUCTIVE: 'RULE 7 (DEDUCTIVE VALUE)',
-  'RULE 7': 'RULE 7 (DEDUCTIVE VALUE)',
   COMPUTED: 'RULE 8 (COMPUTED VALUE)',
-  'RULE 8': 'RULE 8 (COMPUTED VALUE)',
   RESIDUAL: 'RULE 9 (RESIDUAL METHOD)',
-  'RULE 9': 'RULE 9 (RESIDUAL METHOD)',
-};
+  COST_AND_SERVICES: 'RULE 10 (COST AND SERVICES)',
+  DECLARATION_BY_IMPORTER: 'RULE 11 (DECLARATION BY IMPORTER)',
+  REJECTION: 'RULE 12 (REJECTION OF DECLARED VALUE)',
+  OTHERS: 'OTH (OTHERS)',
+} as const;
+
+/** Every string the column accepts, for the operator's dropdown. */
+export const VALUATION_METHODS: readonly string[] = Object.values(VALUATION_METHOD);
 
 /** The method to declare when nothing on the documents says otherwise. */
-export const DEFAULT_VALUATION_METHOD = VALUATION_METHOD.TRANSACTION;
+export const DEFAULT_VALUATION_METHOD: string = VALUATION_METHOD.TRANSACTION;
 
 /**
- * `INVOICES.Valuation_Method` for a draft's stated method.
+ * `INVOICES.Valuation_Method` for a stated method.
  *
- * Matches on the leading keyword so that "Transaction value", "transaction" and
- * "RULE 4" all land on the same string. Unknown text returns undefined rather
- * than passing through: the column is a dropdown in Logi-Sys, and free text in
- * it is what the round trip rejected.
+ * Exact match against the eleven strings first, then a small keyword table.
+ * **There is deliberately no `RULE n` regex.** The two numbering schemes above
+ * disagree about what Rule 4 and Rule 5 are, so a bare rule number identifies
+ * nothing: "RULE 5" is the transaction value of identical goods under one and
+ * of similar goods under the other. Unknown text returns undefined rather than
+ * passing through — the column is a dropdown, and free text in it is what the
+ * round trip rejected.
  */
+const VALUATION_KEYWORDS: Record<string, string> = {
+  TRANSACTION: VALUATION_METHOD.TRANSACTION,
+  'TRANSACTION VALUE': VALUATION_METHOD.TRANSACTION,
+  IDENTICAL: VALUATION_METHOD.IDENTICAL,
+  SIMILAR: VALUATION_METHOD.SIMILAR,
+  DEDUCTIVE: VALUATION_METHOD.DEDUCTIVE,
+  COMPUTED: VALUATION_METHOD.COMPUTED,
+  RESIDUAL: VALUATION_METHOD.RESIDUAL,
+  REJECTION: VALUATION_METHOD.REJECTION,
+  REJECTED: VALUATION_METHOD.REJECTION,
+  OTHERS: VALUATION_METHOD.OTHERS,
+  OTH: VALUATION_METHOD.OTHERS,
+};
+
 export function valuationMethod(value: string | undefined | null): string | undefined {
-  if (!value) return undefined;
-  const raw = value.trim().toUpperCase();
+  const raw = value?.trim().toUpperCase();
   if (!raw) return undefined;
 
-  const exact = VALUATION_METHOD[raw];
+  // Already in the target spelling.
+  const exact = VALUATION_METHODS.find((v) => v === raw);
   if (exact) return exact;
 
-  // Already in the target spelling.
-  if (Object.values(VALUATION_METHOD).includes(raw)) return raw;
-
-  const rule = /RULE\s*([4-9])/.exec(raw);
-  if (rule) return VALUATION_METHOD[`RULE ${rule[1]}`];
-
-  const keyword = Object.keys(VALUATION_METHOD).find(
-    (k) => !k.startsWith('RULE ') && raw.startsWith(k),
-  );
-  return keyword ? VALUATION_METHOD[keyword] : undefined;
+  const keyword = Object.keys(VALUATION_KEYWORDS)
+    .sort((a, b) => b.length - a.length)
+    .find((k) => raw.startsWith(k));
+  return keyword ? VALUATION_KEYWORDS[keyword] : undefined;
 }
 
 /**
- * `INVOICES.Terms_of_Payment` — a dropdown, with a free-text remark beside it
- * (`Other_Terms_of_Payment_Remark`) that Logi-Sys enables for OTHERS.
+ * `INVOICES.Nature_of_Trans` — the nine labels of the Logi-Sys dropdown,
+ * photographed open on the customer's annotated workbook (`INVOICES!BC8`).
  *
- * What our documents carry is never one of the dropdown's words: an invoice
- * says "D/A 45 days from B/L Date", "100% advance TT", "LC at sight 90 days".
- * Writing that into the dropdown column is what the export was doing, and the
- * accepted workbook shows the operator's correction — OTHERS in the column.
- *
- * CONFIRM: only OTHERS is confirmed, from that accepted workbook. The dropdown
- * was not captured open in `logi-sys-screenshots/`, so the codes a term like
- * D/A would map to are unknown, and guessing one is exactly the class of error
- * this table exists to stop. Everything therefore routes to OTHERS, in the
- * remark column as well as the coded one — which is what Logi-Sys' own export
- * writes. When someone can open that dropdown, add the values here and this is
- * the only place that changes.
+ * ICES codes these `S|C|H|F|O|R|P|G|M` (BE JSON schema `natureOfTransaction`);
+ * Logi-Sys takes the label and does the coding itself, so the label is what the
+ * column holds — `Sale` on every vendor workbook, `Free of cost` on the two
+ * free-of-cost re-imports `ex_job3` and `ex_job4`.
  */
-export const TERMS_OF_PAYMENT_OTHERS = 'OTHERS';
+export const NATURE_OF_TRANSACTION: Record<string, string> = {
+  SALE: 'Sale',
+  SALE_ON_CONSIGNMENT: 'Sale on Consignment basis',
+  HIRE: 'Hire',
+  RENT: 'Rent',
+  GIFT: 'Gift',
+  SAMPLE: 'Sample',
+  FREE_OF_COST: 'Free of cost',
+  REPLACEMENT: 'Replacement',
+  OTHER: 'Others',
+  // The document did not say. Every golden but the two FOC re-imports is a sale.
+  UNKNOWN: 'Sale',
+};
+
+/** Every label the column accepts, for the operator's dropdown. */
+export const NATURE_OF_TRANSACTIONS: readonly string[] = [
+  ...new Set(Object.values(NATURE_OF_TRANSACTION)),
+];
+
+/**
+ * `INVOICES.Terms_of_Payment` — a dropdown of six, photographed open on the
+ * customer's annotated workbook (`INVOICES!AX8`), with a remark column beside
+ * it that Logi-Sys enables only for OTHERS.
+ *
+ * ICES itself carries fewer: `DP/DA`, `FoC`, `LC` and `OTH` (BE Message format
+ * 2.25, Payment terms). Logi-Sys splits DP from DA and adds SD, and takes its
+ * own labels.
+ */
+export const TERMS_OF_PAYMENT = {
+  LC: 'LC',
+  FOC: 'FOC',
+  DP: 'DP',
+  DA: 'DA',
+  SD: 'SD',
+  OTHERS: 'OTHERS',
+} as const;
+
+export const TERMS_OF_PAYMENT_OTHERS = TERMS_OF_PAYMENT.OTHERS;
+
+/** Every code the column accepts, for the operator's dropdown. */
+export const TERMS_OF_PAYMENT_CODES: readonly string[] = Object.values(TERMS_OF_PAYMENT);
 
 export interface TermsOfPaymentCells {
   /** The coded column. */
   code: string;
-  /** The remark column — OTHERS, matching the coded column. */
+  /** The remark column — `OTHERS` beside an OTHERS code, blank beside any other. */
   remark: string;
 }
 
 /**
- * Both columns read OTHERS, whatever the invoice says.
+ * The dropdown code an invoice's own payment wording maps to.
  *
- * The remark used to carry the invoice's own wording ("D/A 45 days from B/L
- * Date"). Logi-Sys' own export writes OTHERS in both columns, and that is what
- * this returns: the free text belongs on the invoice, not in this cell.
+ * Invoices write prose: "D/A 45 days from B/L Date", "100% advance TT",
+ * "Irrevocable LC at sight", "CAD". Only the unambiguous shapes are coded; a
+ * term that names no instrument stays OTHERS, because a wrong code here is a
+ * statement to Customs about how the goods were paid for.
+ *
+ * The remark carries `OTHERS` beside an OTHERS code — Logi-Sys' own export
+ * writes the word in both columns — and is blank beside every other code, which
+ * is the customer's rule for the column (`INVOICES!AZ10`): the remark exists to
+ * qualify OTHERS and means nothing next to a code that already says the thing.
  */
-export function termsOfPayment(_value?: string | null): TermsOfPaymentCells {
-  return { code: TERMS_OF_PAYMENT_OTHERS, remark: TERMS_OF_PAYMENT_OTHERS };
+export function termsOfPayment(value?: string | null): TermsOfPaymentCells {
+  const code = termsOfPaymentCode(value);
+  return { code, remark: code === TERMS_OF_PAYMENT.OTHERS ? TERMS_OF_PAYMENT_OTHERS : '' };
 }
 
-/**
- * `INVOICES.RD_Basis` — what the revenue deposit is charged on.
- *
- * "RD" is Revenue Deposit: Invoice → Other Charges reads
- * "Revenue Deposit __ % on [Assessable]". Logi-Sys writes the pair as 0.00 / A
- * on its own export even when no deposit is taken, and the column was being
- * left empty.
- */
+function termsOfPaymentCode(value?: string | null): string {
+  // "D/A", "D.A.", "D / A" and "DA" are one term. Separators collapse to a
+  // single space so the patterns below need only one spelling each.
+  const raw = value?.toUpperCase().replace(/[./\-\s]+/g, ' ').trim();
+  if (!raw) return TERMS_OF_PAYMENT.OTHERS;
+
+  // Already a code.
+  const asCode = TERMS_OF_PAYMENT_CODES.find((c) => c === raw);
+  if (asCode) return asCode;
+
+  if (/\bFREE OF (COST|CHARGE)\b|\bF ?O ?C\b|\bNO COMMERCIAL VALUE\b/.test(raw)) return TERMS_OF_PAYMENT.FOC;
+  // "LC", "L/C", "LETTER OF CREDIT", "IRREVOCABLE LC AT SIGHT".
+  if (/\bL ?C\b|\bLETTER OF CREDIT\b/.test(raw)) return TERMS_OF_PAYMENT.LC;
+  // Documents against acceptance / payment. "CAD" (cash against documents) is
+  // the same instrument as D/P.
+  if (/\bD ?A\b|\bDOCUMENTS? AGAINST ACCEPTANCE\b/.test(raw)) return TERMS_OF_PAYMENT.DA;
+  if (/\bD ?P\b|\bDOCUMENTS? AGAINST PAYMENT\b|\bCAD\b|\bCASH AGAINST DOCUMENTS?\b/.test(raw))
+    return TERMS_OF_PAYMENT.DP;
+  if (/\bS ?D\b|\bSIGHT DRAFT\b/.test(raw)) return TERMS_OF_PAYMENT.SD;
+
+  // Advance payment, open account, "net 30", "TT" — real terms, none of which
+  // is one of the six. OTHERS is the honest answer.
+  return TERMS_OF_PAYMENT.OTHERS;
+}
+
 export const RD_BASIS_ASSESSABLE = 'A';
 
 /* ------------------------------------------------------------------ *
@@ -668,30 +901,92 @@ export function pad8(hs: string | undefined | null): string | undefined {
  * out. Same shape of problem as PORT/COUNTRY/TOI above, same fix: one table.
  */
 
-/** `Info_Type` label -> code. Confirmed against the I-10793 export. */
+/**
+ * `Info_Type` label -> code. ICES field 9, `d_info_type`.
+ *
+ * The spec names six values; the three below it does not name appear only in
+ * later sections of the same document (`DTY` for the SEZ anti-dumping
+ * declaration, `SEZ` for authorised person and bonded-warehouse movement, `HAC`
+ * for hand carriage) and are listed so an unknown label is a lookup miss rather
+ * than a silent omission. We file `CHR`, `CTG`, `IDT` and `PNM` today.
+ */
 export const SW_INFO_TYPE_CODE: Record<string, string> = {
   'Item Characteristics': 'CHR',
   'Item Category': 'CTG',
   'Item Identification': 'IDT',
   'Product Name': 'PNM',
+  'PGA Exception Category': 'PEC',
+  'Origin Criteria': 'ORC',
 };
 
 /**
- * `info_Qualifier` label -> code.
+ * `info_Qualifier` label -> code. ICES field 10, `d_info_qfr`.
  *
- * Only what the I-10793 export actually shows. The FSSAI qualifiers in
- * SINGLE_WINDOW_RULES — Storage Condition, Drug Related Category, Foods &
- * Supplement Proprietry Status, Retail Pre-pack Food Article — are deliberately
- * absent: no vendor export we hold carries a food or pharma consignment, and
- * a plausible-looking three-letter code invented here would go onto a customs
- * declaration as fact. Those rows warn and are dropped until a real export
- * names their codes.
+ * `d_info_qfr` is not published as a file anywhere reachable. **Annexure A of
+ * Circular 55/2020-Customs dated 17.12.2020** is the closest thing that exists
+ * in the open — 35 entries, and the source Logi-Sys took its own UI labels
+ * from, verbatim down to the trailing full stop in "…registration number.".
+ * It is a floor and not a ceiling: `CPC` (Circular 23/2023) and `HZRDS`
+ * (Circular 24/2026) postdate it and are both in the corpus.
+ *
+ * Every label below is CBIC's own wording or the Logi-Sys screen's. Nothing
+ * here is invented — an unmapped label is dropped with a warning rather than
+ * written through, because a plausible-looking three-letter code would go onto
+ * a customs declaration as fact (ICES 454, *Invalid Info Qualifier Code*).
  */
 export const SW_QUALIFIER_CODE: Record<string, string> = {
+  // CHR — item characteristics
   'Standard UQC': 'SQC',
+  'Statistical Unit Quantity Code for Customs': 'SQC',
+  Sex: 'SEX',
+  Breed: 'BRD',
+  Colour: 'CLR',
+  'Plant Variety': 'PLV',
+  'Storage Temperature': 'STT',
+  'Storage Condition': 'STC',
+  // Circular 24/2026: hazardous cargo. Not in Annexure A.
+  Hazardous: 'HZRDS',
+  // CTG — item category
+  'Grade of the Product': 'GRA',
+  'Plant Category': 'PLC',
+  'Plant Parts': 'PLP',
+  'Drug Related Category': 'DRC',
+  'Foods & Supplement Proprietry Status': 'FSP',
+  // Circular 23/2023: the chemical category. Not in Annexure A.
   'Chemical Category (CPC)': 'CPC',
+  // IDT — item identification
+  'Animal Passport Number': 'PAS',
+  'Electronic Component Identification Number': 'ECI',
+  'Global Trade Item Number': 'GTI',
+  'Vehicle Identification Number': 'VIN',
+  'Microchips numbers inserted into animals for identifification purposes': 'MIC',
   'Chemical Abstract Service registration number.': 'CAS',
+  // ORC — origin criteria, mandatory whenever an FTA notification is claimed
+  'Country of Origin': 'COO',
+  'Origin Criteria': 'ORG',
+  Accumulation: 'ACM',
+  'Wholly Obtained or Produced': 'WP',
+  'Value Added': 'VA',
+  'Product Specific Rules': 'PS',
+  // PNM — product name
+  'Pet Name': 'PET',
+  'Scientific Name': 'SCI',
+  'Common Name': 'COM',
+  'Trade or Commercial Name': 'CON',
+  'Name of the model': 'MOD',
   'Name as per the IUPAC Nomenclature': 'IUP',
+  'Name as contained in a Pharmacopeia': 'PHA',
+  'International Non-proprietary Name': 'INN',
+  'Plant Commodity Name': 'PCN',
+  'Name of the Livestock product': 'LSP',
+  'SIMS Unique Reference Number': 'SIU',
+  // Printed on Logi-Sys checklists but absent from Annexure A, so their
+  // three-letter codes are unknown and a row carrying one is dropped with a
+  // warning rather than guessed at. `ex_job2`, `ex_job3` and `ex_job24` all
+  // file "Retail Pre-pack Food Article" (info code RFAN); `ex_job3` files
+  // "Re-Import Reason". See docs/boe-mapping/open-questions.md#sw-fssai-codes.
+  //   'Retail Pre-pack Food Article': '???',
+  //   'Re-Import Reason': '???',
 };
 
 function swLookup(table: Record<string, string>, label: string | undefined): string | undefined {
@@ -710,4 +1005,359 @@ export function swInfoTypeCode(label: string | undefined): string | undefined {
 
 export function swQualifierCode(label: string | undefined): string | undefined {
   return swLookup(SW_QUALIFIER_CODE, label);
+}
+
+/* ------------------------------------------------------------------ *
+ * ITEMS — the per-item code columns
+ * ------------------------------------------------------------------ *
+ *
+ * Read off Logi-Sys' own product screens (`logi-sys-screenshots/`
+ * 15.04.07–15.07.00: General, Cust. Duty, GST, Oth. Duties, FTA Info) and
+ * checked against the ICES BE message (`BE Message format 2.25`, Part 6 ITEMS
+ * and Part 14 SBEDUTY) and JNCH Public Notice 80/2017. Contract:
+ * docs/boe-mapping/06-items.md.
+ */
+
+/**
+ * `Exim_Code` — the "Exim Scheme" dropdown (ICES Part 6 field 14, "Item
+ * category (Scheme Code)"), and the same domain as `LICENSE` field 15
+ * ("License Code").
+ *
+ * The full directory, from the Scheme Code table in
+ * `data/customs-corpus/icegate-specs/ICES 1 5 Customs - DGFT Message Formats
+ * Version 1 9 (21 07 08).pdf` — the list Customs and DGFT exchange, which is
+ * where the Logi-Sys dropdown gets its entries. The dropdown was photographed
+ * scrolled, which is why `10`, `16` and `19` were missing and the list appeared
+ * to stop at `20`; the wording for `01`–`20` is kept as the screenshot shows it
+ * because that is what the vendor's own UI says.
+ *
+ * Blank — no scheme — is the normal import and what most goldens file. An
+ * unknown code is refused rather than passed through: ICES rejects a wrong one
+ * outright (error 329 "Wrong Licence Code", 406 "Wrong Licence Code in LIC
+ * Details"), and a scheme code that does not match the licence is error 426.
+ *
+ * `48` and `49` are reconstructed: the source PDF wraps "DRAWBACK" across two
+ * lines there and prints `49` twice.
+ */
+export const EXIM_SCHEME: Record<string, string> = {
+  '00': 'Free shipping bill involving remittance of foreign exchange',
+  '01': 'Advance Licence with actual user condition',
+  '02': 'Advance licence for intermediate supplies',
+  '03': 'Advance licence',
+  '04': 'Advance Release order',
+  '05': 'Advance Licence for deemed exports',
+  '06': 'DEPB-post exports',
+  '07': 'DEPB-pre exports',
+  '08': 'Replenishment licence',
+  '09': 'Diamond imprest licence',
+  '10': 'Bulk licence',
+  '11': 'Concessional duty EPCG scheme',
+  '12': 'Zero duty EPCG scheme',
+  '13': 'CCP',
+  '14': 'Import licence for restricted items of imports',
+  '15': 'Special Import licence',
+  '16': 'Export licence',
+  '17': 'Advance Licence for annual requirement',
+  '18': 'Duty Free Replenishment Certificate',
+  '19': 'Drawback',
+  '20': 'Jobbing (JBG)',
+  '21': 'EOU/EPZ/SEZ/EHTP/STP',
+  '22': 'Duty Free Credit Entitlement Certificate',
+  '23': 'Target Plus Scheme',
+  '24': 'Vishesh Krishi Upaj Yojana (VKUY)',
+  '25': 'DFCE for status holder',
+  '26': 'DFIA',
+  '27': 'Focus Market',
+  '28': 'Focus Product',
+  '29': 'High Tech Product EPS',
+  '41': 'Drawback and Advance Licence',
+  '42': 'Drawback and DFRC',
+  '43': 'Drawback and zero duty EPCG',
+  '44': 'Drawback and concessional duty EPCG',
+  '45': 'Drawback and pre-export DEPB',
+  '46': 'Drawback and post-export DEPB',
+  '47': 'Drawback and JBG',
+  '48': 'Drawback and Diamond Imprest Licence',
+  '49': 'Drawback and EOU/EPZ/SEZ',
+  '50': 'EPCG and Advance Licence',
+  '51': 'EPCG and DFRC',
+  '52': 'EPCG and JBG',
+  '53': 'EPCG and Diamond Imprest Licence',
+  '54': 'EPCG and Replenishment Licence',
+  '55': 'EPCG and DEPB (post exports)',
+  '56': 'EPCG and DEPB (pre-exports)',
+  '59': 'EPCG and DFIA',
+  '71': 'EPCG, drawback and DEEC',
+  '72': 'EPCG, drawback and DFRC',
+  '73': 'EPCG, drawback and jobbing',
+  '74': 'EPCG, drawback and Diamond Imprest Licence',
+  '75': 'EPCG, drawback and DEPB post export',
+  '76': 'EPCG, drawback and DEPB (pre-export)',
+  '79': 'EPCG, DFIA and DBK',
+  '99': 'NFEI (no foreign exchange involved)',
+};
+
+/**
+ * Scheme codes Logi-Sys writes that are not in the ICES directory.
+ *
+ * Duty-credit scrips issued after the directory was published have no ICES
+ * scheme code of their own, and Logi-Sys files a letter code instead. Each
+ * entry names the vendor export that proves it, because nothing else does —
+ * these are not in any published list and must not be invented.
+ */
+export const VENDOR_EXIM_SCHEME: Record<string, string> = {
+  // ex_job27, job I-14222: the Logi-Sys checklist prints `EximCode:32` beside
+  // `EXIM Notn (TQ) 022/2022 III2`, against DGFT Tariff Rate Quota
+  // authorisation 0111032798 (`ex_job27/14222 TRQ LIC.pdf`). TRQ postdates the
+  // 2008 ICES directory, which is why it is in neither that nor the dropdown.
+  '32': 'Tariff Rate Quota',
+  // ex_job20/JobData_I-14225_26-27_20260907_162112.xlsx: two RoDTEP scrips
+  // debited on one line, with `Exim_Code RD` and `Exim_Notn RODTEP`. The only
+  // non-numeric scheme code seen, and the reason `eximSchemeCode` cannot be
+  // digits-only.
+  RD: 'RoDTEP scrip',
+};
+
+/**
+ * `Exim_Code` for a stated scheme: a code as-is, or a name matched exactly.
+ *
+ * A non-numeric code resolves only through `VENDOR_EXIM_SCHEME`, so an
+ * unrecognised one still refuses rather than reaching the Bill of Entry.
+ */
+export function eximSchemeCode(value: string | undefined | null): string | undefined {
+  const raw = value?.trim();
+  if (!raw) return undefined;
+  const code = raw.match(/^(\d{1,2})\b/)?.[1]?.padStart(2, '0');
+  if (code && (EXIM_SCHEME[code] || VENDOR_EXIM_SCHEME[code])) return code;
+  const upper = raw.toUpperCase();
+  if (VENDOR_EXIM_SCHEME[upper]) return upper;
+  const byName = Object.entries(EXIM_SCHEME).find(([, name]) => name.toUpperCase() === upper);
+  if (byName) return byName[0];
+  return Object.entries(VENDOR_EXIM_SCHEME).find(([, name]) => name.toUpperCase() === upper)?.[0];
+}
+
+/** The scheme's name, whether it is an ICES code or one only Logi-Sys writes. */
+export function eximSchemeName(code: string | undefined | null): string | undefined {
+  const raw = code?.trim();
+  if (!raw) return undefined;
+  return EXIM_SCHEME[raw] ?? VENDOR_EXIM_SCHEME[raw.toUpperCase()];
+}
+
+/**
+ * `*_NotnFlag` — the Plus/Minus/Higher/Lower dropdown beside every duty line
+ * on the Cust. Duty, GST and Oth. Duties screens.
+ *
+ * A notification rate can have an ad valorem part (`%`) and a specific part
+ * (amount per unit). The flag says how the two combine: `+` adds them, `-`
+ * subtracts the specific from the ad valorem, `H` takes the higher and `L` the
+ * lower. With no specific part every flag gives the same duty, which is why
+ * the screen defaults to Plus and liv_job1's export writes `+` on every levy
+ * line. Other Duties (Section 3(3)) defaults to Higher.
+ */
+export const NOTN_FLAG = {
+  PLUS: '+',
+  MINUS: '-',
+  HIGHER: 'H',
+  LOWER: 'L',
+} as const;
+export type NotnFlag = (typeof NOTN_FLAG)[keyof typeof NOTN_FLAG];
+export const NOTN_FLAGS: readonly NotnFlag[] = Object.values(NOTN_FLAG);
+
+export function notnFlag(value: string | undefined | null): NotnFlag | undefined {
+  const raw = value?.trim().toUpperCase();
+  if (!raw) return undefined;
+  const words: Record<string, NotnFlag> = { PLUS: '+', MINUS: '-', HIGHER: 'H', LOWER: 'L' };
+  if (words[raw]) return words[raw];
+  return (NOTN_FLAGS as readonly string[]).includes(raw) ? (raw as NotnFlag) : undefined;
+}
+
+/**
+ * Duty on one line under a notification with an ad valorem and a specific part.
+ * `specific` is already converted to rupees for the whole quantity.
+ */
+export function combineNotnRate(flag: NotnFlag, adValorem: number, specific: number): number {
+  switch (flag) {
+    case '+':
+      return adValorem + specific;
+    case '-':
+      return Math.max(0, adValorem - specific);
+    case 'H':
+      return Math.max(adValorem, specific);
+    case 'L':
+      return Math.min(adValorem, specific);
+  }
+}
+
+/**
+ * `IGST_ExemptionNotnType` / `IGST_CompCessExemptionNotnType` — the
+ * "Customs Notn." / "GST Notn." dropdown on the GST screen.
+ *
+ * ICES SBEDUTY "Customs Notn exempting IGST flag (G/C)". JNCH PN 80/2017 §4:
+ * "Exmp. Notfn. Type — G by Default; C – customs Notfn." An IGST exemption is
+ * granted either under section 6 of the IGST Act (a GST notification, `G`) or
+ * by a Customs notification such as 45/2025's IGST column (`C`).
+ */
+export const EXEMPTION_NOTN_TYPE = {
+  CUSTOMS: 'C',
+  GST: 'G',
+} as const;
+export type ExemptionNotnType = (typeof EXEMPTION_NOTN_TYPE)[keyof typeof EXEMPTION_NOTN_TYPE];
+
+/**
+ * The type a notification number implies, from its own suffix: "-Customs" is
+ * `C`, "-Integrated Tax (Rate)" / "-Compensation Cess (Rate)" is `G`. Undefined
+ * when the number carries no suffix — the caller must know the source.
+ */
+export function exemptionNotnType(notification: string | undefined | null): ExemptionNotnType | undefined {
+  const raw = notification?.toUpperCase() ?? '';
+  if (/CUS/.test(raw)) return 'C';
+  if (/INTEGRATED|COMPENSATION|IGST|CESS|\bIT\b|RATE/.test(raw)) return 'G';
+  return undefined;
+}
+
+/**
+ * `Accessories_Status` — ICES Part 6 field 92 (mandatory).
+ *
+ * `0` nothing imported with the item; `1` accessories compulsorily supplied
+ * free with it (Accessories (Condition) Rules, 1963 rule 2) — then
+ * `Accessories_Details` must describe them; `2` accessories imported but
+ * declared as separate items.
+ */
+export const ACCESSORY_STATUS = {
+  NONE: '0',
+  SUPPLIED_WITH_ITEM: '1',
+  DECLARED_SEPARATELY: '2',
+} as const;
+
+/**
+ * `ADD_Basis` — the anti-dumping "Calc. Method" dropdown. The screen default
+ * "%age of Assbl. Value" is what liv_job1 exports as `AV`. A specific duty
+ * (amount per unit) has no basis letter on the screen; it is carried by
+ * `ADD_AmountPerUnit` / `ADD_AmountUnit` instead.
+ */
+export const ADD_BASIS_ASSESSABLE = 'AV';
+
+/**
+ * `CVD_CalculatedOn` — the Customs CVD "Calc. Method" dropdown. The screen
+ * default "%age of Landed Value" is what liv_job1 exports as `1`.
+ */
+export const CVD_CALCULATED_ON_LANDED = '1';
+
+/**
+ * Logi-Sys' notification-number spelling: three-digit serial, slash, year —
+ * `011/2021`, `009/2025`, `069/2011`. Every golden writes it this way, and CBIC
+ * titles never do ("11/2021-Customs", "69/2011 - Customs").
+ */
+export function logisysNotn(value: string | undefined | null): string | undefined {
+  const m = value?.match(/(\d{1,3})\s*\/\s*(\d{4})/);
+  if (!m) return undefined;
+  return `${m[1]!.padStart(3, '0')}/${m[2]!}`;
+}
+
+/**
+ * An end-use code for what an importer's mail says the goods are for.
+ *
+ * Only the purposes a customer actually writes in plain words; anything else
+ * is left for the operator rather than rounded to trading. "For our factory"
+ * and "actual use" are manufacture — GNX200; "for sale", "trading" and
+ * "resale" are GNX100.
+ */
+export function endUseCodeFromText(text: string | null | undefined): string | undefined {
+  const t = (text ?? '').toUpperCase();
+  if (!t.trim()) return undefined;
+  const direct = t.match(/\b([A-Z]{3}\d{3})\b/)?.[1];
+  if (direct) return direct;
+  if (/\bR\s*&\s*D\b|RESEARCH|DEVELOPMENT/.test(t)) return /MEDICAL|BIOMEDICAL|CLINICAL/.test(t) ? 'GNX815' : 'GNX810';
+  if (/REPAIR|REFURBISH/.test(t)) return 'GNX600';
+  if (/RECYCL|RECOVERY/.test(t)) return 'GNX650';
+  if (/EXHIBITION|DISPLAY/.test(t)) return 'GNX700';
+  if (/ACTUAL\s+USE|MANUFACTUR|PROCESSING|CAPTIVE|OWN\s+USE|FACTORY|PRODUCTION|ASSEMBL/.test(t)) return 'GNX200';
+  if (/TRADING|RESALE|RE-SALE|FOR\s+SALE|WHOLESALE|RETAIL|DISTRIBUTION/.test(t)) return 'GNX100';
+  return undefined;
+}
+
+/* ------------------------------------------------------------------ *
+ * Bonds and certificates
+ * ------------------------------------------------------------------ */
+
+/**
+ * The 25 ICES bond codes, from `<TABLE>BOND` field 8.
+ *
+ * Source: `BE Message format 2.25 (16Feb2026).pdf` p.31 — a published list, so
+ * this table is settled rather than CONFIRM. `BONDS_CERTIFICATES.Bond_Cert_Type`
+ * takes one of these on a `B` row; ICES error 501 is anything else.
+ *
+ * `EB` is deliberately absent. An eBond declares its **purpose code** in this
+ * column instead (`EBOND_PURPOSE_CODES`), which ICES 553 says in as many
+ * words: "Invalid Bond code EB, instead use purpose code".
+ */
+export const BOND_CODES: Record<string, string> = {
+  PD: 'Provisional Duty Bond',
+  EU: 'End Use Bond',
+  RE: 'Re-Export Bond',
+  TB: 'Test Bond',
+  LG: 'Letter of Guarantee',
+  UT: 'Undertaking',
+  TP: 'Transshipment Bond',
+  IT: 'ITC Bond',
+  WH: 'Warehouse Bond',
+  EC: 'EPCG Bond',
+  EZ: 'EPZ Bond',
+  DE: 'DEEC Bond',
+  PJ: 'Project Bond',
+  CD: 'Cash Deposit',
+  EO: 'EOU Bond',
+  JB: 'Jobbing',
+  PI: 'Project Import Bond',
+  NB: 'Common Bond for EP Schemes',
+  EI: 'IGCR Bond',
+  SZ: 'SEZ Bond',
+  PG: 'Provisional Duty Bond Global for SEZ',
+};
+
+/**
+ * The eBond purpose codes, which stand in for a bond code when the security is
+ * an eBond. Spec p.31, the same table as above.
+ *
+ * They carry no published expansions — the spec prints the grid and nothing
+ * else — so this is a set, not a lookup.
+ */
+export const EBOND_PURPOSE_CODES: readonly string[] = [
+  'D1', 'D2',
+  'E1', 'E2', 'E3', 'E4', 'EZ',
+  'M1', 'MZ',
+  'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'PA', 'PB', 'PZ',
+  'R1', 'R2', 'RZ',
+  'S1', 'SW',
+  'W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'WA', 'WZ',
+];
+
+/** Whether a value may appear in `Bond_Cert_Type` on a `B` row. */
+export function isBondCode(value: string | null | undefined): boolean {
+  if (!value) return false;
+  const v = value.trim().toUpperCase();
+  return v in BOND_CODES || EBOND_PURPOSE_CODES.includes(v);
+}
+
+/**
+ * Certificate types, from `<TABLE>CERT` field 9. `C(2)`.
+ *
+ * **CONFIRM.** Unlike the bond codes there is no published list: the spec names
+ * exactly one value, `EI` for IGCR, and scopes the table to "BEs having EOU and
+ * job items only" where a Central Excise certificate stands in for a bond.
+ *
+ * `MS` is here because `ex_job31` filed four of them — the DGCA import NOCs for
+ * I-20271, numbered NOC/2026/000004873..876. Nothing says what it expands to;
+ * "Miscellaneous" is a guess and is recorded as one. It is accepted when an
+ * operator chooses it and is never proposed.
+ * See docs/boe-mapping/open-questions.md#cert-type-ms.
+ */
+export const CERTIFICATE_TYPES: Record<string, string> = {
+  EI: 'IGCR — the IIN issued against Form IGCR-1',
+  MS: 'Observed on ex_job31 against a DGCA import NOC; expansion unknown',
+};
+
+/** Whether a value may appear in `Bond_Cert_Type` on a `C` row. */
+export function isCertificateType(value: string | null | undefined): boolean {
+  return !!value && value.trim().toUpperCase() in CERTIFICATE_TYPES;
 }

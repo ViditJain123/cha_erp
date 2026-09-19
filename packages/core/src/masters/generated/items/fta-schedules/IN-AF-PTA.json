@@ -1,0 +1,478 @@
+[
+ {
+  "serial": "1",
+  "include": [
+   "0802"
+  ],
+  "exclude": [],
+  "description": "Almond thin shelled, almond hard shelled, almond shelled",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0802",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "080231"
+  ],
+  "exclude": [],
+  "description": "Walnuts unshelled",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0802 31 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "080232"
+  ],
+  "exclude": [],
+  "description": "Walnuts shelled",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0802 32 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "080252",
+   "08085100"
+  ],
+  "exclude": [],
+  "description": "Pistachios closed shell, pistachios open shell, pistachios shelled (kernel)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0808 51 00 and 0802 52 00",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "121/2011 (2011-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "5",
+  "include": [
+   "080420"
+  ],
+  "exclude": [],
+  "description": "Fig dried",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0804 20",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "080610"
+  ],
+  "exclude": [],
+  "description": "Grapes fresh, all types",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "806 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "7",
+  "include": [
+   "080620"
+  ],
+  "exclude": [],
+  "description": "Green raisins, green large, black raisins, red raisins, raisins golden, green raisins except large",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0806 20",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "8",
+  "include": [
+   "080719"
+  ],
+  "exclude": [],
+  "description": "Melon fresh",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0807 19",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "36/2019-Cus (2019-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "9",
+  "include": [
+   "080810"
+  ],
+  "exclude": [],
+  "description": "Apples fresh",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0808 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "080910"
+  ],
+  "exclude": [],
+  "description": "Apricots fresh",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0809 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "08109010"
+  ],
+  "exclude": [],
+  "description": "Pomegranates",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0810 90 10",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "12",
+  "include": [
+   "081310"
+  ],
+  "exclude": [],
+  "description": "Dried apricots, dried apricots nuts",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0813 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "13",
+  "include": [
+   "081310"
+  ],
+  "exclude": [],
+  "description": "Apricots nuts, bitter unshelled; apricots bitter shelled",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0813 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "14",
+  "include": [
+   "081340"
+  ],
+  "exclude": [],
+  "description": "Plums dried, cherries sour dried",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0813 40",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "15",
+  "include": [
+   "081340"
+  ],
+  "exclude": [],
+  "description": "Mulberries dried, pine nuts toasted",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0813 40",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "16",
+  "include": [
+   "09096111",
+   "09096119",
+   "09096210"
+  ],
+  "exclude": [],
+  "description": "Anise seeds",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0909 61 11, 0909 61 19 and 0909 62 10",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "121/2011 (2011-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "17",
+  "include": [
+   "09096131",
+   "09096139",
+   "09096230"
+  ],
+  "exclude": [],
+  "description": "Caraway seeds, white, black, kajak",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "0909 61 31, 0909 61 39 and 0909 62 30",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "121/2011 (2011-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "18",
+  "include": [
+   "1204"
+  ],
+  "exclude": [],
+  "description": "Linseeds",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1204 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "19",
+  "include": [
+   "120740"
+  ],
+  "exclude": [],
+  "description": "Sesame seeds",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1207 40",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "20",
+  "include": [
+   "121190"
+  ],
+  "exclude": [],
+  "description": "Liquorice roots",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1211 90",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "130/2006 (2006-12-30) (column 2)"
+  ],
+  "unappliedAmendments": [
+   "67/2016-Cus (2016-12-31)"
+  ]
+ },
+ {
+  "serial": "21",
+  "include": [
+   "121410"
+  ],
+  "exclude": [],
+  "description": "Alfalfa seeds",
+  "rateText": "50%",
+  "rate": 50.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1214 10 00",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "22",
+  "include": [
+   "13019013"
+  ],
+  "exclude": [],
+  "description": "Asafoetida",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1301 90 13",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "23",
+  "include": [
+   "710310"
+  ],
+  "exclude": [],
+  "description": "Lapis lazuli, ruby, emerald (unworked)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "7103 10",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ },
+ {
+  "serial": "24",
+  "include": [
+   "710391"
+  ],
+  "exclude": [],
+  "description": "Emeralds, ruby (otherwise worked)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "7103 91",
+  "allGoods": false,
+  "source": "76/2003-Customs",
+  "amendedBy": [
+   "36/2019-Cus (2019-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "25",
+  "include": [
+   "710399"
+  ],
+  "exclude": [],
+  "description": "Lapis lazuli (otherwise worked)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2003-05-13",
+  "validUntil": null,
+  "page": 1,
+  "notification": "076/2003",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "7103 99",
+  "allGoods": false,
+  "source": "76/2003-Customs"
+ }
+]

@@ -1,0 +1,4217 @@
+{
+ "asOf": "2026-09-13",
+ "generatedBy": "packages/core/scripts/build-fta-schedules.py",
+ "notifications": [
+  {
+   "key": "IN-JP-CEPA",
+   "notification": "069/2011",
+   "base": "20/2021-Customs",
+   "baseFile": "Tariff__20_2021-Cus__1000036.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 494",
+      "omit 496",
+      "omit 497",
+      "omit 671",
+      "omit 686",
+      "omit 687",
+      "omit 757",
+      "omit 768",
+      "omit 769",
+      "insert 29A",
+      "insert 158A",
+      "insert 563A",
+      "insert 639A, 639B",
+      "insert 742A",
+      "insert 758A",
+      "S.No. 96 col 2",
+      "S.No. 244 col 2",
+      "S.No. 271 col 2",
+      "S.No. 272 col 2",
+      "S.No. 294 col 2",
+      "S.No. 300 col 2",
+      "S.No. 392 col 2",
+      "S.No. 456 col 2",
+      "S.No. 487 col 2",
+      "S.No. 495 col 2",
+      "S.No. 502 col 2",
+      "S.No. 503 col 2",
+      "S.No. 511 col 2",
+      "S.No. 513 col 2",
+      "S.No. 551 col 2",
+      "S.No. 553 col 2",
+      "S.No. 685 col 2",
+      "S.No. 737 col 2",
+      "S.No. 738 col 2",
+      "S.No. 742 col 2",
+      "S.No. 758 col 2",
+      "S.No. 767 col 2",
+      "S.No. 770 col 2",
+      "S.No. 782 col 2",
+      "S.No. 796 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "insert 28A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2022-Customs",
+     "date": "2022-11-25",
+     "effective": "2022-11-25",
+     "file": "Tariff__61_2022-Customs__1009558.pdf",
+     "applied": [
+      "insert 680A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 532 col 2",
+      "S.No. 557 col 2",
+      "S.No. 680A col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "S.No. 180 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 76 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 703 col 2",
+      "S.No. 706 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "-:494",
+    "-:496",
+    "-:497",
+    "-:671",
+    "-:686",
+    "-:687",
+    "-:757",
+    "-:768",
+    "-:769"
+   ],
+   "unreadSpecs": [
+    "-:157 '24031010 to 24031020' unread ['24031010 to 24031020']"
+   ],
+   "unreadRates": [],
+   "baseRows": 812,
+   "rows": 812,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-JP-CEPA",
+     "lines": 812
+    }
+   ]
+  },
+  {
+   "key": "IN-KR-CEPA",
+   "notification": "152/2009",
+   "base": "66/2016-Customs",
+   "baseFile": "Tariff__66_2016-Cus__1002590.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "95/2017-Cus",
+     "date": "2017-12-22",
+     "effective": "2018-01-01",
+     "file": "Tariff__95_2017-Cus__1002493.pdf",
+     "applied": [
+      "S.No. 11 col 4",
+      "S.No. 12 col 4",
+      "S.No. 26 col 4",
+      "S.No. 29 col 4",
+      "S.No. 31 col 4",
+      "S.No. 32 col 4",
+      "S.No. 33 col 4",
+      "S.No. 34 col 4",
+      "S.No. 36 col 4",
+      "S.No. 37 col 4",
+      "S.No. 38 col 4",
+      "S.No. 39 col 4",
+      "S.No. 40 col 4",
+      "S.No. 42 col 4",
+      "S.No. 43 col 4",
+      "S.No. 45 col 4",
+      "S.No. 46 col 4",
+      "S.No. 47 col 4",
+      "S.No. 48 col 4",
+      "S.No. 49 col 4",
+      "S.No. 50 col 4",
+      "S.No. 52 col 4",
+      "S.No. 53 col 4",
+      "S.No. 55 col 4",
+      "S.No. 57 col 4",
+      "S.No. 58 col 4",
+      "S.No. 59B col 4",
+      "S.No. 60 col 4",
+      "S.No. 62 col 4",
+      "S.No. 65 col 4",
+      "S.No. 70 col 4",
+      "S.No. 71 col 4",
+      "S.No. 84 col 4",
+      "S.No. 87 col 4",
+      "S.No. 92 col 4",
+      "S.No. 99 col 4",
+      "S.No. 101 col 4",
+      "S.No. 104 col 4",
+      "S.No. 110 col 4",
+      "S.No. 111 col 4",
+      "S.No. 113 col 4",
+      "S.No. 27 col 4",
+      "S.No. 28 col 4",
+      "S.No. 56 col 4",
+      "S.No. 137 col 4",
+      "S.No. 143 col 4",
+      "S.No. 179 col 4",
+      "S.No. 181 col 4",
+      "S.No. 30 col 4",
+      "S.No. 35 col 4",
+      "S.No. 112 col 4",
+      "S.No. 16 col 4",
+      "S.No. 41 col 4",
+      "S.No. 891 col 4",
+      "S.No. 898 col 4",
+      "S.No. 44 col 4",
+      "S.No. 54 col 4",
+      "S.No. 73 col 4",
+      "S.No. 74 col 4",
+      "S.No. 83 col 4",
+      "S.No. 141 col 4",
+      "S.No. 149 col 4",
+      "S.No. 172 col 4",
+      "S.No. 232 col 4",
+      "S.No. 154 col 4",
+      "S.No. 159 col 4",
+      "S.No. 184 col 4",
+      "S.No. 187 col 4",
+      "S.No. 189 col 4",
+      "S.No. 191 col 4",
+      "S.No. 193 col 4",
+      "S.No. 195 col 4",
+      "S.No. 197 col 4",
+      "S.No. 199 col 4",
+      "S.No. 202 col 4",
+      "S.No. 204 col 4",
+      "S.No. 206 col 4",
+      "S.No. 208 col 4",
+      "S.No. 210 col 4",
+      "S.No. 214 col 4",
+      "S.No. 217 col 4",
+      "S.No. 218 col 4",
+      "S.No. 222 col 4",
+      "S.No. 224 col 4",
+      "S.No. 227 col 4",
+      "S.No. 229 col 4",
+      "S.No. 231 col 4",
+      "S.No. 236 col 4",
+      "S.No. 240 col 4",
+      "S.No. 248 col 4",
+      "S.No. 265 col 4",
+      "S.No. 267 col 4",
+      "S.No. 269 col 4",
+      "S.No. 277 col 4",
+      "S.No. 283 col 4",
+      "S.No. 287 col 4",
+      "S.No. 296 col 4",
+      "S.No. 302 col 4",
+      "S.No. 306 col 4",
+      "S.No. 331 col 4",
+      "S.No. 333 col 4",
+      "S.No. 337 col 4",
+      "S.No. 350 col 4",
+      "S.No. 426 col 4",
+      "S.No. 431 col 4",
+      "S.No. 441 col 4",
+      "S.No. 444 col 4",
+      "S.No. 445 col 4",
+      "S.No. 451 col 4",
+      "S.No. 464 col 4",
+      "S.No. 469 col 4",
+      "S.No. 470 col 4",
+      "S.No. 473 col 4",
+      "S.No. 493 col 4",
+      "S.No. 504 col 4",
+      "S.No. 578 col 4",
+      "S.No. 585 col 4",
+      "S.No. 587 col 4",
+      "S.No. 648 col 4",
+      "S.No. 653 col 4",
+      "S.No. 661 col 4",
+      "S.No. 665 col 4",
+      "S.No. 788 col 4",
+      "S.No. 826 col 4",
+      "S.No. 843 col 4",
+      "S.No. 857 col 4",
+      "S.No. 862 col 4",
+      "S.No. 894 col 4",
+      "S.No. 895 col 4",
+      "S.No. 962 col 4",
+      "S.No. 964 col 4",
+      "S.No. 280 col 4",
+      "S.No. 293 col 4",
+      "S.No. 314 col 4",
+      "S.No. 508 col 4",
+      "S.No. 511 col 4"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "83/2018-Cus",
+     "date": "2018-12-31",
+     "effective": "2019-01-01",
+     "file": "Tariff__83_2018-Cus__1000285.pdf",
+     "applied": [
+      "S.No. 11 col 4",
+      "S.No. 12 col 4",
+      "S.No. 26 col 4",
+      "S.No. 29 col 4",
+      "S.No. 31 col 4",
+      "S.No. 32 col 4",
+      "S.No. 33 col 4",
+      "S.No. 34 col 4",
+      "S.No. 36 col 4",
+      "S.No. 37 col 4",
+      "S.No. 38 col 4",
+      "S.No. 39 col 4",
+      "S.No. 40 col 4",
+      "S.No. 42 col 4",
+      "S.No. 43 col 4",
+      "S.No. 45 col 4",
+      "S.No. 46 col 4",
+      "S.No. 47 col 4",
+      "S.No. 48 col 4",
+      "S.No. 49 col 4",
+      "S.No. 50 col 4",
+      "S.No. 52 col 4",
+      "S.No. 53 col 4",
+      "S.No. 55 col 4",
+      "S.No. 57 col 4",
+      "S.No. 58 col 4",
+      "S.No. 59B col 4",
+      "S.No. 60 col 4",
+      "S.No. 62 col 4",
+      "S.No. 65 col 4",
+      "S.No. 70 col 4",
+      "S.No. 71 col 4",
+      "S.No. 84 col 4",
+      "S.No. 87 col 4",
+      "S.No. 92 col 4",
+      "S.No. 99 col 4",
+      "S.No. 101 col 4",
+      "S.No. 104 col 4",
+      "S.No. 110 col 4",
+      "S.No. 111 col 4",
+      "S.No. 113 col 4",
+      "S.No. 27 col 4",
+      "S.No. 28 col 4",
+      "S.No. 56 col 4",
+      "S.No. 137 col 4",
+      "S.No. 143 col 4",
+      "S.No. 179 col 4",
+      "S.No. 181 col 4",
+      "S.No. 30 col 4",
+      "S.No. 35 col 4",
+      "S.No. 112 col 4",
+      "S.No. 16 col 4",
+      "S.No. 41 col 4",
+      "S.No. 891 col 4",
+      "S.No. 898 col 4",
+      "S.No. 44 col 4",
+      "S.No. 54 col 4",
+      "S.No. 73 col 4",
+      "S.No. 74 col 4",
+      "S.No. 83 col 4",
+      "S.No. 141 col 4",
+      "S.No. 149 col 4",
+      "S.No. 172 col 4",
+      "S.No. 232 col 4",
+      "S.No. 154 col 4",
+      "S.No. 159 col 4",
+      "S.No. 184 col 4",
+      "S.No. 187 col 4",
+      "S.No. 189 col 4",
+      "S.No. 191 col 4",
+      "S.No. 193 col 4",
+      "S.No. 195 col 4",
+      "S.No. 197 col 4",
+      "S.No. 199 col 4",
+      "S.No. 202 col 4",
+      "S.No. 204 col 4",
+      "S.No. 206 col 4",
+      "S.No. 208 col 4",
+      "S.No. 210 col 4",
+      "S.No. 214 col 4",
+      "S.No. 217 col 4",
+      "S.No. 218 col 4",
+      "S.No. 222 col 4",
+      "S.No. 224 col 4",
+      "S.No. 227 col 4",
+      "S.No. 229 col 4",
+      "S.No. 231 col 4",
+      "S.No. 236 col 4",
+      "S.No. 240 col 4",
+      "S.No. 248 col 4",
+      "S.No. 265 col 4",
+      "S.No. 267 col 4",
+      "S.No. 269 col 4",
+      "S.No. 277 col 4",
+      "S.No. 283 col 4",
+      "S.No. 287 col 4",
+      "S.No. 296 col 4",
+      "S.No. 302 col 4",
+      "S.No. 306 col 4",
+      "S.No. 331 col 4",
+      "S.No. 333 col 4",
+      "S.No. 337 col 4",
+      "S.No. 350 col 4",
+      "S.No. 426 col 4",
+      "S.No. 431 col 4",
+      "S.No. 441 col 4",
+      "S.No. 444 col 4",
+      "S.No. 445 col 4",
+      "S.No. 451 col 4",
+      "S.No. 464 col 4",
+      "S.No. 469 col 4",
+      "S.No. 470 col 4",
+      "S.No. 473 col 4",
+      "S.No. 493 col 4",
+      "S.No. 504 col 4",
+      "S.No. 578 col 4",
+      "S.No. 585 col 4",
+      "S.No. 587 col 4",
+      "S.No. 648 col 4",
+      "S.No. 653 col 4",
+      "S.No. 661 col 4",
+      "S.No. 665 col 4",
+      "S.No. 788 col 4",
+      "S.No. 826 col 4",
+      "S.No. 843 col 4",
+      "S.No. 857 col 4",
+      "S.No. 862 col 4",
+      "S.No. 894 col 4",
+      "S.No. 895 col 4",
+      "S.No. 962 col 4",
+      "S.No. 964 col 4",
+      "S.No. 280 col 4",
+      "S.No. 293 col 4",
+      "S.No. 314 col 4",
+      "S.No. 508 col 4",
+      "S.No. 511 col 4"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "07/2019-Cus",
+     "date": "2019-03-15",
+     "effective": "2019-03-15",
+     "file": "Tariff__07_2019-Cus__1000275.pdf",
+     "applied": [
+      "S.No. 384 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "replace 522"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "29/2020-Cus",
+     "date": "2020-07-06",
+     "effective": "2020-07-06",
+     "file": "Tariff__29_2020-Cus__1000211.pdf",
+     "applied": [
+      "insert 230A, 230B",
+      "replace 230"
+     ],
+     "unapplied": [
+      "not applied: after the Table, the following shall be inserted, namely- \"Provided that, to give effect to the provisional bilateral safeguard measure, as recommended by the Director General of Trade Remedies,- (a) nothing contained in serial number 230A and entries relating"
+     ]
+    },
+    {
+     "notification": "31/2020-Cus",
+     "date": "2020-07-13",
+     "effective": "2020-07-13",
+     "file": "Tariff__31_2020-Cus__1000209.pdf",
+     "applied": [
+      "insert 342A"
+     ],
+     "unapplied": [
+      "not applied: After the first proviso, the following proviso shall be inserted, namely- \"Provided further that, to give effect to the provisional bilateral safeguard measure, as recommended by the Director General of Trade Remedies, - (a) nothing contained in serial number "
+     ]
+    },
+    {
+     "notification": "37/2020-Cus",
+     "date": "2020-10-20",
+     "effective": "2020-10-20",
+     "file": "Tariff__37_2020-Cus__1000203.pdf",
+     "applied": [
+      "insert 342B",
+      "S.No. 342A col 3"
+     ],
+     "unapplied": [
+      "not applied: In the second proviso, in clause (b), for the word, figures and letter \"number 342A\", the word, figures and letter \"numbers 342A and 342B\", shall be substituted. "
+     ]
+    },
+    {
+     "notification": "44/2020-Cus",
+     "date": "2020-12-18",
+     "effective": "2020-12-18",
+     "file": "Tariff__44_2020-Cus__1000196.pdf",
+     "applied": [
+      "insert 230C"
+     ],
+     "unapplied": [
+      "not applied: For the first proviso, the following proviso shall be substituted, namely:- \"Provided that, to give effect to the bilateral safeguard measure, as recommended by the Director General of Trade Remedies, - (a) nothing contained in serial number 230A and entries r"
+     ]
+    },
+    {
+     "notification": "01/2021-Cus",
+     "date": "2021-01-28",
+     "effective": "2021-01-28",
+     "file": "Tariff__01_2021-Cus__1000194.pdf",
+     "applied": [
+      "insert 342C",
+      "S.No. 342B col 3"
+     ],
+     "unapplied": [
+      "not applied: after the first proviso below the Table, namely: - \"Provided further that, to give effect to the bilateral safeguard measure, as recommended by the Director General of Trade Remedies, - (i) nothing contained in serial number 342 and entries relating thereto in"
+     ]
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 624",
+      "omit 747",
+      "omit 904",
+      "omit 905",
+      "insert 181A",
+      "insert 317A",
+      "insert 663A",
+      "insert 865A",
+      "insert 906A",
+      "replace 59A, 59B, 59C",
+      "S.No. 833 col 2,3",
+      "S.No. 73 col 2",
+      "S.No. 180 col 2",
+      "S.No. 181 col 2",
+      "S.No. 182 col 2",
+      "S.No. 247 col 2",
+      "S.No. 286 col 2",
+      "S.No. 287 col 2",
+      "S.No. 288 col 2",
+      "S.No. 602 col 2",
+      "S.No. 621 col 2",
+      "S.No. 663 col 2",
+      "S.No. 694 col 2",
+      "S.No. 744 col 2",
+      "S.No. 745 col 2",
+      "S.No. 746 col 2",
+      "S.No. 795 col 3",
+      "S.No. 865 col 2",
+      "S.No. 880 col 2",
+      "S.No. 881 col 2",
+      "S.No. 906 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 157 col 2",
+      "S.No. 158 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "58/2023-Customs",
+     "date": "2023-10-09",
+     "effective": "2023-10-10",
+     "file": "Tariff__58_2023-Customs__1009884.pdf",
+     "applied": [
+      "insert 529A, 529B, 529C"
+     ],
+     "unapplied": [
+      "not applied: after the second proviso below the Table, the following proviso shall be inserted, namely: - \"Provided also that, to give effect to the bilateral safeguard measure, as recommended by the Director General of Trade Remedies, - (i) nothing contained in serial num"
+     ]
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "S.No. 906A col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "08/2020-Cus",
+     "date": "2020-02-02",
+     "file": "Tariff__08_2020-Cus__1000232.pdf",
+     "snippet": "oms, dated the 15th January, 2008, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 33(E), dated the 15th January, 2008; (iii) Notification No. 152/2009-Customs, dated the 31st December, 2009, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 943(E), dated the 31st December, 2009; (iv) Notification No. 46/2011-Customs, dated the 1st June, 2011, published in the Gazette of India, Extraor"
+    },
+    {
+     "notification": "11/2021-Cus",
+     "date": "2021-02-01",
+     "file": "Tariff__11_2021-Cus__1000045.pdf",
+     "snippet": " 2005 vide number G.S.R.499(E), dated the 22nd July, 2005. 2. Notification No. 10/2008-Customs, dated the 15th January, 2008 vide number G.S.R.33(E), dated the 15th January, 2008. 3. Notification No. 152/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 943(E), dated the 31st December, 2009. 4. Notification No. 46/2011-Customs, dated the 1st June, 2011 vide number G.S.R.423(E), dated the 1st June, 2011. 5. Notification No. 53/2011-Customs, dated the 1st July, 2011 vide number G.S.R."
+    }
+   ],
+   "omittedSerials": [
+    "-:624",
+    "-:747",
+    "-:904",
+    "-:905"
+   ],
+   "unreadSpecs": [
+    "-:47 '090940 to 090950' unread ['090940 to 090950']"
+   ],
+   "unreadRates": [
+    "-:522 ''"
+   ],
+   "baseRows": 970,
+   "rows": 981,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-KR-CEPA",
+     "lines": 981
+    }
+   ]
+  },
+  {
+   "key": "IN-KR-CEPA",
+   "notification": "151/2009",
+   "base": "122/2011-Customs",
+   "baseFile": "Tariff__122_2011_-_Customs__1002888.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "replace 31",
+      "replace 73",
+      "S.No. 30 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "insert 93A",
+      "S.No. 63 col 2,3",
+      "S.No. 70 col 2,3",
+      "S.No. 57 col 2",
+      "S.No. 93 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2022-Customs",
+     "date": "2022-11-25",
+     "effective": "2022-11-25",
+     "file": "Tariff__61_2022-Customs__1009558.pdf",
+     "applied": [
+      "insert 68A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 68A col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "S.No. 93A col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "snippet": "tor (Customs) cm to 36 cm; or rectangular including square sheets with one side having dimension between 28 to 36 cm and other side 15 cm in the unfolded state\" shall be substituted. 18. Notification 151/2009- Customs, dated the 31st December, 2009 [G.S.R. 942(E), dated the 31st December, 2009 ] In the notification, in the Table- (i) against serial number 39, for the entry in column (2), the entries \"8456 11 and 8456 12\" shall be substituted; (ii) against serial number 44, for the entry in colum"
+    },
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "005 vide number G.S.R. 498(E), dated the 22nd July, 2005; vii. notification No. 75/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 500(E), dated the 22nd July, 2005; viii. notification No. 151/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 944(E), dated the 31st December, 2009; ix. notification No. 68/2012-Customs, dated the 31st December, 2012 vide number G.S.R. 953(E), dated the 31st December, 2012; x. notification No. 25/2021-Customs, dated the 31st March, 2021 vide"
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [
+    "-:40 '845691 to 845699' unread ['845691 to 845699']"
+   ],
+   "unreadRates": [],
+   "baseRows": 106,
+   "rows": 108,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-KR-CEPA",
+     "lines": 108
+    }
+   ]
+  },
+  {
+   "key": "AIFTA",
+   "notification": "046/2011",
+   "base": "41/2019-Customs",
+   "baseFile": "Tariff__41_2019-Cus__1000241.pdf",
+   "warnings": [
+    "41/2019-Customs table -: serials missing [443]"
+   ],
+   "amendments": [
+    {
+     "notification": "10/2020-Cus",
+     "date": "2020-02-02",
+     "effective": "2020-02-02",
+     "file": "Tariff__10_2020-Cus__1000230.pdf",
+     "applied": [
+      "S.No. 1404 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2020-Customs",
+     "date": "2020-12-30",
+     "effective": "2020-12-30",
+     "file": "Tariff__45_2020-Customs__1000195.pdf",
+     "applied": [
+      "S.No. 80 col 5",
+      "S.No. 81 col 5",
+      "S.No. 83 col 5",
+      "S.No. 124 col 5",
+      "S.No. 125 col 5"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "54/2021-Cus",
+     "date": "2021-12-24",
+     "effective": "2022-01-01",
+     "file": "Tariff__54_2021-Cus__1008951.pdf",
+     "applied": [
+      "S.No. 80 col 5",
+      "S.No. 81 col 5",
+      "S.No. 83 col 5",
+      "S.No. 124 col 5",
+      "S.No. 125 col 5"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 834",
+      "omit 835",
+      "omit 836",
+      "omit 1012",
+      "omit 1013",
+      "omit 1014",
+      "omit 1018",
+      "insert 39A",
+      "insert 1121A",
+      "insert 1296A, 1296B",
+      "insert 1460A",
+      "insert 1466A",
+      "insert 1497A",
+      "replace 1437A, 1437B",
+      "S.No. 101A col 2",
+      "S.No. 104 col 2",
+      "S.No. 122 col 2",
+      "S.No. 398 col 2",
+      "S.No. 399 col 2",
+      "S.No. 400 col 2",
+      "S.No. 449 col 2",
+      "S.No. 451 col 2",
+      "S.No. 467 col 2",
+      "S.No. 697 col 2",
+      "S.No. 755 col 2",
+      "S.No. 760 col 2",
+      "S.No. 830 col 2",
+      "S.No. 831 col 2",
+      "S.No. 832 col 2",
+      "S.No. 833 col 2",
+      "S.No. 989 col 2",
+      "S.No. 990 col 2",
+      "S.No. 1008 col 2",
+      "S.No. 1011 col 2",
+      "S.No. 1017 col 2",
+      "S.No. 1026 col 2",
+      "S.No. 1028 col 2",
+      "S.No. 1120 col 2",
+      "S.No. 1121 col 2",
+      "S.No. 1137 col 2",
+      "S.No. 1228 col 2",
+      "S.No. 1325 col 2",
+      "S.No. 1343 col 2",
+      "S.No. 1347 col 2",
+      "S.No. 1387 col 2",
+      "S.No. 1466 col 2",
+      "S.No. 1497 col 2",
+      "S.No. 1519 col 2",
+      "S.No. 1521 col 2",
+      "S.No. 1569 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 37 col 2",
+      "S.No. 225 col 2",
+      "S.No. 226 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2022-Customs",
+     "date": "2022-11-25",
+     "effective": "2022-11-25",
+     "file": "Tariff__61_2022-Customs__1009558.pdf",
+     "applied": [
+      "insert 1382A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "63/2022-Customs",
+     "date": "2022-12-27",
+     "effective": "2023-01-01",
+     "file": "Tariff__63_2022-Customs__1009586.pdf",
+     "applied": [
+      "S.No. 80 col 5",
+      "S.No. 81 col 5",
+      "S.No. 83 col 5",
+      "S.No. 124 col 5",
+      "S.No. 125 col 5"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 104 col 2",
+      "S.No. 1382A col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 258 col 2",
+      "S.No. 299 col 2",
+      "S.No. 317 col 2",
+      "S.No. 337 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 1403 col 2",
+      "S.No. 1405 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "08/2020-Cus",
+     "date": "2020-02-02",
+     "file": "Tariff__08_2020-Cus__1000232.pdf",
+     "snippet": "s, dated the 31st December, 2009, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 943(E), dated the 31st December, 2009; (iv) Notification No. 46/2011-Customs, dated the 1st June, 2011, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 423(E), dated the 1st June, 2011; (v) Notification No. 53/2011-Customs, dated the 1st July, 2011, published in the Gazette of India, Extraordinary, Part"
+    },
+    {
+     "notification": "11/2021-Cus",
+     "date": "2021-02-01",
+     "file": "Tariff__11_2021-Cus__1000045.pdf",
+     "snippet": "ide number G.S.R.33(E), dated the 15th January, 2008. 3. Notification No. 152/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 943(E), dated the 31st December, 2009. 4. Notification No. 46/2011-Customs, dated the 1st June, 2011 vide number G.S.R.423(E), dated the 1st June, 2011. 5. Notification No. 53/2011-Customs, dated the 1st July, 2011 vide number G.S.R.499(E), dated the 1st July, 2011. 6. Notification No. 69/2011-Customs, dated the 29th July, 2011 vide number G.S.R.593(E), dat"
+    }
+   ],
+   "omittedSerials": [
+    "-:834",
+    "-:835",
+    "-:836",
+    "-:1012",
+    "-:1013",
+    "-:1014",
+    "-:1018",
+    "-:1239 (printed as placeholder)",
+    "-:1240 (printed as placeholder)",
+    "-:1241 (printed as placeholder)",
+    "-:1242 (printed as placeholder)"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 1616,
+   "rows": 1614,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "AIFTA",
+     "lines": 1614
+    },
+    {
+     "key": "AIFTA-PH",
+     "lines": 1614
+    }
+   ]
+  },
+  {
+   "key": "IN-SG-CECA",
+   "notification": "010/2008",
+   "base": "53/2015-Customs",
+   "baseFile": "Tariff__53_2015-Cus__1002664.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "insert 533, 534",
+      "S.No. 8 col 3",
+      "S.No. 9 col 3",
+      "S.No. 23 col 2",
+      "S.No. 24 col 2",
+      "S.No. 25 col 2",
+      "S.No. 26 col 2",
+      "S.No. 131 col 2",
+      "S.No. 163 col 2",
+      "S.No. 254 col 2",
+      "S.No. 255 col 2",
+      "S.No. 256 col 2",
+      "S.No. 285 col 2",
+      "S.No. 286 col 2",
+      "S.No. 287 col 2",
+      "S.No. 288 col 2",
+      "S.No. 432 col 2",
+      "S.No. 510 col 2"
+     ],
+     "unapplied": [
+      "insert at S.No. ['23']: could not read rows from '23A. 2202991 0 All goods 0%'",
+      "insert at S.No. ['130']: could not read rows from '130A. 3808520 0 DDT(ISO) 5%'",
+      "insert at S.No. ['163']: could not read rows from '163A. 3901901 0 All goods 0%'",
+      "insert at S.No. ['256']: could not read rows from '256A. 5502909 0 All goods 0%'",
+      "insert at S.No. ['288']: could not read rows from '288A. 6005390 0 All goods 0%'",
+      "insert at S.No. ['432']: could not read rows from '432A. 8423420 0 All goods 0%'",
+      "insert at S.No. ['510']: could not read rows from '510A. 9403830 0 All goods 0%'"
+     ]
+    },
+    {
+     "notification": "61/2018-Cus",
+     "date": "2018-09-14",
+     "effective": "2018-09-14",
+     "file": "Tariff__61_2018-Cus__1000305.pdf",
+     "applied": [
+      "insert 250A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 180 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 117",
+      "omit 118",
+      "omit 178",
+      "omit 179",
+      "omit 450",
+      "omit 451",
+      "omit 452",
+      "omit 453",
+      "omit 454",
+      "omit 514",
+      "insert 180A",
+      "insert 366A",
+      "replace 449",
+      "S.No. 113 col 2",
+      "S.No. 114 col 2",
+      "S.No. 115 col 2",
+      "S.No. 116 col 2",
+      "S.No. 173 col 2",
+      "S.No. 174 col 2",
+      "S.No. 177 col 2",
+      "S.No. 354 col 2",
+      "S.No. 493 col 2",
+      "S.No. 512 col 2",
+      "S.No. 513 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "insert 200A",
+      "S.No. 287 col 2",
+      "S.No. 299 col 2",
+      "S.No. 325 col 2",
+      "S.No. 328 col 2",
+      "S.No. 467 col 2",
+      "S.No. 468 col 2",
+      "S.No. 469 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 61 col 2",
+      "S.No. 148 col 2",
+      "S.No. 154 col 2",
+      "S.No. 421 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "insert 203A",
+      "S.No. 299 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 43 col 2",
+      "S.No. 148 col 2",
+      "S.No. 154 col 2",
+      "S.No. 308 col 2",
+      "S.No. 309 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 24 col 2",
+      "S.No. 25 col 2",
+      "S.No. 26 col 2",
+      "S.No. 215 col 2",
+      "S.No. 345 col 2",
+      "S.No. 346 col 2",
+      "S.No. 423 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "08/2020-Cus",
+     "date": "2020-02-02",
+     "file": "Tariff__08_2020-Cus__1000232.pdf",
+     "snippet": "05-Customs, dated the 22nd July, 2005, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 499(E), dated the 22nd July, 2005; (ii) Notification No.10/2008-Customs, dated the 15th January, 2008, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 33(E), dated the 15th January, 2008; (iii) Notification No. 152/2009-Customs, dated the 31st December, 2009, published in the Gazette of India, Extr"
+    },
+    {
+     "notification": "11/2021-Cus",
+     "date": "2021-02-01",
+     "file": "Tariff__11_2021-Cus__1000045.pdf",
+     "snippet": " ANNEXURE. Nil ANNEXURE S. No. Details of Notifications (1) (2) 1. Notification No. 74/2005-Customs, dated the 22nd July, 2005 vide number G.S.R.499(E), dated the 22nd July, 2005. 2. Notification No. 10/2008-Customs, dated the 15th January, 2008 vide number G.S.R.33(E), dated the 15th January, 2008. 3. Notification No. 152/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 943(E), dated the 31st December, 2009. 4. Notification No. 46/2011-Customs, dated the 1st June, 2011 vide number"
+    }
+   ],
+   "omittedSerials": [
+    "-:117",
+    "-:118",
+    "-:169 (printed as placeholder)",
+    "-:178",
+    "-:179",
+    "-:450",
+    "-:451",
+    "-:452",
+    "-:453",
+    "-:454",
+    "-:514"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "-:245 '5.00% or Rs. 150 per kg whichever is higher'",
+    "-:250A ''"
+   ],
+   "baseRows": 532,
+   "rows": 528,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-SG-CECA",
+     "lines": 528
+    }
+   ]
+  },
+  {
+   "key": "IN-SG-CECA",
+   "notification": "073/2005",
+   "base": "33/2012-Customs",
+   "baseFile": "Tariff__33_2012-Cus__1002848.pdf",
+   "warnings": [
+    "Tariff__33_2012-Cus__1002848.pdf p4: S.No. 187 recovered from text below the ruled table"
+   ],
+   "amendments": [
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "S.No. 16 col 2",
+      "S.No. 140 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2018-Cus",
+     "date": "2018-09-14",
+     "effective": "2018-09-14",
+     "file": "Tariff__61_2018-Cus__1000305.pdf",
+     "applied": [
+      "insert 6A, 6B, 6C",
+      "insert 55A",
+      "insert 83A",
+      "insert 84A, 84B, 84C, 84D, 84E, 84F, 84G, 84H, 84I, 84J, 84K, 84L, 84M, 84N, 84O, 84P",
+      "insert 91A",
+      "insert 125A",
+      "insert 157A",
+      "insert 186A",
+      "insert 190A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "replace 139",
+      "S.No. 37 col 2",
+      "S.No. 84A col 2",
+      "S.No. 109 col 2",
+      "S.No. 137 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "10/2020-Cus",
+     "date": "2020-02-02",
+     "effective": "2020-02-02",
+     "file": "Tariff__10_2020-Cus__1000230.pdf",
+     "applied": [
+      "S.No. 143 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "replace 116",
+      "S.No. 39 col 2",
+      "S.No. 40 col 2",
+      "S.No. 42 col 2",
+      "S.No. 84A col 2",
+      "S.No. 109 col 2",
+      "S.No. 113 col 2",
+      "S.No. 136 col 2",
+      "S.No. 181 col 2",
+      "S.No. 185 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 115 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2022-Customs",
+     "date": "2022-11-25",
+     "effective": "2022-11-25",
+     "file": "Tariff__61_2022-Customs__1009558.pdf",
+     "applied": [
+      "insert 134A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 134A col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "S.No. 46 col 2",
+      "S.No. 181 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 52 col 2",
+      "S.No. 58 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 72 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "ay, 2003 vide number G.S.R. 394(E), dated the 13th May, 2003; v. notification No. 85/2004-Customs, dated 31st August, 2004 vide number G.S.R. 560(E), dated the 31st August, 2004; vi. notification No. 73/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 498(E), dated the 22nd July, 2005; vii. notification No. 75/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 500(E), dated the 22nd July, 2005; viii. notification No. 151/2009-Customs, dated the 31st December, 2009 vide number G"
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 191,
+   "rows": 218,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-SG-CECA",
+     "lines": 218
+    }
+   ]
+  },
+  {
+   "key": "IN-SG-CECA",
+   "notification": "074/2005",
+   "base": "34/2012-Customs",
+   "baseFile": "Tariff__34_2012-Cus__1002847.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "insert 58A",
+      "insert 69A",
+      "insert 171A",
+      "insert 486",
+      "S.No. 4 col 2,3",
+      "S.No. 141 col 2,3",
+      "S.No. 171 col 2,3",
+      "S.No. 180 col 2,3",
+      "S.No. 392 col 2,3",
+      "S.No. 393 col 2,3",
+      "S.No. 447 col 2,3",
+      "S.No. 5 col 2",
+      "S.No. 6 col 2",
+      "S.No. 58 col 2",
+      "S.No. 82 col 2",
+      "S.No. 124 col 2",
+      "S.No. 133 col 2",
+      "S.No. 134 col 2",
+      "S.No. 164 col 2",
+      "S.No. 165 col 2",
+      "S.No. 166 col 2",
+      "S.No. 168 col 2",
+      "S.No. 170 col 2",
+      "S.No. 181 col 2",
+      "S.No. 362 col 2",
+      "S.No. 391 col 2",
+      "S.No. 476 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 37 col 2",
+      "S.No. 71 col 2",
+      "S.No. 82 col 2",
+      "S.No. 281 col 2",
+      "S.No. 282 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 128",
+      "omit 132",
+      "insert 7A",
+      "insert 70A",
+      "insert 135A",
+      "insert 170A",
+      "insert 441A",
+      "insert 30A",
+      "insert 377A",
+      "S.No. 73 col 2,3",
+      "S.No. 440 col 2,3",
+      "S.No. 81 col 2",
+      "S.No. 88 col 2",
+      "S.No. 93 col 2",
+      "S.No. 127 col 2",
+      "S.No. 129 col 2",
+      "S.No. 133 col 2",
+      "S.No. 134 col 2",
+      "S.No. 165 col 2",
+      "S.No. 167 col 2",
+      "S.No. 170 col 2",
+      "S.No. 171 col 2",
+      "S.No. 171A col 2",
+      "S.No. 179 col 2",
+      "S.No. 263 col 2",
+      "S.No. 279 col 2",
+      "S.No. 284 col 2",
+      "S.No. 356 col 2",
+      "S.No. 366 col 2",
+      "S.No. 441 col 2",
+      "S.No. 8 col 2",
+      "S.No. 139 col 2",
+      "S.No. 197 col 2",
+      "S.No. 297 col 2",
+      "S.No. 375 col 2",
+      "S.No. 376 col 2",
+      "S.No. 377 col 2",
+      "S.No. 403 col 3",
+      "S.No. 413 col 2",
+      "S.No. 414 col 2",
+      "S.No. 415 col 2"
+     ],
+     "unapplied": [
+      "column edit of S.No. 491: serial not found in table - — against serial number 491, for the entry in column (2), the entries \"9113 90 10 to 9113 90 90\"",
+      "column edit of S.No. 493: serial not found in table - — against serial number 493, for the entry in column (2), the entries \"9114 90 30 to 9114 90 40\""
+     ]
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 12 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 222 col 2",
+      "S.No. 284 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 56 col 2",
+      "S.No. 67 col 2",
+      "S.No. 70 col 2",
+      "S.No. 126 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 3 col 2",
+      "S.No. 35 col 2",
+      "S.No. 107 col 2",
+      "S.No. 146 col 2",
+      "S.No. 147 col 2",
+      "S.No. 148 col 2",
+      "S.No. 360 col 2",
+      "S.No. 436 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "08/2020-Cus",
+     "date": "2020-02-02",
+     "file": "Tariff__08_2020-Cus__1000232.pdf",
+     "snippet": "ading 9022, other than those for medical, surgical, dental or veterinary uses. 2. All goods on which exemption is claimed and allowed under the following notifications, namely: - (i) Notification No. 74/2005-Customs, dated the 22nd July, 2005, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 499(E), dated the 22nd July, 2005; (ii) Notification No.10/2008-Customs, dated the 15th January, 2008, published in the Gazette of India, Extraordinary"
+    },
+    {
+     "notification": "11/2021-Cus",
+     "date": "2021-02-01",
+     "file": "Tariff__11_2021-Cus__1000045.pdf",
+     "snippet": "tifications, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i), mentioned in the ANNEXURE. Nil ANNEXURE S. No. Details of Notifications (1) (2) 1. Notification No. 74/2005-Customs, dated the 22nd July, 2005 vide number G.S.R.499(E), dated the 22nd July, 2005. 2. Notification No. 10/2008-Customs, dated the 15th January, 2008 vide number G.S.R.33(E), dated the 15th January, 2008. 3. Notification No. 152/2009-Customs, dated the 31st December, 2009 vide number G.S"
+    }
+   ],
+   "omittedSerials": [
+    "-:128",
+    "-:132"
+   ],
+   "unreadSpecs": [
+    "-:20 '19022010 to 1903090' unread ['19022010 to 1903090']",
+    "-:58A '29147910 1' unread ['29147910 1']",
+    "-:88 '30012010 to 30025900 except(30024200)' unread ['30012010 to 30025900 except']",
+    "-:99 '33011200 to 3301300' unread ['33011200 to 3301300']"
+   ],
+   "unreadRates": [],
+   "baseRows": 485,
+   "rows": 494,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "IN-SG-CECA",
+     "lines": 494
+    }
+   ]
+  },
+  {
+   "key": "IN-SG-CECA",
+   "notification": "075/2005",
+   "base": "35/2012-Customs",
+   "baseFile": "Tariff__35_2012-Cus__1002846.pdf",
+   "warnings": [
+    "Tariff__35_2012-Cus__1002846.pdf p7: S.No. 291 recovered from text below the ruled table",
+    "Tariff__35_2012-Cus__1002846.pdf p10: S.No. 421 recovered from text below the ruled table",
+    "Tariff__35_2012-Cus__1002846.pdf p11: S.No. 468 recovered from text below the ruled table"
+   ],
+   "amendments": [
+    {
+     "notification": "10/2013-Cus",
+     "date": "2013-03-01",
+     "effective": "2013-03-01",
+     "file": "Tariff__10_2013-Cus__1002803.pdf",
+     "applied": [
+      "S.No. 118 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "insert 64A",
+      "insert 114A",
+      "insert 129A",
+      "insert 149A",
+      "insert 205A",
+      "S.No. 37 col 2,3",
+      "S.No. 40 col 2,3",
+      "S.No. 77 col 2,3",
+      "S.No. 102 col 2,3",
+      "S.No. 150 col 2,3",
+      "S.No. 383 col 2,3",
+      "S.No. 384 col 2,3",
+      "S.No. 385 col 2,3",
+      "S.No. 9 col 2",
+      "S.No. 10 col 2",
+      "S.No. 12 col 2",
+      "S.No. 13 col 2",
+      "S.No. 18 col 2",
+      "S.No. 38 col 2",
+      "S.No. 39 col 2",
+      "S.No. 67 col 2",
+      "S.No. 76 col 2",
+      "S.No. 78 col 2",
+      "S.No. 117 col 2",
+      "S.No. 118 col 2",
+      "S.No. 142 col 2",
+      "S.No. 149 col 2",
+      "S.No. 370 col 2",
+      "S.No. 381 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "replace 442",
+      "S.No. 104 col 2",
+      "S.No. 106 col 2",
+      "S.No. 245 col 2",
+      "S.No. 253 col 2",
+      "S.No. 254 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "omit 22",
+      "insert 9A",
+      "S.No. 229 col 2",
+      "S.No. 230 col 2",
+      "S.No. 247 col 2",
+      "S.No. 251 col 2",
+      "S.No. 256 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 132 col 2",
+      "S.No. 139 col 2",
+      "S.No. 142 col 2",
+      "S.No. 320 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 73 col 2",
+      "S.No. 96 col 2",
+      "S.No. 125 col 2",
+      "S.No. 130 col 2",
+      "S.No. 138 col 2",
+      "S.No. 140 col 2",
+      "S.No. 271 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "replace 29"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "snippet": "ecember, 2019 that was published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i), vide number G.S.R.964(E), dated the 30th December, 2019. 5. The principal notification No.75/2005-Customs dated the 22nd July, 2005 was published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i), vide number G.S.R.500(E), dated the 22nd July, 2005 and was last amended by notification No.36/2019-Customs dated the 30th December, 2019 that was published in the Gaz"
+    },
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "004 vide number G.S.R. 560(E), dated the 31st August, 2004; vi. notification No. 73/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 498(E), dated the 22nd July, 2005; vii. notification No. 75/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 500(E), dated the 22nd July, 2005; viii. notification No. 151/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 944(E), dated the 31st December, 2009; ix. notification No. 68/2012-Customs, dated the 31st December, 2012 vide n"
+    }
+   ],
+   "omittedSerials": [
+    "-:22"
+   ],
+   "unreadSpecs": [
+    "-:375 '84622910 to 84622990' unread ['84622910 to 84622990']"
+   ],
+   "unreadRates": [],
+   "baseRows": 496,
+   "rows": 501,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "IN-SG-CECA",
+     "lines": 501
+    }
+   ]
+  },
+  {
+   "key": "IN-MY-CECA",
+   "notification": "053/2011",
+   "base": "65/2016-Customs",
+   "baseFile": "Tariff__65_2016-Cus__1002591.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "76/2017-Cus",
+     "date": "2017-09-15",
+     "effective": "2017-09-15",
+     "file": "Tariff__76_2017-Cus__1002512.pdf",
+     "applied": [
+      "S.No. 476 col 2",
+      "S.No. 251 col 2",
+      "S.No. 252 col 2"
+     ],
+     "unapplied": [
+      "not applied: in the opening paragraph, for the figures and words, \"17th March, 2017\", the figures and words \"17th March, 2012\" shall be substituted. (ii) in the Table, at S.No. 251, in column 2, for the figures, \"3823 11 90\", the figures \"3823 11 00\" shall be substituted. "
+     ]
+    },
+    {
+     "notification": "97/2017-Cus",
+     "date": "2017-12-29",
+     "effective": "2018-01-01",
+     "file": "Tariff__97_2017-Cus__1002491.pdf",
+     "applied": [
+      "S.No. 84 col 4",
+      "S.No. 85 col 4",
+      "S.No. 87 col 4",
+      "S.No. 129 col 4",
+      "S.No. 130 col 4",
+      "S.No. 133 col 4",
+      "S.No. 134 col 4",
+      "S.No. 136 col 4"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "84/2018-Cus",
+     "date": "2018-12-31",
+     "effective": "2019-01-01",
+     "file": "Tariff__84_2018-Cus__1000284.pdf",
+     "applied": [
+      "S.No. 84 col 4",
+      "S.No. 85 col 4",
+      "S.No. 87 col 4",
+      "S.No. 129 col 4",
+      "S.No. 130 col 4",
+      "S.No. 134 col 4",
+      "S.No. 135 col 4",
+      "S.No. 136 col 4"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "29/2019-Cus",
+     "date": "2019-09-04",
+     "effective": "2019-09-04",
+     "file": "Tariff__29_2019-Cus__1000253.pdf",
+     "applied": [
+      "insert 130A"
+     ],
+     "unapplied": [
+      "not applied: after the Table, the following shall be inserted namely: - \"Provided that nothing contained in serial number 130 and entries relating thereto of the said table shall have effect upto and inclusive of the 2nd day of March 2020: Provided further that nothing con"
+     ]
+    },
+    {
+     "notification": "42/2019-Cus",
+     "date": "2019-12-31",
+     "effective": "2020-01-01",
+     "file": "Tariff__42_2019-Cus__1000240.pdf",
+     "applied": [
+      "S.No. 84 col 4",
+      "S.No. 85 col 4",
+      "S.No. 87 col 4",
+      "S.No. 129 col 4",
+      "S.No. 324 col 2",
+      "S.No. 351 col 2",
+      "S.No. 486 col 2",
+      "S.No. 1427 col 2",
+      "S.No. 1432 col 2",
+      "S.No. 1433 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "10/2020-Cus",
+     "date": "2020-02-02",
+     "effective": "2020-02-02",
+     "file": "Tariff__10_2020-Cus__1000230.pdf",
+     "applied": [
+      "S.No. 1445 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 1031",
+      "omit 1048",
+      "omit 1049",
+      "omit 1050",
+      "omit 1051",
+      "omit 1052",
+      "omit 1053",
+      "omit 1054",
+      "omit 1055",
+      "omit 1059",
+      "omit 1537",
+      "omit 1560",
+      "omit 1561",
+      "insert 39A",
+      "insert 106B",
+      "insert 483A",
+      "insert 1160A",
+      "insert 1162A",
+      "insert 1337A, 1337B",
+      "insert 1507A",
+      "insert 1538A",
+      "S.No. 909 col 2,3",
+      "S.No. 127 col 2",
+      "S.No. 429 col 2",
+      "S.No. 430 col 2",
+      "S.No. 431 col 2",
+      "S.No. 482 col 2",
+      "S.No. 499 col 2",
+      "S.No. 729 col 2",
+      "S.No. 796 col 2",
+      "S.No. 801 col 2",
+      "S.No. 871 col 2",
+      "S.No. 872 col 2",
+      "S.No. 873 col 2",
+      "S.No. 1030 col 2",
+      "S.No. 1047 col 2",
+      "S.No. 1058 col 2",
+      "S.No. 1067 col 2",
+      "S.No. 1069 col 2",
+      "S.No. 1162 col 2",
+      "S.No. 1178 col 2",
+      "S.No. 1269 col 2",
+      "S.No. 1366 col 2",
+      "S.No. 1384 col 2",
+      "S.No. 1387 col 2",
+      "S.No. 1388 col 2",
+      "S.No. 1428 col 2",
+      "S.No. 1445 col 2",
+      "S.No. 1501 col 2",
+      "S.No. 1507 col 2",
+      "S.No. 1538 col 2",
+      "S.No. 1559 col 2",
+      "S.No. 1562 col 2",
+      "S.No. 1607 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 37 col 2",
+      "S.No. 235 col 2",
+      "S.No. 236 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "61/2022-Customs",
+     "date": "2022-11-25",
+     "effective": "2022-11-25",
+     "file": "Tariff__61_2022-Customs__1009558.pdf",
+     "applied": [
+      "insert 1423A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 109 col 2",
+      "S.No. 364 col 2",
+      "S.No. 1423A col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 312 col 2",
+      "S.No. 332 col 2",
+      "S.No. 351 col 2",
+      "S.No. 358 col 2",
+      "S.No. 360 col 2",
+      "S.No. 361 col 2",
+      "S.No. 362 col 2",
+      "S.No. 363 col 2",
+      "S.No. 365 col 2",
+      "S.No. 366 col 2",
+      "S.No. 461 col 2"
+     ],
+     "unapplied": [
+      "not applied: against serial number 359, for the entry in column (2), e ntry \"2930 90 13\" shall be substituted; (vi) against serial number 360, for the entry in column (2), entry \"2930 90 15\" shall be substituted; (vii) against serial"
+     ]
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 1444 col 2",
+      "S.No. 1446 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "08/2020-Cus",
+     "date": "2020-02-02",
+     "file": "Tariff__08_2020-Cus__1000232.pdf",
+     "snippet": "2011-Customs, dated the 1st June, 2011, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 423(E), dated the 1st June, 2011; (v) Notification No. 53/2011-Customs, dated the 1st July, 2011, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 499(E), dated the 1st July, 2011; and (vi) Notification No. 69/2011-Customs, dated the 29th July, 2011, published in the Gazette of India, Extraordinary"
+    },
+    {
+     "notification": "22/2020-Cus",
+     "date": "2020-05-12",
+     "file": "Tariff__22_2020-Cus__1000218.pdf",
+     "snippet": "ection (i), vide number G.S.R. 632 (E), dated the 4th September 2019 by making further amendments in the notification of the Government of India in the Ministry of Finance (Department of Revenue), No.53/2011-Customs, dated the 1st July, 2011, published in the Gazette of India, vide number G.S.R. 499 (E), dated the 1st July, 2011. And Whereas, the designated authority in its final findings issued vide notification (Bilateral Safeguard Investigation) case no (SG) 04/2019, dated the 28th February 2"
+    },
+    {
+     "notification": "11/2021-Cus",
+     "date": "2021-02-01",
+     "file": "Tariff__11_2021-Cus__1000045.pdf",
+     "snippet": "r, 2009 vide number G.S.R. 943(E), dated the 31st December, 2009. 4. Notification No. 46/2011-Customs, dated the 1st June, 2011 vide number G.S.R.423(E), dated the 1st June, 2011. 5. Notification No. 53/2011-Customs, dated the 1st July, 2011 vide number G.S.R.499(E), dated the 1st July, 2011. 6. Notification No. 69/2011-Customs, dated the 29th July, 2011 vide number G.S.R.593(E), dated the 29th July, 2011. 7. Notification No. 52/2003-Customs, dated the 31st March, 2003 vide number G.S.R.274(E), "
+    }
+   ],
+   "omittedSerials": [
+    "-:1031",
+    "-:1048",
+    "-:1049",
+    "-:1050",
+    "-:1051",
+    "-:1052",
+    "-:1053",
+    "-:1054",
+    "-:1055",
+    "-:1059",
+    "-:1280 (printed as placeholder)",
+    "-:1281 (printed as placeholder)",
+    "-:1282 (printed as placeholder)",
+    "-:1283 (printed as placeholder)",
+    "-:1537",
+    "-:1560",
+    "-:1561"
+   ],
+   "unreadSpecs": [
+    "-:95 '090940 to 090950' unread ['090940 to 090950']"
+   ],
+   "unreadRates": [],
+   "baseRows": 1636,
+   "rows": 1630,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-MY-CECA",
+     "lines": 1630
+    }
+   ]
+  },
+  {
+   "key": "IN-TH-EHS",
+   "notification": "085/2004",
+   "base": "85/2004-Customs",
+   "baseFile": "Tariff__85_2004-Customs__1003831.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "79/2005-Customs",
+     "date": "2005-09-01",
+     "effective": "2005-09-01",
+     "file": "Tariff__79_2005-Customs__1003724.pdf",
+     "applied": [
+      "reflected in configuration: preamble: 50% -> 25% of the column (4) rate (superseded by 86/2006)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "86/2006 - Customs",
+     "date": "2006-08-30",
+     "effective": "2006-09-01",
+     "file": "Tariff__86_2006_-_Customs__1003616.pdf",
+     "applied": [
+      "reflected in configuration: preamble: whole of the duty from 2006-09-01; column (4) omitted — rows carry rate 0"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "131/2006 - Customs",
+     "date": "2006-12-30",
+     "effective": "2007-01-01",
+     "file": "Tariff__131_2006_-_Customs__1003571.pdf",
+     "applied": [
+      "omit 33A",
+      "omit 34A",
+      "omit 35A",
+      "omit 36A",
+      "omit 61A",
+      "omit 72A",
+      "insert 22A",
+      "insert 56A",
+      "insert 69A",
+      "replace 27",
+      "replace 36",
+      "replace 61",
+      "replace 73, 73A, 73B",
+      "S.No. 72 col 2",
+      "S.No. 74 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "115/2011 - Customs",
+     "date": "2011-12-28",
+     "effective": "2012-01-01",
+     "file": "Tariff__115_2011_-_Customs__1002895.pdf",
+     "applied": [
+      "omit 73B",
+      "replace 73A",
+      "S.No. 6 col 2",
+      "S.No. 7 col 2",
+      "S.No. 73 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "38/2012-Cus",
+     "date": "2012-05-29",
+     "effective": "2012-05-29",
+     "file": "Tariff__38_2012-Cus__1002843.pdf",
+     "applied": [
+      "insert 49A"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "insert 39A",
+      "S.No. 14 col 2",
+      "S.No. 61 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "S.No. 29 col 2",
+      "S.No. 82 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "S.No. 29 col 2",
+      "S.No. 30 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 52 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "29/2006 - Customs",
+     "date": "2006-03-20",
+     "file": "Tariff__29_2006_-_Customs__1003673.pdf",
+     "snippet": "i) No.40/2002-Customs, dated the 12 th April, 2002, G.S.R. 281(E), dated the 12 th April, 2002; (viii) No.76/2003-Customs, dated the 13 th May, 2003, G.S.R. 394(E), dated the 13 th May, 2003; (ix) No.85/2004-Customs, dated the 31 st August, 2004, G.S.R. 560(E), dated the 31 st August, 2004; (x) No.72/2005-Customs, dated the 22 nd July, 2005, G.S.R. 497(E), dated the 22 nd July, 2005; (xi) No.73/2005-Customs, dated the 22 nd July, 2005, G.S.R. 498(E), dated the 22 nd July, 2005.\". F.No. 341/11/20"
+    },
+    {
+     "notification": "89/2006 - Customs",
+     "date": "2006-09-01",
+     "file": "Tariff__89_2006_-_Customs__1003613.pdf",
+     "snippet": " 7214 All goods 50 17 7216 All goods 50 18 7324 All goods 50 19 Any chapter Jamdani dupattas, Jamdani kamiz or fabrics made of Jamdani cloth 100\" F.No. 354/213/2002-TRU The principal notification No. 85/2004-Customs, dated the 31st August, 2004, was published in the Gazette of India, Extraordinary, vide number G.S.R. 560 (E), dated the 31st August, 2004 and was last amended by notification No. 69/2006-Customs, dated the 30 th June,2006, published vide number G.S.R. 395 (E) dated the 30 th June,2"
+    },
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "y, 1999 vide number G.S.R. 11(E), dated the 08th January, 1999; iv. notification No. 76/2003-Customs, dated the 13th May, 2003 vide number G.S.R. 394(E), dated the 13th May, 2003; v. notification No. 85/2004-Customs, dated 31st August, 2004 vide number G.S.R. 560(E), dated the 31st August, 2004; vi. notification No. 73/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 498(E), dated the 22nd July, 2005; vii. notification No. 75/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 5"
+    }
+   ],
+   "omittedSerials": [
+    "-:33A",
+    "-:34A",
+    "-:35A",
+    "-:36A",
+    "-:61A",
+    "-:72A",
+    "-:73B"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 91,
+   "rows": 91,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-TH-EHS",
+     "lines": 91
+    }
+   ]
+  },
+  {
+   "key": "IN-AE-CEPA",
+   "notification": "022/2022",
+   "base": "09/2026-Customs",
+   "baseFile": "Tariff__09_2026-Customs__1010614.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "omit 2173",
+      "S.No. 638 col 2",
+      "S.No. 655 col 2",
+      "S.No. 656 col 2",
+      "S.No. 817 col 2",
+      "S.No. 926 col 2",
+      "S.No. 927 col 2",
+      "S.No. 928 col 2",
+      "S.No. 1240 col 2",
+      "S.No. 1246 col 2",
+      "S.No. 1296 col 2",
+      "S.No. 1297 col 2",
+      "S.No. 1528 col 2",
+      "S.No. 1592 col 2",
+      "S.No. 1971 col 2",
+      "S.No. 2383 col 2",
+      "S.No. 2394 col 2",
+      "S.No. 2424 col 2",
+      "S.No. 2443 col 2",
+      "S.No. 2448 col 2",
+      "S.No. 2450 col 2",
+      "S.No. 2506 col 2",
+      "S.No. 2511 col 2",
+      "S.No. 2633 col 2",
+      "S.No. 2661 col 2",
+      "S.No. 2712 col 2",
+      "S.No. 2798 col 2",
+      "S.No. 2807 col 2",
+      "S.No. 2828 col 2",
+      "S.No. 2829 col 2",
+      "S.No. 2904 col 2",
+      "S.No. 2962 col 2",
+      "S.No. 2963 col 2",
+      "S.No. 2965 col 2",
+      "S.No. 2974 col 2",
+      "S.No. 3603 col 2",
+      "S.No. 4328 col 2",
+      "S.No. 4329 col 2",
+      "S.No. 4332 col 2",
+      "S.No. 4334 col 2",
+      "S.No. 4336 col 2",
+      "S.No. 4339 col 2",
+      "S.No. 4724 col 2",
+      "S.No. 4944 col 2",
+      "S.No. 7924 col 2",
+      "S.No. 7925 col 2",
+      "S.No. 7928 col 2",
+      "S.No. 7929 col 2",
+      "S.No. 7932 col 2",
+      "S.No. 7933 col 2",
+      "S.No. 7936 col 2",
+      "S.No. 7937 col 2",
+      "S.No. 7938 col 2",
+      "S.No. 7939 col 2",
+      "S.No. 7948 col 2",
+      "S.No. 7949 col 2",
+      "S.No. 8400 col 2",
+      "S.No. 8787 col 2",
+      "S.No. 8873 col 2",
+      "S.No. 9771 col 2",
+      "S.No. 9950 col 2",
+      "S.No. 9953 col 2",
+      "S.No. 10253 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "18/2026-Customs",
+     "date": "2026-05-12",
+     "effective": "2026-05-13",
+     "file": "Tariff__18_2026-Customs__1010652.pdf",
+     "applied": [
+      "S.No. 12 col 5,6"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "I:2173"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "II:145 '7.5 12.5 12'",
+    "II:146 '7.5 12.5 12'",
+    "II:151 '7.5 12.5 25'",
+    "II:152 '7.5 12.5 25'"
+   ],
+   "baseRows": 11135,
+   "rows": 11134,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-AE-CEPA",
+     "lines": 11134
+    }
+   ]
+  },
+  {
+   "key": "IN-AU-ECTA",
+   "notification": "062/2022",
+   "base": "50/2025-Customs",
+   "baseFile": "Tariff__50_2025-Customs__1010528.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "64/2022-Customs",
+     "date": "2022-12-29",
+     "effective": "2022-12-29",
+     "file": "Tariff__64_2022-Customs__1009587.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "omit predates base text of table I (already reflected)",
+      "omit predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table II (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "38/2023-Customs",
+     "date": "2023-05-23",
+     "effective": "2023-05-23",
+     "file": "Tariff__38_2023-Customs__1009739.pdf",
+     "applied": [
+      "omit predates base text of table II (already reflected)",
+      "insert predates base text of table II (already reflected)",
+      "column-pair predates base text of table II (already reflected)",
+      "S.No. 1 col 2,3"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "68/2023-Customs",
+     "date": "2023-12-29",
+     "effective": "2023-12-29",
+     "file": "Tariff__68_2023-Customs__1009968.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "68/2023-Customs",
+     "date": "2023-12-29",
+     "effective": "2023-12-29",
+     "file": "Tariff__68_2023-Customs__1009984.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "omit predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "50/2024-Customs",
+     "date": "2024-12-30",
+     "effective": "2024-12-30",
+     "file": "Tariff__50_2024-Customs__1010246.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "omit 1392",
+      "S.No. 392 col 2",
+      "S.No. 444 col 2",
+      "S.No. 811 col 2",
+      "S.No. 848 col 2",
+      "S.No. 1213 col 2",
+      "S.No. 1541 col 2",
+      "S.No. 1585 col 2",
+      "S.No. 1635 col 2",
+      "S.No. 1783 col 2",
+      "S.No. 1824 col 2",
+      "S.No. 1839 col 2",
+      "S.No. 1913 col 2",
+      "S.No. 1922 col 2",
+      "S.No. 1945 col 2",
+      "S.No. 1946 col 2",
+      "S.No. 1987 col 2",
+      "S.No. 2031 col 2",
+      "S.No. 2088 col 2",
+      "S.No. 2089 col 2",
+      "S.No. 2091 col 2",
+      "S.No. 2100 col 2",
+      "S.No. 3250 col 2",
+      "S.No. 3251 col 2",
+      "S.No. 3254 col 2",
+      "S.No. 3256 col 2",
+      "S.No. 3258 col 2",
+      "S.No. 3261 col 2",
+      "S.No. 3616 col 2",
+      "S.No. 3834 col 2",
+      "S.No. 6317 col 2",
+      "S.No. 6318 col 2",
+      "S.No. 6321 col 2",
+      "S.No. 6322 col 2",
+      "S.No. 6325 col 2",
+      "S.No. 6326 col 2",
+      "S.No. 6329 col 2",
+      "S.No. 6330 col 2",
+      "S.No. 6331 col 2",
+      "S.No. 6332 col 2",
+      "S.No. 6341 col 2",
+      "S.No. 6342 col 2",
+      "S.No. 6669 col 2",
+      "S.No. 7079 col 2",
+      "S.No. 7821 col 2",
+      "S.No. 7928 col 2",
+      "S.No. 7931 col 2",
+      "S.No. 8124 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "21/2026-Customs",
+     "date": "2026-06-09",
+     "effective": "2026-06-09",
+     "file": "Tariff__21_2026-Customs__1010681.pdf",
+     "applied": [
+      "insert 825A"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "ch, 1994 vide number G.S.R.319(E), dated the 16th March, 1994 33. Notification No. 128/1994-Customs, dated the 10th June, 1994 vide number G.S.R.506(E), dated the 10th June, 1994 xi. notification No. 62/2022-Customs, dated the 26th December, 2022 vide number G.S.R. 904(E), dated the 26th December, 2022; 34. Notification No. 134/1994-Customs, dated the 22nd June, 1994 vide number G.S.R.525(E), dated the 22nd June, 1994 35. Notification No. 146/1994-Customs, dated the 13th July, 1994 vide number G"
+    }
+   ],
+   "omittedSerials": [
+    "I:1392"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "I:877 'Re. 0.0 per tonne'",
+    "I:878 'Re. 0.80 per tonne'",
+    "I:957 'Rs. 571 Per 1000 Kwh'",
+    "II:4 '0 0'"
+   ],
+   "extraBases": [
+    {
+     "notification": "62/2022-Customs",
+     "file": "Tariff__62_2022-Customs__1009583.pdf",
+     "tables": [
+      "III",
+      "IV"
+     ]
+    }
+   ],
+   "baseRows": 8661,
+   "rows": 8661,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-AU-ECTA",
+     "lines": 8661
+    }
+   ]
+  },
+  {
+   "key": "IN-MU-CECPA",
+   "notification": "025/2021",
+   "base": "10/2026-Customs",
+   "baseFile": "Tariff__10_2026-Customs__1010615.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit predates base text of table I (already reflected)",
+      "omit predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)",
+      "column predates base text of table I (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "17/2022-Customs",
+     "date": "2022-03-31",
+     "effective": "2022-03-31",
+     "file": "Tariff__17_2022-Customs__1009247.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used",
+      "table(s) ['II'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "insert predates base text of table I (already reflected)",
+      "replace predates base text of table I (already reflected)",
+      "S.No. 70 col 2",
+      "S.No. 72 col 2",
+      "S.No. 73 col 2",
+      "S.No. 76 col 2",
+      "S.No. 85 col 2",
+      "S.No. 87 col 2",
+      "S.No. 88 col 2",
+      "S.No. 89 col 2",
+      "S.No. 90 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "51/2022-Customs",
+     "date": "2022-09-28",
+     "effective": "2022-09-28",
+     "file": "Tariff__51_2022-Customs__1009516.pdf",
+     "applied": [
+      "column predates base text of table - (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "19/2023-Customs",
+     "date": "2023-03-31",
+     "effective": "2023-04-01",
+     "file": "Tariff__19_2023-Customs__1009676.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used",
+      "table(s) ['II'] substitution superseded by the base text used",
+      "S.No. 7 col 4"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "column predates base text of table - (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "18/2024-Customs",
+     "date": "2024-03-14",
+     "effective": "2024-04-01",
+     "file": "Tariff__18_2024-Customs__1010035.pdf",
+     "applied": [
+      "table(s) ['I'] substitution superseded by the base text used",
+      "table(s) ['II'] substitution superseded by the base text used"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "omit predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)",
+      "insert predates base text of table I (already reflected)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 54 col 2",
+      "S.No. 59 col 2",
+      "S.No. 63 col 2",
+      "S.No. 69 col 2",
+      "S.No. 248 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": " number G.S.R. 944(E), dated the 31st December, 2009; ix. notification No. 68/2012-Customs, dated the 31st December, 2012 vide number G.S.R. 953(E), dated the 31st December, 2012; x. notification No. 25/2021-Customs, dated the 31st March, 2021 vide number G.S.R. 241(E), dated the 31st March, 2021; Nil\"; II. in the Annexure, after S. No. 11 and the entries relating thereto, the following S. Nos. and entries shall be inserted, namely:- (1) (2) \"12. Notification No. 33/1935-Customs, dated the 22nd "
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "extraBases": [
+    {
+     "notification": "22/2025-Customs",
+     "file": "Tariff__22_2025-Customs__1010346.pdf",
+     "tables": [
+      "II"
+     ]
+    },
+    {
+     "notification": "25/2021-Customs",
+     "file": "Tariff__25_2021-Cus__1000031.pdf",
+     "tables": [
+      "III"
+     ]
+    },
+    {
+     "notification": "51/2021-Customs",
+     "file": "Tariff__51_2021-Cus__1000003.pdf",
+     "tables": [
+      "IV"
+     ]
+    }
+   ],
+   "baseRows": 610,
+   "rows": 610,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-MU-CECPA",
+     "lines": 610
+    }
+   ]
+  },
+  {
+   "key": "IN-OM-CEPA",
+   "notification": "020/2026",
+   "base": "20/2026-Customs",
+   "baseFile": "Tariff__20_2026-Customs__1010664.pdf",
+   "warnings": [],
+   "amendments": [],
+   "referencesOnly": [],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 10005,
+   "rows": 10005,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-OM-CEPA",
+     "lines": 10005
+    }
+   ]
+  },
+  {
+   "key": "IN-UK-CETA",
+   "notification": "029/2026",
+   "base": "29/2026-Customs",
+   "baseFile": "Tariff__29_2026-Customs__1010722.pdf",
+   "warnings": [],
+   "amendments": [],
+   "referencesOnly": [],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "I:4049 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4050 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4051 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4052 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4053 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4054 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4055 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:4080 '22.3% or Rs.26.9/- per kg which ever is lower'",
+    "I:6029 '18% or Rs. 63 per sq. metre, whichever is higher'",
+    "I:6030 '18% or Rs. 63 per sq. metre, whichever is higher'",
+    "I:6031 '18% or Rs. 63 per sq. metre, whichever is higher'",
+    "I:6335 '18% or Rs. 74.7 per piece, whichever is higher'",
+    "I:6384 '18% or Rs. 40.5 per piece, whichever is higher'",
+    "I:6385 '18% or Rs. 45 per piece, whichever is higher'",
+    "I:6395 '18% or Rs. 76.5 per piece, whichever is higher'",
+    "I:6396 '18% or Rs. 99 per piece, whichever is higher'",
+    "I:6397 '18% or Rs. 99 per piece, whichever is higher'",
+    "I:6398 '18% or Rs. 94.5 per piece, whichever is higher'",
+    "III:1 '25 25 15'"
+   ],
+   "baseRows": 11136,
+   "rows": 11136,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-UK-CETA",
+     "lines": 11136
+    }
+   ]
+  },
+  {
+   "key": "IN-EFTA-TEPA-CH",
+   "notification": "041/2025",
+   "base": "51/2025-Customs",
+   "baseFile": "Tariff__51_2025-Customs__1010529.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "omit 1691",
+      "replace 813",
+      "S.No. 422 col 2",
+      "S.No. 432 col 2",
+      "S.No. 433 col 2",
+      "S.No. 436 col 2",
+      "S.No. 785 col 2",
+      "S.No. 826 col 2",
+      "S.No. 1027 col 2",
+      "S.No. 1088 col 2",
+      "S.No. 1491 col 2",
+      "S.No. 1890 col 2",
+      "S.No. 1901 col 2",
+      "S.No. 1927 col 2",
+      "S.No. 1944 col 2",
+      "S.No. 1949 col 2",
+      "S.No. 1951 col 2",
+      "S.No. 2003 col 2",
+      "S.No. 2152 col 2",
+      "S.No. 2191 col 2",
+      "S.No. 2396 col 2",
+      "S.No. 2397 col 2",
+      "S.No. 2399 col 2",
+      "S.No. 2967 col 2",
+      "S.No. 2968 col 2",
+      "S.No. 2969 col 2",
+      "S.No. 3658 col 2",
+      "S.No. 3889 col 2",
+      "S.No. 3890 col 2",
+      "S.No. 3893 col 2",
+      "S.No. 3895 col 2",
+      "S.No. 3897 col 2",
+      "S.No. 3900 col 2",
+      "S.No. 4267 col 2",
+      "S.No. 4497 col 2",
+      "S.No. 7480 col 2",
+      "S.No. 7481 col 2",
+      "S.No. 7484 col 2",
+      "S.No. 7485 col 2",
+      "S.No. 7488 col 2",
+      "S.No. 7489 col 2",
+      "S.No. 7492 col 2",
+      "S.No. 7493 col 2",
+      "S.No. 7494 col 2",
+      "S.No. 7495 col 2",
+      "S.No. 7504 col 2",
+      "S.No. 7505 col 2",
+      "S.No. 7942 col 2",
+      "S.No. 8340 col 2",
+      "S.No. 8419 col 2",
+      "S.No. 9307 col 2",
+      "S.No. 9676 col 2",
+      "S.No. 9677 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "I:1691"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "I:3745 '14.85% or Rs.17.82/- per kg which ever is lower'",
+    "I:3747 '17.68% or Rs.21.21/- per kg which ever is lower'",
+    "I:3749 '17.68% or Rs.21.21/- per kg which ever is lower'",
+    "I:3751 '17.68% or Rs.21.21/- per kg which ever is lower'",
+    "I:4866 '8% or Rs. 7.2 per sq. mtr., whichever is higher'",
+    "I:4885 '8% or Rs. 114.4 per sq. mtr., whichever is higher'",
+    "I:4971 '8% or Rs. 19.2 per sq. mtr., whichever is higher'",
+    "I:5765 '8% or Rs. 108 per sq. mtr., whichever is higher'",
+    "I:5771 '16% or Rs. 112 per sq. mtr., whichever is higher'",
+    "I:5773 '16% or Rs. 112 per sq. mtr., whichever is higher'",
+    "I:6063 '16% or Rs. 68 per sq. mtr., whichever is higher'",
+    "I:6064 '16% or Rs. 84 per sq. mtr., whichever is higher'",
+    "I:6148 '16% or Rs. 108 per sq. mtr., whichever is higher'",
+    "I:6149 '16% or Rs. 108 per sq. mtr., whichever is higher'",
+    "I:6212 '16% or Rs. 108 per sq. mtr., whichever is higher'",
+    "I:6213 '12% or Rs. 81 per sq. mtr., whichever is higher'",
+    "I:6217 '16% or Rs. 68 per sq. mtr., whichever is higher'",
+    "I:6219 '16% or Rs. 68 per sq. mtr., whichever is higher'",
+    "I:6222 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "I:6224 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "I:6229 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "I:6230 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "I:6275 '14.3% or Rs. 260.7 per sq. mtr., whichever is higher'",
+    "I:6280 '14.3% or Rs. 46.4 per sq. mtr., whichever is higher'",
+    "I:6317 '8% or Rs. 312 per sq. mtr., whichever is higher'",
+    "I:6374 '8% or Rs. 86.4 per sq. mtr., whichever is higher'",
+    "I:6375 '8% or Rs. 86.4 per sq. mtr., whichever is higher'",
+    "II:1 '0 0'",
+    "II:2 '0 0'",
+    "II:3 '0 0'",
+    "II:4 '0 0'",
+    "II:5 '0 0'",
+    "II:6 '0 0'",
+    "II:7 '0 0'",
+    "II:8 '0 0'",
+    "II:9 '0 0'",
+    "II:10 '0 0'",
+    "II:11 '0 0'"
+   ],
+   "baseRows": 10378,
+   "rows": 10377,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-EFTA-TEPA-CH",
+     "lines": 10377
+    }
+   ]
+  },
+  {
+   "key": "IN-EFTA-TEPA-NO",
+   "notification": "042/2025",
+   "base": "52/2025-Customs",
+   "baseFile": "Tariff__52_2025-Customs__1010530.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "omit 1673",
+      "replace 792",
+      "S.No. 420 col 2",
+      "S.No. 430 col 2",
+      "S.No. 431 col 2",
+      "S.No. 764 col 2",
+      "S.No. 1005 col 2",
+      "S.No. 1067 col 2",
+      "S.No. 1473 col 2",
+      "S.No. 1868 col 2",
+      "S.No. 1879 col 2",
+      "S.No. 1921 col 2",
+      "S.No. 1926 col 2",
+      "S.No. 1976 col 2",
+      "S.No. 2097 col 2",
+      "S.No. 2127 col 2",
+      "S.No. 2164 col 2",
+      "S.No. 2317 col 2",
+      "S.No. 2318 col 2",
+      "S.No. 2320 col 2",
+      "S.No. 2834 col 2",
+      "S.No. 2835 col 2",
+      "S.No. 2836 col 2",
+      "S.No. 3508 col 2",
+      "S.No. 3745 col 2",
+      "S.No. 3746 col 2",
+      "S.No. 3749 col 2",
+      "S.No. 3751 col 2",
+      "S.No. 3753 col 2",
+      "S.No. 3756 col 2",
+      "S.No. 4139 col 2",
+      "S.No. 4369 col 2",
+      "S.No. 7318 col 2",
+      "S.No. 7319 col 2",
+      "S.No. 7322 col 2",
+      "S.No. 7323 col 2",
+      "S.No. 7326 col 2",
+      "S.No. 7327 col 2",
+      "S.No. 7330 col 2",
+      "S.No. 7331 col 2",
+      "S.No. 7332 col 2",
+      "S.No. 7333 col 2",
+      "S.No. 7342 col 2",
+      "S.No. 7343 col 2",
+      "S.No. 7780 col 2",
+      "S.No. 8177 col 2",
+      "S.No. 8256 col 2",
+      "S.No. 9126 col 2",
+      "S.No. 9461 col 2",
+      "S.No. 9462 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "-:1673"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "-:3595 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:3596 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:3597 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:3598 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:3599 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:3601 '14.9% or Rs.17.8/- per kg which ever is lower'",
+    "-:4738 '7.14% or Rs. 6.43 per sq. mtr., whichever is higher'",
+    "-:4757 '7.14% or Rs. 102.1 per sq. mtr., whichever is higher'",
+    "-:4843 '7.14% or Rs. 17.1 per sq. mtr., whichever is higher'",
+    "-:5637 '7.14% or Rs. 96.4 per sq. mtr., whichever is higher'",
+    "-:5935 '14.3% or Rs. 60.7 per sq. mtr., whichever is higher'",
+    "-:6189 '87.1% or Rs. 278.6 per sq. mtr., whichever is higher'"
+   ],
+   "baseRows": 10113,
+   "rows": 10112,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-EFTA-TEPA-NO",
+     "lines": 10112
+    }
+   ]
+  },
+  {
+   "key": "IN-EFTA-TEPA-IS",
+   "notification": "043/2025",
+   "base": "53/2025-Customs",
+   "baseFile": "Tariff__53_2025-Customs__1010531.pdf",
+   "warnings": [
+    "53/2025-Customs table -: serials repeated ['1']"
+   ],
+   "amendments": [
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "omit 1697",
+      "replace 821",
+      "S.No. 433 col 2",
+      "S.No. 443 col 2",
+      "S.No. 444 col 2",
+      "S.No. 447 col 2",
+      "S.No. 793 col 2",
+      "S.No. 1036 col 2",
+      "S.No. 1098 col 2",
+      "S.No. 1495 col 2",
+      "S.No. 1893 col 2",
+      "S.No. 1904 col 2",
+      "S.No. 1946 col 2",
+      "S.No. 1952 col 2",
+      "S.No. 2002 col 2",
+      "S.No. 2149 col 2",
+      "S.No. 2186 col 2",
+      "S.No. 2342 col 2",
+      "S.No. 2343 col 2",
+      "S.No. 2345 col 2",
+      "S.No. 2835 col 2",
+      "S.No. 2836 col 2",
+      "S.No. 2837 col 2",
+      "S.No. 3512 col 2",
+      "S.No. 3749 col 2",
+      "S.No. 3750 col 2",
+      "S.No. 3753 col 2",
+      "S.No. 3755 col 2",
+      "S.No. 3757 col 2",
+      "S.No. 3760 col 2",
+      "S.No. 4122 col 2",
+      "S.No. 4352 col 2",
+      "S.No. 7301 col 2",
+      "S.No. 7302 col 2",
+      "S.No. 7305 col 2",
+      "S.No. 7306 col 2",
+      "S.No. 7309 col 2",
+      "S.No. 7310 col 2",
+      "S.No. 7313 col 2",
+      "S.No. 7314 col 2",
+      "S.No. 7315 col 2",
+      "S.No. 7316 col 2",
+      "S.No. 7325 col 2",
+      "S.No. 7326 col 2",
+      "S.No. 7780 col 2",
+      "S.No. 8162 col 2",
+      "S.No. 8241 col 2",
+      "S.No. 9097 col 2",
+      "S.No. 9430 col 2",
+      "S.No. 9431 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "-:1697"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "-:3599 '16.11% or Rs.19.26/- per kg which ever is lower'",
+    "-:3603 '16.11% or Rs.19.26/- per kg which ever is lower'",
+    "-:3605 '16.11% or Rs.19.26/- per kg which ever is lower'",
+    "-:5863 '12% or Rs. 66 per piece, whichever is higher'",
+    "-:5871 '14.3% or Rs. 59.3 per piece, whichever is higher'",
+    "-:5914 '14.3% or Rs. 196.4 per piece, whichever is higher'",
+    "-:5919 '16% or Rs. 84 per piece, whichever is higher'",
+    "-:6003 '16% or Rs. 108 per piece, whichever is higher'",
+    "-:6004 '16% or Rs. 108 per piece, whichever is higher'",
+    "-:6067 '16% or Rs. 108 per piece, whichever is higher'",
+    "-:6068 '16% or Rs. 108 per piece, whichever is higher'",
+    "-:6072 '16% or Rs. 68 per sq. mtr., whichever is higher'",
+    "-:6074 '16% or Rs. 68 per sq. mtr., whichever is higher'",
+    "-:6077 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "-:6079 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "-:6084 '16% or Rs. 76per sq. mtr., whichever is higher'",
+    "-:6085 '16% or Rs. 76 per sq. mtr., whichever is higher'",
+    "-:6144 '14.3% or Rs. 46.4 per sq. mtr., whichever is higher'",
+    "-:6202 '12% or Rs. 33 per sq. mtr., whichever is higher'",
+    "-:6229 '8% or Rs. 86.4 per sq. mtr., whichever is higher'",
+    "-:6230 '8% or Rs. 86.4 per sq. mtr., whichever is higher'"
+   ],
+   "baseRows": 10083,
+   "rows": 10082,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-EFTA-TEPA-IS",
+     "lines": 10082
+    }
+   ]
+  },
+  {
+   "key": "SAFTA",
+   "notification": "068/2012",
+   "base": "68/2012-Customs",
+   "baseFile": "Tariff__68_2012-Cus__1002813.pdf",
+   "warnings": [
+    "Tariff__68_2012-Cus__1002813.pdf p4: S.No. 3 recovered from text below the ruled table",
+    "Tariff__68_2012-Cus__1002813.pdf p5: S.No. 68 recovered from text below the ruled table",
+    "Tariff__68_2012-Cus__1002813.pdf p12: S.No. 248 recovered from text below the ruled table",
+    "Tariff__68_2012-Cus__1002813.pdf p14: S.No. 375 recovered from text below the ruled table"
+   ],
+   "amendments": [
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "insert 121",
+      "insert 218A",
+      "insert 615",
+      "S.No. 16 col 2",
+      "S.No. 50 col 2",
+      "S.No. 215 col 2",
+      "S.No. 216 col 2",
+      "S.No. 217 col 2",
+      "S.No. 218 col 2",
+      "S.No. 104 col 2",
+      "S.No. 608 col 2",
+      "S.No. 34 col 2",
+      "S.No. 47 col 2",
+      "S.No. 55 col 2",
+      "S.No. 60 col 3",
+      "S.No. 67 col 2"
+     ],
+     "unapplied": [
+      "not applied: against serial number 14, in the entry,- (a) in column (2), after the figures \"1211 40 00\" the figures \"1211 50,\" shall be inserted. (b) in the column (3), after the word \"roots\", the words \", fresh or dried\" shall be in"
+     ]
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 46 col 2",
+      "S.No. 35 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "insert 141A",
+      "insert 143A",
+      "insert 144A",
+      "insert 161A",
+      "S.No. 101 col 2,3",
+      "S.No. 24 col 2",
+      "S.No. 138 col 2",
+      "S.No. 408 col 2",
+      "S.No. 409 col 2",
+      "S.No. 410 col 2",
+      "S.No. 411 col 2",
+      "S.No. 412 col 2",
+      "S.No. 606 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 32 col 2",
+      "S.No. 472 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 101 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": " number G.S.R. 500(E), dated the 22nd July, 2005; viii. notification No. 151/2009-Customs, dated the 31st December, 2009 vide number G.S.R. 944(E), dated the 31st December, 2009; ix. notification No. 68/2012-Customs, dated the 31st December, 2012 vide number G.S.R. 953(E), dated the 31st December, 2012; x. notification No. 25/2021-Customs, dated the 31st March, 2021 vide number G.S.R. 241(E), dated the 31st March, 2021; Nil\"; II. in the Annexure, after S. No. 11 and the entries relating thereto,"
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "I:8 'Rs.28 per kg'",
+    "I:9 'Rs. 52 per kg'",
+    "I:113 ''",
+    "I:116 ''"
+   ],
+   "baseRows": 998,
+   "rows": 1005,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "SAFTA-NLDC",
+     "lines": 388
+    }
+   ]
+  },
+  {
+   "key": "SAFTA",
+   "notification": "099/2011",
+   "base": "99/2011-Customs",
+   "baseFile": "Tariff__99_2011_-_Customs__1002911.pdf",
+   "warnings": [],
+   "amendments": [],
+   "referencesOnly": [
+    {
+     "notification": "Corrigendum",
+     "date": "2021-02-05",
+     "file": "Tariff__Corrigendum__1008973.pdf",
+     "snippet": "; (ii) at page 36, in the ANNEXURE, the following S. No. shall be added at the end, namely :- [F. No. 334/02/2021-TRU] (Gaurav Singh) Deputy Secretary to the Government of India \" 9. Notification No. 99/2011-Customs, dated the 9th November, 2011 vide number G.S.R.801(E), dated the 9th November, 2011.\"."
+    },
+    {
+     "notification": "Corrigendum",
+     "date": "2021-02-05",
+     "file": "Tariff__Corrigendum__1009038.pdf",
+     "snippet": "; (ii) at page 36, in the ANNEXURE, the following S. No. shall be added at the end, namely :- [F. No. 334/02/2021-TRU] (Gaurav Singh) Deputy Secretary to the Government of India \" 9. Notification No. 99/2011-Customs, dated the 9th November, 2011 vide number G.S.R.801(E), dated the 9th November, 2011.\"."
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 4,
+   "rows": 5,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "SAFTA-LDC",
+     "lines": 1
+    }
+   ]
+  },
+  {
+   "key": "APTA",
+   "notification": "050/2018",
+   "base": "50/2018-Customs",
+   "baseFile": "Tariff__50_2018-Cus__1000366.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 195 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "16/2021-Cus",
+     "date": "2021-02-05",
+     "effective": "2021-02-05",
+     "file": "Tariff__16_2021-Cus__1000040.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: in the Explanation, for the words, figures and brackets \" the standard rate of duty specified in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Schedule to ",
+      "not applied: in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Schedule to the Customs Tariff Act, 1975 and Agriculture Infrastructure and Development Cess leviable unde",
+      "not applied: in the First Schedule to the Customs Tariff Act, 1975 and Agriculture Infrastructure and Development Cess leviable under clause 115 of the Finance Bill, 2021 (15 of 2021)\" shall be substituted. "
+     ]
+    },
+    {
+     "notification": "26/2021-Cus",
+     "date": "2021-04-08",
+     "effective": "2021-04-08",
+     "file": "Tariff__26_2021-Cus__1000030.pdf",
+     "applied": [],
+     "unapplied": [
+      "no instruction recognised: In the said notification, for the words, figures and brackets \"clause 115 of the Finance Bill, 2021 (15 of 2021)\", the words, figures and brackets, \"section 124 of the Finance Act, 2021 (13 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 900",
+      "omit 901",
+      "omit 902",
+      "omit 903",
+      "insert 35A, 35B, 35C",
+      "insert 63A",
+      "insert 340A",
+      "insert 342A",
+      "insert 343A",
+      "insert 407A",
+      "insert 485A",
+      "insert 554A",
+      "insert 571A",
+      "insert 917A, 917B",
+      "insert 1080A",
+      "replace 1084",
+      "replace 1171",
+      "replace 1172",
+      "S.No. 111 col 2",
+      "S.No. 262 col 2",
+      "S.No. 263 col 2",
+      "S.No. 342 col 2",
+      "S.No. 355 col 2",
+      "S.No. 384 col 2",
+      "S.No. 385 col 2",
+      "S.No. 406 col 2",
+      "S.No. 407 col 2",
+      "S.No. 408 col 2",
+      "S.No. 409 col 2",
+      "S.No. 410 col 2",
+      "S.No. 479 col 2",
+      "S.No. 484 col 2",
+      "S.No. 524 col 2",
+      "S.No. 536 col 2",
+      "S.No. 555 col 2",
+      "S.No. 556 col 2",
+      "S.No. 558 col 2",
+      "S.No. 563 col 2",
+      "S.No. 564 col 2",
+      "S.No. 565 col 2",
+      "S.No. 567 col 2",
+      "S.No. 568 col 2",
+      "S.No. 674 col 2",
+      "S.No. 675 col 2",
+      "S.No. 676 col 2",
+      "S.No. 677 col 2",
+      "S.No. 682 col 2",
+      "S.No. 844 col 2",
+      "S.No. 892 col 2",
+      "S.No. 907 col 2",
+      "S.No. 908 col 2",
+      "S.No. 909 col 2",
+      "S.No. 917 col 2",
+      "S.No. 981 col 2",
+      "S.No. 1054 col 2",
+      "S.No. 1144 col 2",
+      "S.No. 1147 col 2",
+      "S.No. 1154 col 2",
+      "S.No. 1156 col 2",
+      "S.No. 1173 col 2",
+      "S.No. 1176 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "omit 49",
+      "omit 917B",
+      "replace 25, 25A",
+      "replace 917A",
+      "S.No. 50 col 2",
+      "S.No. 702 col 2",
+      "S.No. 743 col 2",
+      "S.No. 750 col 2",
+      "S.No. 917 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "replace 76",
+      "S.No. 75 col 2,3",
+      "S.No. 68 col 2",
+      "S.No. 73 col 2",
+      "S.No. 74 col 2",
+      "S.No. 100 col 2",
+      "S.No. 101 col 2",
+      "S.No. 102 col 2",
+      "S.No. 660 col 2",
+      "S.No. 661 col 2",
+      "S.No. 662 col 2",
+      "S.No. 663 col 2",
+      "S.No. 682 col 2",
+      "S.No. 683 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 260 col 2",
+      "S.No. 266 col 2",
+      "S.No. 323 col 2",
+      "S.No. 338 col 2",
+      "S.No. 340 col 2",
+      "S.No. 344 col 2",
+      "S.No. 473 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 97 col 2",
+      "S.No. 98 col 2",
+      "S.No. 154 col 2",
+      "S.No. 511 col 2",
+      "S.No. 512 col 2",
+      "S.No. 774 col 2",
+      "S.No. 775 col 2",
+      "S.No. 776 col 2",
+      "S.No. 777 col 2",
+      "S.No. 778 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "Corrigendum",
+     "date": "2018-07-12",
+     "file": "Tariff__Corrigendum__1008983.pdf",
+     "snippet": "STRY OF FINANCE (DEPARTMENT OF REVENUE) CORRIGENDUM New Delhi, the 12th July, 2018 G.S. R. (E). - In the notification of the Government of India in the Ministry of Finance (Department of Revenue) No. 50/2018-Customs, dated the 30th June, 2018, published in the Gazette of India, Extraordinary, Part II, Section 3, Sub-section (i) vide number G.S.R. 604(E), dated the 30th June, 2018, - (i) at page 10, in the Table, against serial number 185, in column (2), for \"2524 10 92 to 2525 10 90 (except 2524"
+    }
+   ],
+   "omittedSerials": [
+    "PART A:49",
+    "PART A:900",
+    "PART A:901",
+    "PART A:902",
+    "PART A:903",
+    "PART A:917B"
+   ],
+   "unreadSpecs": [
+    "PART A:154 '2202 10 to 2202 99 (except 2202 99 21 to 2202 91 29)' unread ['2202 99 21 to 2202 91 29']",
+    "PART A:340A '29301000 2' unread ['29301000 2']",
+    "PART A:379 '3305 10 t0 3305 30' unread ['3305 10 t0 3305 30']",
+    "PART A:387 '3403 90 10 to 3403 90 33' unread ['3403 90 10 to 3403 90 33']",
+    "PART A:554A '4412 4100 to 4412 49 00' unread ['4412 4100 to 4412 49 00']",
+    "PART A:555 '4412 51 00 to 4412 59 00' unread ['4412 51 00 to 4412 59 00']"
+   ],
+   "unreadRates": [
+    "PART A:1080A '8802 40'",
+    "PART A:1172 '1171 30'"
+   ],
+   "baseRows": 1224,
+   "rows": 1233,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "APTA",
+     "lines": 1185
+    },
+    {
+     "key": "APTA-LDC",
+     "lines": 48
+    }
+   ]
+  },
+  {
+   "key": "ISFTA",
+   "notification": "026/2000",
+   "base": "26/2000-Customs",
+   "baseFile": "Tariff__26_2000-Customs__1004484.pdf",
+   "warnings": [
+    "ISFTA schedule read from the CBIC compilation, not rebuilt from primary text; ANNEXURE LIST-1A (described goods) is not machine-excluded; LIST 5 also excludes goods of 60/2000 and 2/2007 which are not listed here"
+   ],
+   "amendments": [],
+   "referencesOnly": [],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "rows": 222,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "ISFTA",
+     "lines": 222
+    }
+   ]
+  },
+  {
+   "key": "DFTP",
+   "notification": "096/2008",
+   "base": "08/2014-Customs",
+   "baseFile": "Tariff__08_2014-Cus__1002748.pdf",
+   "warnings": [
+    "Tariff__08_2014-Cus__1002748.pdf p2: S.No. 102 recovered from text below the ruled table",
+    "Tariff__08_2014-Cus__1002748.pdf p2: S.No. 103 recovered from text below the ruled table"
+   ],
+   "amendments": [
+    {
+     "notification": "12/2015-Cus",
+     "date": "2015-03-10",
+     "effective": "2015-03-10",
+     "file": "Tariff__12_2015-Cus__1002705.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: in the opening paragraph, for the proviso, the following shall be substituted, namely:- \"Provided that the importer proves to the satisfaction of the Assistant Commissioner of Customs or Deputy Commissioner of Customs, as the case may be, that the goods in res",
+      "not applied: for the proviso, the following shall be substituted, namely:- \"Provided that the importer proves to the satisfaction of the Assistant Commissioner of Customs or Deputy Commissioner of Customs, as the case may be, that the goods in respect of which the exemptio",
+      "not applied: in the Schedule to this notification, in accordance with provisions of the Rules of Origin, published in the notification of the Government of India in the Ministry of Finance (Department of Revenue), No. 29/2015-Customs (N.T.), dated 10 th March, 2015.\". "
+     ]
+    },
+    {
+     "notification": "34/2016-Cus",
+     "date": "2016-05-19",
+     "effective": "2016-05-19",
+     "file": "Tariff__34_2016-Cus__1002622.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: against serial numbers 5 and 21, shall be omitted; ii. for the entry against serial number 24, the following entry shall be substituted, namely:- \"Democratic Republic of Timor-Leste\" ",
+      "not applied: against serial number 24, the following entry shall be substituted, namely:- \"Democratic Republic of Timor-Leste\" "
+     ]
+    },
+    {
+     "notification": "39/2016-Cus",
+     "date": "2016-06-21",
+     "effective": "2016-06-21",
+     "file": "Tariff__39_2016-Cus__1002617.pdf",
+     "applied": [
+      "country list: insert after S.No. 31 — 32. Republic of Togo 33. Republic of Chad (see the agreement's partner list)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "46/2016-Cus",
+     "date": "2016-08-23",
+     "effective": "2016-08-23",
+     "file": "Tariff__46_2016-Cus__1002610.pdf",
+     "applied": [
+      "country list: insert after S.No. 33 — 34 Republic of Guinea-Bissau (see the agreement's partner list)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "S.No. 47 col 2"
+     ],
+     "unapplied": [
+      "insert at S.No. ['114']: could not read rows from '115. 9620000 0 Monopo d, Bipod Tripods of plastics 50%'"
+     ]
+    },
+    {
+     "notification": "02/2017-Cus",
+     "date": "2017-01-27",
+     "effective": "2017-01-27",
+     "file": "Tariff__02_2017-Cus__1002586.pdf",
+     "applied": [
+      "replace 14"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "68/2017-Cus",
+     "date": "2017-07-27",
+     "effective": "2017-07-27",
+     "file": "Tariff__68_2017-Cus__1002520.pdf",
+     "applied": [
+      "country list: insert after S.No. 34 — 35 Republic of Niger 36 Republic of Guinea (see the agreement's partner list)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 9 col 2",
+      "S.No. 95 col 2",
+      "S.No. 97 col 2",
+      "S.No. 12 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "16/2021-Cus",
+     "date": "2021-02-05",
+     "effective": "2021-02-05",
+     "file": "Tariff__16_2021-Cus__1000040.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: in the preamble, in clause (i), after the words, figures and brackets \"from whole of the duty of Customs as specified in the first schedule of the Customs Tariff Act, 1975\", the words, figures and brackets \"and from whole of Agriculture Infrastructure and Deve",
+      "not applied: in the Explanation, for the words, figures and brackets \" the standard rate of duty specified in the First Schedule to the Customs Tariff Act, 1975 (51 of 1975) \", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Sch",
+      "not applied: in the First Schedule to the Customs Tariff Act, 1975 (51 of 1975) \", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Schedule to the Customs Tariff Act, 1975 (51 of 1975) and Agriculture Infrastructure and Developm",
+      "not applied: in the First Schedule to the Customs Tariff Act, 1975 (51 of 1975) and Agriculture Infrastructure and Development Cess leviable under clause 115 of the Finance Bill, 2021 (15 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "26/2021-Cus",
+     "date": "2021-04-08",
+     "effective": "2021-04-08",
+     "file": "Tariff__26_2021-Cus__1000030.pdf",
+     "applied": [],
+     "unapplied": [
+      "no instruction recognised: In the said notification, for the words, figures and brackets \"clause 115 of the Finance Bill, 2021 (15 of 2021)\", the words, figures and brackets, \"section 124 of the Finance Act, 2021 (13 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "50/2021-Cus",
+     "date": "2021-10-22",
+     "effective": "2021-10-22",
+     "file": "Tariff__50_2021-Cus__1000004.pdf",
+     "applied": [
+      "country list: insert after S.No. 36 — 37 Sierra Leone (see the agreement's partner list)"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "insert 35A",
+      "insert 75A, 75B"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 98 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2023-Customs",
+     "date": "2023-12-29",
+     "effective": "2023-12-29",
+     "file": "Tariff__67_2023-Customs__1009967.pdf",
+     "applied": [
+      "country list: insert after S.No. 37 — 38 Democratic Republic of Congo (see the agreement's partner list)"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 211,
+   "rows": 215,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "DFTP",
+     "lines": 116
+    }
+   ]
+  },
+  {
+   "key": "IN-CL-PTA",
+   "notification": "101/2007",
+   "base": "19/2017-Customs",
+   "baseFile": "Tariff__19_2017-Cus__1002569.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "10/2020-Cus",
+     "date": "2020-02-02",
+     "effective": "2020-02-02",
+     "file": "Tariff__10_2020-Cus__1000230.pdf",
+     "applied": [
+      "S.No. 1002 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "16/2021-Cus",
+     "date": "2021-02-05",
+     "effective": "2021-02-05",
+     "file": "Tariff__16_2021-Cus__1000040.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: in the Explanation, for the words, figures and brackets \" the standard rate of duty specified in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Schedule to ",
+      "not applied: in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets \"the sum of the standard rate of duty specified in the First Schedule to the Customs Tariff Act, 1975 and Agriculture Infrastructure and Development Cess leviable unde",
+      "not applied: in the First Schedule to the Customs Tariff Act, 1975 and Agriculture Infrastructure and Development Cess leviable under clause 115 of the Finance Bill, 2021 (15 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "26/2021-Cus",
+     "date": "2021-04-08",
+     "effective": "2021-04-08",
+     "file": "Tariff__26_2021-Cus__1000030.pdf",
+     "applied": [],
+     "unapplied": [
+      "no instruction recognised: In the said notification, for the words, figures and brackets \"clause 115 of the Finance Bill, 2021 (15 of 2021)\", the words, figures and brackets, \"section 124 of the Finance Act, 2021 (13 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 587",
+      "omit 588",
+      "omit 589",
+      "omit 718",
+      "omit 929",
+      "omit 930",
+      "omit 931",
+      "omit 932",
+      "omit 1013",
+      "omit 1014",
+      "insert 187A",
+      "replace 719",
+      "S.No. 1001 col 2,3",
+      "S.No. 581 col 2",
+      "S.No. 582 col 2",
+      "S.No. 583 col 2",
+      "S.No. 584 col 2",
+      "S.No. 585 col 2",
+      "S.No. 586 col 2",
+      "S.No. 608 col 2",
+      "S.No. 609 col 2",
+      "S.No. 703 col 2",
+      "S.No. 704 col 2",
+      "S.No. 716 col 2",
+      "S.No. 717 col 2",
+      "S.No. 840 col 2",
+      "S.No. 928 col 2",
+      "S.No. 1002 col 2",
+      "S.No. 1012 col 2",
+      "S.No. 1016 col 2",
+      "S.No. 1028 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "omit 125",
+      "insert 105A",
+      "insert 833A",
+      "replace 1032",
+      "S.No. 124 col 2",
+      "S.No. 126 col 2",
+      "S.No. 130 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2023-Customs",
+     "date": "2023-04-29",
+     "effective": "2023-04-29",
+     "file": "Tariff__36_2023-Customs__1009724.pdf",
+     "applied": [
+      "omit 223",
+      "S.No. 193 col 2",
+      "S.No. 204 col 2",
+      "S.No. 214 col 2",
+      "S.No. 215 col 2",
+      "S.No. 216 col 2",
+      "S.No. 217 col 2",
+      "S.No. 218 col 2",
+      "S.No. 219 col 2",
+      "S.No. 220 col 2",
+      "S.No. 221 col 2",
+      "S.No. 222 col 2",
+      "S.No. 224 col 2",
+      "S.No. 229 col 2",
+      "S.No. 601 col 2",
+      "S.No. 766 col 2",
+      "S.No. 842 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "omit 276",
+      "insert 277A, 277B",
+      "S.No. 938 col 2",
+      "S.No. 1016 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 287 col 2",
+      "S.No. 288 col 2",
+      "S.No. 289 col 2",
+      "S.No. 290 col 2",
+      "S.No. 601 col 2",
+      "S.No. 843 col 2",
+      "S.No. 844 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 105 col 2",
+      "S.No. 155 col 2",
+      "S.No. 169 col 2",
+      "S.No. 170 col 2",
+      "S.No. 311 col 2",
+      "S.No. 312 col 2",
+      "S.No. 313 col 2",
+      "S.No. 394 col 2",
+      "S.No. 653 col 2",
+      "S.No. 654 col 2",
+      "S.No. 657 col 2",
+      "S.No. 967 col 2",
+      "S.No. 1002 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "-:125",
+    "-:223",
+    "-:276",
+    "-:587",
+    "-:588",
+    "-:589",
+    "-:718",
+    "-:929",
+    "-:930",
+    "-:931",
+    "-:932",
+    "-:1013",
+    "-:1014"
+   ],
+   "unreadSpecs": [
+    "-:703 '4412 39 90 to 4412 49 00' unread ['4412 39 90 to 4412 49 00']"
+   ],
+   "unreadRates": [
+    "-:917 '50% (Subject to a quota of maximum 5000 MTs per annum and above this at MFN rates.)'"
+   ],
+   "baseRows": 1034,
+   "rows": 1026,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "IN-CL-PTA",
+     "lines": 1026
+    }
+   ]
+  },
+  {
+   "key": "IN-MERCOSUR-PTA",
+   "notification": "057/2009",
+   "base": "57/2009-Customs",
+   "baseFile": "Tariff__57_2009_-_Customs__1003242.pdf",
+   "warnings": [
+    "Tariff__57_2009_-_Customs__1003242.pdf p3: S.No. 155 recovered from text below the ruled table",
+    "57/2009-Customs table -: serials missing [26]"
+   ],
+   "amendments": [
+    {
+     "notification": "121/2011 - Customs",
+     "date": "2011-12-30",
+     "effective": "2012-01-01",
+     "file": "Tariff__121_2011_-_Customs__1002889.pdf",
+     "applied": [
+      "S.No. 12 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [
+      "S.No. 239 col 2,3",
+      "S.No. 448 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 35 col 2",
+      "S.No. 50 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "16/2021-Cus",
+     "date": "2021-02-05",
+     "effective": "2021-02-05",
+     "file": "Tariff__16_2021-Cus__1000040.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: in the Explanation, for the words, figures and brackets \" the standard rate of duty specified in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets Extraordinary, Part II, Section 3, Sub-section (i), vide number G.S.R. 37",
+      "not applied: in the First Schedule to the said Customs Tariff Act, 1975\", the words, figures and brackets Extraordinary, Part II, Section 3, Sub-section (i), vide number G.S.R. 371 (E), dated the 30th May, 2009 \"the sum of the standard rate of duty specified in the First S",
+      "not applied: in the First Schedule to the Customs Tariff Act, 1975 and Agriculture Infrastructure and Development Cess leviable under clause 115 of the Finance Bill, 2021 (15 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "26/2021-Cus",
+     "date": "2021-04-08",
+     "effective": "2021-04-08",
+     "file": "Tariff__26_2021-Cus__1000030.pdf",
+     "applied": [],
+     "unapplied": [
+      "no instruction recognised: In the said notification, for the words, figures and brackets \"clause 115 of the Finance Bill, 2021 (15 of 2021)\", the words, figures and brackets, \"section 124 of the Finance Act, 2021 (13 of 2021)\" shall be substituted."
+     ]
+    },
+    {
+     "notification": "60/2021-Cus",
+     "date": "2021-12-30",
+     "effective": "2021-12-30",
+     "file": "Tariff__60_2021-Cus__1008957.pdf",
+     "applied": [
+      "omit 344",
+      "omit 345",
+      "omit 346",
+      "omit 374",
+      "omit 375",
+      "omit 376",
+      "omit 377",
+      "omit 378",
+      "replace 421",
+      "S.No. 343 col 2",
+      "S.No. 347 col 2",
+      "S.No. 373 col 2",
+      "S.No. 402 col 2",
+      "S.No. 433 col 2",
+      "S.No. 438 col 2",
+      "S.No. 450 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "23/2022 Customs",
+     "date": "2022-04-30",
+     "effective": "2022-05-01",
+     "file": "Tariff__23_2022_Customs__1009296.pdf",
+     "applied": [
+      "S.No. 16 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "45/2024-Customs",
+     "date": "2024-09-30",
+     "effective": "2024-09-30",
+     "file": "Tariff__45_2024-Customs__1010165.pdf",
+     "applied": [
+      "insert 357A",
+      "S.No. 408 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "25/2025-Customs",
+     "date": "2025-04-30",
+     "effective": "2025-04-30",
+     "file": "Tariff__25_2025-Customs__1010364.pdf",
+     "applied": [
+      "S.No. 136 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "14/2026-Customs",
+     "date": "2026-04-30",
+     "effective": "2026-04-30",
+     "file": "Tariff__14_2026-Customs__1010638.pdf",
+     "applied": [
+      "S.No. 150 col 2",
+      "S.No. 151 col 2",
+      "S.No. 154 col 2",
+      "S.No. 156 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [],
+   "omittedSerials": [
+    "-:344",
+    "-:345",
+    "-:346",
+    "-:374",
+    "-:375",
+    "-:376",
+    "-:377",
+    "-:378"
+   ],
+   "unreadSpecs": [],
+   "unreadRates": [
+    "-:421 ''"
+   ],
+   "baseRows": 449,
+   "rows": 442,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "IN-MERCOSUR-PTA",
+     "lines": 442
+    }
+   ]
+  },
+  {
+   "key": "IN-AF-PTA",
+   "notification": "076/2003",
+   "base": "76/2003-Customs",
+   "baseFile": "Tariff__76_2003-Cus__1004004.pdf",
+   "warnings": [],
+   "amendments": [
+    {
+     "notification": "130/2006 - Customs",
+     "date": "2006-12-30",
+     "effective": "2007-01-01",
+     "file": "Tariff__130_2006_-_Customs__1003572.pdf",
+     "applied": [
+      "S.No. 20 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "121/2011 - Customs",
+     "date": "2011-12-30",
+     "effective": "2012-01-01",
+     "file": "Tariff__121_2011_-_Customs__1002889.pdf",
+     "applied": [
+      "S.No. 4 col 2",
+      "S.No. 16 col 2",
+      "S.No. 17 col 2"
+     ],
+     "unapplied": []
+    },
+    {
+     "notification": "67/2016-Cus",
+     "date": "2016-12-31",
+     "effective": "2017-01-01",
+     "file": "Tariff__67_2016-Cus__1002589.pdf",
+     "applied": [],
+     "unapplied": [
+      "not applied: against serial number 20, in the entry in the column (3), after the word \"roots\" the words \", fresh or dried\" shall be inserted."
+     ]
+    },
+    {
+     "notification": "36/2019-Cus",
+     "date": "2019-12-30",
+     "effective": "2019-12-30",
+     "file": "Tariff__36_2019-Cus__1000246.pdf",
+     "applied": [
+      "S.No. 8 col 2",
+      "S.No. 24 col 2"
+     ],
+     "unapplied": []
+    }
+   ],
+   "referencesOnly": [
+    {
+     "notification": "29/2006 - Customs",
+     "date": "2006-03-20",
+     "file": "Tariff__29_2006_-_Customs__1003673.pdf",
+     "snippet": ") No.60/2000-Customs, dated the 12 th May, 2000, G.S.R. 434(E), dated the 12 th May, 2000; (vii) No.40/2002-Customs, dated the 12 th April, 2002, G.S.R. 281(E), dated the 12 th April, 2002; (viii) No.76/2003-Customs, dated the 13 th May, 2003, G.S.R. 394(E), dated the 13 th May, 2003; (ix) No.85/2004-Customs, dated the 31 st August, 2004, G.S.R. 560(E), dated the 31 st August, 2004; (x) No.72/2005-Customs, dated the 22 nd July, 2005, G.S.R. 497(E), dated the 22 nd July, 2005; (xi) No.73/2005-Cus"
+    },
+    {
+     "notification": "06/2025-Customs",
+     "date": "2025-02-01",
+     "file": "Tariff__06_2025-Customs__1010293.pdf",
+     "snippet": "e number G.S.R. 656(E), dated the 05th November, 1998; iii. notification No. 4/1999 -Customs, dated the 08th January, 1999 vide number G.S.R. 11(E), dated the 08th January, 1999; iv. notification No. 76/2003-Customs, dated the 13th May, 2003 vide number G.S.R. 394(E), dated the 13th May, 2003; v. notification No. 85/2004-Customs, dated 31st August, 2004 vide number G.S.R. 560(E), dated the 31st August, 2004; vi. notification No. 73/2005-Customs, dated the 22nd July, 2005 vide number G.S.R. 498(E"
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "baseRows": 25,
+   "rows": 25,
+   "slot": "SAPTA",
+   "emittedTo": [
+    {
+     "key": "IN-AF-PTA",
+     "lines": 25
+    }
+   ]
+  },
+  {
+   "key": "IN-NP-TREATY",
+   "notification": "104/2010",
+   "base": "104/2010-Customs",
+   "baseFile": "Tariff__104_2010_-_Customs__1003042.pdf",
+   "warnings": [],
+   "amendments": [],
+   "referencesOnly": [
+    {
+     "notification": "107/2011 - Customs",
+     "date": "2011-12-05",
+     "file": "Tariff__107_2011_-_Customs__1002903.pdf",
+     "snippet": "[TO BE PUBLISHED IN THE GAZETTE OF INDIA, EXTRAORDINARY, PART II, SECTION 3, SUB-SECTION (i)] GOVERNMENT OF INDIA MINISTRY OF FINANCE (DEPARTMENT OF REVENUE) Notification No. 107 / 2011 - Customs New Delhi, dated the 5 th December, 2011 G.S.R. (E).- In exercise of the powers conferred by sub-section"
+    },
+    {
+     "notification": "21/2012-Cus",
+     "date": "2012-03-17",
+     "file": "Tariff__21_2012-Cus__1002860.pdf",
+     "snippet": "[TO BE PUBLISHED IN THE GAZETTE OF INDIA, EXTRAORDINARY, PART II, SECTION 3, SUB-SECTION (i)] GOVERNMENT OF INDIA MINISTRY OF FINANCE (DEPARTMENT OF REVENUE) New Delhi, the 17th March, 2012 Notification No. 21 /2012- Customs G.S.R. (E).- In exercise of the powers conferred by sub-section (1) of sect"
+    },
+    {
+     "notification": "08/2022-Customs",
+     "date": "2022-02-01",
+     "file": "Tariff__08_2022-Customs__1009196.pdf",
+     "snippet": "In the said notification, in the preamble, after the words, figures and brackets \"from the whole of the duty of Customs leviable thereon under the First Schedule to the Customs Tariff Act, 1975 (51 of 1975)\", the words, figures and brackets \"and from the whole of Agriculture Infrastructure and Development Cess, leviable under section 124 of the Finance Act, 2021 (13 of 2021)\" shall be inserted."
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "rows": 3,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-NP-TREATY",
+     "lines": 3
+    }
+   ]
+  },
+  {
+   "key": "IN-BT-TRADE",
+   "notification": "040/2017",
+   "base": "40/2017-Customs",
+   "baseFile": "Tariff__40_2017-Cus__1002548.pdf",
+   "warnings": [],
+   "amendments": [],
+   "referencesOnly": [
+    {
+     "notification": "08/2022-Customs",
+     "date": "2022-02-01",
+     "file": "Tariff__08_2022-Customs__1009196.pdf",
+     "snippet": "In the said notification, in the preamble, after the words, \"from the whole of the duty of Customs leviable thereon which is specified in the said First Schedule\", the words, figures and brackets \", the whole of Agriculture Infrastructure and Development Cess, leviable under section 124 of the Finance Act, 2021 (13 of 2021), the whole of Health Cess, leviable under section 141 of the Finance Act, "
+    }
+   ],
+   "omittedSerials": [],
+   "unreadSpecs": [],
+   "unreadRates": [],
+   "rows": 1,
+   "slot": "BASIC",
+   "emittedTo": [
+    {
+     "key": "IN-BT-TRADE",
+     "lines": 1
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+[
+ {
+  "serial": "1",
+  "include": [],
+  "exclude": [],
+  "anyChapter": true,
+  "description": "Goods of Bhutanese or Indian origin imported from Bhutan into India.",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2017-07-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "040/2017",
+  "rateMeaning": "preferential BCD rate %",
+  "allGoods": false,
+  "source": "40/2017-Customs"
+ }
+]

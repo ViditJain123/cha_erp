@@ -1,0 +1,1702 @@
+[
+ {
+  "serial": "1",
+  "include": [
+   "080450"
+  ],
+  "exclude": [],
+  "description": "Fresh mangosteens, mangoes",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "0804 50",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "080610"
+  ],
+  "exclude": [],
+  "description": "Fresh grapes",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "0806 10 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "080810"
+  ],
+  "exclude": [],
+  "description": "Apples",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "0808 10 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "081060"
+  ],
+  "exclude": [],
+  "description": "Durians",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "0810 60 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "5",
+  "include": [
+   "081090"
+  ],
+  "exclude": [],
+  "description": "Fresh rambutans, longans, pomegranates",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "0810 90",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "100111",
+   "100119"
+  ],
+  "exclude": [],
+  "description": "Durum wheat",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "100111 and 100119",
+  "allGoods": false,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "115/2011 (2011-12-28) (column 2)"
+  ]
+ },
+ {
+  "serial": "7",
+  "include": [
+   "100191",
+   "100199"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "100191 and 100199",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "115/2011 (2011-12-28) (column 2)"
+  ]
+ },
+ {
+  "serial": "8",
+  "include": [
+   "160411"
+  ],
+  "exclude": [],
+  "description": "Salmon",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "1604 11 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "9",
+  "include": [
+   "160413"
+  ],
+  "exclude": [],
+  "description": "Sardines, sardinella and brisling or sprats",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "1604 13",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "160415"
+  ],
+  "exclude": [],
+  "description": "Mackerel",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "1604 15 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "160510"
+  ],
+  "exclude": [],
+  "description": "Crab",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "1605 10 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "12",
+  "include": [
+   "2501"
+  ],
+  "exclude": [],
+  "description": "Salt (including table salt and denatured salt) and pure sodium chloride, whether or not in aqueous solution or containing added anti-caking or free flowing agents; Sea water",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2501 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "13",
+  "include": [
+   "2610"
+  ],
+  "exclude": [],
+  "description": "Chromium ores and concentrates",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2610 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "14",
+  "include": [
+   "281112",
+   "281119"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2811 12 , 2811 19",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "67/2016-Cus (2016-12-31) (column 2)"
+  ]
+ },
+ {
+  "serial": "15",
+  "include": [
+   "281820"
+  ],
+  "exclude": [],
+  "description": "Aluminium oxide, other than artificial corundum",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2818 20",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "16",
+  "include": [
+   "281830"
+  ],
+  "exclude": [],
+  "description": "Aluminium hydroxide",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2818 30 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "17",
+  "include": [
+   "291739"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "2917 39",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "18",
+  "include": [
+   "390690"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3906 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "19",
+  "include": [
+   "390710"
+  ],
+  "exclude": [],
+  "description": "Polyacetals",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3907 10 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "20",
+  "include": [
+   "390730"
+  ],
+  "exclude": [],
+  "description": "Epoxide resins",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3907 30",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "21",
+  "include": [
+   "390740"
+  ],
+  "exclude": [],
+  "description": "Polycarbonates",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3907 40 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "22",
+  "include": [
+   "390799"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3907 99",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "22A",
+  "include": [
+   "390770"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3907 70 00",
+  "allGoods": true,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (insert)"
+  ]
+ },
+ {
+  "serial": "23",
+  "include": [
+   "390810"
+  ],
+  "exclude": [],
+  "description": "Polyamide-6,-11,-12,-6,6,-6,9,-6,10 or -6,12",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3908 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "24",
+  "include": [
+   "390890"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3908 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "25",
+  "include": [
+   "390950"
+  ],
+  "exclude": [],
+  "description": "Polyurethanes",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3909 50 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "26",
+  "include": [
+   "391990"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "3919 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "27",
+  "include": [
+   "441210"
+  ],
+  "exclude": [],
+  "description": "Plywood of bamboo, consisting solely of sheets of wood, each ply not exceeding 6mm thickness 27A4412 39 All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "4412 10 00",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (replace)"
+  ]
+ },
+ {
+  "serial": "28",
+  "include": [
+   "710310"
+  ],
+  "exclude": [],
+  "description": "Rubies, emeralds and sapphires, unset and imported uncut",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7103 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "28A",
+  "include": [
+   "710310"
+  ],
+  "exclude": [],
+  "description": "All goods, other than the goods mentioned against S. No.28",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7103 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "29",
+  "include": [
+   "710491",
+   "710499"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7104 91 10, 7104 91 20, 7104 99 00",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)",
+   "36/2023-Customs (2023-04-29) (column 2)"
+  ]
+ },
+ {
+  "serial": "30",
+  "include": [
+   "710510"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7105 10 10, 7105 10 20",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "36/2023-Customs (2023-04-29) (column 2)"
+  ]
+ },
+ {
+  "serial": "31",
+  "include": [
+   "711319"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7113 19",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "32",
+  "include": [
+   "720150"
+  ],
+  "exclude": [],
+  "description": "Alloy pig iron",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7201 50",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "32A",
+  "include": [
+   "720150"
+  ],
+  "exclude": [],
+  "description": "Spiegeleisen",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7201 50",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "33",
+  "include": [
+   "720711"
+  ],
+  "exclude": [],
+  "description": "All goods (other than seconds and defectives)",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7207 11",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "34",
+  "include": [
+   "720719"
+  ],
+  "exclude": [],
+  "description": "All goods (other than seconds and defectives)",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7207 19",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "35",
+  "include": [
+   "72261900"
+  ],
+  "exclude": [],
+  "description": "All goods (other than seconds and defectives)",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7226 19 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "36",
+  "include": [
+   "722990"
+  ],
+  "exclude": [],
+  "description": "All goods other than wire of high speed steel'; (vii) S. No. 36A and the entries relating thereto shall be omitted; (viii) After S.No.51 and the entries relating thereto, the following S.No. and entries shall be inserted:- 51A8486 90 Parts of machinery, plant or laboratory equipment, whether or not electrically heated (excluding furnaces, ovens and other equipment of heading 8514), for the treatment of materials by a process involving a change of temperature such as heating, cooking, roasting, distilling, rectifying, sterilisings, pasteurizing, steaming, drying, evaporating, vapourising, condensing or cooling, other than machinery or plant of a kind used for domestic purposes; instantaneous or storage water heaters, non-electric. (ix) after S. No.56 and the entries relating thereto, the following S. No. and entries shall be inserted, namely :-",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7229 90",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (replace)"
+  ]
+ },
+ {
+  "serial": "37",
+  "include": [
+   "730792"
+  ],
+  "exclude": [],
+  "description": "Threaded elbows, bends and sleeves",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7307 92",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "38",
+  "include": [
+   "732020"
+  ],
+  "exclude": [],
+  "description": "Helical springs",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7320 20 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "39",
+  "include": [
+   "732690"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "732690",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "39A",
+  "include": [
+   "9620"
+  ],
+  "exclude": [],
+  "description": "Monopods, bipods, tripods and similar articles made of iron and steel",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2017-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "9620 00 00",
+  "allGoods": false,
+  "source": "67/2016-Cus",
+  "amendedBy": [
+   "67/2016-Cus (2016-12-31) (insert)"
+  ]
+ },
+ {
+  "serial": "40",
+  "include": [
+   "760110"
+  ],
+  "exclude": [],
+  "description": "Aluminium, not alloyed",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7601 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "41",
+  "include": [
+   "760120"
+  ],
+  "exclude": [],
+  "description": "Aluminium alloys",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "7601 20",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "42",
+  "include": [
+   "840490"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8404 90 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "43",
+  "include": [
+   "840991"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8409 91",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "44",
+  "include": [
+   "841360"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8413 60",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "45",
+  "include": [
+   "841381"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8413 81",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "46",
+  "include": [
+   "841451"
+  ],
+  "exclude": [],
+  "description": "Table, floor, wall, window, ceiling or roof fans, with a self-contained electric motor of an output not exceeding 125 W",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8414 51",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "47",
+  "include": [
+   "841459"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8414 59",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "48",
+  "include": [
+   "841490"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8414 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "49",
+  "include": [
+   "841510"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8415 10",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "49A",
+  "include": [
+   "84181090"
+  ],
+  "exclude": [],
+  "description": "Compression-type combined refrigerator-freezers, fitted with separate external doors, household type",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2012-05-29",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "84181090",
+  "allGoods": false,
+  "source": "38/2012-Cus",
+  "amendedBy": [
+   "38/2012-Cus (2012-05-29) (insert)"
+  ]
+ },
+ {
+  "serial": "50",
+  "include": [
+   "841821"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8418 21 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "51",
+  "include": [
+   "841990"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8419 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "52",
+  "include": [
+   "84219910",
+   "84219990"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8421 99 10, 8421 99 90",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "14/2026-Customs (2026-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "53",
+  "include": [
+   "842390"
+  ],
+  "exclude": [],
+  "description": "Weighing machine weights of all kinds; Parts of weighing machinery",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8423 90",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "54",
+  "include": [
+   "842549"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8425 49 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "55",
+  "include": [
+   "843221"
+  ],
+  "exclude": [],
+  "description": "Disc harrows",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8432 21 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "56",
+  "include": [
+   "843780"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8437 80",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "56A",
+  "include": [
+   "84433953"
+  ],
+  "exclude": [],
+  "description": "Staplers (stapling machines)",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8443 39 53",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (insert)"
+  ]
+ },
+ {
+  "serial": "57",
+  "include": [
+   "844820"
+  ],
+  "exclude": [],
+  "description": "Parts and accessories of machines of heading 8444 or of their auxiliary machinery",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8448 20 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "58",
+  "include": [
+   "844833"
+  ],
+  "exclude": [],
+  "description": "Spindles, spindle flyers, spinning rings and ring travellers",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8448 33",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "59",
+  "include": [
+   "847141"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8471 41",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "60",
+  "include": [
+   "847190"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8471 90 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "61",
+  "include": [
+   "84729099"
+  ],
+  "exclude": [],
+  "description": "All goods other than addressing machines and address plate embossing machines",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8472 90 99",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (replace)",
+   "67/2016-Cus (2016-12-31) (column 2)"
+  ]
+ },
+ {
+  "serial": "62",
+  "include": [
+   "847751"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8477 51 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "63",
+  "include": [
+   "847989"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8479 89",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "64",
+  "include": [
+   "847990"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8479 90",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "65",
+  "include": [
+   "848079"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8480 79 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "66",
+  "include": [
+   "848180"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8481 80",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "67",
+  "include": [
+   "848210"
+  ],
+  "exclude": [],
+  "description": "Ball bearings",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8482 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "68",
+  "include": [
+   "848350"
+  ],
+  "exclude": [],
+  "description": "Flywheels and pulleys, including pulley blocks",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8483 50",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "69",
+  "include": [
+   "850431"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8504 31 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "69A",
+  "include": [
+   "8508"
+  ],
+  "exclude": [],
+  "description": "Industrial Vacuum cleaners and parts thereof",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8508",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (insert)"
+  ]
+ },
+ {
+  "serial": "70",
+  "include": [
+   "851220"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8512 20",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "71",
+  "include": [
+   "851711"
+  ],
+  "exclude": [],
+  "description": "Line telephone sets with cordless handsets",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8517 11",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "72",
+  "include": [
+   "08443997"
+  ],
+  "exclude": [],
+  "description": "Parts (other than populated PCBs)",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8443 997",
+  "allGoods": false,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "73",
+  "include": [
+   "85234120",
+   "85234130",
+   "85234140",
+   "85234150",
+   "85234950",
+   "85234960",
+   "85234970"
+  ],
+  "exclude": [],
+  "description": ". All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2007-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "85234120 to 85234150 and 85234950 to 85234970",
+  "allGoods": false,
+  "source": "131/2006 - Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (replace)",
+   "115/2011 (2011-12-28) (column 2)"
+  ]
+ },
+ {
+  "serial": "73A",
+  "include": [
+   "85234110"
+  ],
+  "exclude": [],
+  "description": "Unrecorded Compact Disc (audio), compact disc readable",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2012-01-01",
+  "validUntil": null,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "85234110",
+  "allGoods": false,
+  "source": "115/2011 - Customs",
+  "amendedBy": [
+   "115/2011 (2011-12-28) (replace)"
+  ]
+ },
+ {
+  "serial": "74",
+  "include": [
+   "852872"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8528 72",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "131/2006 (2006-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "75",
+  "include": [
+   "852910"
+  ],
+  "exclude": [],
+  "description": "Aerials or antennae of a kind used with apparatus for radio-telephony and radio-telegraphy",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8529 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "75A",
+  "include": [
+   "852910"
+  ],
+  "exclude": [],
+  "description": "All goods, other than the goods mentioned against S. No.75",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8529 10",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "76",
+  "include": [
+   "8534"
+  ],
+  "exclude": [],
+  "description": "Printed circuits",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8534 00 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "77",
+  "include": [
+   "854011"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8540 11",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "78",
+  "include": [
+   "870840"
+  ],
+  "exclude": [],
+  "description": "Gear boxes",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "8708 40 00",
+  "allGoods": false,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "79",
+  "include": [
+   "903289"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "9032 89",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "80",
+  "include": [
+   "903290"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "9032 90 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "81",
+  "include": [
+   "910211"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "9102 11 00",
+  "allGoods": true,
+  "source": "85/2004-Customs"
+ },
+ {
+  "serial": "82",
+  "include": [
+   "940191",
+   "940199"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2006-09-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "085/2004",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "94019100 to 94019900",
+  "allGoods": true,
+  "source": "85/2004-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ }
+]

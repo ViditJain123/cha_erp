@@ -1,0 +1,914 @@
+[
+ {
+  "serial": "1",
+  "include": [
+   "030551"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03 05 51",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "030552"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03 05 52",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "030553"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03 05 53",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "030554"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03 05 54",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "5",
+  "include": [
+   "030559"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03 05 59",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "410411"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 04 11",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "7",
+  "include": [
+   "410419"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 04 19",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "8",
+  "include": [
+   "410441"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 51,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 04 41",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "9",
+  "include": [
+   "410449"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 04 49",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "410711"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 11",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "410712"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 12",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "12",
+  "include": [
+   "410719"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 19",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "13",
+  "include": [
+   "410791"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 91",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "14",
+  "include": [
+   "410792"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 92",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "15",
+  "include": [
+   "410799"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 07 99",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "16",
+  "include": [
+   "410621"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 06 21",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "17",
+  "include": [
+   "410622"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "43",
+  "rate": 43.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 06 22",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "18",
+  "include": [
+   "411510"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "43",
+  "rate": 43.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41 15 10",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "19",
+  "include": [
+   "480100"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "43",
+  "rate": 43.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 01 00",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "20",
+  "include": [
+   "480254"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "43",
+  "rate": 43.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 02 54",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "21",
+  "include": [
+   "480255"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "43",
+  "rate": 43.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 02 55",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "22",
+  "include": [
+   "480256"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "14",
+  "rate": 14.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 02 56",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "23",
+  "include": [
+   "480257"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "14",
+  "rate": 14.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 02 57",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "24",
+  "include": [
+   "480258"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48 02 58",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "25",
+  "include": [
+   "570190"
+  ],
+  "exclude": [],
+  "description": "Carpets wholly made of jute",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "57 01 90",
+  "allGoods": false,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "26",
+  "include": [
+   "570390"
+  ],
+  "exclude": [],
+  "description": "Carpets wholly made of jute",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "57 03 90",
+  "allGoods": false,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "27",
+  "include": [
+   "721310"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 13 10",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "28",
+  "include": [
+   "721320"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 13 20",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "29",
+  "include": [
+   "721391"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 13 91",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "30",
+  "include": [
+   "721399"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 13 99",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "31",
+  "include": [
+   "721410"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 14 10",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "32",
+  "include": [
+   "721420"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 52,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 14 20",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "33",
+  "include": [
+   "721491"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 14 91",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "34",
+  "include": [
+   "721499"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 14 99",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "35",
+  "include": [
+   "721610"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 10",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "36",
+  "include": [
+   "721621"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 21",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "37",
+  "include": [
+   "721622"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 22",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "38",
+  "include": [
+   "721631"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 31",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "39",
+  "include": [
+   "721632"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 32",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "40",
+  "include": [
+   "721633"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 33",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "41",
+  "include": [
+   "721640"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 40",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "42",
+  "include": [
+   "721650"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 50",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "43",
+  "include": [
+   "721661"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 61",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "44",
+  "include": [
+   "721669"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 69",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "45",
+  "include": [
+   "721691"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 91",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "46",
+  "include": [
+   "721699"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "72 16 99",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "47",
+  "include": [
+   "732410"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "50",
+  "rate": 50.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73 24 10",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ },
+ {
+  "serial": "48",
+  "include": [
+   "732421"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "100",
+  "rate": 100.0,
+  "validFrom": "2018-07-01",
+  "validUntil": null,
+  "page": 53,
+  "notification": "050/2018",
+  "table": "PART B",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73 24 21",
+  "allGoods": true,
+  "source": "50/2018-Customs"
+ }
+]

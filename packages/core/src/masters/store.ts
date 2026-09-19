@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import {
   DECLARATIONS,
@@ -14,6 +14,7 @@ import {
   type PortMaster,
   type TariffMaster,
 } from './data.js';
+import { tariffBookMasters } from './tariff-book.js';
 
 /**
  * Mutable masters store: compiled seed data + a JSON overlay directory
@@ -66,14 +67,79 @@ function readOverlay<K extends keyof MastersOverlay>(name: K): MastersOverlay[K]
 function writeOverlay<K extends keyof MastersOverlay>(name: K, data: MastersOverlay[K]): void {
   mkdirSync(overlayDir(), { recursive: true });
   writeFileSync(overlayPath(name), JSON.stringify(data, null, 2));
+  // mtime has a coarse resolution on some filesystems, so a write inside the
+  // same millisecond as the last read would not invalidate the cache on its
+  // own. Clearing it here makes upsert-then-lookup correct regardless.
+  if (name === 'tariff') tariffCache = null;
 }
 
 /* ---------- merged reads (overlay wins on key collision) ---------- */
 
+/**
+ * The tariff master, in three layers.
+ *
+ * Highest first: the overlay (a reviewer's correction, or a rate learned from
+ * an approved job), then the hand-typed seed in data.ts, then the ~12,000 rows
+ * parsed from the printed tariff book. A CTH resolves to the most authored
+ * reading of it that exists.
+ *
+ * The seed sits above the book deliberately. Its three rows were transcribed
+ * from real filed jobs, and `masters-store.test.ts` pins them; the book
+ * reproduces all three exactly, which is the evidence that the parse can be
+ * trusted with the other 12,000. If that ever stops being true it should
+ * surface as a failing test, not as a silently changed duty.
+ */
 export function allTariff(): TariffMaster[] {
-  const overlay = readOverlay('tariff');
-  const overlayCths = new Set(overlay.map((t) => t.cth));
-  return [...overlay, ...TARIFF.filter((t) => !overlayCths.has(t.cth))];
+  return tariffIndex().ordered;
+}
+
+/**
+ * Indexed and memoised, because this is now a hot path over 12,000 rows rather
+ * than a cold one over three. `lookupTariff` is called up to three times per
+ * invoice line, and each call used to re-read and re-parse the overlay file.
+ *
+ * The cache turns over when the overlay file's mtime changes, and `writeOverlay`
+ * clears it outright so that upsert-then-read inside one process — which is
+ * what learn.ts does, and what the store test asserts — still sees its own write.
+ */
+interface TariffIndex {
+  byCth: Map<string, TariffMaster>;
+  ordered: TariffMaster[];
+}
+
+let tariffCache: { index: TariffIndex; stamp: number } | null = null;
+
+function overlayStamp(): number {
+  try {
+    return statSync(overlayPath('tariff')).mtimeMs;
+  } catch {
+    return 0; // no overlay file yet
+  }
+}
+
+function tariffIndex(): TariffIndex {
+  const stamp = overlayStamp();
+  if (tariffCache && tariffCache.stamp === stamp) return tariffCache.index;
+
+  const byCth = new Map<string, TariffMaster>();
+  // Lowest precedence first: each layer overwrites what the one beneath said.
+  for (const row of tariffBookMasters()) byCth.set(row.cth, row);
+  for (const row of TARIFF) {
+    byCth.set(row.cth, { ...row, provenance: row.provenance ?? { source: 'seed' } });
+  }
+  for (const row of readOverlay('tariff')) byCth.set(row.cth, row);
+
+  const index: TariffIndex = {
+    byCth,
+    ordered: [...byCth.values()].sort((a, b) => a.cth.localeCompare(b.cth)),
+  };
+  tariffCache = { index, stamp };
+  return index;
+}
+
+/** One tariff row by exact CTH. O(1) over the whole First Schedule. */
+export function tariffByCth(cth: string): TariffMaster | undefined {
+  return tariffIndex().byCth.get(cth.replace(/\D/g, '').slice(0, 8));
 }
 
 export function allImporters(): ImporterMaster[] {

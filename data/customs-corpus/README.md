@@ -1,7 +1,8 @@
 # The customs corpus
 
 The primary-source documents behind the tariff, duty and code masters: the CBIC
-Customs Tariff, the CBIC notification archive, and the ICEGATE specifications.
+Customs Tariff, the CBIC notification, circular, instruction, order, regulation,
+rule and form archives, and the ICEGATE specifications.
 
 Downloaded with `python3 packages/core/scripts/fetch-corpus.py`, which documents
 the retrieval routes and why they are what they are. Parsed into masters by
@@ -93,3 +94,29 @@ Two traps worth stating once:
 - **`ices-locations.json` is the list to validate against**, not the 1,061 ports
   in the e-invoice master, which is broader and includes codes ICES will reject.
   Use the e-invoice list for name enrichment only.
+
+## From files to the knowledge base
+
+```
+python3 packages/core/scripts/fetch-corpus.py cbic     # every CBIC type (update: only what changed)
+pnpm --filter @checklist/library extract-corpus        # PDF/HTML -> text/<type>.jsonl, incremental
+pnpm --filter @checklist/library ocr-corpus --yes      # scans with no text layer -> transcribed pages
+pnpm --filter @checklist/library index-corpus --yes    # -> Supabase reference_chunks (dry run without --yes)
+pnpm --filter @checklist/library search "<question or notification no.>"
+```
+
+- **Rate limit.** taxinformation.cbic.gov.in blocks this machine for 20–60
+  minutes after a few hundred downloads. `fetch-corpus.py` paces itself and
+  stops when refused. A backfill has to be re-run after a cooldown, and it
+  resumes where it stopped. About 41 old notification PDFs return HTTP 500 from
+  CBIC itself; re-running won't fetch them.
+- **Scans.** `ocr-corpus` reads the `noText` list in `text/_report.json`. It
+  renders each page with poppler's `pdftoppm` and has `gpt-5.6-terra`
+  transcribe the English text, Hindi skipped, tables as `a | b | c` rows. Rows
+  are marked `ocr: true` and a document is never read twice. Run it after
+  `extract-corpus`, never alongside it.
+- **Refresh.** `packages/core/scripts/refresh-corpus.sh` runs all four steps
+  incrementally. It won't embed if the estimate is over `--max-usd` (default
+  $3). `in.kuberr.corpus-refresh.plist` would run it daily, but macOS privacy
+  protection blocks launchd from this repo's `~/Desktop` path. Read the note in
+  the plist before installing.

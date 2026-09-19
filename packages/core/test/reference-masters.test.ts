@@ -167,9 +167,26 @@ describe('valuation method', () => {
     expect(DEFAULT_VALUATION_METHOD).toBe('RULE 4 (TRANSACTION VALUE)');
   });
 
-  it('accepts the rule number and the already-correct spelling', () => {
-    expect(valuationMethod('RULE 5')).toBe('RULE 5 (TRANSACTION VALUE OF IDENTICAL GOODS)');
+  it('takes a rule string already in the dropdown spelling', () => {
     expect(valuationMethod('RULE 4 (TRANSACTION VALUE)')).toBe('RULE 4 (TRANSACTION VALUE)');
+    expect(valuationMethod('rule 7 (deductive value)')).toBe('RULE 7 (DEDUCTIVE VALUE)');
+    expect(valuationMethod('OTH (OTHERS)')).toBe('OTH (OTHERS)');
+  });
+
+  it('refuses a bare rule number, because the two numberings disagree', () => {
+    // Logi-Sys' dropdown is Customs Valuation Rules 2007 — Rule 4 is identical
+    // goods, Rule 5 is similar goods — while its own export writes the 1988
+    // "RULE 4 (TRANSACTION VALUE)". So "RULE 5" names the transaction value of
+    // identical goods under one and of similar goods under the other, and the
+    // old regex that mapped rule numbers was silently picking one.
+    expect(valuationMethod('RULE 5')).toBeUndefined();
+    expect(valuationMethod('RULE 4')).toBeUndefined();
+  });
+
+  it('maps the words the documents use', () => {
+    expect(valuationMethod('identical')).toBe('RULE 4 (TRANS. VALUE OF IDENTICAL GOODS)');
+    expect(valuationMethod('similar goods')).toBe('RULE 5 (TRANS. VALUE OF SIMILAR GOODS)');
+    expect(valuationMethod('residual method')).toBe('RULE 9 (RESIDUAL METHOD)');
   });
 
   it('is undefined for text that is not one of the rules', () => {
@@ -179,17 +196,31 @@ describe('valuation method', () => {
 });
 
 describe('terms of payment', () => {
-  it('writes OTHERS in both columns, never the invoice wording', () => {
-    // "D/A 45 days from B/L Date" was going into the dropdown column, then
-    // into the remark. Logi-Sys' own export writes OTHERS in both.
-    expect(termsOfPayment('D/A 45 days from B/L Date')).toEqual({
-      code: 'OTHERS',
-      remark: 'OTHERS',
-    });
+  it('codes the instrument the invoice names', () => {
+    // The dropdown is LC / FOC / DP / DA / SD / OTHERS. An invoice writes prose
+    // — "D/A 45 days from B/L Date" — and the instrument in it is D/A.
+    expect(termsOfPayment('D/A 45 days from B/L Date')).toEqual({ code: 'DA', remark: '' });
+    expect(termsOfPayment('Irrevocable L/C at sight')).toEqual({ code: 'LC', remark: '' });
+    expect(termsOfPayment('CAD')).toEqual({ code: 'DP', remark: '' });
+    expect(termsOfPayment('FREE OF COST')).toEqual({ code: 'FOC', remark: '' });
   });
 
-  it('writes the pair whether or not the draft states terms', () => {
+  it('falls back to OTHERS, in both columns, when no instrument is named', () => {
+    // The remark exists to qualify OTHERS; Logi-Sys' own export writes the word
+    // in both columns, and prints them "OTHERS (OTHERS)".
+    expect(termsOfPayment('100% advance TT')).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
+    expect(termsOfPayment('NET 30')).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
     expect(termsOfPayment('OTHERS')).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
     expect(termsOfPayment(undefined)).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
+  });
+
+  it('leaves the remark blank beside a real code', () => {
+    // A remark next to DA would be qualifying a term that already says the
+    // thing — the customer's rule for the column.
+    expect(termsOfPayment('DA').remark).toBe('');
+  });
+
+  it('does not find a code inside an ordinary word', () => {
+    expect(termsOfPayment('30 days from B/L date')).toEqual({ code: 'OTHERS', remark: 'OTHERS' });
   });
 });

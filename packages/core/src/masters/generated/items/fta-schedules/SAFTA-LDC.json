@@ -1,0 +1,28 @@
+[
+ {
+  "include": [],
+  "exclude": [
+   "2203",
+   "2204",
+   "2205",
+   "2206",
+   "220710",
+   "2208",
+   "24"
+  ],
+  "anyChapter": true,
+  "description": "All goods other than those in the ANNEXURE, imported from a country in the APPENDIX (Bangladesh, Bhutan, Maldives, Nepal, Afghanistan)",
+  "rateText": "whole of the duty of customs leviable under the First Schedule",
+  "rate": 0.0,
+  "validFrom": "2011-11-09",
+  "validUntil": null,
+  "page": 1,
+  "notification": "099/2011",
+  "table": "opening paragraph",
+  "rateMeaning": "preferential BCD rate %",
+  "specText": "all goods other than those mentioned in the ANNEXURE",
+  "allGoods": true,
+  "source": "099/2011",
+  "serial": ""
+ }
+]

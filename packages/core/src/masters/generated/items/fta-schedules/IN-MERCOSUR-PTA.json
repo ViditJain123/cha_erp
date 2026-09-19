@@ -1,0 +1,8030 @@
+[
+ {
+  "serial": "1",
+  "include": [
+   "01041010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "1041010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "020312"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2031200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "020319"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2031900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "020321"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2032100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "5",
+  "include": [
+   "020322"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2032200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "020329"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2032900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "7",
+  "include": [
+   "020621"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2062100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "8",
+  "include": [
+   "020622"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2062200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "9",
+  "include": [
+   "021011"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2101100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "021012"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2101200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "021019"
+  ],
+  "exclude": [],
+  "description": "Other Meat of Swine,Sltd,In Brine,Drd/Smkd Excld.Ham",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2101900",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "12",
+  "include": [
+   "030111",
+   "030119"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "03011100 and 03011900",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "121/2011 (2011-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "13",
+  "include": [
+   "15050010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "15050010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "14",
+  "include": [
+   "150710"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "15071000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "15",
+  "include": [
+   "220720"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "22072000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "16",
+  "include": [
+   "28182011",
+   "28182019"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2818 20 11, 2818 20 19",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "23/2022 (2022-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "17",
+  "include": [
+   "281830"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28183000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "18",
+  "include": [
+   "28241010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28241010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "19",
+  "include": [
+   "28332210"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28332210",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "20",
+  "include": [
+   "28332290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28332290",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "21",
+  "include": [
+   "28332910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28332910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "22",
+  "include": [
+   "284910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28491000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "23",
+  "include": [
+   "28500010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28500010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "24",
+  "include": [
+   "28500020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28500020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "25",
+  "include": [
+   "28500030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 1,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28500030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "27",
+  "include": [
+   "28500049"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28500049",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "28",
+  "include": [
+   "28500050"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "28500050",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "29",
+  "include": [
+   "29041010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29041010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "30",
+  "include": [
+   "29041020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29041020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "31",
+  "include": [
+   "29041030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29041030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "32",
+  "include": [
+   "29041040"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29041040",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "33",
+  "include": [
+   "29053990"
+  ],
+  "exclude": [],
+  "description": "Other ( 2-Metil-2,4-Pentanodiol (Hexilenoglicol)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29053990",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "34",
+  "include": [
+   "290543"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29054300",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "35",
+  "include": [
+   "290949"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2909 49",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "36/2019-Cus (2019-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "36",
+  "include": [
+   "291413"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29141300",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "37",
+  "include": [
+   "291440"
+  ],
+  "exclude": [],
+  "description": "4-Hydroxy-4-Methyl Pentan-2-One(Diiacetone-Alcohols)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29144000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "38",
+  "include": [
+   "291732"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29173200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "39",
+  "include": [
+   "291814"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181400",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "40",
+  "include": [
+   "29181510"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181510",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "41",
+  "include": [
+   "29181520"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181520",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "42",
+  "include": [
+   "29181530"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181530",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "43",
+  "include": [
+   "29181540"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181540",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "44",
+  "include": [
+   "29181550"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181550",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "45",
+  "include": [
+   "29181590"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29181590",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "46",
+  "include": [
+   "29224210"
+  ],
+  "exclude": [],
+  "description": "Glutamic Salts",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29224210",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "47",
+  "include": [
+   "29232010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29232010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "48",
+  "include": [
+   "29232090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29232090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "49",
+  "include": [
+   "29291020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29291020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "50",
+  "include": [
+   "293299"
+  ],
+  "exclude": [],
+  "description": "Other (Glycerol Formal)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "2932 99",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "36/2019-Cus (2019-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "51",
+  "include": [
+   "29362920"
+  ],
+  "exclude": [],
+  "description": "Niacinamide or niacin",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "29362920",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "52",
+  "include": [
+   "320110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32011000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "53",
+  "include": [
+   "32041211"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041211",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "54",
+  "include": [
+   "32041212"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041212",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "55",
+  "include": [
+   "32041213"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041213",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "56",
+  "include": [
+   "32041214"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041214",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "57",
+  "include": [
+   "32041215"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041215",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "58",
+  "include": [
+   "32041216"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041216",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "59",
+  "include": [
+   "32041217"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041217",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "60",
+  "include": [
+   "32041218"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041218",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "61",
+  "include": [
+   "32041219"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041219",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "62",
+  "include": [
+   "32041221"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041221",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "63",
+  "include": [
+   "32041222"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041222",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "64",
+  "include": [
+   "32041223"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041223",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "65",
+  "include": [
+   "32041224"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041224",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "66",
+  "include": [
+   "32041225"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041225",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "67",
+  "include": [
+   "32041229"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041229",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "68",
+  "include": [
+   "32041231"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041231",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "69",
+  "include": [
+   "32041232"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041232",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "70",
+  "include": [
+   "32041239"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041239",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "71",
+  "include": [
+   "32041241"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041241",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "72",
+  "include": [
+   "32041242"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041242",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "73",
+  "include": [
+   "32041243"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041243",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "74",
+  "include": [
+   "32041244"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041244",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "75",
+  "include": [
+   "32041245"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041245",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "76",
+  "include": [
+   "32041246"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041246",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "77",
+  "include": [
+   "32041247"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041247",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "78",
+  "include": [
+   "32041248"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041248",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "79",
+  "include": [
+   "32041251"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041251",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "80",
+  "include": [
+   "32041252"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041252",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "81",
+  "include": [
+   "32041253"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041253",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "82",
+  "include": [
+   "32041254"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041254",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "83",
+  "include": [
+   "32041255"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041255",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "84",
+  "include": [
+   "32041259"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041259",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "85",
+  "include": [
+   "32041261"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041261",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "86",
+  "include": [
+   "32041262"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041262",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "87",
+  "include": [
+   "32041263"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041263",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "88",
+  "include": [
+   "32041264"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041264",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "89",
+  "include": [
+   "32041265"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041265",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "90",
+  "include": [
+   "32041266"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 2,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041266",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "91",
+  "include": [
+   "32041267"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041267",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "92",
+  "include": [
+   "32041268"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041268",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "93",
+  "include": [
+   "32041269"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041269",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "94",
+  "include": [
+   "32041291"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041291",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "95",
+  "include": [
+   "32041292"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041292",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "96",
+  "include": [
+   "32041293"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041293",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "97",
+  "include": [
+   "32041294"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041294",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "98",
+  "include": [
+   "32041295"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041295",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "99",
+  "include": [
+   "32041299"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041299",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "100",
+  "include": [
+   "32041411"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041411",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "101",
+  "include": [
+   "32041419"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041419",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "102",
+  "include": [
+   "32041421"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041421",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "103",
+  "include": [
+   "32041429"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041429",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "104",
+  "include": [
+   "32041431"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041431",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "105",
+  "include": [
+   "32041439"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041439",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "106",
+  "include": [
+   "32041440"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041440",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "107",
+  "include": [
+   "32041450"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041450",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "108",
+  "include": [
+   "32041460"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041460",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "109",
+  "include": [
+   "32041470"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041470",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "110",
+  "include": [
+   "32041481"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041481",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "111",
+  "include": [
+   "32041482"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041482",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "112",
+  "include": [
+   "32041483"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041483",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "113",
+  "include": [
+   "32041484"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041484",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "114",
+  "include": [
+   "32041485"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041485",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "115",
+  "include": [
+   "32041486"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041486",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "116",
+  "include": [
+   "32041487"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041487",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "117",
+  "include": [
+   "32041488"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041488",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "118",
+  "include": [
+   "32041489"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041489",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "119",
+  "include": [
+   "32041490"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32041490",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "120",
+  "include": [
+   "32061190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32061190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "121",
+  "include": [
+   "32064910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32064910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "122",
+  "include": [
+   "32064920"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32064920",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "123",
+  "include": [
+   "32064930"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32064930",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "124",
+  "include": [
+   "32064940"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32064940",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "125",
+  "include": [
+   "32064990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "32064990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "126",
+  "include": [
+   "340510"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "34051000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "127",
+  "include": [
+   "38051020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38051020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "128",
+  "include": [
+   "38059090"
+  ],
+  "exclude": [],
+  "description": "Pine Oil",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38059090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "129",
+  "include": [
+   "38061010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38061010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "130",
+  "include": [
+   "38061090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38061090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "131",
+  "include": [
+   "380620"
+  ],
+  "exclude": [],
+  "description": "Salts Of Rosin, Of Resin Acids",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38062000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "132",
+  "include": [
+   "380630"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38063000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "133",
+  "include": [
+   "38069010"
+  ],
+  "exclude": [],
+  "description": "Run Gums",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38069010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "134",
+  "include": [
+   "38069090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38069090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "135",
+  "include": [
+   "38089210"
+  ],
+  "exclude": [],
+  "description": "Maneb",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "38089210",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "136",
+  "include": [
+   "38089410",
+   "38089420",
+   "38089490"
+  ],
+  "exclude": [],
+  "description": "Disinfectants (Based In 2-(Tiocianometiltio Benzotiazol)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "3808 94 10, 3808 94 20 and 3808 94 90",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "25/2025-Customs (2025-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "137",
+  "include": [
+   "40082120"
+  ],
+  "exclude": [],
+  "description": "For resoling or repairing or retreading rubber tyres.",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "40082120",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "138",
+  "include": [
+   "41021010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41021010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "139",
+  "include": [
+   "41021020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41021020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "140",
+  "include": [
+   "41021030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41021030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "141",
+  "include": [
+   "41012010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41012010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "142",
+  "include": [
+   "41012020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41012020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "143",
+  "include": [
+   "41012090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41012090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "144",
+  "include": [
+   "41015010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41015010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "145",
+  "include": [
+   "41015020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41015020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "146",
+  "include": [
+   "41015090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41015090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "147",
+  "include": [
+   "41019010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41019010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "148",
+  "include": [
+   "41019020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41019020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "149",
+  "include": [
+   "41019090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41019090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "150",
+  "include": [
+   "41041110",
+   "41041190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "4104 11 10 , 4104 11 90",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "14/2026-Customs (2026-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "151",
+  "include": [
+   "41041910",
+   "41041990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "4104 19 10 , 4104 19 90",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "14/2026-Customs (2026-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "152",
+  "include": [
+   "410441"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41044100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "153",
+  "include": [
+   "410449"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41044900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "154",
+  "include": [
+   "41051010",
+   "41051090"
+  ],
+  "exclude": [],
+  "description": "In the wet State (Melding wet)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "4105 10 10 , 4105 10 90",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "14/2026-Customs (2026-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "155",
+  "include": [
+   "410530"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 3,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41053000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "156",
+  "include": [
+   "41062110",
+   "41062190"
+  ],
+  "exclude": [],
+  "description": "In The Wet State (Including Wet Blue), Vgtbl Tanned",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "4106 21 10, 4106 21 90",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "14/2026-Customs (2026-04-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "157",
+  "include": [
+   "410622"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41062200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "158",
+  "include": [
+   "410711"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41071100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "159",
+  "include": [
+   "410712"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41071200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "160",
+  "include": [
+   "410719"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41071900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "161",
+  "include": [
+   "410791"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41079100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "162",
+  "include": [
+   "410792"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41079200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "163",
+  "include": [
+   "410799"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41079900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "164",
+  "include": [
+   "4112"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41120000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "165",
+  "include": [
+   "411310"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41131000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "166",
+  "include": [
+   "411410"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41141000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "167",
+  "include": [
+   "41142010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41142010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "168",
+  "include": [
+   "41142020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41142020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "169",
+  "include": [
+   "411510"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41151000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "170",
+  "include": [
+   "41152010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41152010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "171",
+  "include": [
+   "41152090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "41152090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "172",
+  "include": [
+   "42021110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "173",
+  "include": [
+   "42021120"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021120",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "174",
+  "include": [
+   "42021130"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021130",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "175",
+  "include": [
+   "42021140"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021140",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "176",
+  "include": [
+   "42021150"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021150",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "177",
+  "include": [
+   "42021170"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021170",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "178",
+  "include": [
+   "42021190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42021190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "179",
+  "include": [
+   "42031010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42031010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "180",
+  "include": [
+   "42050020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42050020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "181",
+  "include": [
+   "42050090"
+  ],
+  "exclude": [],
+  "description": "All Goods other than goods of a kind used in machinery or mechanical appliances for other technical uses.",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "42050090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "182",
+  "include": [
+   "43021920"
+  ],
+  "exclude": [],
+  "description": "Whole Skin, Without Head, Not Assembled Of Lamb",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "43021920",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "183",
+  "include": [
+   "43021990"
+  ],
+  "exclude": [],
+  "description": "Hides and Skin of other animals with hair on , tanned or dressed other than lamb",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "43021990",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "184",
+  "include": [
+   "48191010"
+  ],
+  "exclude": [],
+  "description": "Boxes of Corrugated Pater and Paper Board",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48191010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "185",
+  "include": [
+   "48192020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48192020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "186",
+  "include": [
+   "481960"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48196000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "187",
+  "include": [
+   "48201010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48201010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "188",
+  "include": [
+   "48201020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48201020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "189",
+  "include": [
+   "482020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48202000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "190",
+  "include": [
+   "48211020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "10%",
+  "rate": 10.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "48211020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "191",
+  "include": [
+   "50020010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "50020010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "192",
+  "include": [
+   "50020020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "50020020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "193",
+  "include": [
+   "50020030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "50020030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "194",
+  "include": [
+   "510121"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51012100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "195",
+  "include": [
+   "510111"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51011100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "196",
+  "include": [
+   "510119"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51011900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "197",
+  "include": [
+   "510129"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51012900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "198",
+  "include": [
+   "51021110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51021110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "199",
+  "include": [
+   "51021190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51021190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "200",
+  "include": [
+   "51052910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51052910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "201",
+  "include": [
+   "51052990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51052990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "202",
+  "include": [
+   "52042010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52042010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "203",
+  "include": [
+   "52042020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52042020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "204",
+  "include": [
+   "52042030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52042030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "205",
+  "include": [
+   "52042040"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52042040",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "206",
+  "include": [
+   "52042090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52042090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "207",
+  "include": [
+   "52051310"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52051310",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "208",
+  "include": [
+   "52051390"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52051390",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "209",
+  "include": [
+   "52052110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "210",
+  "include": [
+   "52052120"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052120",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "211",
+  "include": [
+   "52052130"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052130",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "212",
+  "include": [
+   "52052190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "213",
+  "include": [
+   "52052210"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052210",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "214",
+  "include": [
+   "52052220"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052220",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "215",
+  "include": [
+   "52052290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052290",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "216",
+  "include": [
+   "52052310"
+  ],
+  "exclude": [],
+  "description": "Cotton Yarn, Containing 85 % Of More Of Weight Of Cotton- Crude",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 4,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052310",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "217",
+  "include": [
+   "52052390"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52052390",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "218",
+  "include": [
+   "52053110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "219",
+  "include": [
+   "52053120"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053120",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "220",
+  "include": [
+   "52053130"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053130",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "221",
+  "include": [
+   "52053190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "222",
+  "include": [
+   "52053210"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053210",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "223",
+  "include": [
+   "52053220"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053220",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "224",
+  "include": [
+   "52053290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52053290",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "225",
+  "include": [
+   "520643"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52064300",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "226",
+  "include": [
+   "520710"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52071000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "227",
+  "include": [
+   "520790"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52079000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "228",
+  "include": [
+   "52081290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52081290",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "229",
+  "include": [
+   "52081390"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52081390",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "230",
+  "include": [
+   "52081990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52081990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "231",
+  "include": [
+   "640340"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64034000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "232",
+  "include": [
+   "640510"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64051000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "233",
+  "include": [
+   "640520"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64052000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "234",
+  "include": [
+   "640590"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64059000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "235",
+  "include": [
+   "64069910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64069910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "236",
+  "include": [
+   "64069920"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "64069920",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "237",
+  "include": [
+   "68132010"
+  ],
+  "exclude": [],
+  "description": "Brake Linings And Pads",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "68132010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "238",
+  "include": [
+   "68132090"
+  ],
+  "exclude": [],
+  "description": "Asbestos Friction Materials",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "68132090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "239",
+  "include": [
+   "6907"
+  ],
+  "exclude": [],
+  "description": "Unglazed vitrified tiles whether polished or not, whether or not rectangular, the largest surface area of which is capable of being enclosed in a square the side of which is more than 7 cm",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6907",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "67/2016-Cus (2016-12-31) (column 2,3)"
+  ]
+ },
+ {
+  "serial": "240",
+  "include": [
+   "691010"
+  ],
+  "exclude": [],
+  "description": "Of Porcelain",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "69101000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "241",
+  "include": [
+   "69120010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "69120010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "242",
+  "include": [
+   "70010010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70010010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "243",
+  "include": [
+   "700231"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70023100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "244",
+  "include": [
+   "7006"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70060000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "245",
+  "include": [
+   "70080010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70080010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "246",
+  "include": [
+   "70080020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70080020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "247",
+  "include": [
+   "70080090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70080090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "248",
+  "include": [
+   "70111020"
+  ],
+  "exclude": [],
+  "description": "BULBS OF A DIAMETER OF < OR = 90mm",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70111020",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "249",
+  "include": [
+   "70111090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70111090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "250",
+  "include": [
+   "701120"
+  ],
+  "exclude": [],
+  "description": "For Cathode - Ray Tubes",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70112000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "251",
+  "include": [
+   "7020"
+  ],
+  "exclude": [],
+  "description": "Glass Inners For Vacuum Flasks Or For Other Vacuum Vessels",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "702000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "252",
+  "include": [
+   "70189010"
+  ],
+  "exclude": [],
+  "description": "Glass Statues",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70189010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "253",
+  "include": [
+   "70189090"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70189090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "254",
+  "include": [
+   "70189010"
+  ],
+  "exclude": [],
+  "description": "Glass Statues",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70189010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "255",
+  "include": [
+   "70189090"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70189090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "256",
+  "include": [
+   "701610"
+  ],
+  "exclude": [],
+  "description": "Glass Cubes and other Glass smallwares, whether or not on a backing, for mosaics or similar decorative purposes",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70161000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "257",
+  "include": [
+   "701690"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70169000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "258",
+  "include": [
+   "70179090"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70179090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "259",
+  "include": [
+   "701820"
+  ],
+  "exclude": [],
+  "description": "Glass microspheres not exceeding 1 mm in diameter",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "70182000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "260",
+  "include": [
+   "73030010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73030010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "261",
+  "include": [
+   "73030020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73030020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "262",
+  "include": [
+   "73030030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73030030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "263",
+  "include": [
+   "73030090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73030090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "264",
+  "include": [
+   "73045930"
+  ],
+  "exclude": [],
+  "description": "Up to 229 mm outer diameter",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73045930",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "265",
+  "include": [
+   "73063010"
+  ],
+  "exclude": [],
+  "description": "Of iron",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73063010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "266",
+  "include": [
+   "73063090"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73063090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "267",
+  "include": [
+   "73090010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73090010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "268",
+  "include": [
+   "731822"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73182200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "269",
+  "include": [
+   "731824"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73182400",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "270",
+  "include": [
+   "73101020"
+  ],
+  "exclude": [],
+  "description": "Trunks and cases",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73101020",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "271",
+  "include": [
+   "732020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73202000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "272",
+  "include": [
+   "73209010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73209010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "273",
+  "include": [
+   "73209020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73209020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "274",
+  "include": [
+   "73211110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73211110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "275",
+  "include": [
+   "73211120"
+  ],
+  "exclude": [],
+  "description": "Other stoves other than those for solid fuel",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73211120",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "276",
+  "include": [
+   "73211190"
+  ],
+  "exclude": [],
+  "description": "Other cooking appliances and plate warmers other than for solid fuel",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "73211190",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "277",
+  "include": [
+   "760421"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "76042100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "278",
+  "include": [
+   "76151910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 5,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "76151910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "279",
+  "include": [
+   "76151920"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "76151920",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "280",
+  "include": [
+   "76151930"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "76151930",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "281",
+  "include": [
+   "76151940"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "76151940",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "282",
+  "include": [
+   "821191"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "82119100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "283",
+  "include": [
+   "821192"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "82119200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "284",
+  "include": [
+   "8213"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "82130000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "285",
+  "include": [
+   "83021010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83021010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "286",
+  "include": [
+   "83021020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83021020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "287",
+  "include": [
+   "83021090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83021090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "288",
+  "include": [
+   "83099010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83099010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "289",
+  "include": [
+   "83100010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83100010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "290",
+  "include": [
+   "83100090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "83100090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "291",
+  "include": [
+   "84129090"
+  ],
+  "exclude": [],
+  "description": "Other parts of machinery of headings 8412.21 or 8412.31",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84129090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "292",
+  "include": [
+   "84133020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84133020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "293",
+  "include": [
+   "84133090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84133090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "294",
+  "include": [
+   "84136010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84136010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "295",
+  "include": [
+   "84136090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84136090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "296",
+  "include": [
+   "84139110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84139110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "297",
+  "include": [
+   "84139120"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84139120",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "298",
+  "include": [
+   "84139130"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84139130",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "299",
+  "include": [
+   "84139140"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84139140",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "300",
+  "include": [
+   "84139190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84139190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "301",
+  "include": [
+   "84151010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84151010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "302",
+  "include": [
+   "84151090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84151090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "303",
+  "include": [
+   "84152090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84152090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "304",
+  "include": [
+   "84158190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84158190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "305",
+  "include": [
+   "84158290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84158290",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "306",
+  "include": [
+   "84158310"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84158310",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "307",
+  "include": [
+   "84158390"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84158390",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "308",
+  "include": [
+   "84181010"
+  ],
+  "exclude": [],
+  "description": "Commercial Type - Combined Refrigerators - Freezers Fitted with Separate External Doors",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84181010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "309",
+  "include": [
+   "84181090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84181090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "310",
+  "include": [
+   "841821"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84182100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "311",
+  "include": [
+   "84183010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84183010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "312",
+  "include": [
+   "84183090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84183090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "313",
+  "include": [
+   "84184010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84184010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "314",
+  "include": [
+   "84184090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84184090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "315",
+  "include": [
+   "841850"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84185000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "316",
+  "include": [
+   "841861"
+  ],
+  "exclude": [],
+  "description": "Compressions type units whose condensers are heat exchangers",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84186100",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "317",
+  "include": [
+   "84186950"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84186950",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "318",
+  "include": [
+   "84186990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84186990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "319",
+  "include": [
+   "84229010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84229010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "320",
+  "include": [
+   "843352"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84335200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "321",
+  "include": [
+   "84336010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84336010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "322",
+  "include": [
+   "84336020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84336020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "323",
+  "include": [
+   "84378010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84378010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "324",
+  "include": [
+   "843710"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84371000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "325",
+  "include": [
+   "845011"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84501100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "326",
+  "include": [
+   "845121"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84512100",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "327",
+  "include": [
+   "84521011"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521011",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "328",
+  "include": [
+   "84521012"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521012",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "329",
+  "include": [
+   "84521019"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521019",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "330",
+  "include": [
+   "84521021"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521021",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "331",
+  "include": [
+   "84521022"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521022",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "332",
+  "include": [
+   "84521029"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84521029",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "333",
+  "include": [
+   "84523010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84523010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "334",
+  "include": [
+   "84523090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84523090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "335",
+  "include": [
+   "84529010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84529010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "336",
+  "include": [
+   "845910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84591000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "337",
+  "include": [
+   "84596910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84596910",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "338",
+  "include": [
+   "84596920"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84596920",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "339",
+  "include": [
+   "84596930"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84596930",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "340",
+  "include": [
+   "84596940"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84596940",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "341",
+  "include": [
+   "84596990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 6,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84596990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "342",
+  "include": [
+   "84612019"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84612019",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "343",
+  "include": [
+   "846229"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8462 29 00",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "347",
+  "include": [
+   "846290"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8462 90 00",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "348",
+  "include": [
+   "84639090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84639090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "349",
+  "include": [
+   "846694"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84669400",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "350",
+  "include": [
+   "84713090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84713090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "351",
+  "include": [
+   "84716029"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84716029",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "352",
+  "include": [
+   "84716090"
+  ],
+  "exclude": [],
+  "description": "Automatic bank surveillance terminals",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84716090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "353",
+  "include": [
+   "847190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84719000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "354",
+  "include": [
+   "84733099"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84733099",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "355",
+  "include": [
+   "847432"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84743200",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "356",
+  "include": [
+   "847439"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84743900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "357",
+  "include": [
+   "847910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84791000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "357A",
+  "include": [
+   "84798980"
+  ],
+  "exclude": [],
+  "description": "All goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2024-09-30",
+  "validUntil": null,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8479 89 80",
+  "allGoods": true,
+  "source": "45/2024-Customs",
+  "amendedBy": [
+   "45/2024-Customs (2024-09-30) (insert)"
+  ]
+ },
+ {
+  "serial": "358",
+  "include": [
+   "84798999"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84798999",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "359",
+  "include": [
+   "848110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84811000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "360",
+  "include": [
+   "848120"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84812000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "361",
+  "include": [
+   "84818049"
+  ],
+  "exclude": [],
+  "description": "Plastic Tap, Pressure Register",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84818049",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "362",
+  "include": [
+   "84818090"
+  ],
+  "exclude": [],
+  "description": "Water Entrance Valves",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84818090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "363",
+  "include": [
+   "84819090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84819090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "364",
+  "include": [
+   "84821020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84821020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "365",
+  "include": [
+   "84821030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84821030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "366",
+  "include": [
+   "84821090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84821090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "367",
+  "include": [
+   "84822011"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84822011",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "368",
+  "include": [
+   "84822012"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84822012",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "369",
+  "include": [
+   "84822013"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84822013",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "370",
+  "include": [
+   "84822090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84822090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "371",
+  "include": [
+   "848230"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84823000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "372",
+  "include": [
+   "848240"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84824000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "373",
+  "include": [
+   "848250"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8482 50 00",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "379",
+  "include": [
+   "848280"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84828000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "380",
+  "include": [
+   "84829119"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84829119",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "381",
+  "include": [
+   "84829130"
+  ],
+  "exclude": [],
+  "description": "Rollers (Cylindrical Rollers)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84829130",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "382",
+  "include": [
+   "848299"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84829900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "383",
+  "include": [
+   "848330"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84833000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "384",
+  "include": [
+   "84841010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84841010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "385",
+  "include": [
+   "848420"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "84842000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "386",
+  "include": [
+   "85011020"
+  ],
+  "exclude": [],
+  "description": "AC Motor (Synchronous)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85011020",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "387",
+  "include": [
+   "85013310"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85013310",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "388",
+  "include": [
+   "85014090"
+  ],
+  "exclude": [],
+  "description": "Other (Fractional Power Motor)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85014090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "389",
+  "include": [
+   "85015210"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85015210",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "390",
+  "include": [
+   "85015310"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85015310",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "391",
+  "include": [
+   "85044010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "392",
+  "include": [
+   "85044021"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044021",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "393",
+  "include": [
+   "85044029"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044029",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "394",
+  "include": [
+   "85044030"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044030",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "395",
+  "include": [
+   "85044040"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044040",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "396",
+  "include": [
+   "85044090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85044090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "397",
+  "include": [
+   "85079090"
+  ],
+  "exclude": [],
+  "description": "Parts Of Storage Batteries (Plastic Recipients And Lids)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85079090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "398",
+  "include": [
+   "850860"
+  ],
+  "exclude": [],
+  "description": "Vacuum Cleaners, Including Dry, And Wet Vacuum Cleaners",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85086000",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "399",
+  "include": [
+   "85176290"
+  ],
+  "exclude": [],
+  "description": "Telephonic Or Telegraphic Switching Apparatus",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8517 62 90",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "400",
+  "include": [
+   "85176230"
+  ],
+  "exclude": [],
+  "description": "Modems (Modulators -Demodulators)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85176230",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "401",
+  "include": [
+   "85176990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85176990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "402",
+  "include": [
+   "85177990"
+  ],
+  "exclude": [],
+  "description": "Other Apparatus Parts",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8517 79 90",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "403",
+  "include": [
+   "85365090"
+  ],
+  "exclude": [],
+  "description": "Other (Obs.: Only For 1- Switches; 2 -Rotative Switches)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85365090",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "404",
+  "include": [
+   "85366110"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85366110",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "405",
+  "include": [
+   "85366190"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85366190",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "406",
+  "include": [
+   "85366910"
+  ],
+  "exclude": [],
+  "description": "Of Plastic (Only For \"Fuse Holders\")",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 7,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85366910",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "407",
+  "include": [
+   "85366990"
+  ],
+  "exclude": [],
+  "description": "Of Other Materials (Only For \"Fuse Holders\")",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "85366990",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "408",
+  "include": [
+   "85371010",
+   "85371090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8537 10 10, 8537 10 90",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "45/2024-Customs (2024-09-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "409",
+  "include": [
+   "844331"
+  ],
+  "exclude": [],
+  "description": "Operating By Reproducing The Original Image Via Na Intermediate Onto The Copy (Indirect Process)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "844331",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "410",
+  "include": [
+   "84439910"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8443 99 10",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "411",
+  "include": [
+   "84439920"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8443 99 20",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "412",
+  "include": [
+   "84439930"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8443 99 30",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "413",
+  "include": [
+   "84439940"
+  ],
+  "exclude": [],
+  "description": "OTHER",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "8443 99 40",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "414",
+  "include": [
+   "90189022"
+  ],
+  "exclude": [],
+  "description": "Knives, Scissors And Blades (Electro-Surgical Knife- Bistoury)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90189022",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "415",
+  "include": [
+   "90189092"
+  ],
+  "exclude": [],
+  "description": "Baby Incubators",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90189092",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "416",
+  "include": [
+   "90258010"
+  ],
+  "exclude": [],
+  "description": "Hydrometers And Similar Floating Instruments (Only For: Digital Measurements Instruments)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90258010",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "417",
+  "include": [
+   "90258020"
+  ],
+  "exclude": [],
+  "description": "Barometers, Not Combined With Other Instruments (Only For: Digital Measurements Instruments)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90258020",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "418",
+  "include": [
+   "90258030"
+  ],
+  "exclude": [],
+  "description": "Lactometer (Only For: Digital Measurements Instruments)",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90258030",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "419",
+  "include": [
+   "90258090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90258090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "420",
+  "include": [
+   "902590"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90259000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "421",
+  "include": [
+   "902789"
+  ],
+  "exclude": [],
+  "description": "All goods other than Nuclear magnetic resonance instruments",
+  "rate": null,
+  "validFrom": "2021-12-30",
+  "validUntil": null,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "9027 89",
+  "allGoods": false,
+  "source": "60/2021-Cus",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (replace)"
+  ]
+ },
+ {
+  "serial": "422",
+  "include": [
+   "90291090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90291090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "423",
+  "include": [
+   "90303310"
+  ],
+  "exclude": [],
+  "description": "Ammeters, Volt Meters And Watt Meters",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303310",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "424",
+  "include": [
+   "90303320"
+  ],
+  "exclude": [],
+  "description": "Other Spectrum Resistance Meters",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303320",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "425",
+  "include": [
+   "90303330"
+  ],
+  "exclude": [],
+  "description": "Capacitance Meter",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303330",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "426",
+  "include": [
+   "90303340"
+  ],
+  "exclude": [],
+  "description": "Frequency Measuring Apparatus",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303340",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "427",
+  "include": [
+   "90303350"
+  ],
+  "exclude": [],
+  "description": "Mega Meters",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303350",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "428",
+  "include": [
+   "90303390"
+  ],
+  "exclude": [],
+  "description": "Other",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90303390",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "429",
+  "include": [
+   "90308990"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90308990",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "430",
+  "include": [
+   "90321090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90321090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "431",
+  "include": [
+   "90322010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90322010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "432",
+  "include": [
+   "90322090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "90322090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "433",
+  "include": [
+   "940141",
+   "940149"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "9401 41 00 and 9401 49 00",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "434",
+  "include": [
+   "940161"
+  ],
+  "exclude": [],
+  "description": "Other Seats With Wooden Frames Upholstered",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94016100",
+  "allGoods": false,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "435",
+  "include": [
+   "940169"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94016900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "436",
+  "include": [
+   "940179"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94017900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "437",
+  "include": [
+   "940180"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94018000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "438",
+  "include": [
+   "940191",
+   "940199"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "9401 91 00 and 9401 99 00",
+  "allGoods": true,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ },
+ {
+  "serial": "439",
+  "include": [
+   "94021090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94021090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "440",
+  "include": [
+   "94029010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94029010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "441",
+  "include": [
+   "94029020"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94029020",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "442",
+  "include": [
+   "94029090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94029090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "443",
+  "include": [
+   "94032010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94032010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "444",
+  "include": [
+   "940340"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94034000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "445",
+  "include": [
+   "94035010"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94035010",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "446",
+  "include": [
+   "94035090"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94035090",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "447",
+  "include": [
+   "940360"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94036000",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "448",
+  "include": [
+   "940382"
+  ],
+  "exclude": [],
+  "description": "Furniture of wicker work or bamboo",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "9403 82 00",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "67/2016-Cus (2016-12-31) (column 2)"
+  ]
+ },
+ {
+  "serial": "449",
+  "include": [
+   "940389"
+  ],
+  "exclude": [],
+  "description": "All Goods",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "94038900",
+  "allGoods": true,
+  "source": "57/2009-Customs"
+ },
+ {
+  "serial": "450",
+  "include": [
+   "940391",
+   "940399"
+  ],
+  "exclude": [],
+  "description": "All Goods Sl No Country (1) (2) 1 Argentina 2 Brazil 3 Paraguay 4 Uruguay",
+  "rateText": "20%",
+  "rate": 20.0,
+  "validFrom": "2009-06-01",
+  "validUntil": null,
+  "page": 8,
+  "notification": "057/2009",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "9403 91 00 and 9403 99 00",
+  "allGoods": false,
+  "source": "57/2009-Customs",
+  "amendedBy": [
+   "60/2021-Cus (2021-12-30) (column 2)"
+  ]
+ }
+]

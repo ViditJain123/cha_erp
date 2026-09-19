@@ -1,0 +1,60 @@
+[
+ {
+  "serial": "1",
+  "include": [],
+  "exclude": [],
+  "anyChapter": true,
+  "description": "(i) Agricultural, horticultural, floricultural and forest produce; (ii) minerals which have not undergone any processing; (iii) rice, pulses, flour, atta, bran and husk; (iv) timber; (v) jaggery; (vi) livestock, poultry bird and fish; (vii) bees, bees-wax and honey; (viii) raw wool, goat hair, bristles and bones used for bone-meal; (ix) milk, home-made products of milk and eggs; (x) ghani-produced oil and oil-cakes; (xi) herbs, Ayurvedic and herbal medicines including essential oils and extracts; (xii) articles produced by village artisans mainly used in villages; (xiii) akra; (xiv) yak tail; (xv) stone aggregate, boulder, sand and gravel",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2010-10-01",
+  "validUntil": null,
+  "conditions": [
+   "1"
+  ],
+  "page": 1,
+  "notification": "104/2010",
+  "rateMeaning": "preferential BCD rate %",
+  "allGoods": false,
+  "source": "104/2010-Customs"
+ },
+ {
+  "serial": "2",
+  "include": [],
+  "exclude": [],
+  "anyChapter": true,
+  "description": "All manufactured goods other than (i) alcoholic liquors or beverages and their concentrates except industrial spirits; (ii) perfumes and cosmetics with non-Nepalese or non-Indian brand names; (iii) cigarettes and tobacco; (iv) vegetable fats (Vanaspati); (v) acrylic yarn; (vi) copper products of Chapter 74 and heading 8544; (vii) zinc oxide",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2010-10-01",
+  "validUntil": null,
+  "conditions": [
+   "2"
+  ],
+  "page": 1,
+  "notification": "104/2010",
+  "rateMeaning": "preferential BCD rate %",
+  "allGoods": false,
+  "source": "104/2010-Customs"
+ },
+ {
+  "serial": "3",
+  "include": [],
+  "exclude": [],
+  "anyChapter": true,
+  "description": "(i) Vegetable fats (Vanaspati); (ii) acrylic yarn; (iii) copper products of Chapter 74 and heading 8544; (iv) zinc oxide",
+  "rateText": "whole of the duty of customs",
+  "rate": 0.0,
+  "validFrom": "2010-10-01",
+  "validUntil": null,
+  "conditions": [
+   "2",
+   "3"
+  ],
+  "page": 1,
+  "notification": "104/2010",
+  "rateMeaning": "preferential BCD rate %",
+  "allGoods": false,
+  "source": "104/2010-Customs"
+ }
+]

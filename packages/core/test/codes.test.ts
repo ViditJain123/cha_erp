@@ -6,9 +6,11 @@ import {
   TRANSPORT_MODE_CODE,
   iso2,
   normalizePackageUnit,
+  normalizeWeightUnit,
   pad8,
   parseContainerSizeType,
   unlocodeOf,
+  weightToKg,
 } from '../src/index.js';
 
 /**
@@ -223,5 +225,52 @@ describe('pad8', () => {
     expect(pad8(undefined)).toBeUndefined();
     expect(pad8('')).toBeUndefined();
     expect(pad8('n/a')).toBeUndefined();
+  });
+});
+
+describe('weight units', () => {
+  it('reads KGM as kilograms', () => {
+    // The UN/ECE Recommendation 20 code. An EDI-generated bill of lading prints
+    // it and a human never would — ex_job6's B/L says "157,703.000 KGM" — and a
+    // unit nobody recognised is how a gross weight went missing.
+    expect(normalizeWeightUnit('KGM')).toBe('KGS');
+    expect(weightToKg(157703, 'KGM')).toBe(157703);
+  });
+
+  it('accepts the spellings documents actually use', () => {
+    for (const unit of ['KG', 'KGS', 'Kgs', 'kilograms', 'KILOGRAMME']) {
+      expect(normalizeWeightUnit(unit)).toBe('KGS');
+    }
+  });
+
+  it('reads the IATA single-letter unit off an air waybill', () => {
+    // The weight box on ex_job1's waybill reads "101.00 K". K is kilograms and
+    // L is pounds; refusing them lost the gross weight on every air job.
+    expect(weightToKg(101, 'K')).toBe(101);
+    expect(weightToKg(100, 'L')).toBeCloseTo(45.359237, 5);
+  });
+
+  it('converts pounds rather than relabelling them', () => {
+    // The dangerous one: 1000 LBS taken as kilograms overstates the declared
+    // weight by more than double.
+    expect(weightToKg(1000, 'LBS')).toBeCloseTo(453.59237, 5);
+    expect(weightToKg(1, 'MT')).toBe(1000);
+  });
+
+  it('refuses a volume', () => {
+    // MTQ is cubic metres and sits in the same column as the weight on some
+    // bills of lading. Answering "KGS" for it would declare a measurement as a
+    // weight.
+    expect(normalizeWeightUnit('MTQ')).toBeUndefined();
+    expect(normalizeWeightUnit('CBM')).toBeUndefined();
+    expect(weightToKg(270, 'MTQ')).toBeUndefined();
+  });
+
+  it('treats an unstated unit as kilograms, and no figure as no weight', () => {
+    // Documents that omit the unit are stating kilograms; a figure with an
+    // unreadable unit is not a weight at all.
+    expect(weightToKg(500, null)).toBe(500);
+    expect(weightToKg(500, '')).toBe(500);
+    expect(weightToKg(null, 'KGS')).toBeUndefined();
   });
 });

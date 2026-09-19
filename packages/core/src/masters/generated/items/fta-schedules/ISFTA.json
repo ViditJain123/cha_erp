@@ -1,0 +1,4338 @@
+[
+ {
+  "serial": "1",
+  "include": [
+   "51"
+  ],
+  "exclude": [],
+  "description": "Wool, Fine or Coarse Animal Hair,",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "51",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "52"
+  ],
+  "exclude": [],
+  "description": "Cotton",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "52",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "53"
+  ],
+  "exclude": [],
+  "description": "All goods, other than :- [exclusions continue in the source text; see G.E. 78]",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "53",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "54"
+  ],
+  "exclude": [],
+  "description": "All goods, other than :- [exclusions continue in the source text; see G.E. 78]",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "54",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "00"
+  ],
+  "exclude": [],
+  "description": "5 55 Man made staple fibres except those [exclusions continue in the source text; see G.E. 78]",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "56"
+  ],
+  "exclude": [],
+  "description": "All goods, other than :- [exclusions continue in the source text; see G.E. 78]",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "56",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "7",
+  "include": [
+   "58"
+  ],
+  "exclude": [],
+  "description": "Special woven fabrics, tufted textile",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "58",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "8",
+  "include": [
+   "59"
+  ],
+  "exclude": [],
+  "description": "Impregnated coated covered or",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "59",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "9",
+  "include": [
+   "300610",
+   "60"
+  ],
+  "exclude": [],
+  "description": "Knitted or crocheted fabrics",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "3006 10 or 60",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "63"
+  ],
+  "exclude": [],
+  "description": "Other made up textile articles, sets,",
+  "rateText": "25%",
+  "rate": 25.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 2",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "63",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "1",
+  "include": [
+   "6105",
+   "6106",
+   "610711",
+   "610821",
+   "610822",
+   "6109",
+   "611020",
+   "611030",
+   "611090",
+   "620193",
+   "620332",
+   "620333",
+   "620339",
+   "620342",
+   "620343",
+   "620349",
+   "620413",
+   "620433",
+   "620439",
+   "620442",
+   "620443",
+   "620444",
+   "620449",
+   "620462",
+   "620469",
+   "620520",
+   "620590",
+   "620630",
+   "620640",
+   "620811",
+   "620892",
+   "621142",
+   "621210"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: 6 million pieces a calendar year; proviso to condition (2))",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "620342, 620520, 620462, 620630, 610510, 621210, 620640, 610910, 620333, 610990, 611030, 620433, 620469, 620343, 620443, 611020, 620892, 611090, 620442, 610610, 620449, 621142, 620339, 610590, 6205 90, 620439, 610520, 610822, 620444, 6106 90, 620349, 620332, 620811, 620413, 610711, 620193, 610620, 610821",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "2",
+  "include": [
+   "61",
+   "62"
+  ],
+  "exclude": [],
+  "description": "All goods, other than those specified in S.No.1 above",
+  "rateText": "75%",
+  "rate": 75.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "61, 62",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "3",
+  "include": [
+   "610120"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6101 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "4",
+  "include": [
+   "610130"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6101 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "5",
+  "include": [
+   "610190"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6101 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "6",
+  "include": [
+   "610210"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6102 10 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "7",
+  "include": [
+   "610220"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6102 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "8",
+  "include": [
+   "610230"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6102 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "9",
+  "include": [
+   "610290"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6102 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "10",
+  "include": [
+   "610310"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "11",
+  "include": [
+   "610322"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 22 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "12",
+  "include": [
+   "610323"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 23 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "13",
+  "include": [
+   "610329"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "14",
+  "include": [
+   "610331"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 31 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "15",
+  "include": [
+   "610332"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 32 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "16",
+  "include": [
+   "610333"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 33 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "17",
+  "include": [
+   "610339"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "18",
+  "include": [
+   "610341"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 41 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "19",
+  "include": [
+   "610342"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 42 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "20",
+  "include": [
+   "610343"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 43 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "21",
+  "include": [
+   "610349"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6103 49",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "22",
+  "include": [
+   "610413"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 13 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "23",
+  "include": [
+   "610419"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "24",
+  "include": [
+   "610422"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 22 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "25",
+  "include": [
+   "610423"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 23 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "26",
+  "include": [
+   "610429"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "27",
+  "include": [
+   "610431"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 31 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "28",
+  "include": [
+   "610432"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 32 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "29",
+  "include": [
+   "610433"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 33 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "30",
+  "include": [
+   "610439"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "31",
+  "include": [
+   "610441"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 41 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "32",
+  "include": [
+   "610442"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 42 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "33",
+  "include": [
+   "610443"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 43 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "34",
+  "include": [
+   "610444"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 44 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "35",
+  "include": [
+   "610449"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 49",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "36",
+  "include": [
+   "610452"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 52 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "37",
+  "include": [
+   "610453"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 53 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "38",
+  "include": [
+   "610459"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 59",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "39",
+  "include": [
+   "610461"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 61 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "40",
+  "include": [
+   "610462"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 62 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "41",
+  "include": [
+   "610463"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 63 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "42",
+  "include": [
+   "610469"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6104 69",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "43",
+  "include": [
+   "610510"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6105 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "44",
+  "include": [
+   "610520"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6105 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "45",
+  "include": [
+   "610590"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6105 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "46",
+  "include": [
+   "610610"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6106 10 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "47",
+  "include": [
+   "610620"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6106 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "48",
+  "include": [
+   "610690"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6106 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "49",
+  "include": [
+   "610711"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "50",
+  "include": [
+   "610712"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 12",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "51",
+  "include": [
+   "610719"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "52",
+  "include": [
+   "610721"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 21 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "53",
+  "include": [
+   "610722"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 22",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "54",
+  "include": [
+   "610729"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "55",
+  "include": [
+   "610791"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 91",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "56",
+  "include": [
+   "610799"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6107 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "57",
+  "include": [
+   "610811"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 11",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "58",
+  "include": [
+   "610819"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "59",
+  "include": [
+   "610821"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 21 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "60",
+  "include": [
+   "610822"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 22",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "61",
+  "include": [
+   "610829"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "62",
+  "include": [
+   "610831"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 31 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "63",
+  "include": [
+   "610832"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 32",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "64",
+  "include": [
+   "610839"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "65",
+  "include": [
+   "610891"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 91 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "66",
+  "include": [
+   "610892"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 92",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "67",
+  "include": [
+   "610899"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6108 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "68",
+  "include": [
+   "610910"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6109 10 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "69",
+  "include": [
+   "610990"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6109 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "70",
+  "include": [
+   "611011"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 11",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "71",
+  "include": [
+   "611012"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 12 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "72",
+  "include": [
+   "611019"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 19 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "73",
+  "include": [
+   "611020"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "74",
+  "include": [
+   "611030"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "75",
+  "include": [
+   "611090"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6110 90 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "76",
+  "include": [
+   "611120"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6111 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "77",
+  "include": [
+   "611130"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6111 30 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "78",
+  "include": [
+   "611190"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6111 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "79",
+  "include": [
+   "611211"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "80",
+  "include": [
+   "611212"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 12 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "81",
+  "include": [
+   "611219"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "82",
+  "include": [
+   "611220"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "83",
+  "include": [
+   "611231"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 31 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "84",
+  "include": [
+   "611239"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "85",
+  "include": [
+   "611241"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 41 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "86",
+  "include": [
+   "611249"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6112 49",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "87",
+  "include": [
+   "6113"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6113 00 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "88",
+  "include": [
+   "611420"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6114 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "89",
+  "include": [
+   "611430"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6114 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "90",
+  "include": [
+   "611490"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6114 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "92",
+  "include": [
+   "611610"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6116 10 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "93",
+  "include": [
+   "611691"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6116 91 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "94",
+  "include": [
+   "611692"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6116 92 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "95",
+  "include": [
+   "611693"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6116 93 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "96",
+  "include": [
+   "611699"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6116 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "97",
+  "include": [
+   "611710"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6117 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "98",
+  "include": [
+   "611780"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6117 80",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "99",
+  "include": [
+   "611790"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6117 90 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "100",
+  "include": [
+   "62011100"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "101",
+  "include": [
+   "620112"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 12",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "102",
+  "include": [
+   "620113"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 13",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "103",
+  "include": [
+   "620119"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "104",
+  "include": [
+   "62019100"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 91 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "105",
+  "include": [
+   "62019200"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 92 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "106",
+  "include": [
+   "62019300"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 93 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "107",
+  "include": [
+   "620199"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6201 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "108",
+  "include": [
+   "620211"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 11",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "109",
+  "include": [
+   "62021200"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 12 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "110",
+  "include": [
+   "62021300"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 13 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "111",
+  "include": [
+   "620219"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "112",
+  "include": [
+   "620291"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 91",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "113",
+  "include": [
+   "620292"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 92",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "114",
+  "include": [
+   "620293"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 93",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "115",
+  "include": [
+   "620299"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6202 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "116",
+  "include": [
+   "620311"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "117",
+  "include": [
+   "620312"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 12 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "118",
+  "include": [
+   "620319"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "119",
+  "include": [
+   "620322"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 22 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "120",
+  "include": [
+   "620323"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 23 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "121",
+  "include": [
+   "62032990"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 29 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "122",
+  "include": [
+   "620331"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 31",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "123",
+  "include": [
+   "620332"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 32 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "124",
+  "include": [
+   "620333"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 33 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "125",
+  "include": [
+   "620339"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "126",
+  "include": [
+   "620341"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 41 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "127",
+  "include": [
+   "620342"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 42",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "128",
+  "include": [
+   "620343"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 43 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "129",
+  "include": [
+   "620349"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6203 49",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "130",
+  "include": [
+   "620411"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "131",
+  "include": [
+   "620412"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62041210, 62041290",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "132",
+  "include": [
+   "620413"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62041310, 62041390",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "133",
+  "include": [
+   "620419"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "134",
+  "include": [
+   "620421"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 21 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "135",
+  "include": [
+   "620422"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 22",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "136",
+  "include": [
+   "620423"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62042310, 62042390",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "137",
+  "include": [
+   "620429"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "138",
+  "include": [
+   "620431"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 31",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "139",
+  "include": [
+   "620432"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62043210, 62043290",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "140",
+  "include": [
+   "620433"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62043310, 62043390",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "141",
+  "include": [
+   "620439"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "620439",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "142",
+  "include": [
+   "620441"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 41",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "143",
+  "include": [
+   "620442"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 42",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "144",
+  "include": [
+   "620443"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 43",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "145",
+  "include": [
+   "620444"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62044410, 62044490",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "146",
+  "include": [
+   "620449"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 49",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "147",
+  "include": [
+   "620451"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 51 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "148",
+  "include": [
+   "620452"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62045210, 62045290",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "149",
+  "include": [
+   "620453"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62045310, 62045390",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "150",
+  "include": [
+   "620459"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 59",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "151",
+  "include": [
+   "620461"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 61",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "152",
+  "include": [
+   "620462"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 62",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "153",
+  "include": [
+   "620463"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 63 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "154",
+  "include": [
+   "620469"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6204 69",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "155",
+  "include": [
+   "620520"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6205 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "156",
+  "include": [
+   "620530"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62053010, 62053090",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "157",
+  "include": [
+   "620590"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6205 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "158",
+  "include": [
+   "620610"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6206 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "159",
+  "include": [
+   "620620"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6206 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "160",
+  "include": [
+   "620630"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6206 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "161",
+  "include": [
+   "620640"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6206 40 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "162",
+  "include": [
+   "620690"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6206 90 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "163",
+  "include": [
+   "620711"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "164",
+  "include": [
+   "620719"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "165",
+  "include": [
+   "620721"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 21",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "166",
+  "include": [
+   "620722"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 22 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "167",
+  "include": [
+   "620729"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 29 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "168",
+  "include": [
+   "620791"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 91",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "169",
+  "include": [
+   "620799"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6207 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "170",
+  "include": [
+   "620811"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "171",
+  "include": [
+   "620819"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 19",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "172",
+  "include": [
+   "620821"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 21",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "173",
+  "include": [
+   "620822"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 22 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "174",
+  "include": [
+   "620829"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 29",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "175",
+  "include": [
+   "620891"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 91",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "176",
+  "include": [
+   "620892"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 92",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "177",
+  "include": [
+   "620899"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6208 99",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "178",
+  "include": [
+   "620920"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6209 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "179",
+  "include": [
+   "620930"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6209 30 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "180",
+  "include": [
+   "620990"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6209 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "181",
+  "include": [
+   "621010"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62101010, 62101020, 62101090",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "182",
+  "include": [
+   "621020"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6210 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "183",
+  "include": [
+   "621030"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6210 30",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "184",
+  "include": [
+   "621040"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6210 40",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "185",
+  "include": [
+   "621050"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6210 50 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "186",
+  "include": [
+   "621111"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 11 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "187",
+  "include": [
+   "621112"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 12 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "188",
+  "include": [
+   "621120"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "189",
+  "include": [
+   "621132"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 32 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "190",
+  "include": [
+   "621133"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 33 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "191",
+  "include": [
+   "621139"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 39",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "192",
+  "include": [
+   "62114100"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 41 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "193",
+  "include": [
+   "621142"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 42",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "194",
+  "include": [
+   "621143"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62114310, 62114390",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "195",
+  "include": [
+   "62114900"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6211 49 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "196",
+  "include": [
+   "621210"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6212 10 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "197",
+  "include": [
+   "621220"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6212 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "198",
+  "include": [
+   "621230"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6212 30 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "199",
+  "include": [
+   "621290"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6212 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "200",
+  "include": [
+   "621320"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6213 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "201",
+  "include": [
+   "621390"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6213 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "202",
+  "include": [
+   "621410"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6214 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "203",
+  "include": [
+   "621420"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6214 20",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "204",
+  "include": [
+   "621430"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62143010, 62143090",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "205",
+  "include": [
+   "621440"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "62144010, 62144090",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "206",
+  "include": [
+   "621490"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6214 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "207",
+  "include": [
+   "621510"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6215 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "208",
+  "include": [
+   "621520"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6215 20 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "209",
+  "include": [
+   "621590"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6215 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "210",
+  "include": [
+   "6216"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6216 00",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "211",
+  "include": [
+   "621710"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6217 10",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "212",
+  "include": [
+   "621790"
+  ],
+  "exclude": [],
+  "description": "All goods (TRQ: S.Nos. 3 to 212 together 3 million pieces a calendar year)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 3",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "6217 90",
+  "allGoods": false,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ },
+ {
+  "serial": "1",
+  "include": [],
+  "exclude": [
+   "080111",
+   "080112",
+   "080119",
+   "1203",
+   "151311",
+   "2203",
+   "2204",
+   "2205",
+   "2206",
+   "2207",
+   "2208",
+   "300610",
+   "300691",
+   "3915",
+   "3916",
+   "3917",
+   "3918",
+   "3919",
+   "3920",
+   "3921",
+   "3922",
+   "3923",
+   "3924",
+   "3925",
+   "3926",
+   "4001",
+   "4003",
+   "4004",
+   "4005",
+   "4006",
+   "4007",
+   "4008",
+   "4012",
+   "4016",
+   "4017",
+   "46",
+   "4803",
+   "480810",
+   "481121",
+   "481129",
+   "4817",
+   "4821",
+   "482360",
+   "482361",
+   "482369",
+   "5001",
+   "5002",
+   "5003",
+   "5004",
+   "5006",
+   "5007",
+   "51",
+   "52",
+   "53",
+   "530810",
+   "5311",
+   "54",
+   "54021110",
+   "540219",
+   "540220",
+   "540231",
+   "540232",
+   "540233",
+   "540251",
+   "540252",
+   "540261",
+   "540262",
+   "5404",
+   "550120",
+   "550130",
+   "550320",
+   "550330",
+   "550510",
+   "550620",
+   "550630",
+   "56",
+   "5609",
+   "57",
+   "58",
+   "59",
+   "60",
+   "61",
+   "62",
+   "63"
+  ],
+  "anyChapter": true,
+  "description": "All goods other than (a) goods mentioned in lists 2 and 3 and in notifications 60/2000-Customs and 2/2007-Customs; (b) goods listed in the ANNEXURE (LIST-1 codes excluded here; LIST-1A items are described, not coded, and are NOT excluded by this row)",
+  "rateText": "100%",
+  "rate": 100.0,
+  "validFrom": "2000-03-01",
+  "validUntil": null,
+  "notification": "026/2000",
+  "table": "LIST 5",
+  "rateMeaning": "percent reduction of applied duty",
+  "specText": "All goods other than goods in LISTS 2 and 3, notifications 60/2000 and 2/2007, and the ANNEXURE",
+  "allGoods": true,
+  "source": "26/2000-Customs as compiled in CBIC Customs Tariff Vol. II G.E. 78 (as on 30.06.2024)",
+  "sourceKind": "compilation"
+ }
+]

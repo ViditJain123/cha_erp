@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Daily CBIC knowledge-base refresh (refresh-corpus.sh), as a user LaunchAgent.
+
+  Install:   cp packages/core/scripts/in.kuberr.corpus-refresh.plist ~/Library/LaunchAgents/
+             launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/in.kuberr.corpus-refresh.plist
+  Run now:   launchctl kickstart gui/$(id -u)/in.kuberr.corpus-refresh
+  Remove:    launchctl bootout gui/$(id -u)/in.kuberr.corpus-refresh && rm ~/Library/LaunchAgents/in.kuberr.corpus-refresh.plist
+  Log:       ~/Library/Logs/checklist-corpus-refresh.log
+
+  macOS privacy protection stops a launchd job from reading ~/Desktop, where
+  this repo lives: the first run failed with "can't open input file" (exit
+  127). Before installing, either move the repo out of Desktop/Documents/
+  Downloads and fix the paths below, or add /bin/zsh under System Settings >
+  Privacy & Security > Full Disk Access.
+
+  A run missed while the Mac was asleep starts when it wakes. The paths are
+  absolute because launchd has no working directory or login shell.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>in.kuberr.corpus-refresh</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>/Users/viditjain/Desktop/ERP/checklist-app/packages/core/scripts/refresh-corpus.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/viditjain/Library/Logs/checklist-corpus-refresh.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/viditjain/Library/Logs/checklist-corpus-refresh.log</string>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>

@@ -1,0 +1,3114 @@
+{
+ "_generated": "do not edit by hand — python3 packages/core/scripts/build-tariff-book.py",
+ "source": "bdp",
+ "publisher": "BDP (Business Datainfo Publishing Co. Pvt. Ltd.)",
+ "edition": "2026-27",
+ "volume": 2,
+ "builtAt": "2026-09-13T14:50:05+00:00",
+ "sha256": "191e326caebec8e83e5514b7c4d359bbe27c206e04c28fb9c0edefda461984dd",
+ "notificationCount": 286,
+ "unplaced": 0,
+ "pageCount": 1456,
+ "notifications": [
+  {
+   "number": 45,
+   "kind": "CUS",
+   "date": "24.10.2025",
+   "title": "Exemption to Customs Tariffs Schedule Exemption of Customs Duty and Integrated Tax on Certain Goods Imported into India",
+   "label": "A-3",
+   "startPage": 35,
+   "notification": "045/2025",
+   "endPage": 136
+  },
+  {
+   "number": 29,
+   "kind": "CUS",
+   "date": "01.03.2008",
+   "title": "Exemption of Additional Duty on Certain Goods Imported into India",
+   "label": "A-105",
+   "startPage": 137,
+   "notification": "029/2008",
+   "endPage": 137
+  },
+  {
+   "number": 44,
+   "kind": "CUS",
+   "date": "17.09.2013",
+   "title": "Increase in Import Duty on Articles of Jewellery and Parts Thereof. and Goldsmiths' and Silversmiths' Wares and Parts Thereof",
+   "label": "A-105",
+   "startPage": 137,
+   "notification": "044/2013",
+   "endPage": 137
+  },
+  {
+   "number": 24,
+   "kind": "CUS",
+   "date": "01.03.2005",
+   "title": "Exemption of Customs Duty on Certain Goods Imported into India",
+   "label": "A-105",
+   "startPage": 137,
+   "notification": "024/2005",
+   "endPage": 138
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "01.03.2005",
+   "title": "Exemption of Customs Duty on Electronics Goods Imported into India under Chapter 84 and 85",
+   "label": "A-107",
+   "startPage": 139,
+   "notification": "025/2005",
+   "endPage": 140
+  },
+  {
+   "number": 20,
+   "kind": "CUS",
+   "date": "17.03.2012",
+   "title": "Exemption of Customs Duty and Additional Duty on Dredgers Imported into India under 890510 00",
+   "label": "A-109",
+   "startPage": 141,
+   "notification": "020/2012",
+   "endPage": 141
+  },
+  {
+   "number": 9,
+   "kind": "CUS",
+   "date": "09.03.2012",
+   "title": "Exemption of Customs Duty and Integrated Tax on Cut and Polished Diamonds Re-imported into India after Certification/Grading",
+   "label": "A-109",
+   "startPage": 141,
+   "notification": "009/2012",
+   "endPage": 141
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "28.06.2017",
+   "title": "Implementation of the Taxation Laws (Amendment) Act, 2017",
+   "label": "A-110",
+   "startPage": 142,
+   "notification": "025/2017",
+   "endPage": 142
+  },
+  {
+   "number": 52,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Exemption of Customs Duty and Additional Duty on Certain Petroleum Goods Imported into India",
+   "label": "A-110",
+   "startPage": 142,
+   "notification": "052/2017",
+   "endPage": 143
+  },
+  {
+   "number": 56,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Customs Tariff Act: Increase in Import Duty on Articles and Parts thereof under Headings 8443 and 8517",
+   "label": "A-112",
+   "startPage": 144,
+   "notification": "056/2017",
+   "endPage": 144
+  },
+  {
+   "number": 57,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Exemption of customs duties on certain goods imported into India for use in the manufacture of cellular mobile phones and other electronic devices",
+   "label": "A-112",
+   "startPage": 144,
+   "notification": "057/2017",
+   "endPage": 148
+  },
+  {
+   "number": 64,
+   "kind": "CUS",
+   "date": "05.07.2017",
+   "title": "Exemption from Integrated Tax for Goods Imported by a Unit or Developer in a Special Economic Zone for Authorized Operations",
+   "label": "A-117",
+   "startPage": 149,
+   "notification": "064/2017",
+   "endPage": 149
+  },
+  {
+   "number": 91,
+   "kind": "CUS",
+   "date": "14.12.2017",
+   "title": "Increase in Import Duty on Certain Goods and Parts thereof in Chapters 85, 90, and 94 of the First Schedule to the Customs Tariff Act, 1975",
+   "label": "A-117",
+   "startPage": 149,
+   "notification": "091/2017",
+   "endPage": 149
+  },
+  {
+   "number": 21,
+   "kind": "CUS",
+   "date": "02.02.2018",
+   "title": "Exemption of Motor Spirit and High Speed Diesel Oil from Additional Duty of Customs under the Customs Act,1962 and Finance Act. 2018",
+   "label": "A-117",
+   "startPage": 149,
+   "notification": "021/2018",
+   "endPage": 149
+  },
+  {
+   "number": 43,
+   "kind": "CUS",
+   "date": "10.04.2018",
+   "title": "Amendment to the Import Duty on Goods Falling under Heading 0404 of the First Schedule to the Customs Tariff Act, 1975",
+   "label": "A-117",
+   "startPage": 149,
+   "notification": "043/2018",
+   "endPage": 149
+  },
+  {
+   "number": 45,
+   "kind": "CUS",
+   "date": "23.05.2018",
+   "title": "Increase in Import Duty on Certain Goods",
+   "label": "A-118",
+   "startPage": 150,
+   "notification": "045/2018",
+   "endPage": 150
+  },
+  {
+   "number": 48,
+   "kind": "CUS",
+   "date": "20.06.2018",
+   "title": "Increase in Import Duty on Certain Goods",
+   "label": "A-118",
+   "startPage": 150,
+   "notification": "048/2018",
+   "endPage": 150
+  },
+  {
+   "number": 22,
+   "kind": "NT",
+   "date": "20.03.2018",
+   "title": "Amendments to the First Schedule of the Customs Tariff Act, 1975",
+   "label": "A-118",
+   "startPage": 150,
+   "notification": "022/2018",
+   "endPage": 150
+  },
+  {
+   "number": 67,
+   "kind": "CUS",
+   "date": "26.09.2018",
+   "title": "Amendments to the First Schedule of the Customs Tariff Act, 1975",
+   "label": "A-118",
+   "startPage": 150,
+   "notification": "067/2018",
+   "endPage": 150
+  },
+  {
+   "number": 74,
+   "kind": "CUS",
+   "date": "11.10.2018",
+   "title": "Increase in Import Duty on Goods Falling Under Chapter 85 of the First Schedule to the Customs Tariff Act, 1975",
+   "label": "A-119",
+   "startPage": 151,
+   "notification": "074/2018",
+   "endPage": 151
+  },
+  {
+   "number": 5,
+   "kind": "CUS",
+   "date": "16.02.2019",
+   "title": "Increase in Import Duty on Goods Originating in or Exported from the Islamic Republic of Pakistan",
+   "label": "A-119",
+   "startPage": 151,
+   "notification": "005/2019",
+   "endPage": 151
+  },
+  {
+   "number": 16,
+   "kind": "CUS",
+   "date": "15.06.2019",
+   "title": "Increasing Import Duty on Goods in Chapters 7, 28, and 38 of the Customs Tariff Act.1975",
+   "label": "A-119",
+   "startPage": 151,
+   "notification": "016/2019",
+   "endPage": 151
+  },
+  {
+   "number": 18,
+   "kind": "CUS",
+   "date": "06.07.2019",
+   "title": "Exemption from Additional Duty of Customs on Motor Spirit and High Speed Diesel Oil",
+   "label": "A-119",
+   "startPage": 151,
+   "notification": "018/2019",
+   "endPage": 151
+  },
+  {
+   "number": 28,
+   "kind": "CUS",
+   "date": "23.06.2020",
+   "title": "Quota Tariff Rate to prescribe the manner and modalities in respect ofWTO committed under TRQ on specified items",
+   "label": "A-120",
+   "startPage": 152,
+   "notification": "028/2020",
+   "endPage": 152
+  },
+  {
+   "number": 11,
+   "kind": "CUS",
+   "date": "01.02.2022",
+   "title": "Customs Duty Exemption for Wrist Wearable Devices and Parts and Components for their Manufacture",
+   "label": "A-120",
+   "startPage": 152,
+   "notification": "011/2022",
+   "endPage": 153
+  },
+  {
+   "number": 12,
+   "kind": "CUS",
+   "date": "01.02.2022",
+   "title": "Import Duty exemption under PMP for Hearable Devices",
+   "label": "A-122",
+   "startPage": 154,
+   "notification": "012/2022",
+   "endPage": 154
+  },
+  {
+   "number": 13,
+   "kind": "CUS",
+   "date": "01.02.2022",
+   "title": "Import Duty Exemption for Smart Meters under the Public Maritime Project (PMP)",
+   "label": "A-123",
+   "startPage": 155,
+   "notification": "013/2022",
+   "endPage": 155
+  },
+  {
+   "number": 40,
+   "kind": "CUS",
+   "date": "30.06.2023",
+   "title": "Increase in Import Duty on Uquified Petroleum Gas (LPG)",
+   "label": "A-124",
+   "startPage": 156,
+   "notification": "040/2023",
+   "endPage": 156
+  },
+  {
+   "number": 43,
+   "kind": "CUS",
+   "date": "01.07.2023",
+   "title": "Increase in Import Duty on Uquified Propane and Uquified Butane",
+   "label": "A-124",
+   "startPage": 156,
+   "notification": "043/2023",
+   "endPage": 156
+  },
+  {
+   "number": 14,
+   "kind": "CUS",
+   "date": "12.03.2024",
+   "title": "Exemption from Customs Duty andAIDC on Import of Gold by Reserve Bank oflndia",
+   "label": "A-124",
+   "startPage": 156,
+   "notification": "014/2024",
+   "endPage": 156
+  },
+  {
+   "number": 15,
+   "kind": "CUS",
+   "date": "12.03.2024",
+   "title": "Increase in Import Duty on Goods under Chapter 90 of the Customs Tariff Act, 1975",
+   "label": "A-124",
+   "startPage": 156,
+   "notification": "015/2024",
+   "endPage": 156
+  },
+  {
+   "number": 27,
+   "kind": "CUS",
+   "date": "12.07.2024",
+   "title": "Exemption of GST Compensation Cess on Goods Imported by SEZ Units or Developers",
+   "label": "A-125",
+   "startPage": 157,
+   "notification": "027/2024",
+   "endPage": 157
+  },
+  {
+   "number": 36,
+   "kind": "CUS",
+   "date": "23.07.2024",
+   "title": "Import Duty and Social Welfare Surcharge exemption on specified critical mineral products",
+   "label": "A-125",
+   "startPage": 157,
+   "notification": "036/2024",
+   "endPage": 157
+  },
+  {
+   "number": 35,
+   "kind": "CUS",
+   "date": "18.08.2025",
+   "title": "Exemption of Customs Duty and Agriculture Infrastructure and Development Cess on Import of Cotton",
+   "label": "A-126",
+   "startPage": 158,
+   "notification": "035/2025",
+   "endPage": 158
+  },
+  {
+   "number": 46,
+   "kind": "CUS",
+   "date": "29.10.2025",
+   "title": "Exemption to Yellow Peas -Reduction of Customs Duty and AIDC Rates",
+   "label": "A-126",
+   "startPage": 158,
+   "notification": "046/2025",
+   "endPage": 158
+  },
+  {
+   "number": 30,
+   "kind": "CUS",
+   "date": "28.02.1999",
+   "title": "Special Duty of Customs All goods exempt from Special duty of Customs",
+   "label": "A-127",
+   "startPage": 159,
+   "notification": "030/1999",
+   "endPage": 159
+  },
+  {
+   "number": 26,
+   "kind": "CUS",
+   "date": "01.03.2008",
+   "title": "National caianiity Contingent Duty of Customs Exemption of Cellular Telephones from National Calamity Contingent Duty (NCCD)",
+   "label": "A-128",
+   "startPage": 160,
+   "notification": "026/2008",
+   "endPage": 172
+  },
+  {
+   "number": 1,
+   "kind": "NT",
+   "date": "01",
+   "title": "Customs Tariff (Identification. Assessment and Collection of Duty or Additional Duty on Bounty-fed Articles and for Determination of Injury) Rules. 1995",
+   "label": "B-3",
+   "startPage": 270,
+   "endPage": 270
+  },
+  {
+   "number": 2,
+   "kind": "NT",
+   "date": "01.01.1995",
+   "title": "Customs Tariff (Identification. Assessment and Collection of Anti-Dumping Duty on Dumped Articles and for Determination of Injury) Rules. 1995",
+   "label": "B-19",
+   "startPage": 179,
+   "notification": "002/1995",
+   "endPage": 189
+  },
+  {
+   "number": 5,
+   "kind": "NT",
+   "date": "19.01.2012",
+   "title": "Refund of Anti-Dumping Duty (paid in excess of actual margin of dumping) Rules, 2012",
+   "label": "B-30",
+   "startPage": 190,
+   "notification": "005/2012",
+   "endPage": 190
+  },
+  {
+   "number": 38,
+   "kind": "NT",
+   "date": "27.05.1992",
+   "title": "Specification of Countries for the Purposes of Subsection (2) of Section 9B of the Customs Tariff Act, 1975",
+   "label": "B-31",
+   "startPage": 191,
+   "notification": "038/1992",
+   "endPage": 191
+  },
+  {
+   "number": 75,
+   "kind": "CUS",
+   "date": "11.06.1999",
+   "title": "Exemption of Articles imported Against India with Annual Advance Licences from Anti-Dumping Duty",
+   "label": "B-31",
+   "startPage": 191,
+   "notification": "075/1999",
+   "endPage": 191
+  },
+  {
+   "number": 37,
+   "kind": "ADD",
+   "date": "14.09.2019",
+   "title": "Anti-Dumping Duty: Electrical Insulators of Glass or Ceramics/Porcelain originating in or exported from China PR",
+   "label": "B-31",
+   "startPage": 191,
+   "notification": "037/2019",
+   "endPage": 191
+  },
+  {
+   "number": 35,
+   "kind": "ADD",
+   "date": "10.11.2020",
+   "title": "Anti-Dumping Duty: Woven Fabric or Flax Fabric originating in or exported from China PR and Hong Kong",
+   "label": "B-32",
+   "startPage": 192,
+   "notification": "035/2020",
+   "endPage": 192
+  },
+  {
+   "number": 37,
+   "kind": "ADD",
+   "date": "11.11.2020",
+   "title": "Anti-Dumping Duty: Clear Float Glass originating in or exported from Malaysia",
+   "label": "B-33",
+   "startPage": 193,
+   "notification": "037/2020",
+   "endPage": 193
+  },
+  {
+   "number": 40,
+   "kind": "ADD",
+   "date": "27.11.2020",
+   "title": "Anti-Dumping Duty: Fluoroelastomers (FKM) originating in or exported from China PR",
+   "label": "B-34",
+   "startPage": 194,
+   "notification": "040/2020",
+   "endPage": 194
+  },
+  {
+   "number": 13,
+   "kind": "ADD",
+   "date": "11.03.2021",
+   "title": "Anti-Dumping Duty: Ciprofloxacin Hydrocl1loride originating in or exported from China PR",
+   "label": "B-35",
+   "startPage": 195,
+   "notification": "013/2021",
+   "endPage": 195
+  },
+  {
+   "number": 14,
+   "kind": "ADD",
+   "date": "18.03.2021",
+   "title": "Anti-Dumping Duty: Faced Glass Wool in rolls originating in or exported from China PR",
+   "label": "B-36",
+   "startPage": 196,
+   "notification": "014/2021",
+   "endPage": 196
+  },
+  {
+   "number": 17,
+   "kind": "ADD",
+   "date": "26.03.2021",
+   "title": "Anti-Dumping Duty: 2-Ethyl Hexanol originating in or exported from European Union, Indonesia, Korea RP. Malaysia, Taiwan and USA",
+   "label": "B-37",
+   "startPage": 197,
+   "notification": "017/2021",
+   "endPage": 197
+  },
+  {
+   "number": 18,
+   "kind": "ADD",
+   "date": "27",
+   "title": "Anti-Dumping Duty: Polyethylene Terephthalate Resin as specified originating in or exported from China PR",
+   "label": "B-38",
+   "startPage": 198,
+   "endPage": 198
+  },
+  {
+   "number": 20,
+   "kind": "ADD",
+   "date": "05.04.2021",
+   "title": "Anti-Dumping Duty: Flexible Slabstock Polyol of molecular weight 3000-4000 originating in or exported from Saudi Arabia and UAE",
+   "label": "B-39",
+   "startPage": 199,
+   "notification": "020/2021",
+   "endPage": 199
+  },
+  {
+   "number": 21,
+   "kind": "ADD",
+   "date": "12.04.2021",
+   "title": "Anti-Dumping Duty: Normal Butanol or N-Butyl Alcohol originating in or exported from specified Countries",
+   "label": "B-40",
+   "startPage": 200,
+   "notification": "021/2021",
+   "endPage": 200
+  },
+  {
+   "number": 26,
+   "kind": "ADD",
+   "date": "27.04.2021",
+   "title": "Anti-Dumping Duty: 1-Phenyl-3-Methyl-5-Pyrazolone originating in or exported from China PR",
+   "label": "B-41",
+   "startPage": 201,
+   "notification": "026/2021",
+   "endPage": 201
+  },
+  {
+   "number": 28,
+   "kind": "ADD",
+   "date": "27.04.2021",
+   "title": "Anti-Dumping Duty: Toluene Di-Isocyanate (TDI) originating in or exported from European Union. Saudi Arabia. Chinese Taipei and UAE",
+   "label": "B-42",
+   "startPage": 202,
+   "notification": "028/2021",
+   "endPage": 202
+  },
+  {
+   "number": 31,
+   "kind": "ADD",
+   "date": "29.05.2021",
+   "title": "Anti-Dumping Duty: Methyl Acetoacetate originating in or exported from China PR",
+   "label": "B-43",
+   "startPage": 203,
+   "notification": "031/2021",
+   "endPage": 203
+  },
+  {
+   "number": 43,
+   "kind": "ADD",
+   "date": "09.08.2021",
+   "title": "Anti-Dumping Duty: Phtbalic Anhydride originating in or exported from China PR, Indonesia, Korea RP and Thailand",
+   "label": "B-44",
+   "startPage": 204,
+   "notification": "043/2021",
+   "endPage": 204
+  },
+  {
+   "number": 47,
+   "kind": "ADD",
+   "date": "26.08.2021",
+   "title": "Anti-Dumping Duty: Natural Mica based Pearl Industrial Pigments exduding cosmetic grade originating in or exported from China PR",
+   "label": "B-45",
+   "startPage": 205,
+   "notification": "047/2021",
+   "endPage": 205
+  },
+  {
+   "number": 51,
+   "kind": "ADD",
+   "date": "16.09.2021",
+   "title": "Anti-Dumping Duty: Aluminium Foil (80 micron and below) originating in or exported from China PR, Malaysia, Thailand and Indonesia",
+   "label": "B-46",
+   "startPage": 206,
+   "notification": "051/2021",
+   "endPage": 206
+  },
+  {
+   "number": 59,
+   "kind": "ADD",
+   "date": "04.10.2021",
+   "title": "Anti-Dumping Duty: Ceramic Tableware and Kitchenware exduding Knives and Toilet items originating in or exported from China and Malaysia",
+   "label": "B-47",
+   "startPage": 207,
+   "notification": "059/2021",
+   "endPage": 207
+  },
+  {
+   "number": 60,
+   "kind": "ADD",
+   "date": "10.10.2021",
+   "title": "Anti-Dumping Duty: Aceto Acetyl Derivatives of Aromatic or Hetrocyclic Compounds originating in or exported from China PR",
+   "label": "B-48",
+   "startPage": 208,
+   "notification": "060/2021",
+   "endPage": 208
+  },
+  {
+   "number": 64,
+   "kind": "ADD",
+   "date": "28.10.2021",
+   "title": "Anti-Dumping Duty: Seamless tubes, pipes and hollow profiles of iron, alloy or non-alloy steel originating in or exported from China PR",
+   "label": "B-49",
+   "startPage": 209,
+   "notification": "064/2021",
+   "endPage": 211
+  },
+  {
+   "number": 66,
+   "kind": "ADD",
+   "date": "11.11.2021",
+   "title": "Anti-Dumping Duty: Untreated Fumed Silica originating in or exported from China PR and Korea RP",
+   "label": "B-52",
+   "startPage": 212,
+   "notification": "066/2021",
+   "endPage": 212
+  },
+  {
+   "number": 67,
+   "kind": "ADD",
+   "date": "12.11.2021",
+   "title": "Anti-Dumping Duty: Steel and Fibre Glass Measuring Tapes and their parts and components originating in or exported from Singapore and Cambodia",
+   "label": "B-53",
+   "startPage": 213,
+   "notification": "067/2021",
+   "endPage": 213
+  },
+  {
+   "number": 68,
+   "kind": "ADD",
+   "date": "06.12.2021",
+   "title": "Anti-Dumping Duty: Flat Rolled Products of Aluminium originating in or exported from China PR",
+   "label": "B-54",
+   "startPage": 214,
+   "notification": "068/2021",
+   "endPage": 214
+  },
+  {
+   "number": 69,
+   "kind": "ADD",
+   "date": "13.12.2021",
+   "title": "Anti-Dumping Duty: Axle for Trailers in Completely Knock Down and Semi Knod< Down Condition originating in or exported from China PR",
+   "label": "B-55",
+   "startPage": 215,
+   "notification": "069/2021",
+   "endPage": 215
+  },
+  {
+   "number": 71,
+   "kind": "ADD",
+   "date": "17.12.2021",
+   "title": "Anti-Dumping Duty: Sodium Hydrosulphite originating in or exported from China PR and Korea RP",
+   "label": "B-56",
+   "startPage": 216,
+   "notification": "071/2021",
+   "endPage": 216
+  },
+  {
+   "number": 73,
+   "kind": "ADD",
+   "date": "1712.2021",
+   "title": "Anti-Dumping Duty: Calcined Gypsum Powder originating in or exported from Iran, Oman, Saudi Arabia and United Arab Emirates(UAE)",
+   "label": "B-57",
+   "startPage": 217,
+   "endPage": 217
+  },
+  {
+   "number": 74,
+   "kind": "ADD",
+   "date": "21.12.2021",
+   "title": "Anti-Dumping Duty: Silicone Sealants exduding silicon sealants as specified originating in or exported from China PR",
+   "label": "B-57",
+   "startPage": 217,
+   "notification": "074/2021",
+   "endPage": 218
+  },
+  {
+   "number": 75,
+   "kind": "ADD",
+   "date": "21.12.2021",
+   "title": "Anti-Dumping Duty: Hydrofluorocarbon (HFC) Component R-32 originating in or exported from ChinaPR",
+   "label": "B-59",
+   "startPage": 219,
+   "notification": "075/2021",
+   "endPage": 219
+  },
+  {
+   "number": 76,
+   "kind": "ADD",
+   "date": "22.12.2021",
+   "title": "Anti-Dumping Duty: Hydrofluorocarbon (HFC) Blends as specified originating in or exported from China PR",
+   "label": "B-59",
+   "startPage": 219,
+   "notification": "076/2021",
+   "endPage": 219
+  },
+  {
+   "number": 77,
+   "kind": "ADD",
+   "date": "27.12.2021",
+   "title": "Anti-Dumping Duty: Decor Paper originating in or exported from China PR",
+   "label": "B-60",
+   "startPage": 220,
+   "notification": "077/2021",
+   "endPage": 220
+  },
+  {
+   "number": 4,
+   "kind": "ADD",
+   "date": "24.01.2022",
+   "title": "Anti-Dumping Duty: Axles for Trailers originating in or exported from China PR",
+   "label": "B-61",
+   "startPage": 221,
+   "notification": "004/2022",
+   "endPage": 221
+  },
+  {
+   "number": 9,
+   "kind": "ADD",
+   "date": "24.02.2022",
+   "title": "Anti-Dumping Duty: Glazed/Unglazed PorcelainNitrified tiles in polished or unpolished finish with less than 3% water absorption originating in or exported from China PR",
+   "label": "B-62",
+   "startPage": 222,
+   "notification": "009/2022",
+   "endPage": 222
+  },
+  {
+   "number": 12,
+   "kind": "ADD",
+   "date": "28.04.2022",
+   "title": "Anti-Dumping Duty: N. N'-Dicyclohexyl Carbodiirnide (DCC) originating in or exported from China PR",
+   "label": "B-63",
+   "startPage": 223,
+   "notification": "012/2022",
+   "endPage": 223
+  },
+  {
+   "number": 14,
+   "kind": "ADD",
+   "date": "20.05.2022",
+   "title": "Anti-Dumping Duty: Polyurethane Leather which includes any kind of textile coated one sided or both sided with Polyurethane originating in or exported from China PR",
+   "label": "B-64",
+   "startPage": 224,
+   "notification": "014/2022",
+   "endPage": 224
+  },
+  {
+   "number": 16,
+   "kind": "ADD",
+   "date": "24",
+   "title": "Anti-Dumping Duty: Ceramic Tableware and Kitchenware, excluding knives and toilet items originating in or exported from China PR",
+   "label": "B-65",
+   "startPage": 225,
+   "endPage": 225
+  },
+  {
+   "number": 22,
+   "kind": "ADD",
+   "date": "15.06.2022",
+   "title": "Anti-Dumping Duty: Fluoro Backsheet excluding transparent backsheet originating in or exported from China PR",
+   "label": "B-66",
+   "startPage": 226,
+   "notification": "022/2022",
+   "endPage": 226
+  },
+  {
+   "number": 24,
+   "kind": "ADD",
+   "date": "03.08.2022",
+   "title": "Anti-Dumping Duty: Opal Glassware originating in or exported from China PR and UAE",
+   "label": "B-67",
+   "startPage": 227,
+   "notification": "024/2022",
+   "endPage": 227
+  },
+  {
+   "number": 28,
+   "kind": "ADD",
+   "date": "21.09.2022",
+   "title": "Anti-Dumping Duty: Toluene Di-isocyanate originating in or exported from China PR. Japan and Korea RP",
+   "label": "B-68",
+   "startPage": 228,
+   "notification": "028/2022",
+   "endPage": 228
+  },
+  {
+   "number": 29,
+   "kind": "ADD",
+   "date": "19.10.2022",
+   "title": "Anti-Dumping Duty: Electrogalvanized Steel originating in or exported from Korea RP, Japan and Singapore",
+   "label": "B-69",
+   "startPage": 229,
+   "notification": "029/2022",
+   "endPage": 229
+  },
+  {
+   "number": 31,
+   "kind": "ADD",
+   "date": "20.122022",
+   "title": "Anti-Dumping Duty: Stainless-Steel Seamless Tubes and Pipes originating in or exported from China PR",
+   "label": "B-70",
+   "startPage": 230,
+   "endPage": 230
+  },
+  {
+   "number": 32,
+   "kind": "ADD",
+   "date": "27.12.2022",
+   "title": "Anti-Dumping Duty: Semi-finished Ophthalmic Lenses originating in or exported from China PR",
+   "label": "B-71",
+   "startPage": 231,
+   "notification": "032/2022",
+   "endPage": 231
+  },
+  {
+   "number": 33,
+   "kind": "ADD",
+   "date": "30.12.2022",
+   "title": "Anti-Dumping Duty: Jute Products originating in or exported from Bangladesh and Nepal",
+   "label": "B-72",
+   "startPage": 232,
+   "notification": "033/2022",
+   "endPage": 235
+  },
+  {
+   "number": 4,
+   "kind": "ADD",
+   "date": "10.04.2023",
+   "title": "Anti-Dumping Duty: Ursodeoxycholic Acid (UDCA) originating in or exported from China PR and KoreaRP",
+   "label": "B-76",
+   "startPage": 236,
+   "notification": "004/2023",
+   "endPage": 236
+  },
+  {
+   "number": 5,
+   "kind": "ADD",
+   "date": "i9.04.2023",
+   "title": "Anti-Dumping Duty: Vinyl Tiles, other than in roll or sheet form originating in or exported from China PR, Taiwan and Vietnam",
+   "label": "B-77",
+   "startPage": 237,
+   "notification": "005/2023",
+   "endPage": 237
+  },
+  {
+   "number": 7,
+   "kind": "ADD",
+   "date": "03.08.2023",
+   "title": "Anti-Dumping Duty: Dispersion Unshifted Single - Mode Optical Fiber originating in or exported from China PR, Indonesia and Korea RP",
+   "label": "B-78",
+   "startPage": 238,
+   "notification": "007/2023",
+   "endPage": 238
+  },
+  {
+   "number": 8,
+   "kind": "ADD",
+   "date": "29.08.2023",
+   "title": "Anti-Dumping Duty: Fishing Net originating in or exported from China PR",
+   "label": "B-79",
+   "startPage": 239,
+   "notification": "008/2023",
+   "endPage": 239
+  },
+  {
+   "number": 9,
+   "kind": "ADD",
+   "date": "11.09.2023",
+   "title": "Anti-dumping duty: Anti-dumping duty on Flat Base Steel Wheels as specified originating in or exported from China PR",
+   "label": "B-80",
+   "startPage": 240,
+   "notification": "009/2023",
+   "endPage": 240
+  },
+  {
+   "number": 10,
+   "kind": "ADD",
+   "date": "12.10.2023",
+   "title": "Anti-dumping duty: Flax yarn below 70 Lea count originating in or exported from China PR",
+   "label": "B-81",
+   "startPage": 241,
+   "notification": "010/2023",
+   "endPage": 241
+  },
+  {
+   "number": 11,
+   "kind": "ADD",
+   "date": "17.11.2023",
+   "title": "Anti-dumping duty: Toughened Glass for Home Appliances having thiclmess between 1.8 MM to 8 MM and area of 0.4 SqM or less originating in or exported from China PR",
+   "label": "B-81",
+   "startPage": 241,
+   "notification": "011/2023",
+   "endPage": 242
+  },
+  {
+   "number": 12,
+   "kind": "ADD",
+   "date": "21.11.2023",
+   "title": "Anti-dumping duty: Synthetic Grade zeolite 4A (Detergent Grade) originating in or exported from China PR",
+   "label": "B-83",
+   "startPage": 243,
+   "notification": "012/2023",
+   "endPage": 243
+  },
+  {
+   "number": 14,
+   "kind": "ADD",
+   "date": "11.12.2023",
+   "title": "Anti-dumping duty: Synthetic Grade Zeolite 4A originating in or exported from Iran and Thailand",
+   "label": "B-83",
+   "startPage": 243,
+   "notification": "014/2023",
+   "endPage": 243
+  },
+  {
+   "number": 15,
+   "kind": "ADD",
+   "date": "22.12.2023",
+   "title": "Anti-dumping duty: Industrial Laser Machines, used for curting, marking, or welding originating in or exported from China PR",
+   "label": "B-84",
+   "startPage": 244,
+   "notification": "015/2023",
+   "endPage": 244
+  },
+  {
+   "number": 16,
+   "kind": "ADD",
+   "date": "26.12.2023",
+   "title": "Anti-dumping duty: Gypsum Board/ Tiles with lamination at least on one side originating in or exported from China PR and Oman",
+   "label": "B-85",
+   "startPage": 245,
+   "notification": "016/2023",
+   "endPage": 245
+  },
+  {
+   "number": 17,
+   "kind": "ADD",
+   "date": "27.12.2023",
+   "title": "Anti-dumping duty: Wheel Loaders originating in or exported from China PR",
+   "label": "B-86",
+   "startPage": 246,
+   "notification": "017/2023",
+   "endPage": 247
+  },
+  {
+   "number": 3,
+   "kind": "ADD",
+   "date": "14.03.2024",
+   "title": "Anti-dumping duty: Printed Circuit Boards (PCB) originating in or exported from China PR and Hongkong",
+   "label": "B-88",
+   "startPage": 248,
+   "notification": "003/2024",
+   "endPage": 249
+  },
+  {
+   "number": 4,
+   "kind": "ADD",
+   "date": "14.03.2024",
+   "title": "Anti-dumping duty: Para-Tertiary Butyl Phenol (PTBP) originating in or exported from Korea RP. Singapore and the USA",
+   "label": "B-90",
+   "startPage": 250,
+   "notification": "004/2024",
+   "endPage": 251
+  },
+  {
+   "number": 6,
+   "kind": "ADD",
+   "date": "14.03.2024",
+   "title": "Ntfn 05 (ADD) dated J4.03.2024 Anti-dumping duty: Self-Adhesive Vinyl (SA V) originating in or exported from China PR",
+   "label": "B-92",
+   "startPage": 252,
+   "notification": "006/2024",
+   "endPage": 252
+  },
+  {
+   "number": 7,
+   "kind": "ADD",
+   "date": "15.03.2024",
+   "title": "Anti-dumping duty: Cast Aluminium Alioy Wheels or Alioy Road Wheels (ARW) used in Motor Vehicles as specified originating in or exported from China PR",
+   "label": "B-93",
+   "startPage": 253,
+   "notification": "007/2024",
+   "endPage": 253
+  },
+  {
+   "number": 8,
+   "kind": "ADD",
+   "date": "16.05.2024",
+   "title": "Anti-dumping duty: Pentaerythritol originating in or exported from China PR, Saudi Arabia and Taiwan",
+   "label": "B-94",
+   "startPage": 254,
+   "notification": "008/2024",
+   "endPage": 254
+  },
+  {
+   "number": 10,
+   "kind": "ADD",
+   "date": "27.06.2024",
+   "title": "Anti-dumping duty: Sodium Cyanide originating in or exported from China PR. European Union, Japan and Korea RP",
+   "label": "B-95",
+   "startPage": 255,
+   "notification": "010/2024",
+   "endPage": 255
+  },
+  {
+   "number": 11,
+   "kind": "ADD",
+   "date": "27.06.2024",
+   "title": "Anti-dumping duty: Alioy Steel Chisel/ Tool and Hydraulic Rock Breaker in fully assembled condition originating in or exported from China PR and Korea RP",
+   "label": "B-96",
+   "startPage": 256,
+   "notification": "011/2024",
+   "endPage": 257
+  },
+  {
+   "number": 15,
+   "kind": "ADD",
+   "date": "23.08.2024",
+   "title": "Anti-dumping duty: Chlorinated Polyvinyl Chloride Resin (CPVC)-whether or not further processed into compound originating in or exported from China PR and Korea RP",
+   "label": "B-98",
+   "startPage": 258,
+   "notification": "015/2024",
+   "endPage": 258
+  },
+  {
+   "number": 16,
+   "kind": "ADD",
+   "date": "27.09.2024",
+   "title": "Anti-dumping duty: Anodized Aluminium Frames for Solar Panels/ Modules originating in or exported from China PR",
+   "label": "B-99",
+   "startPage": 259,
+   "notification": "016/2024",
+   "endPage": 259
+  },
+  {
+   "number": 17,
+   "kind": "ADD",
+   "date": "27.09.2024",
+   "title": "Anti-dumping duty: Isobutylene-Isoprene Rubber ('IIR') originating in or exported from People's Republic of China, Russia, Saudi Arabia. Singapore and United States of America",
+   "label": "B-100",
+   "startPage": 260,
+   "notification": "017/2024",
+   "endPage": 260
+  },
+  {
+   "number": 18,
+   "kind": "ADD",
+   "date": "21.10.2024",
+   "title": "Anti-dumping duty: Unframed Glass Mirror originating in or exported from People's Republic of China",
+   "label": "B-101",
+   "startPage": 261,
+   "notification": "018/2024",
+   "endPage": 261
+  },
+  {
+   "number": 19,
+   "kind": "ADD",
+   "date": "22.10.2024",
+   "title": "Anti-dumping duty: Thermoplastic Polyurethane (TPU) originating in or exported from People's Republic of China",
+   "label": "B-102",
+   "startPage": 262,
+   "notification": "019/2024",
+   "endPage": 262
+  },
+  {
+   "number": 20,
+   "kind": "ADD",
+   "date": "22.10.2024",
+   "title": "Anti-dumping duty: Cellophane Transparent Film originating in or exported from China PR",
+   "label": "B-103",
+   "startPage": 263,
+   "notification": "020/2024",
+   "endPage": 263
+  },
+  {
+   "number": 22,
+   "kind": "ADD",
+   "date": "22.10.2024",
+   "title": "Ntfn 21 (ADD} dated 22.10.2024 Anti-dumping duty: Isopropyl Alcohol originating in or exported from China PR",
+   "label": "B-104",
+   "startPage": 264,
+   "notification": "022/2024",
+   "endPage": 264
+  },
+  {
+   "number": 23,
+   "kind": "ADD",
+   "date": "04.11.2024",
+   "title": "Anti-dumping duty: Welded Stainless-Steel Pipes and Tubes originating in or exported from Thailand andViemam",
+   "label": "B-105",
+   "startPage": 265,
+   "notification": "023/2024",
+   "endPage": 265
+  },
+  {
+   "number": 24,
+   "kind": "ADD",
+   "date": "11.11.2024",
+   "title": "Anti-dumping duty: Epichlorohydrin originating in or exported from China PR. Korea RP and Thailand",
+   "label": "B-106",
+   "startPage": 266,
+   "notification": "024/2024",
+   "endPage": 266
+  },
+  {
+   "number": 27,
+   "kind": "ADD",
+   "date": "18.12.2024",
+   "title": "Anti-dumping duty: Telescopic Channel Drawer Slider originating in or exported from China PR",
+   "label": "B-106",
+   "startPage": 266,
+   "notification": "027/2024",
+   "endPage": 268
+  },
+  {
+   "number": 28,
+   "kind": "ADD",
+   "date": "26.12.2024",
+   "title": "Anti-dumping duty: Digital Offset Printing Plates originating in or exported from China PR. Japan. Korea RP, Viemam, and Taiwan",
+   "label": "B-109",
+   "startPage": 269,
+   "notification": "028/2024",
+   "endPage": 269
+  },
+  {
+   "number": 2,
+   "kind": "ADD",
+   "date": "17.03.2025",
+   "title": "Anti-dumping duty: \"Aluminium foil up to 80 microns, excluding aluminium foil below 5.5 microns for non-capadtor application\" originating in or exported from China PR",
+   "label": "B-111",
+   "startPage": 271,
+   "notification": "002/2025",
+   "endPage": 271
+  },
+  {
+   "number": 3,
+   "kind": "ADD",
+   "date": "17.03.2025",
+   "title": "Anti-dumping duty: Vacuum insulated flask and other vacuum vessels. of stainless steel originating in or exported from China PR",
+   "label": "B-112",
+   "startPage": 272,
+   "notification": "003/2025",
+   "endPage": 272
+  },
+  {
+   "number": 4,
+   "kind": "ADD",
+   "date": "18.03.2025",
+   "title": "Anti-dumping duty: Soft Ferrite Cores originating in or exported from China PR",
+   "label": "B-113",
+   "startPage": 273,
+   "notification": "004/2025",
+   "endPage": 273
+  },
+  {
+   "number": 5,
+   "kind": "ADD",
+   "date": "21.03.2025",
+   "title": "Anti-dumping duty: Poly Vinyl Chloride Paste Resin originating in or exported from China PR. Korea RP. Malaysia. Norway, Taiwan and Thailand",
+   "label": "B-114",
+   "startPage": 274,
+   "notification": "005/2025",
+   "endPage": 275
+  },
+  {
+   "number": 6,
+   "kind": "ADD",
+   "date": "24.03.2025",
+   "title": "Anti-dumping duty: Roller Chains originating in or exported from China PR",
+   "label": "B-116",
+   "startPage": 276,
+   "notification": "006/2025",
+   "endPage": 276
+  },
+  {
+   "number": 7,
+   "kind": "ADD",
+   "date": "25.03.2025",
+   "title": "Anti-dumping duty: Acrylic Solid Surfaces originating in or exported from China PR",
+   "label": "B-116",
+   "startPage": 276,
+   "notification": "007/2025",
+   "endPage": 276
+  },
+  {
+   "number": 9,
+   "kind": "ADD",
+   "date": "08.05.2025",
+   "title": "Anti-dumping duty: Glufosinate and its salt originating in or exported from China PR",
+   "label": "B-117",
+   "startPage": 277,
+   "notification": "009/2025",
+   "endPage": 277
+  },
+  {
+   "number": 10,
+   "kind": "ADD",
+   "date": "0",
+   "title": "Anti-dumping duty: Sodium Citrate originating in or exported from China PR",
+   "label": "B-118",
+   "startPage": 278,
+   "endPage": 278
+  },
+  {
+   "number": 11,
+   "kind": "ADD",
+   "date": "08.05.2025",
+   "title": "Anti-dumping duty: Textured Tempered Coated and Uncoated Glass originating in or exported from China PR and Viemam",
+   "label": "B-119",
+   "startPage": 279,
+   "notification": "011/2025",
+   "endPage": 279
+  },
+  {
+   "number": 12,
+   "kind": "ADD",
+   "date": "10.05.2025",
+   "title": "Anti-dumping duty: Titanium dioxide originating in or exported from China PR",
+   "label": "B-120",
+   "startPage": 280,
+   "notification": "012/2025",
+   "endPage": 282
+  },
+  {
+   "number": 13,
+   "kind": "ADD",
+   "date": "06.06.2025",
+   "title": "Anti-dumping duty: Insoluble Sulphur originating in or exported from China PR and Japan",
+   "label": "B-122",
+   "startPage": 173,
+   "notification": "013/2025",
+   "endPage": 173
+  },
+  {
+   "number": 14,
+   "kind": "ADD",
+   "date": "06.06.2025",
+   "title": "Anti-dumping duty: Vitamin-A Palmitate originating in or exported from China PR. European Union and Switzerland",
+   "label": "B-122",
+   "startPage": 173,
+   "notification": "014/2025",
+   "endPage": 173
+  },
+  {
+   "number": 15,
+   "kind": "ADD",
+   "date": "19.06.2025",
+   "title": "Anti-dumping duty: Aluminium foil upto 80 micron originating in or exported from China PR",
+   "label": "B-123",
+   "startPage": 283,
+   "notification": "015/2025",
+   "endPage": 284
+  },
+  {
+   "number": 16,
+   "kind": "ADD",
+   "date": "19.06.2025",
+   "title": "Anti-dumping duty: Acetonitrile originating in or exported from China PR, Russia and Taiwan",
+   "label": "B-125",
+   "startPage": 285,
+   "notification": "016/2025",
+   "endPage": 285
+  },
+  {
+   "number": 17,
+   "kind": "ADD",
+   "date": "19.06.2025",
+   "title": "Anti-dumping duty: Pretilachlor in any of its form & its intermediate - 2,6-Diethyl-n-(2-propoxy ethyl) Aniline in or exported from China PR",
+   "label": "B-126",
+   "startPage": 286,
+   "notification": "017/2025",
+   "endPage": 286
+  },
+  {
+   "number": 18,
+   "kind": "ADD",
+   "date": "23.06.2025",
+   "title": "Anti-dumping duty: Linear Alkyl Benzene (LAB) in or exported from Iran and Qatar",
+   "label": "B-127",
+   "startPage": 287,
+   "notification": "018/2025",
+   "endPage": 287
+  },
+  {
+   "number": 20,
+   "kind": "ADD",
+   "date": "24.06.2025",
+   "title": "Anti-dumping duty: Potassium Tertiary Butoxide (KTB) and Sodium Tertiary Butoxide (STB) in or exported from China PR and United States of America",
+   "label": "B-128",
+   "startPage": 288,
+   "notification": "020/2025",
+   "endPage": 288
+  },
+  {
+   "number": 21,
+   "kind": "ADD",
+   "date": "26.06.2025",
+   "title": "Anti-dumping duty: Plastic Processing Machines in or exported from China PR and Taiwan",
+   "label": "B-128",
+   "startPage": 288,
+   "notification": "021/2025",
+   "endPage": 289
+  },
+  {
+   "number": 25,
+   "kind": "ADD",
+   "date": "18.07.2025",
+   "title": "Anti-dumping duty: Aniline originating in or exported from China PR",
+   "label": "B-130",
+   "startPage": 290,
+   "notification": "025/2025",
+   "endPage": 290
+  },
+  {
+   "number": 26,
+   "kind": "ADD",
+   "date": "04.08.2025",
+   "title": "Anti-dumping duty: Black Toner in powder form originating in or exported from China PR. Malaysia and Taiwan",
+   "label": "B-131",
+   "startPage": 291,
+   "notification": "026/2025",
+   "endPage": 291
+  },
+  {
+   "number": 31,
+   "kind": "ADD",
+   "date": "07.11.2025",
+   "title": "Anti-dumping duty: Woven Fabric (having more than 50% Flax content) originating ih or exported from China PR and Hong Kong",
+   "label": "B-132",
+   "startPage": 292,
+   "notification": "031/2025",
+   "endPage": 293
+  },
+  {
+   "number": 33,
+   "kind": "ADD",
+   "date": "17.11.2025",
+   "title": "Anti-dumping duty: Liquid Epoxy Resins originating in or exported from China PR. Korea RP, Saudi Arabia, Taiwan and Thailand",
+   "label": "B-134",
+   "startPage": 294,
+   "notification": "033/2025",
+   "endPage": 294
+  },
+  {
+   "number": 35,
+   "kind": "ADD",
+   "date": "18",
+   "title": "Anti-dumping duty: Cold Rolled Non Oriented Electrical Steel originating in or exported from China PR",
+   "label": "B-135",
+   "startPage": 295,
+   "endPage": 295
+  },
+  {
+   "number": 36,
+   "kind": "ADD",
+   "date": "24",
+   "title": "Anti-dumping duty: 1,1,1,2- Tetrafluoroethane or R-134a originating in or exported from China PR",
+   "label": "B-136",
+   "startPage": 296,
+   "endPage": 296
+  },
+  {
+   "number": 37,
+   "kind": "ADD",
+   "date": "24",
+   "title": "Anti-dumping duty: Calcium Carbonate Filler Masterbatch originating in or exported from Vietnam",
+   "label": "B-137",
+   "startPage": 297,
+   "endPage": 297
+  },
+  {
+   "number": 41,
+   "kind": "ADD",
+   "date": "31",
+   "title": "Anti-dumping duty: Low Ash Metallurgical Coke originating in or exported from Australia, China PR. Colombia, Indonesia, Japan and Russia",
+   "label": "B-137",
+   "startPage": 297,
+   "endPage": 304
+  },
+  {
+   "number": 35,
+   "kind": "NT",
+   "date": "29.07.1997",
+   "title": "Safeguard Duty & Countervailing Duty (CVD) CUstoms Tariff Odentification and Assessment of Safeguard Duty) RuJes, 1997",
+   "label": "B-141",
+   "startPage": 174,
+   "notification": "035/1997",
+   "endPage": 178
+  },
+  {
+   "number": 37,
+   "kind": "NT",
+   "date": "04.03.2016",
+   "title": "India -ASEAN Trade in Goods Agreement (Safeguard Measures) RuJes, 2016",
+   "label": "B-145",
+   "startPage": 305,
+   "notification": "037/2016",
+   "endPage": 330
+  },
+  {
+   "number": 28,
+   "kind": "CUS",
+   "date": "01.03.2007",
+   "title": "EXTRACTS FROM THE FINANCE ACT, 2007 Exemption from Secondary and Higher Education Cess on imported Goods",
+   "label": "B-171",
+   "startPage": 331,
+   "notification": "028/2007",
+   "endPage": 331
+  },
+  {
+   "number": 55,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Exemption of Secondary and Higher Education Cess on IGST and Compensation Cess on imports of goods",
+   "label": "B-171",
+   "startPage": 331,
+   "notification": "055/2017",
+   "endPage": 331
+  },
+  {
+   "number": 8,
+   "kind": "CUS",
+   "date": "02.02.2020",
+   "title": "THE FOURTH SCHEDULE OF FINANCE ACT, 2020 Exemption to Health Cess on specified imported Medical Devices",
+   "label": "B-172",
+   "startPage": 332,
+   "notification": "008/2020",
+   "endPage": 333
+  },
+  {
+   "number": 11,
+   "kind": "CUS",
+   "date": "01.02.2021",
+   "title": "Agriculture Infrastructure and Development Cess Exemption from Agriculture Infrastructure and Development Cess for certain goods",
+   "label": "B-174",
+   "startPage": 334,
+   "notification": "011/2021",
+   "endPage": 340
+  },
+  {
+   "number": 64,
+   "kind": "CUS",
+   "date": "07.12.2023",
+   "title": "Exemption from Agriculture Infrastructure and Development Cess for Yellow Peas",
+   "label": "B-181",
+   "startPage": 341,
+   "notification": "064/2023",
+   "endPage": 341
+  },
+  {
+   "number": 51,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Additional Duty under Section 3 of The Customs Tariff Act Exemption to Additional Duty of Customs on Specified Goods imported into India",
+   "label": "B-182",
+   "startPage": 342,
+   "notification": "051/2017",
+   "endPage": 342
+  },
+  {
+   "number": 53,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Additional duty of customs on petrol. diesel, A TF, LNG and Natural Gas @4%",
+   "label": "B-182",
+   "startPage": 342,
+   "notification": "053/2017",
+   "endPage": 342
+  },
+  {
+   "number": 78,
+   "kind": "CUS",
+   "date": "14.05.2003",
+   "title": "Exemption of additional duty on tea and tea waste imports in India",
+   "label": "B-183",
+   "startPage": 343,
+   "notification": "078/2003",
+   "endPage": 343
+  },
+  {
+   "number": 79,
+   "kind": "CUS",
+   "date": "14.05.2003",
+   "title": "Exemption of Additional Duty of Customs on Green Tea imports",
+   "label": "B-183",
+   "startPage": 343,
+   "notification": "079/2003",
+   "endPage": 343
+  },
+  {
+   "number": 50,
+   "kind": "CUS",
+   "date": "26.05.1997",
+   "title": "Exemption of Additional Duty of Customs on Petroleum Crude imported into India",
+   "label": "B-183",
+   "startPage": 343,
+   "notification": "050/1997",
+   "endPage": 343
+  },
+  {
+   "number": 357,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "Motor Spirit: Additional duty of Customs - Rs.1/ltr Additional Duty on Stainless Steel Manufactures for Household Use",
+   "label": "B-184",
+   "startPage": 344,
+   "notification": "357/1976",
+   "endPage": 344
+  },
+  {
+   "number": 356,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "Additional Duty Rules. 1976",
+   "label": "B-184",
+   "startPage": 344,
+   "notification": "356/1976",
+   "endPage": 344
+  },
+  {
+   "number": 82,
+   "kind": "CUS",
+   "date": "03.07",
+   "title": "Exemption to Additional duty of Customs to alcoholic liquor as specified",
+   "label": "B-184",
+   "startPage": 344,
+   "endPage": 344
+  },
+  {
+   "number": 102,
+   "kind": "CUS",
+   "date": "14.09.2007",
+   "title": "Exemption from Additional Duty of Customs for imported Goods Subsequently Sold in India",
+   "label": "B-184",
+   "startPage": 344,
+   "notification": "102/2007",
+   "endPage": 344
+  },
+  {
+   "number": 53,
+   "kind": "CUS",
+   "date": "23.04.2008",
+   "title": "Exemption from Duty of CUstoms and Additional Duty for Specified Goods imported from Bangladesh through Dhaka-Darsana-Gede-Kolkata Route",
+   "label": "B-185",
+   "startPage": 345,
+   "notification": "053/2008",
+   "endPage": 483
+  },
+  {
+   "number": 50,
+   "kind": "CUS",
+   "date": "30.06.2018",
+   "title": "Korea, and Sri Lanka (APPENDIX I) and Bangladesh and Lao People's Democratic Republic (APPENDIXm",
+   "label": "G-4",
+   "startPage": 484,
+   "notification": "050/2018",
+   "endPage": 498
+  },
+  {
+   "number": 236,
+   "kind": "CUS",
+   "date": "01.09.1989",
+   "title": "Exemption from Standard Rate of Duty for Imports of Specified Goods from Developing Countries andLeastDevelopingCountries",
+   "label": "G-19",
+   "startPage": 499,
+   "notification": "236/1989",
+   "endPage": 500
+  },
+  {
+   "number": 38,
+   "kind": "CUS",
+   "date": "23.07.1996",
+   "title": "Exemption from Duty of CUstoms for Imports and Exports of Specified Goods from and to Bhutan and Nepal",
+   "label": "G-21",
+   "startPage": 501,
+   "notification": "038/1996",
+   "endPage": 501
+  },
+  {
+   "number": 40,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Exemption of Certain Goods from CUstoms Duty, Agriculture Infrastructure and Development Cess, Health Cess, and Road and Infrastructure Cess in India from Bhutan and Bangladesh",
+   "label": "G-22",
+   "startPage": 502,
+   "notification": "040/2017",
+   "endPage": 502
+  },
+  {
+   "number": 85,
+   "kind": "CUS",
+   "date": "05.11.1998",
+   "title": "Exemption from customs duty for specified goods imported from Nepal",
+   "label": "G-22",
+   "startPage": 502,
+   "notification": "085/1998",
+   "endPage": 504
+  },
+  {
+   "number": 104,
+   "kind": "CUS",
+   "date": "01.10.2010",
+   "title": "Exemption of Customs Duty and Agricultural Infrastructure and Development Cess on Imported Goods from Nepal",
+   "label": "G-25",
+   "startPage": 505,
+   "notification": "104/2010",
+   "endPage": 506
+  },
+  {
+   "number": 101,
+   "kind": "CUS",
+   "date": "01.04.1982",
+   "title": "Designation of Preferential Areas for the Purpose of CUstoms Tariff Act,l975",
+   "label": "G-27",
+   "startPage": 507,
+   "notification": "101/1982",
+   "endPage": 507
+  },
+  {
+   "number": 28,
+   "kind": "CUS",
+   "date": "16.03.1995",
+   "title": "Exemption of Duty on Import of certain Goods from Mauritius, Seychelles and Tonga",
+   "label": "G-28",
+   "startPage": 508,
+   "notification": "028/1995",
+   "endPage": 508
+  },
+  {
+   "number": 26,
+   "kind": "CUS",
+   "date": "01.03.2000",
+   "title": "Exemption from CUstoms Duty on Imports from Sri Lanka Under the Free Trade Agreement",
+   "label": "G-29",
+   "startPage": 509,
+   "notification": "026/2000",
+   "endPage": 512
+  },
+  {
+   "number": 60,
+   "kind": "CUS",
+   "date": "12.05.2000",
+   "title": "Exemption of Certain Goods of Sri Lankan Origin from CUstoms Duty",
+   "label": "G-33",
+   "startPage": 513,
+   "notification": "060/2000",
+   "endPage": 513
+  },
+  {
+   "number": 2,
+   "kind": "CUS",
+   "date": "05.01.2007",
+   "title": "Exemption of certain goods of Sri Lankan origin from customs duty",
+   "label": "G-33",
+   "startPage": 513,
+   "notification": "002/2007",
+   "endPage": 513
+  },
+  {
+   "number": 76,
+   "kind": "CUS",
+   "date": "13.05.2003",
+   "title": "Exemption on Imported Goods from Transitional Islamic State of Afghanistan under Customs Act, 1962",
+   "label": "G-34",
+   "startPage": 514,
+   "notification": "076/2003",
+   "endPage": 514
+  },
+  {
+   "number": 85,
+   "kind": "CUS",
+   "date": "31.08.2004",
+   "title": "Import from Thailand under India-Thailand Free Trade Agreement",
+   "label": "G-35",
+   "startPage": 515,
+   "notification": "085/2004",
+   "endPage": 515
+  },
+  {
+   "number": 73,
+   "kind": "CUS",
+   "date": "22.07.2005",
+   "title": "ExemptionofGoodsfromDutyofCUstomswhenirnportedfromRepublicofSingapore",
+   "label": "G-36",
+   "startPage": 516,
+   "notification": "073/2005",
+   "endPage": 519
+  },
+  {
+   "number": 74,
+   "kind": "CUS",
+   "date": "22.07.2005",
+   "title": "Exemption of Goods Imported from Republic of Singapore from CUstoms Duty",
+   "label": "G-40",
+   "startPage": 520,
+   "notification": "074/2005",
+   "endPage": 525
+  },
+  {
+   "number": 75,
+   "kind": "CUS",
+   "date": "22.07",
+   "title": "Exemption of Goods Imported from Republic of Singapore from CUstoms Duty under India-Singapore Comprehensive Economic Cooperation Agreement",
+   "label": "G-46",
+   "startPage": 526,
+   "endPage": 531
+  },
+  {
+   "number": 68,
+   "kind": "CUS",
+   "date": "31.12.2012",
+   "title": "Exemption of Certain Goods Imported from Countries Listed in the APPENDIX from Customs Duty under the Agreement on South Asian Free Trade Area (SAFT A)",
+   "label": "G-52",
+   "startPage": 532,
+   "notification": "068/2012",
+   "endPage": 542
+  },
+  {
+   "number": 101,
+   "kind": "CUS",
+   "date": "11.09.2007",
+   "title": "Exemption of Goods Imported from Republic of Chile from Customs Duty under India-Chile Preferential Trading Agreement",
+   "label": "G-63",
+   "startPage": 543,
+   "notification": "101/2007",
+   "endPage": 544
+  },
+  {
+   "number": 99,
+   "kind": "CUS",
+   "date": "09.11.2011",
+   "title": "Exemption of Certain Goods from CUstoms Duty under South Asian Free Trade Area (SAFTA) Agreement",
+   "label": "G-74",
+   "startPage": 554,
+   "notification": "099/2011",
+   "endPage": 554
+  },
+  {
+   "number": 10,
+   "kind": "CUS",
+   "date": "15.01.2008",
+   "title": "Exemption of Customs Duty on Goods Imported from Republic of Singapore under India-Singapore Comprehensive Economic Co-operation Agreement",
+   "label": "G-75",
+   "startPage": 555,
+   "notification": "010/2008",
+   "endPage": 559
+  },
+  {
+   "number": 96,
+   "kind": "CUS",
+   "date": "13.08.2008",
+   "title": "Exemption of Goods Imported from Certain Countries from Customs Duty and Agriculture Infrastructure and Development Cess under Preferential Trade Agreements",
+   "label": "G-80",
+   "startPage": 560,
+   "notification": "096/2008",
+   "endPage": 563
+  },
+  {
+   "number": 57,
+   "kind": "CUS",
+   "date": "30.05.2009",
+   "title": "Exemption of Goods Imported from MERCOSUR Member States from Customs Duty under Preferential Trade Agreement between India and MERCOSUR Member States",
+   "label": "G-84",
+   "startPage": 564,
+   "notification": "057/2009",
+   "endPage": 567
+  },
+  {
+   "number": 151,
+   "kind": "CUS",
+   "date": "31.12.2009",
+   "title": "Exemption of Goods Imported from Republic of Korea from Customs Duty under India-Korea Preferential Trade Agreement",
+   "label": "G-89",
+   "startPage": 569,
+   "notification": "151/2009",
+   "endPage": 569
+  },
+  {
+   "number": 152,
+   "kind": "CUS",
+   "date": "31.12.2009",
+   "title": "Exemption of Duty on Import of Goods from Republic of Korea",
+   "label": "G-90",
+   "startPage": 570,
+   "notification": "152/2009",
+   "endPage": 580
+  },
+  {
+   "number": 46,
+   "kind": "CUS",
+   "date": "01.06.2011",
+   "title": "Exemption of Goods from Customs Duty under the ASEAN-India Free Trade Agreement",
+   "label": "G-101",
+   "startPage": 581,
+   "notification": "046/2011",
+   "endPage": 601
+  },
+  {
+   "number": 53,
+   "kind": "CUS",
+   "date": "01.07.2011",
+   "title": "Exemption of Customs Duty on Goods Imported from Malaysia",
+   "label": "G-122",
+   "startPage": 602,
+   "notification": "053/2011",
+   "endPage": 618
+  },
+  {
+   "number": 60,
+   "kind": "CUS",
+   "date": "14.07.2011",
+   "title": "Exemption of Customs Duty, Agriculture Infrastructure and Development Cess, and Integrated Tax on Goods Imported from Bangladesh",
+   "label": "G-139",
+   "startPage": 619,
+   "notification": "060/2011",
+   "endPage": 619
+  },
+  {
+   "number": 69,
+   "kind": "CUS",
+   "date": "29.07.201",
+   "title": "Exemption of Customs Duty on Goods Imported from Japan",
+   "label": "G-139",
+   "startPage": 619,
+   "endPage": 627
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "31.03.202",
+   "title": "Imported from Mauritius under India-Mauritius Comprehensive Economic Cooperation and Partnership Agreement (CECPA)",
+   "label": "G-148",
+   "startPage": 628,
+   "endPage": 633
+  },
+  {
+   "number": 63,
+   "kind": "CUS",
+   "date": "31.12.2012",
+   "title": "Exemption of Customs Duty on Crude Petroleum Oils and Oils Obtained from Bituminous Minerals Imported from Brunei Darussalam",
+   "label": "G-154",
+   "startPage": 634,
+   "notification": "063/2012",
+   "endPage": 634
+  },
+  {
+   "number": 10,
+   "kind": "CUS",
+   "date": "12.05.2014",
+   "title": "Exemption of Customs Duty and Integrated Tax on Goods Imported for Display or Use at Events in India",
+   "label": "G-154",
+   "startPage": 634,
+   "notification": "010/2014",
+   "endPage": 637
+  },
+  {
+   "number": 22,
+   "kind": "CUS",
+   "date": "30.04.2022",
+   "title": "Exemption of Customs Duty and Agriculture Infrastructure and Development Cess for Imported Goods from The United Arab Emirates",
+   "label": "G-158",
+   "startPage": 638,
+   "notification": "022/2022",
+   "endPage": 704
+  },
+  {
+   "number": 62,
+   "kind": "CUS",
+   "date": "26.12.2022",
+   "title": "Exemption from Customs Duties and Agricultural Infrastructure and Development Cess on Imported Goods from Australia",
+   "label": "G-225",
+   "startPage": 705,
+   "notification": "062/2022",
+   "endPage": 784
+  },
+  {
+   "number": 41,
+   "kind": "CUS",
+   "date": "30.09.2025",
+   "title": "Exemption of Customs Duty, AIDC and Health Cess on specified goods Imported from Switzerland",
+   "label": "G-305",
+   "startPage": 785,
+   "notification": "041/2025",
+   "endPage": 879
+  },
+  {
+   "number": 42,
+   "kind": "CUS",
+   "date": "30.09.2025",
+   "title": "Exemption of Customs Duty, AIDC and Health Cess on specified goods Imported from Norway",
+   "label": "G-400",
+   "startPage": 880,
+   "notification": "042/2025",
+   "endPage": 970
+  },
+  {
+   "number": 43,
+   "kind": "CUS",
+   "date": "30.09.2025",
+   "title": "Exemption of Customs Duty, AIDC and Health Cess on specified goods Imported from Iceland",
+   "label": "G-491",
+   "startPage": 971,
+   "notification": "043/2025",
+   "endPage": 1064
+  },
+  {
+   "number": 52,
+   "kind": "CUS",
+   "date": "31.03.2003",
+   "title": "Customs Duty Exemption for Certain Goods Imported or Procured from Public or Private Warehouses or International Exhibitions in India for Use by Export Oriented Units",
+   "label": "G-585",
+   "startPage": 1065,
+   "notification": "052/2003",
+   "endPage": 1076
+  },
+  {
+   "number": 42,
+   "kind": "CUS",
+   "date": "28.04.1999",
+   "title": "Exemption of Cut and Polished Diamonds and Gemstones from Customs Duty and Additional Duty for Import by Holders of Diamond Imprest Licences or Replenishment Authorisation for Gems",
+   "label": "G-597",
+   "startPage": 1077,
+   "notification": "042/1999",
+   "endPage": 1077
+  },
+  {
+   "number": 40,
+   "kind": "CUS",
+   "date": "21.07",
+   "title": "Exemption from customs duty and integrated tax on cut and polished diamonds imported for grading or certification by notified laboratories and agencies. subject to certain conditions",
+   "label": "G-598",
+   "startPage": 1078,
+   "endPage": 1078
+  },
+  {
+   "number": 21,
+   "kind": "CUS",
+   "date": "22.05.2017",
+   "title": "Authorized Agencies/ Offices in India of Laboratories Mentioned in Foreign Trade Policy During the Period from 9th March. 2012 to lst March. 2017",
+   "label": "G-598",
+   "startPage": 1078,
+   "notification": "021/2017",
+   "endPage": 1078
+  },
+  {
+   "number": 18,
+   "kind": "CUS",
+   "date": "01.05.1998",
+   "title": "Non-Levy of Customs Duty on Excess Gold Loss in Gem and Jewellery Units in Domestic Tariff Area During 1988-1992",
+   "label": "G-599",
+   "startPage": 1079,
+   "notification": "018/1998",
+   "endPage": 1079
+  },
+  {
+   "number": 56,
+   "kind": "CUS",
+   "date": "05.05.2000",
+   "title": "mountings, and plain semi-finished gold/silver/platinum jewellery by nominated agencies. status holders. and exporters for export supply by foreign buyers under certain conditions",
+   "label": "G-599",
+   "startPage": 1079,
+   "notification": "056/2000",
+   "endPage": 1079
+  },
+  {
+   "number": 57,
+   "kind": "CUS",
+   "date": "08.05.2000",
+   "title": "Silver. Gold and Platinum under the scheme for export against supply by nominated agencies",
+   "label": "G-600",
+   "startPage": 1080,
+   "notification": "057/2000",
+   "endPage": 1081
+  },
+  {
+   "number": 148,
+   "kind": "CUS",
+   "date": "19.09.1995",
+   "title": "NOTIFICATIONS UNDERVALUE BASED ADVANCE LICENCE Import underValue Based Advance Licence for leather and textile garments",
+   "label": "G-602",
+   "startPage": 1082,
+   "notification": "148/1995",
+   "endPage": 1084
+  },
+  {
+   "number": 203,
+   "kind": "CUS",
+   "date": "19.05.1992",
+   "title": "Exemption from Customs and Additional Duty for Materials Imported into India against Value Based Advance Licence Issued Before March 31, 1995",
+   "label": "G-605",
+   "startPage": 1085,
+   "notification": "203/1992",
+   "endPage": 1088
+  },
+  {
+   "number": 79,
+   "kind": "CUS",
+   "date": "31.03.1995",
+   "title": "Import against Value Based Advance Licence issued on or after Ol.04.l995",
+   "label": "G-609",
+   "startPage": 1089,
+   "notification": "079/1995",
+   "endPage": 1092
+  },
+  {
+   "number": 80,
+   "kind": "CUS",
+   "date": "31.03.1995",
+   "title": "Exemption from Customs Duty on Materials Imported into India against a Value Based Advance Licence. Subject to Certain Conditions",
+   "label": "G-613",
+   "startPage": 1093,
+   "notification": "080/1995",
+   "endPage": 1096
+  },
+  {
+   "number": 149,
+   "kind": "CUS",
+   "date": "19.09.1995",
+   "title": "Exemption of Customs Duty on Materials Imported Against with Advance Licence Issued on or after 19th September.l995 for Export of Specified Products",
+   "label": "G-617",
+   "startPage": 1097,
+   "notification": "149/1995",
+   "endPage": 1099
+  },
+  {
+   "number": 204,
+   "kind": "CUS",
+   "date": "19.05.1992",
+   "title": "Exemption from Customs Duty and Additional Duty for Materials Imported Under Advance Licences Issued Before March 31, 1995",
+   "label": "G-620",
+   "startPage": 1100,
+   "notification": "204/1992",
+   "endPage": 1104
+  },
+  {
+   "number": 41,
+   "kind": "CUS",
+   "date": "30.04.1997",
+   "title": "Exemption from Anti-Dumping Duty for Articles Imported Under Advance Licences",
+   "label": "G-625",
+   "startPage": 1105,
+   "notification": "041/1997",
+   "endPage": 1105
+  },
+  {
+   "number": 36,
+   "kind": "CUS",
+   "date": "11.04.1957",
+   "title": "Exemption from Customs Duty and Additional Duty for Materials Required for the Manufacture of Final Goods Imported Under Special Imprest Licences",
+   "label": "G-625",
+   "startPage": 1105,
+   "notification": "036/1957",
+   "endPage": 1105
+  },
+  {
+   "number": 104,
+   "kind": "CUS",
+   "date": "16.03.1993",
+   "title": "Exemption from Customs Duty and Additional Duty for Materials Imported Under Special Value Based Advance Licences Issued Before April30,1995",
+   "label": "G-626",
+   "startPage": 1106,
+   "notification": "104/1993",
+   "endPage": 1110
+  },
+  {
+   "number": 106,
+   "kind": "CUS",
+   "date": "02.06.1995",
+   "title": "Import against Special Value Based Advance licence for the export of readymade garments under Scheme 'A'",
+   "label": "G-631",
+   "startPage": 1111,
+   "notification": "106/1995",
+   "endPage": 1113
+  },
+  {
+   "number": 107,
+   "kind": "CUS",
+   "date": "02.06.1995",
+   "title": "Based Advance licence for Export of Readymade Garments (Other than Leather Garments) under Scheme 'B'",
+   "label": "G-634",
+   "startPage": 1114,
+   "notification": "107/1995",
+   "endPage": 1116
+  },
+  {
+   "number": 90,
+   "kind": "CUS",
+   "date": "10.09.2004",
+   "title": "Exemption from Duty of Customs for Materials Imported for Manufacture of Final Goods under Duty Free Replenishment Certificate or Duty Free Replenishment Certificate for Intermediate",
+   "label": "G-637",
+   "startPage": 1117,
+   "notification": "090/2004",
+   "endPage": 1118
+  },
+  {
+   "number": 46,
+   "kind": "CUS",
+   "date": "22.04.2002",
+   "title": "Exemption from Customs Duty and Special Additional Duty for Materials Imported for Export Production in India",
+   "label": "G-639",
+   "startPage": 1119,
+   "notification": "046/2002",
+   "endPage": 1119
+  },
+  {
+   "number": 48,
+   "kind": "CUS",
+   "date": "25.04.2000",
+   "title": "Exemption of Duty on Materials Used in the Manufacture of Resultant Products Imported into India",
+   "label": "G-640",
+   "startPage": 1120,
+   "notification": "048/2000",
+   "endPage": 1120
+  },
+  {
+   "number": 91,
+   "kind": "CUS",
+   "date": "10.09.2004",
+   "title": "Exemption of Customs Duty and Additional Duty on Materials Imported for Manufacture of Final Goods in India",
+   "label": "G-640",
+   "startPage": 1120,
+   "notification": "091/2004",
+   "endPage": 1124
+  },
+  {
+   "number": 92,
+   "kind": "CUS",
+   "date": "10.09.2004",
+   "title": "Customs Duty Exemption for Goods Imported Against in India Under the Served From India Scheme",
+   "label": "G-642",
+   "startPage": 545,
+   "notification": "092/2004",
+   "endPage": 551
+  },
+  {
+   "number": 94,
+   "kind": "CUS",
+   "date": "10.09.2004",
+   "title": "Advance Authorisation for Annual Requirement with actual user condition, from customs duties and additional duties",
+   "label": "G-645",
+   "startPage": 1125,
+   "notification": "094/2004",
+   "endPage": 1125
+  },
+  {
+   "number": 47,
+   "kind": "CUS",
+   "date": "22.04.2002",
+   "title": "Customs Duty Exemption for Materials Imported for the Manufacture of Final Goods under Advance licence for Deemed Export",
+   "label": "G-646",
+   "startPage": 1126,
+   "notification": "047/2002",
+   "endPage": 1127
+  },
+  {
+   "number": 43,
+   "kind": "CUS",
+   "date": "19.04.2002",
+   "title": "Exemption from Duty of Customs and Additional Duty for Imported Materials Used in Manufacturing Exported Products",
+   "label": "G-648",
+   "startPage": 1128,
+   "notification": "043/2002",
+   "endPage": 1128
+  },
+  {
+   "number": 50,
+   "kind": "CUS",
+   "date": "27.04.2000",
+   "title": "Exemption from Customs Duty and Additional Duty for Materials Imported for the Manufacture of Final Goods",
+   "label": "G-649",
+   "startPage": 1129,
+   "notification": "050/2000",
+   "endPage": 1130
+  },
+  {
+   "number": 30,
+   "kind": "CUS",
+   "date": "01.04.1997",
+   "title": "Exemption of duties for materials imported under advance licence with actual user",
+   "label": "G-651",
+   "startPage": 1131,
+   "notification": "030/1997",
+   "endPage": 1134
+  },
+  {
+   "number": 31,
+   "kind": "CUS",
+   "date": "01.04.1997",
+   "title": "Import against an Advance licence (1997-2002 Import Policy)",
+   "label": "G-655",
+   "startPage": 1135,
+   "notification": "031/1997",
+   "endPage": 1137
+  },
+  {
+   "number": 77,
+   "kind": "CUS",
+   "date": "16.10.1998",
+   "title": "Exemption of Duty on Imported Materials with Actual User Condition for Export of Electronic",
+   "label": "G-658",
+   "startPage": 1138,
+   "notification": "077/1998",
+   "endPage": 1142
+  },
+  {
+   "number": 48,
+   "kind": "CUS",
+   "date": "29.04.1999",
+   "title": "Exemption of Duty on Materials Imported Under Advance licences with Actual User",
+   "label": "G-663",
+   "startPage": 1143,
+   "notification": "048/1999",
+   "endPage": 1145
+  },
+  {
+   "number": 104,
+   "kind": "CUS",
+   "date": "30.05.1995",
+   "title": "NOTIFICATIONS UNDER POLICY (1992-1997) Customs Duty Exemption for Goods Imported into India under Pass Book",
+   "label": "G-666",
+   "startPage": 1146,
+   "notification": "104/1995",
+   "endPage": 1182
+  },
+  {
+   "number": 28,
+   "kind": "CUS",
+   "date": "01.04.1997",
+   "title": "Exemption of Duty on Capital Goods Imported for Manufacture and Supply to Holders of EPCG Licenses",
+   "label": "G-703",
+   "startPage": 1183,
+   "notification": "028/1997",
+   "endPage": 1184
+  },
+  {
+   "number": 29,
+   "kind": "CUS",
+   "date": "01.04.1997",
+   "title": "Exemption of customs duty and additional duty on goods imported under the Export Promotion capital Goods (EPCG) Scheme",
+   "label": "G-705",
+   "startPage": 1185,
+   "notification": "029/1997",
+   "endPage": 1192
+  },
+  {
+   "number": 136,
+   "kind": "CUS",
+   "date": "24.12.2008",
+   "title": "Exemption of Customs Duty for Certain Goods Imported under the Export Promotion capital Goods Scheme",
+   "label": "G-713",
+   "startPage": 1193,
+   "notification": "136/2008",
+   "endPage": 1195
+  },
+  {
+   "number": 5,
+   "kind": "CUS",
+   "date": "18.01.1994",
+   "title": "NOTIFICATIONS UNDER 100% EXPORT ORIENTED UNITS/ FREE TRADE ZONES/ SEZ Exemption of Additional Duty for Certain Goods Imported by 100% Export Oriented Units",
+   "label": "G-716",
+   "startPage": 1196,
+   "notification": "005/1994",
+   "endPage": 1196
+  },
+  {
+   "number": 101,
+   "kind": "CUS",
+   "date": "16.03.1993",
+   "title": "Exemption of Customs Duty for materials used in the manufacture of certain goods for Export- Oriented Units in India",
+   "label": "G-717",
+   "startPage": 1197,
+   "notification": "101/1993",
+   "endPage": 1197
+  },
+  {
+   "number": 128,
+   "kind": "CUS",
+   "date": "10.06.1994",
+   "title": "Exemption of Customs Duty for materials used in the manufacture of certain goods for Export- Oriented Units in India, subject to certain conditions and limitations",
+   "label": "G-718",
+   "startPage": 1198,
+   "notification": "128/1994",
+   "endPage": 1198
+  },
+  {
+   "number": 153,
+   "kind": "CUS",
+   "date": "13.08.1993",
+   "title": "from India under the Software Technology Parks 100% Export Oriented Scheme, subject to certain conditions",
+   "label": "G-719",
+   "startPage": 1199,
+   "notification": "153/1993",
+   "endPage": 1199
+  },
+  {
+   "number": 45,
+   "kind": "CUS",
+   "date": "16.05.2005",
+   "title": "Exemption of Additional Customs Duty for goods brought from Special Economic Zones to other places in India, subject to certain conditions",
+   "label": "G-720",
+   "startPage": 1200,
+   "notification": "045/2005",
+   "endPage": 1202
+  },
+  {
+   "number": 113,
+   "kind": "CUS",
+   "date": "22.07.2003",
+   "title": "Exempts Castor Oil Cake and Castor De-Oiled Cake manufactured in Special Economic Zones from Duty of Customs",
+   "label": "G-721",
+   "startPage": 552,
+   "notification": "113/2003",
+   "endPage": 552
+  },
+  {
+   "number": 41,
+   "kind": "CUS",
+   "date": "28.04.1999",
+   "title": "Exempts Imported Goods Used for manufacture of Gold, Silver, Platinum Jewellery and Cut and Polished Diamonds from Duty of Customs under Replenishment Authorisation Scheme",
+   "label": "G-721",
+   "startPage": 552,
+   "notification": "041/1999",
+   "endPage": 553
+  },
+  {
+   "number": 86,
+   "kind": "CUS",
+   "date": "07.08.2001",
+   "title": "Exempts Gold, Platinum, Silver Findings and Mountings from Duty of Customs under Replenishment Licence Scheme",
+   "label": "G-723",
+   "startPage": 1203,
+   "notification": "086/2001",
+   "endPage": 1203
+  },
+  {
+   "number": 146,
+   "kind": "CUS",
+   "date": "28.06.1993",
+   "title": "Exempts Platinum Imported by Authorized Agencies for supply under Gold/Silver and Platinum Jewellery and Articles Export Promotion and Replenishment Scheme from Duty of Customs",
+   "label": "G-723",
+   "startPage": 1203,
+   "notification": "146/1993",
+   "endPage": 1203
+  },
+  {
+   "number": 60,
+   "kind": "CUS",
+   "date": "07.06.2002",
+   "title": "Exempts Raw Pearls and Precious and Semi-Precious Stones from Duty of Customs under Replenishment Authorisation for Gems Scheme",
+   "label": "G-723",
+   "startPage": 1203,
+   "notification": "060/2002",
+   "endPage": 1203
+  },
+  {
+   "number": 73,
+   "kind": "CUS",
+   "date": "10.07",
+   "title": "Exemption of Duty Credit Certificate for Star Export Houses for Imported Goods Under the Foreign Trade Policy",
+   "label": "G-724",
+   "startPage": 1204,
+   "endPage": 1204
+  },
+  {
+   "number": 32,
+   "kind": "CUS",
+   "date": "08.04.2005",
+   "title": "Exemption of Duty on Goods imported against certificate issued under Foreign Trade Policy for Status Holders in Marine and Other Sectors",
+   "label": "G-725",
+   "startPage": 1205,
+   "notification": "032/2005",
+   "endPage": 1206
+  },
+  {
+   "number": 41,
+   "kind": "CUS",
+   "date": "09.05.2005",
+   "title": "Exemption from customs duties for imported inputs and goods under Vishesh Krishi and Gram UdyogYojana",
+   "label": "G-727",
+   "startPage": 1207,
+   "notification": "041/2005",
+   "endPage": 1207
+  },
+  {
+   "number": 40,
+   "kind": "CUS",
+   "date": "01.05.2006",
+   "title": "Customs Exemptions Granted for Inputs and Goods Imported with Duty Credit Certificates and Duty Free Import Authorizations",
+   "label": "G-728",
+   "startPage": 1208,
+   "notification": "040/2006",
+   "endPage": 1210
+  },
+  {
+   "number": 45,
+   "kind": "CUS",
+   "date": "13.08.2016",
+   "title": "Ntfn OJ dated 17.01.2014 Customs Duty Exemption for Fabrics Imported under Special Advance Authorisation in India",
+   "label": "G-731",
+   "startPage": 1211,
+   "notification": "045/2016",
+   "endPage": 1211
+  },
+  {
+   "number": 90,
+   "kind": "CUS",
+   "date": "01.09.2006",
+   "title": "Exemption from Customs Duties for Import of Goods against Duty Credit Scrip under Focus Market Scheme",
+   "label": "G-732",
+   "startPage": 1212,
+   "notification": "090/2006",
+   "endPage": 1213
+  },
+  {
+   "number": 91,
+   "kind": "CUS",
+   "date": "01.09.2006",
+   "title": "Exemption from Customs Duties and Additional Duties for goods imported against a Duty Credit Scrip under the Focus Product Scheme",
+   "label": "G-734",
+   "startPage": 1214,
+   "notification": "091/2006",
+   "endPage": 1214
+  },
+  {
+   "number": 14,
+   "kind": "CUS",
+   "date": "19.02.2009",
+   "title": "Exempts Certain Goods from Customs Duty and Additional Duty when Imported with Duty Credit Scrip Under Hi-tech Product Export Promotion Scheme",
+   "label": "G-735",
+   "startPage": 1215,
+   "notification": "014/2009",
+   "endPage": 1215
+  },
+  {
+   "number": 91,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "NOTIFICATIONS UNDER NEW FOREIGN TRADE POLICY (2009-2014) Exemption for Service Sector Businesses Importing Goods against Served From India Scheme Scrip",
+   "label": "G-736",
+   "startPage": 1216,
+   "notification": "091/2009",
+   "endPage": 1217
+  },
+  {
+   "number": 92,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exemption for Goods Imported against Duty Credit Scrip Issued Under the Focus Product Scheme",
+   "label": "G-738",
+   "startPage": 1218,
+   "notification": "092/2009",
+   "endPage": 1218
+  },
+  {
+   "number": 93,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exemption for Goods Imported against Duty Credit Scrip issued under the Focus Market Scheme",
+   "label": "G-739",
+   "startPage": 1219,
+   "notification": "093/2009",
+   "endPage": 1220
+  },
+  {
+   "number": 94,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exempts Certain Goods from Customs Duty and Additional Duty under the Focus Market Scheme, Focus Product Scheme, andAgri Infrastructure Incentive Scheme",
+   "label": "G-741",
+   "startPage": 1221,
+   "notification": "094/2009",
+   "endPage": 1221
+  },
+  {
+   "number": 95,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exemption of duties on Inputs and Goods, including Capital Goods, imported under Vishesh Krishi and Gram Udyog Yojana in India",
+   "label": "G-742",
+   "startPage": 1222,
+   "notification": "095/2009",
+   "endPage": 1222
+  },
+  {
+   "number": 96,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exempts Materials Imported to India against under Advance Authorisation from Customs Duty, Additional Duty, Safeguard Duty, and Anti-Dumping Duty subject to certain conditions",
+   "label": "G-743",
+   "startPage": 1223,
+   "notification": "096/2009",
+   "endPage": 1224
+  },
+  {
+   "number": 97,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Exemption from Customs Duties for goods imported into India using Duty Entitlement Pass Book Scrip under the Foreign Trade Policy",
+   "label": "G-745",
+   "startPage": 1225,
+   "notification": "097/2009",
+   "endPage": 1225
+  },
+  {
+   "number": 98,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Duty-Free Import Authorisation Scheme for Exemptions from Customs Duties, Additional Duties, Safeguard Duties, and Anti-Dumping Duties on Materials Imported into India",
+   "label": "G-746",
+   "startPage": 1226,
+   "notification": "098/2009",
+   "endPage": 1228
+  },
+  {
+   "number": 99,
+   "kind": "CUS",
+   "date": "11.09.2009",
+   "title": "Advance Authorisation for Annual Requirement Scheme Allows for Duty-Free Import of Materials with Actual User Condition in India, subject to certain conditions",
+   "label": "G-749",
+   "startPage": 1229,
+   "notification": "099/2009",
+   "endPage": 1285
+  },
+  {
+   "number": 24,
+   "kind": "CUS",
+   "date": "08.04.2015",
+   "title": "Exemption from Customs Duty and Additional Duty of CUstoms for goods imported against a Duty Credit Scrip under the Merchandise Exports from India Scheme",
+   "label": "G-806",
+   "startPage": 1286,
+   "notification": "024/2015",
+   "endPage": 1287
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "08.04.2015",
+   "title": "Exemption from Customs Duty and Additional Duty for imports against against Service Exports from India Scheme Duty Credit Scrip",
+   "label": "G-808",
+   "startPage": 1288,
+   "notification": "025/2015",
+   "endPage": 1288
+  },
+  {
+   "number": 13,
+   "kind": "CUS",
+   "date": "14.02.2020",
+   "title": "Exemption from Customs Duties for goods imported against a Duty Credit Scrip under the Scheme for Rebate of State and Central Taxes and Levies (RoSCTL) in the Foreign Trade Policy",
+   "label": "G-808",
+   "startPage": 1288,
+   "notification": "013/2020",
+   "endPage": 1289
+  },
+  {
+   "number": 38,
+   "kind": "CUS",
+   "date": "21.10.2020",
+   "title": "Exemption from Customs Duty and Additional Duty for goods imported against Duty Credit Scrip Issued under the Scheme for Rebate of State and Central Taxes and Levies",
+   "label": "G-810",
+   "startPage": 1290,
+   "notification": "038/2020",
+   "endPage": 1290
+  },
+  {
+   "number": 21,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Exemption of customs duty on imported materials for Advance Authorisation holders under FTP- 2023",
+   "label": "G-811",
+   "startPage": 1291,
+   "notification": "021/2023",
+   "endPage": 1291
+  },
+  {
+   "number": 22,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Exemption of Duty on Materials for Final Goods Manufacture imported with Advance Authorization for Deemed Export under FTP-2023",
+   "label": "G-812",
+   "startPage": 1292,
+   "notification": "022/2023",
+   "endPage": 1293
+  },
+  {
+   "number": 23,
+   "kind": "CUS",
+   "date": "0",
+   "title": "Exemption on customs duty for materials imported into India against Advance Authorisation for Annual Requirement under FTP-2023",
+   "label": "G-814",
+   "startPage": 1294,
+   "endPage": 1295
+  },
+  {
+   "number": 24,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Exemption of duty on imported materials for export of prohibited item under Advance Authorisation under FTP-2023",
+   "label": "G-816",
+   "startPage": 1296,
+   "notification": "024/2023",
+   "endPage": 1297
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Customs Duty Exemption for Materials imported against Duty Free Import Authorization (DFIA) under FTP-2023",
+   "label": "G-818",
+   "startPage": 1298,
+   "notification": "025/2023",
+   "endPage": 1298
+  },
+  {
+   "number": 26,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Customs Duty Exemption for Goods imported under Export Promotion Capital Goods Scheme (EPCG) in India under FTP-2023",
+   "label": "G-819",
+   "startPage": 1299,
+   "notification": "026/2023",
+   "endPage": 1301
+  },
+  {
+   "number": 27,
+   "kind": "CUS",
+   "date": "01.04.2023",
+   "title": "Exemption of Duty on Imported Fabrics with Special Advance Authorisation under FTP 2023",
+   "label": "G-822",
+   "startPage": 1302,
+   "notification": "027/2023",
+   "endPage": 1304
+  },
+  {
+   "number": 25,
+   "kind": "NT",
+   "date": "01.04.2023",
+   "title": "Manner of Issue of Duty Credit for Goods Exported under the Scheme for Rebate of State and Central Taxes and Levies",
+   "label": "G-825",
+   "startPage": 1305,
+   "notification": "025/2023",
+   "endPage": 1308
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "28.02.1999",
+   "title": "Electronics Import of Goods for Electrical and Electronic Industry for use in manufacture of Finished Goods",
+   "label": "G-829",
+   "startPage": 1309,
+   "notification": "025/1999",
+   "endPage": 1317
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "01.03.2002",
+   "title": "Exemption from Customs Duty on Import of specified goods for use in manufacture of Finished Goods in Chapters 69, 82, 84, 85, and 90",
+   "label": "G-838",
+   "startPage": 1318,
+   "notification": "025/2002",
+   "endPage": 1328
+  },
+  {
+   "number": 8,
+   "kind": "CUS",
+   "date": "05.02.2016",
+   "title": "Exempting Certain Goods imported for display or use at specified events from CUstoms Duty and Integrated Tax",
+   "label": "G-849",
+   "startPage": 1329,
+   "notification": "008/2016",
+   "endPage": 1356
+  },
+  {
+   "number": 153,
+   "kind": "CUS",
+   "date": "13.07.1994",
+   "title": "Equipment, Photographic and Fihning Equipment. Mountaineering Equipment, and Goods Imported for use in Exhibitions and Trade Fairs",
+   "label": "G-877",
+   "startPage": 1357,
+   "notification": "153/1994",
+   "endPage": 1357
+  },
+  {
+   "number": 241,
+   "kind": "CUS",
+   "date": "04.11.1982",
+   "title": "Exemption from Customs Duty and Integrated Tax for imported goods used in Approved Commercial and Industrial Projects",
+   "label": "G-878",
+   "startPage": 1358,
+   "notification": "241/1982",
+   "endPage": 1358
+  },
+  {
+   "number": 66,
+   "kind": "CUS",
+   "date": "02.09",
+   "title": "Customs Duty Exemption for Ford Foundation Imports for Official Use",
+   "label": "G-879",
+   "startPage": 1359,
+   "endPage": 1359
+  },
+  {
+   "number": 275,
+   "kind": "CUS",
+   "date": "25.10.1958",
+   "title": "Customs Duty Exemption on Re-Imported Cinematograph Films and Publicity Materials in India and Pondicherry",
+   "label": "G-879",
+   "startPage": 1359,
+   "notification": "275/1958",
+   "endPage": 1359
+  },
+  {
+   "number": 33,
+   "kind": "CUS",
+   "date": "22.06.1935",
+   "title": "Customs Duty Exemption for Tourist Publicity Materials and Technical Materials for Accredited Representatives of Offidal Tourist Agencies",
+   "label": "G-879",
+   "startPage": 1359,
+   "notification": "033/1935",
+   "endPage": 1362
+  },
+  {
+   "number": 248,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "Exemption of Duty on Predous Stones Imported by Post on \"Approval or Return\" basis",
+   "label": "G-881",
+   "startPage": 568,
+   "notification": "248/1976",
+   "endPage": 568
+  },
+  {
+   "number": 25,
+   "kind": "CUS",
+   "date": "01.03.2001",
+   "title": "Exemption of Gold and Silver Produced from Copper Anode Slime from Customs Duty, Additional Duty, and Spedal Additional Duty",
+   "label": "G-881",
+   "startPage": 568,
+   "notification": "025/2001",
+   "endPage": 568
+  },
+  {
+   "number": 24,
+   "kind": "CUS",
+   "date": "01.03.2001",
+   "title": "Exemption from Customs Duty on Copper Cathodes, Wire Bars, and Wire Rods Produced from Exported Copper Reverts for Toll Smelting or Toll Processing",
+   "label": "G-882",
+   "startPage": 569,
+   "notification": "024/2001",
+   "endPage": 569
+  },
+  {
+   "number": 30,
+   "kind": "CUS",
+   "date": "28.01.2004",
+   "title": "Exemption of Second Hand Computers and Computer Peripherals from Customs Duty when received as Donation by certain Organizations",
+   "label": "G-882",
+   "startPage": 569,
+   "notification": "030/2004",
+   "endPage": 569
+  },
+  {
+   "number": 72,
+   "kind": "CUS",
+   "date": "16.08.2017",
+   "title": "Exemption from Customs Duty and Integrated Tax on Imported Temporary Machinery, Equipment, and Tools for Execution of Contracts",
+   "label": "G-883",
+   "startPage": 1363,
+   "notification": "072/2017",
+   "endPage": 1363
+  },
+  {
+   "number": 296,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "under the Temporary Importation of Conveyances and Spare Parts (Tourist Traffic) Convention, 1954",
+   "label": "G-884",
+   "startPage": 1364,
+   "notification": "296/1976",
+   "endPage": 1364
+  },
+  {
+   "number": 23,
+   "kind": "CUS",
+   "date": "01.03.2016",
+   "title": "Exemption of Parts of Aircraft under Standard Exchange Scheme from Customs Duty",
+   "label": "G-885",
+   "startPage": 1365,
+   "notification": "023/2016",
+   "endPage": 1365
+  },
+  {
+   "number": 26,
+   "kind": "CUS",
+   "date": "19.02.1962",
+   "title": "Exemption of Import Duty on Catering Cabin Equipments and Food and Drink Re-Imported by Indian Airlines Corporation from Foreign Flights",
+   "label": "G-886",
+   "startPage": 1366,
+   "notification": "026/1962",
+   "endPage": 1366
+  },
+  {
+   "number": 90,
+   "kind": "CUS",
+   "date": "07.09.2009",
+   "title": "Exemption from Customs Duty and Integrated Tax on Goods Imported from Antarctica for Indian Antarctic Expedition or Indian Polar Sdence Progranune",
+   "label": "G-886",
+   "startPage": 1366,
+   "notification": "090/2009",
+   "endPage": 1366
+  },
+  {
+   "number": 4,
+   "kind": "CUS",
+   "date": "16.02.2015",
+   "title": "Exemption from Duty of Customs and Additional Duty on Urea imported under the Urea Off-take Agreement (UOTA)",
+   "label": "G-886",
+   "startPage": 1366,
+   "notification": "004/2015",
+   "endPage": 1366
+  },
+  {
+   "number": 48,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Exemption from Duty of Customs and Integrated Tax on Reimportation of Catering Cabin Equipment and Food and Drink by Indian Airlines Corporation",
+   "label": "G-886",
+   "startPage": 1366,
+   "notification": "048/2017",
+   "endPage": 1366
+  },
+  {
+   "number": 48,
+   "kind": "CUS",
+   "date": "30",
+   "title": "Exemption from Customs Duty and Integrated Tax on Equipment and Consumable Samples Imported by the International Atomic Energy Agency for Verification or Inspection",
+   "label": "G-887",
+   "startPage": 1367,
+   "endPage": 1368
+  },
+  {
+   "number": 7,
+   "kind": "CUS",
+   "date": "09.02.2011",
+   "title": "Exemption of Duty of Customs on Certain Goods for the Purpose of Organizing the International Cricket Council World CUp 201l",
+   "label": "G-889",
+   "startPage": 1369,
+   "notification": "007/2011",
+   "endPage": 1369
+  },
+  {
+   "number": 4,
+   "kind": "CUS",
+   "date": "18.01.2018",
+   "title": "Customs Duty and Integrated Tax Exemption for Imported Goods Imported Under a FICCI- Guaranteed Camet and Exported within Two Months",
+   "label": "G-889",
+   "startPage": 1369,
+   "notification": "004/2018",
+   "endPage": 1372
+  },
+  {
+   "number": 151,
+   "kind": "CUS",
+   "date": "13.07.1994",
+   "title": "CUstoms Duty Exemption for Imported Aircraft Equipment, Engines, and Spare Parts Subject to Re- Export Within One Month",
+   "label": "G-893",
+   "startPage": 1373,
+   "notification": "151/1994",
+   "endPage": 1373
+  },
+  {
+   "number": 17,
+   "kind": "CUS",
+   "date": "21.04.2017",
+   "title": "Exemption of Customs Duty and Integrated Tax on Goods Imported by Military Uuits Returning to India After Tour of SeiVice Abroad",
+   "label": "G-893",
+   "startPage": 1373,
+   "notification": "017/2017",
+   "endPage": 1373
+  },
+  {
+   "number": 33,
+   "kind": "CUS",
+   "date": "30.06.2017",
+   "title": "Encouraging Military Effictency :,>.,",
+   "label": "G-894",
+   "startPage": 1374,
+   "notification": "033/2017",
+   "endPage": 1374
+  },
+  {
+   "number": 14,
+   "kind": "NT",
+   "date": "01.02.2026",
+   "title": "Baggage Baggage Rules, 2026",
+   "label": "G-895",
+   "startPage": 1375,
+   "notification": "014/2026",
+   "endPage": 1378
+  },
+  {
+   "number": 15,
+   "kind": "NT",
+   "date": "01.02.2026",
+   "title": "Customs Baggage (Declaration and Processing) Regulations. 2026",
+   "label": "G-899",
+   "startPage": 1379,
+   "notification": "015/2026",
+   "endPage": 1387
+  },
+  {
+   "number": 26,
+   "kind": "CUS",
+   "date": "31.03.2016",
+   "title": "CUstoms Duty Exemption for Articles Imported as Baggage with Duty Rate of35% ad va/orem",
+   "label": "G-908",
+   "startPage": 1388,
+   "notification": "026/2016",
+   "endPage": 1388
+  },
+  {
+   "number": 172,
+   "kind": "CUS",
+   "date": "30.09.1994",
+   "title": "Exemption from Duty and Integrated Tax on Import of Silver by Eligible Passengers - Quantity Limit of100 kg and Duty Rate ofRs.ISOO per kg",
+   "label": "G-909",
+   "startPage": 1389,
+   "notification": "172/1994",
+   "endPage": 1389
+  },
+  {
+   "number": 49,
+   "kind": "CUS",
+   "date": "23.07.1996",
+   "title": "Exemption of certain goods under Heading 98.03 of the First Schedule to the Customs Tariff Act, 1975 when imported into India by a passenger as baggage",
+   "label": "G-909",
+   "startPage": 1389,
+   "notification": "049/1996",
+   "endPage": 1389
+  },
+  {
+   "number": 32,
+   "kind": "NT",
+   "date": "01.03.2016",
+   "title": "Customs (Import of goods at Concessional Rate of Duty for manufacture of Exdsable Goods) Rules, 2016",
+   "label": "G-910",
+   "startPage": 1390,
+   "notification": "032/2016",
+   "endPage": 1391
+  },
+  {
+   "number": 90,
+   "kind": "NT",
+   "date": "29.08.2013",
+   "title": "Customs Baggage Declaration (Amendment) Regulations, 2014",
+   "label": "G-912",
+   "startPage": 1392,
+   "notification": "090/2013",
+   "endPage": 1393
+  },
+  {
+   "number": 326,
+   "kind": "CUS",
+   "date": "23.12.1983",
+   "title": "Exemption of Articles of Gift from CUstoms Duty and Integrated Tax for Certain Government Offictals and Foreign Diguitaries",
+   "label": "G-914",
+   "startPage": 1394,
+   "notification": "326/1983",
+   "endPage": 1394
+  },
+  {
+   "number": 183,
+   "kind": "CUS",
+   "date": "01.03.1986",
+   "title": "Exemption from Integrated Tax on Import of Goods as Baggage",
+   "label": "G-914",
+   "startPage": 1394,
+   "notification": "183/1986",
+   "endPage": 1394
+  },
+  {
+   "number": 230,
+   "kind": "CUS",
+   "date": "03.04.1986",
+   "title": "Project Project Imports Regulations,1986",
+   "label": "G-915",
+   "startPage": 1395,
+   "notification": "230/1986",
+   "endPage": 1397
+  },
+  {
+   "number": 42,
+   "kind": "CUS",
+   "date": "23.07.1996",
+   "title": "List of Projects Eligible for assessment under Heading No. 98.01 of the First Schedule to the Customs Tariff Act,1975",
+   "label": "G-918",
+   "startPage": 1398,
+   "notification": "042/1996",
+   "endPage": 1398
+  },
+  {
+   "number": 84,
+   "kind": "CUS",
+   "date": "11",
+   "title": "Customs Duty Exemption for Projects Financed by the United Nations or International Organizations and approved by the Government of India",
+   "label": "G-919",
+   "startPage": 1399,
+   "endPage": 1404
+  },
+  {
+   "number": 61,
+   "kind": "CUS",
+   "date": "11.05.1999",
+   "title": "NOTIFICATIONS & RULES UNDER SECTION 3A Amendment of Authorities in Customs Act and Customs Tariff Act",
+   "label": "G-925",
+   "startPage": 1405,
+   "notification": "061/1999",
+   "endPage": 1418
+  },
+  {
+   "number": 4,
+   "kind": "CUS",
+   "date": "08.01.1962",
+   "title": "Exempting Confiscated Goods allowed to be Exported on Payment of Fine or Otherwise from the requirements of Import Trade Control Regulations in the State of Pondicherry",
+   "label": "G-939",
+   "startPage": 1419,
+   "notification": "004/1962",
+   "endPage": 1419
+  },
+  {
+   "number": 16,
+   "kind": "CUS",
+   "date": "23.01.1965",
+   "title": "Exempting Goods Produced or manufactured in India for Display in Foreign Showrooms, Exhibitions, or Fairs from Customs Duty",
+   "label": "G-940",
+   "startPage": 1420,
+   "notification": "016/1965",
+   "endPage": 1420
+  },
+  {
+   "number": 325,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "Exempting Samples, Gifts, and Other Low-Value Goods Exported by Post from Customs Duty",
+   "label": "G-940",
+   "startPage": 1420,
+   "notification": "325/1976",
+   "endPage": 1420
+  },
+  {
+   "number": 326,
+   "kind": "CUS",
+   "date": "02.08.1976",
+   "title": "Exempting Gifts and Free Samples Exported by Air from Customs Duty",
+   "label": "G-940",
+   "startPage": 1420,
+   "notification": "326/1976",
+   "endPage": 1420
+  },
+  {
+   "number": 88,
+   "kind": "CUS",
+   "date": "01.09.2010",
+   "title": "Exempting Exported Raw Hides, Skins, and Semi-Processed Leathers from Customs Duty when exported from a Bonded Warehouse after importation",
+   "label": "G-940",
+   "startPage": 1420,
+   "notification": "088/2010",
+   "endPage": 1420
+  },
+  {
+   "number": 27,
+   "kind": "CUS",
+   "date": "01.03.2011",
+   "title": "Exempting Specified Goods from Customs Duty when exported out of India",
+   "label": "G-940",
+   "startPage": 1420,
+   "notification": "027/2011",
+   "endPage": 1423
+  },
+  {
+   "number": 55,
+   "kind": "CUS",
+   "date": "31.10.2022",
+   "title": "Exempting Specified commodities from Customs Duty when exported out of India",
+   "label": "G-944",
+   "startPage": 1424,
+   "notification": "055/2022",
+   "endPage": 1424
+  },
+  {
+   "number": 22,
+   "kind": "CUS",
+   "date": "02.04.2024",
+   "title": "Exempting Export Duty on Kala Namak Rice",
+   "label": "G-945",
+   "startPage": 1425,
+   "notification": "022/2024",
+   "endPage": 1456
+  }
+ ]
+}

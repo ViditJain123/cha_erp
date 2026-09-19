@@ -1,0 +1,2608 @@
+{
+ "_generated": "do not edit by hand — pnpm --filter @checklist/extraction repair-tariff-book",
+ "note": "Rows re-read from the page image because the text layer would not reconcile. Every entry here passed the same arithmetic check as the deterministic parse; rows that still did not are absent, and stay unverified.",
+ "builtAt": "2026-09-13T14:09:26.662Z",
+ "repaired": 260,
+ "rows": {
+  "12091000": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 15,
+   "igstRate": 0,
+   "swsOfAv": 1.5,
+   "totalIncidencePercent": 16.5,
+   "page": 185,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "13023210": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 202,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "13023220": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 202,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "14020000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 205,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "14030000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 205,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "16043100": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 5,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 39.65,
+   "page": 220,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "17011310": {
+   "basicBcdRate": 100,
+   "effectiveBcdRate": 100,
+   "igstRate": 5,
+   "swsOfAv": 10,
+   "totalIncidencePercent": 120.5,
+   "page": 223,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "17011320": {
+   "basicBcdRate": 100,
+   "effectiveBcdRate": 100,
+   "igstRate": 5,
+   "swsOfAv": 10,
+   "totalIncidencePercent": 120.5,
+   "page": 223,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "20059100": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 5,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 39.65,
+   "page": 236,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "24022060": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 264,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "24041200": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 268,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25132030": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 272,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25291010": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25292100": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25292290": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25293000": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25301010": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25301020": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25301090": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "25302000": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 278,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "27101221": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 18,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 21.245,
+   "page": 293,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "27101250": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 294,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "27102020": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 18,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 21.245,
+   "page": 296,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "27160000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 302,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "28372090": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 321,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "28401100": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 321,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "28401900": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 321,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "28416100": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 321,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29061190": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 5,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 13.663,
+   "page": 342,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29071950": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 343,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29125090": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 347,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29157030": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 350,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29159080": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 351,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29161951": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 352,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29161959": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 352,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29161970": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 352,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29162020": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 352,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29163170": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 352,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29173920": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29173940": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29181540": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29181620": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29181690": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29181700": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 355,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29201920": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 358,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29201990": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 358,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29202200": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 358,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29213090": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 361,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29304000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 372,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29306000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 372,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29307000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 372,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29309091": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 372,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29315910": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 375,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29315920": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 375,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29315939": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 375,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29331991": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 378,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29333314": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 380,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "29392050": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 389,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "30019091": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 402,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "32089019": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 438,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "37023990": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 463,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38061010": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38061090": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38062000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38070030": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38085200": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38086100": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38086900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089111": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 473,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089330": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 477,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089399": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 479,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089410": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 479,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089420": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 479,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38089992": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 480,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38140011": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 483,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38180020": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 485,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38180030": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 485,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38231111": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 486,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38231112": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 486,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38231119": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 486,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "38231190": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 486,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "39173210": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 507,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "39209922": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 510,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40052090": {
+   "basicBcdRate": 25,
+   "effectiveBcdRate": 25,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 47.5,
+   "page": 524,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40059110": {
+   "basicBcdRate": 25,
+   "effectiveBcdRate": 25,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 47.5,
+   "page": 524,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40059190": {
+   "basicBcdRate": 25,
+   "effectiveBcdRate": 25,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 47.5,
+   "page": 524,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40059910": {
+   "basicBcdRate": 25,
+   "effectiveBcdRate": 25,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 47.5,
+   "page": 524,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40059990": {
+   "basicBcdRate": 25,
+   "effectiveBcdRate": 25,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 47.5,
+   "page": 524,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40121910": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40121990": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40122090": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129010": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129020": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129030": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129041": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129049": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129050": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "40129090": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 528,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "46012100": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 570,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "47031100": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 573,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "48025430": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 579,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "48219090": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 591,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52063300": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 618,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52063500": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 618,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52084310": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 622,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52084320": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 622,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52084330": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 622,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52084340": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 622,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52084390": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 622,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52092920": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 625,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52092990": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 625,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52112060": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 630,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52112091": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 630,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52112092": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 630,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "52112099": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 630,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54024400": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 639,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54026930": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 639,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54041990": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 5,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 10.775,
+   "page": 641,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54081000": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 648,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54082110": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 648,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "54082120": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 648,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "55141910": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 658,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "55141920": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 658,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "56021000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 665,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "57025031": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 671,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "58030011": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 678,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "58089060": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 680,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "58109110": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 680,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "58109190": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 680,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "58109290": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 681,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "59113150": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 687,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "60049000": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 691,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "60062200": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 693,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "60063100": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 693,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "60064100": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 694,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "60069000": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 5,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 28.1,
+   "page": 695,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "61071910": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 703,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "61071990": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 703,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "61072100": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 703,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "61089990": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 705,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "62143010": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 733,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "62143090": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 733,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "62144010": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 733,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "62144090": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 733,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "63029100": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 746,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "63051010": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 749,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "66020000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 762,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "70120000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 783,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71022120": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 1.5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 12.665,
+   "page": 791,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71039942": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71039944": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71039952": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71039990": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71041000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71042900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71049110": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0.25,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11.278,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71049900": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 15,
+   "igstRate": 0.25,
+   "swsOfAv": 1.5,
+   "totalIncidencePercent": 16.791,
+   "page": 793,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71090000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 5,
+   "igstRate": 3,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 8.665,
+   "page": 799,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "71171910": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 804,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72083920": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 819,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72179013": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 831,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72193210": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 833,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72193510": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 833,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72199011": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 833,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72221199": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 834,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72221912": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72222012": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72222099": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72223011": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72223091": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72223092": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72223099": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72224010": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 835,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "72254013": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 836,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74040019": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74040021": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 18,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 21.245,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74040022": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74040024": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 18,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 21.245,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74040025": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 18,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 21.245,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74050000": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 18,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 24.49,
+   "page": 865,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "74192000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 869,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "82033000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 895,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84159090": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 917,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84183090": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 15,
+   "igstRate": 18,
+   "swsOfAv": 1.5,
+   "totalIncidencePercent": 37.47,
+   "page": 918,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84232000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 924,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84238900": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 924,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84239020": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 924,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84241000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 924,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84284000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 926,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84313100": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84313990": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314310": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314910": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314920": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314930": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314940": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84314990": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 928,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84431900": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 932,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84453030": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 936,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84484290": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 939,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84484920": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 939,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84623300": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 948,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84624200": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 948,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84714900": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84715000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716010": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716024": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716025": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716029": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716040": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716060": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84716090": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717010": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717020": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717030": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717040": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717050": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717060": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717070": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84717090": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84718000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84719000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 18,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 18,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84721000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84723000": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "84729010": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 952,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85079020": {
+   "basicBcdRate": 5,
+   "effectiveBcdRate": 5,
+   "igstRate": 18,
+   "swsOfAv": 0.5,
+   "totalIncidencePercent": 24.49,
+   "page": 981,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85121000": {
+   "basicBcdRate": 15,
+   "effectiveBcdRate": 15,
+   "igstRate": 18,
+   "swsOfAv": 1.5,
+   "totalIncidencePercent": 37.47,
+   "page": 983,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85176990": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 989,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85255050": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 998,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85408100": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1011,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85408900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1011,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85409900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1011,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "85491900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1019,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90089000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1138,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90183210": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 5,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 13.663,
+   "page": 1141,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90219010": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 5,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 5,
+   "page": 1144,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90221410": {
+   "basicBcdRate": 8,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 1145,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90221420": {
+   "basicBcdRate": 8,
+   "effectiveBcdRate": 0,
+   "igstRate": 5,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 5,
+   "page": 1145,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90229040": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 1146,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "90292010": {
+   "basicBcdRate": 7.5,
+   "effectiveBcdRate": 7.5,
+   "igstRate": 18,
+   "swsOfAv": 0.75,
+   "totalIncidencePercent": 27.735,
+   "page": 1150,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "91019110": {
+   "basicBcdRate": 20,
+   "effectiveBcdRate": 20,
+   "igstRate": 18,
+   "swsOfAv": 2,
+   "totalIncidencePercent": 43.96,
+   "page": 1156,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "92011000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1160,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "92071000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1161,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "92081000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1161,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "96020040": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1184,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "96099020": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11,
+   "page": 1187,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "96100000": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 0,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 11,
+   "page": 1187,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "97012100": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 1192,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "97012900": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 1192,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "97019100": {
+   "basicBcdRate": 10,
+   "effectiveBcdRate": 10,
+   "igstRate": 5,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 16.55,
+   "page": 1192,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "98020000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 10,
+   "igstRate": 18,
+   "swsOfAv": 1,
+   "totalIncidencePercent": 30.98,
+   "page": 1198,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "98071000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 1200,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "98072000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 1200,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "98073000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 1200,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "98074000": {
+   "basicBcdRate": 0,
+   "effectiveBcdRate": 0,
+   "igstRate": 0,
+   "swsOfAv": 0,
+   "totalIncidencePercent": 0,
+   "page": 1200,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "02101200": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 5,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 39.65,
+   "page": 95,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "03036500": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 5,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 39.65,
+   "page": 104,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "05119991": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 0,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 33,
+   "page": 129,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "09030000": {
+   "basicBcdRate": 30,
+   "effectiveBcdRate": 30,
+   "igstRate": 5,
+   "swsOfAv": 3,
+   "totalIncidencePercent": 39.65,
+   "page": 163,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  },
+  "09042212": {
+   "basicBcdRate": 2.5,
+   "effectiveBcdRate": 2.5,
+   "igstRate": 5,
+   "swsOfAv": 0.25,
+   "totalIncidencePercent": 7.875,
+   "page": 164,
+   "source": "vision",
+   "model": "gpt-5.6-terra"
+  }
+ }
+}
