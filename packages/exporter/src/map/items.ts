@@ -269,6 +269,14 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     if (item.eximScheme && !eximCode) {
       ctx.blocker(`${path}.Exim_Code`, `${label}: "${item.eximScheme.code}" is not a known Exim scheme code.`);
     }
+    // ICES 330 / 331 / 383: the scheme's notification and serial are present
+    // if and only if the code is.
+    if (eximCode && !item.eximScheme?.notification) {
+      ctx.warn(
+        `${path}.Exim_Notn`,
+        `${label}: scheme ${eximCode} is claimed with no notification behind it. ICES asks for the notification and its serial beside the code.`,
+      );
+    }
 
     // ---- §17 preferential origin ----
     const fta = item.fta;
@@ -295,6 +303,22 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     // P only for a preferential (trade-agreement) rate in Basic; a general
     // exemption like 45/2025 is not a preferential rate.
     const preferential = Boolean(basicFromFta || (legacyClaim && (legacyClaim.scheme || draftClaim)));
+    // §10: the scheme exemption is claimed in the Exim slot and not in
+    // `Basic_Notn`, which is empty on all four licence goldens.
+    if (eximCode && basicNotn) {
+      const sameNotification = logisysNotn(item.eximScheme?.notification) === logisysNotn(basicNotn);
+      const detail = `${label}: the relief is claimed under scheme ${eximCode} (${item.eximScheme?.notification ?? 'no notification'}) and again under ${basicNotn} in Basic_Notn.`;
+      if (sameNotification) {
+        // The same notification in both slots claims the relief twice, which
+        // is a misdeclaration however it got there.
+        ctx.blocker(`${path}.Basic_Notn`, `${detail} A scheme claim goes in the Exim slot alone — filing both claims it twice.`);
+      } else {
+        // Two different reliefs on one line. Both may be real (a scheme import
+        // of preferential-origin goods), but usually one is left over, so the
+        // operator is told rather than the filing refused.
+        ctx.warn(`${path}.Basic_Notn`, `${detail} Check that both are meant to be claimed.`);
+      }
+    }
 
     // ---- §21 trade remedies ----
     if (item.tradeRemedyCandidates?.length) {

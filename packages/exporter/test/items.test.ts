@@ -80,6 +80,30 @@ describe('ITEMS §10 Exim scheme', () => {
     await expect(build(withItem({ eximScheme: { code: '88' } }))).rejects.toThrow(/Exim scheme/);
   });
 
+  it('refuses the same notification in both the Exim and Basic slots', async () => {
+    // Filing the scheme's own notification in Basic_Notn too claims the
+    // relief twice. All four licence goldens leave Basic_Notn empty.
+    const { bcdExemption: _e, ...item } = structuredClone(EP061126_1_DRAFT).items[0]!;
+    const draft = standard({
+      ...item,
+      eximScheme: { code: '03', notification: '021/2023', serial: '1' },
+      bcdNotification: '021/2023',
+    });
+    await expect(build(draft)).rejects.toThrow(/claims it twice/);
+  });
+
+  it('warns, but files, when a different relief sits beside a scheme', async () => {
+    const { warnings } = await build(
+      withItem({ eximScheme: { code: '03', notification: '021/2023', serial: '1' } }),
+    );
+    expect(warnings.some((w) => w.includes('Basic_Notn') && w.includes('both are meant'))).toBe(true);
+  });
+
+  it('warns when a scheme is claimed with no notification behind it', async () => {
+    const { warnings } = await build(standard({ eximScheme: { code: '03' } }));
+    expect(warnings.some((w) => w.includes('Exim_Notn'))).toBe(true);
+  });
+
   it('exports the schemes the scrolled dropdown never showed', async () => {
     // Before the ICES directory was loaded these three refused the *workbook*,
     // not just the cell — so three of the four jobs in the corpus that carry a

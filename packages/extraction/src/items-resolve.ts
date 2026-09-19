@@ -7,6 +7,8 @@ import {
   lookupTariff,
   notnFlagFromRateText,
   endUseCodeFromText,
+  eximSchemeCode,
+  eximSchemeForNotification,
   ftaAgreementForCertificate,
   ftaAgreementsForOrigin,
   ftaConcessionFor,
@@ -70,6 +72,7 @@ const OWNED_FIELDS = [
   'igstExemption',
   'compCessExemption',
   'compCess',
+  'eximScheme',
   'fta',
   'tradeRemedies',
   'tariffValue',
@@ -79,7 +82,7 @@ const OWNED_FIELDS = [
   'classification',
 ] as const;
 
-const ownedPath = /^items\.\d+\.(aidc|sws|healthCess|igstExemption|compCessExemption|compCess|fta|tradeRemedies|tariffValue|endUseCode|brand|manufacturer|classification)$/;
+const ownedPath = /^items\.\d+\.(aidc|sws|healthCess|igstExemption|compCessExemption|compCess|eximScheme|fta|tradeRemedies|tariffValue|endUseCode|brand|manufacturer|classification)$/;
 
 const isOperator = (item: DraftItem, field: keyof NonNullable<DraftItem['sources']>) =>
   item.sources?.[field] === 'operator';
@@ -429,12 +432,41 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     // ---- AIDC ----
     // Resolved after the preferential claim, because the serial follows the
     // BCD exemption claimed on the line (S.No. 19 for 69/2011, 17 otherwise).
+    // The scheme a line is cleared under, when one is claimed. Its code comes
+    // from the notification the scheme is implemented by (`021/2023` is the
+    // Advance Authorisation Scheme, so `03`) rather than from the operator
+    // spelling a code; an explicit code still wins, because a licence can say
+    // something the notification alone does not.
+    const schemeNotn = item.eximScheme?.notification;
+    const keyed = item.eximScheme?.code?.trim() ? eximSchemeCode(item.eximScheme.code) : undefined;
+    // A code the operator keyed wins — a licence can say something the
+    // notification alone does not — and one they did not is derived. An
+    // unrecognised code is left alone for the mapper to refuse, because
+    // replacing a person's answer with a guess is the worse failure.
+    const schemeCode = item.eximScheme?.code?.trim() ? keyed : eximSchemeForNotification(schemeNotn);
+    if (item.eximScheme && schemeCode && item.eximScheme.code !== schemeCode) {
+      item.eximScheme = { ...item.eximScheme, code: schemeCode };
+    }
+    if (item.eximScheme && !schemeCode) {
+      flags.push({
+        severity: 'warning',
+        path: at('eximScheme'),
+        message:
+          `${label}: "${item.eximScheme.code || schemeNotn}" names no scheme in the ICES directory, so Exim_Code cannot be filed. ` +
+          'Set the scheme on the job.',
+      });
+    }
+
     const bcdClaim =
       item.bcdExemption ??
       (item.bcdNotification
         ? { notification: item.bcdNotification, ...(item.notificationSerials?.basic && { serial: item.notificationSerials.basic }) }
         : undefined);
-    const aidc = aidcLevyFor(cth, today, bcdClaim);
+    const claim =
+      bcdClaim || schemeCode
+        ? { notification: bcdClaim?.notification ?? '', ...bcdClaim, ...(schemeCode && { scheme: schemeCode }) }
+        : undefined;
+    const aidc = aidcLevyFor(cth, today, claim);
 
     if (aidc) {
       item.aidcNotification = aidc.notification;

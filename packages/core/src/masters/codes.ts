@@ -1161,6 +1161,58 @@ export function eximSchemeCode(value: string | undefined | null): string | undef
   return Object.entries(VENDOR_EXIM_SCHEME).find(([, name]) => name.toUpperCase() === upper)?.[0];
 }
 
+/**
+ * The scheme notification a line claims → its `Exim_Code`.
+ *
+ * Each Foreign Trade Policy is implemented by a family of Customs
+ * notifications, one per scheme, and the notification a line claims names the
+ * scheme exactly. Titles are from the CBIC notification index in
+ * `data/customs-corpus/index/cbic-notifications.json`; the codes are
+ * `EXIM_SCHEME` above, matched on the scheme the title names.
+ *
+ * Corroborated by Logi-Sys' own exports: `021/2023` with `03` (ex_job25),
+ * `026/2023` with `12` (ex_job26), `025/2023` with `26` (ex_job28).
+ *
+ * Deliberately absent: `24/2023` (Advance Authorisation for export of
+ * prohibited goods), which the directory has no distinct code for — a line
+ * claiming it warns rather than borrowing `03`. RoDTEP is absent too: it is
+ * claimed by debiting a scrip, not under a notification, so the code comes
+ * from the licence and not from here.
+ */
+export const EXIM_SCHEME_NOTIFICATION: Record<string, string> = {
+  // Foreign Trade Policy 2023
+  '021/2023': '03', // Advance Authorisation Scheme
+  '022/2023': '05', // Advance Authorisation for deemed export
+  '023/2023': '17', // Advance Authorisation for annual requirement
+  '025/2023': '26', // Duty Free Import Authorisation
+  '026/2023': '12', // EPCG (zero duty since FTP 2015)
+  // Foreign Trade Policy 2015-2020, for authorisations still being debited
+  '018/2015': '03',
+  '019/2015': '26',
+  '016/2015': '12',
+};
+
+/** The `Exim_Code` a scheme notification implies, in any spelling. */
+export function eximSchemeForNotification(notification: string | undefined | null): string | undefined {
+  const key = logisysNotn(notification) ?? notification?.trim();
+  return key ? EXIM_SCHEME_NOTIFICATION[key] : undefined;
+}
+
+/**
+ * The scheme codes that are an advance authorisation.
+ *
+ * 11/2021-Customs S.No. 18 is "all goods on which exemption from basic customs
+ * duty is claimed and allowed under the advance authorisation" — the
+ * instrument, named in words rather than by notification, which is why it
+ * cannot be matched the way S.No. 19's ANNEXURE is. Read off the directory so
+ * the two cannot drift apart; `04` is an Advance Release Order, a transfer
+ * instrument rather than an authorisation to import, and is excluded by the
+ * wording.
+ */
+export const ADVANCE_AUTHORISATION_SCHEMES: readonly string[] = Object.entries(EXIM_SCHEME)
+  .filter(([, name]) => /^advance licence/i.test(name))
+  .map(([code]) => code);
+
 /** The scheme's name, whether it is an ICES code or one only Logi-Sys writes. */
 export function eximSchemeName(code: string | undefined | null): string | undefined {
   const raw = code?.trim();

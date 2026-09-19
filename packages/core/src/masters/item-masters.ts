@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { logisysNotn, type NotnFlag } from './codes.js';
+import { ADVANCE_AUTHORISATION_SCHEMES, logisysNotn, type NotnFlag } from './codes.js';
 
 /**
  * The duty masters behind the ITEMS sheet (docs/boe-mapping/06-items.md).
@@ -258,17 +258,24 @@ export const AIDC_ANNEXURE_AS_AT = '2025-02-01';
 export interface BcdClaim {
   notification: string;
   serial?: string;
+  /**
+   * The `Exim_Code` of the scheme the relief is claimed under, when the claim
+   * is a scheme claim. 11/2021's S.No. 18 names the advance authorisation in
+   * words rather than by notification, so it can only be reached from here.
+   */
+  scheme?: string;
 }
 
 /**
  * AIDC levy (11/2021-Customs) serial for a line.
  *
  * 11/2021 names very few tariff codes. For almost everything the serial is
- * chosen by the BCD exemption claimed on the line: S.No. 19 for a claim under
- * a notification in its ANNEXURE (69/2011 — so ex_job6's polypropylene is 19),
- * the claim-based entries that name their own notification and serials
- * (45/2025 → S.No. 20), and otherwise the residual S.No. 17. A code-specific
- * entry wins over all of them.
+ * chosen by the BCD exemption claimed on the line: S.No. 18 for a claim under
+ * an advance authorisation, S.No. 19 for a claim under a notification in its
+ * ANNEXURE (69/2011 — so ex_job6's polypropylene is 19), the claim-based
+ * entries that name their own notification and serials (45/2025 → S.No. 20),
+ * and otherwise the residual S.No. 17. A code-specific entry wins over all of
+ * them.
  */
 export function aidcLevyFor(cth: string, onIsoDate: string, claim?: BcdClaim): LevyLine | undefined {
   const file = levies();
@@ -296,6 +303,20 @@ export function aidcLevyFor(cth: string, onIsoDate: string, claim?: BcdClaim): L
     );
     const annexureEntry = live.find((e) => e.kind === 'claim-based' && /mentioned in the ANNEXURE/i.test(e.description));
     if (annexed && annexureEntry) return lineFrom(aidc.notification, { entry: annexureEntry, rivals: [] });
+  }
+
+  // S.No. 18 — "all goods on which exemption from basic customs duty is
+  // claimed and allowed under the advance authorisation". The entry names the
+  // instrument in words and carries no `refs`, so no notification number can
+  // reach it; the scheme on the claim is the only thing that can. It is tried
+  // after the notification-matched entries, which are the more specific claim,
+  // and it needs no BCD notification of its own — a scheme claim is filed in
+  // the Exim slot and leaves `Basic_Notn` empty (06-items.md §10).
+  if (claim?.scheme && ADVANCE_AUTHORISATION_SCHEMES.includes(claim.scheme)) {
+    const advance = live.find(
+      (e) => e.kind === 'claim-based' && coverRank(e, cth) !== null && /under the advance authorisation/i.test(e.description),
+    );
+    if (advance) return lineFrom(aidc.notification, { entry: advance, rivals: [] });
   }
 
   const residual = live.find((e) => e.kind === 'residual');

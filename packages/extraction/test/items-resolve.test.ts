@@ -40,6 +40,7 @@ function masters(extra: Record<string, unknown> = {}) {
         entries: [
           { serial: '1', include: ['071310'], description: 'All goods', rate: 40, rateText: '40%', allGoods: true, kind: 'specific' },
           { serial: '17', include: [], anyChapter: true, description: 'All goods other than goods mentioned against serial numbers 1 to 16G above.', rate: 0, rateText: 'Nil', kind: 'residual' },
+          { serial: '18', include: [], anyChapter: true, description: 'All goods on which exemption from basic customs duty is claimed and allowed under the advance authorisation.', rate: 0, rateText: 'Nil', kind: 'claim-based' },
           { serial: '19', include: [], anyChapter: true, description: 'All goods on which exemption from basic customs duty is claimed and allowed under the notifications mentioned in the ANNEXURE.', rate: 0, rateText: 'Nil', kind: 'claim-based' },
         ],
         annexure: [{ serial: '6', notification: '069/2011', validFrom: '2021-02-02' }],
@@ -117,6 +118,34 @@ const JP_COO = {
   transitCountries: [],
   items: [{ itemNumber: '1', description: 'POLYPROPYLENE', hsCode: '3902.10', originCriterion: 'CTH' }],
 };
+
+describe('the Exim scheme', () => {
+  // 021/2023-Customs implements the Advance Authorisation Scheme under FTP
+  // 2023; the directory's code for an advance licence is 03. Logi-Sys files
+  // exactly that pair on ex_job25.
+  it('reads the code off the scheme notification', () => {
+    const out = resolveItems(draft({}, [item({ eximScheme: { notification: '021/2023', serial: '1' } })]), { today: TODAY });
+    expect(out.items[0]!.eximScheme?.code).toBe('03');
+  });
+
+  it('carries the scheme into the AIDC serial', () => {
+    const out = resolveItems(draft({}, [item({ eximScheme: { notification: '021/2023', serial: '1' } })]), { today: TODAY });
+    expect(out.items[0]!.aidcLevy?.serial).toBe('18');
+  });
+
+  it('leaves a code the operator keyed alone', () => {
+    const out = resolveItems(draft({}, [item({ eximScheme: { code: '12', notification: '026/2023', serial: '1' } })]), { today: TODAY });
+    expect(out.items[0]!.eximScheme?.code).toBe('12');
+    // EPCG is not the advance authorisation, so the serial stays residual.
+    expect(out.items[0]!.aidcLevy?.serial).toBe('17');
+  });
+
+  it('warns rather than guessing when nothing names a scheme', () => {
+    const out = resolveItems(draft({}, [item({ eximScheme: { code: '', notification: '099/1999' } })]), { today: TODAY });
+    expect(out.items[0]!.eximScheme?.code).toBe('');
+    expect(out.flags.some((f) => f.path === 'items.0.eximScheme')).toBe(true);
+  });
+});
 
 describe('the levy flag', () => {
   // 1/2017-Compensation Cess S.No. 8: "21% or Rs. 4170 per thousand, whichever

@@ -314,7 +314,12 @@ export interface ReImportCandidateSummary {
 
 /** Import under an export-promotion scheme: `Exim_Code` and its notification. */
 export interface EximSchemeLine {
-  code: string;
+  /**
+   * `Exim_Code`. Optional because the scheme notification names the scheme on
+   * its own (`021/2023` is the Advance Authorisation Scheme), so `resolveItems`
+   * fills it; a code the operator keyed wins over the derivation.
+   */
+  code?: string;
   notification?: string;
   serial?: string;
   policyPara?: string;

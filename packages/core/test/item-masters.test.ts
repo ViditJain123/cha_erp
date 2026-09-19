@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
+  ADVANCE_AUTHORISATION_SCHEMES,
   aidcLevyFor,
   combineNotnRate,
   computeBeDuty,
@@ -132,6 +133,35 @@ describe('AIDC serials against the committed master (11/2021)', () => {
     const line = aidcLevyFor(cth, date, claim);
     expect(line?.notification).toBe('011/2021');
     expect(line?.serial).toBe(serial);
+  });
+
+  it('files S.No. 18 under an advance authorisation', () => {
+    // "All goods on which exemption from basic customs duty is claimed and
+    // allowed under the advance authorisation." The entry names the instrument
+    // in words and carries no notification refs, so only the scheme reaches
+    // it — ex_job25 is an Advance Authorisation and Logi-Sys files 18.
+    const line = aidcLevyFor('39023000', '2026-09-07', { notification: '', scheme: '03' });
+    expect(line?.serial).toBe('18');
+    // Every advance-licence code in the directory, not just the plain one.
+    for (const scheme of ADVANCE_AUTHORISATION_SCHEMES) {
+      expect(aidcLevyFor('39023000', '2026-09-07', { notification: '', scheme })?.serial).toBe('18');
+    }
+  });
+
+  it('leaves a non-advance scheme on the residual serial', () => {
+    // EPCG and DFIA are not the advance authorisation, and 11/2021 names
+    // neither, so they fall to S.No. 17 — which is what Logi-Sys files on
+    // ex_job26 (EPCG) and ex_job28 (DFIA).
+    for (const scheme of ['12', '26', 'RD']) {
+      expect(aidcLevyFor('39023000', '2026-09-07', { notification: '', scheme })?.serial).toBe('17');
+    }
+  });
+
+  it('prefers a notification-matched serial over the scheme', () => {
+    // 45/2025 S.No. 105 is named by S.No. 20 outright; the scheme is the
+    // vaguer claim and must not override it.
+    const line = aidcLevyFor('39023000', '2026-09-07', { notification: '045/2025', serial: '105', scheme: '03' });
+    expect(line?.serial).toBe('20');
   });
 });
 
