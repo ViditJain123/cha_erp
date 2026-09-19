@@ -1,4 +1,9 @@
-export { buildLogisysWorkbook, logisysTemplateVersion, UNMAPPED_SHEETS } from './build.js';
+export {
+  buildLogisysWorkbook,
+  logisysTemplateVersion,
+  MAPPED_SHEETS,
+  UNMAPPED_SHEETS,
+} from './build.js';
 export { loadTemplate, templateHash } from './template.js';
 export { LOGISYS_DATE_FORMAT } from './format.js';
 export type { LoadedTemplate, TemplateSheet } from './template.js';

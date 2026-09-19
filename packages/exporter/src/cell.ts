@@ -1,4 +1,4 @@
-import { formatLogisysDate } from './format.js';
+import { formatLogisysDate, formatLogisysDateTime } from './format.js';
 
 /**
  * A single cell of the Logi-Sys import workbook.
@@ -123,4 +123,29 @@ export function isoDate(value: string | null | undefined): Cell {
 export function yn(value: boolean | null | undefined): Cell {
   if (value === null || value === undefined) return BLANK;
   return { kind: 'text', value: value ? 'Y' : 'N' };
+}
+
+/**
+ * A yes/no flag on a sheet where "no" is written as an empty cell.
+ *
+ * The nine boolean columns on GENERAL are like this: the workbook Logi-Sys
+ * exported itself leaves every one of them blank rather than writing `N`, so
+ * `N` is not a value that sheet uses. False and unknown collapse to the same
+ * cell here — which is correct for the file, and is why the draft keeps them
+ * apart in `BoeFlags` for the job screen.
+ */
+export function ynBlank(value: boolean | null | undefined): Cell {
+  return value === true ? { kind: 'text', value: 'Y' } : BLANK;
+}
+
+/**
+ * An eSanchit upload timestamp, `DD-MM-YYYY HH:MM:SS`.
+ *
+ * SUPPORTING_DOCS only. See `formatLogisysDateTime` for why it is its own
+ * format and not the workbook's usual `DD-MMM-YYYY`.
+ */
+export function isoDateTime(value: string | null | undefined): Cell {
+  if (!value) return BLANK;
+  const formatted = formatLogisysDateTime(value);
+  return formatted ? { kind: 'text', value: formatted } : BLANK;
 }

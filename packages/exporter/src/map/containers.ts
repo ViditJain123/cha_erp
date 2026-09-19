@@ -12,10 +12,24 @@ import type { MapContext } from './context.js';
  * wrong one.
  */
 export function containersRows(ctx: MapContext): SheetRow[] {
-  const { containers } = ctx.draft.shipment;
+  const { containers, containerCountStated } = ctx.draft.shipment;
 
   if (ctx.draft.transportMode === 'Sea' && containers.length === 0) {
     ctx.warn('CONTAINERS', 'No containers found on the B/L for a sea shipment.');
+  }
+
+  // The count the B/L states against the count we are about to file. This is
+  // the warning that matters most on this sheet: a workbook carrying three of
+  // six containers looks exactly like a correct one, and nothing else in the
+  // file says otherwise. It does not block the export — the operator may know
+  // the list is right and the total misprinted — but it is said plainly.
+  if (containerCountStated != null && containerCountStated !== containers.length) {
+    ctx.warn(
+      'CONTAINERS.Container No',
+      `The B/L states ${containerCountStated} container${containerCountStated === 1 ? '' : 's'} and ` +
+        `this workbook declares ${containers.length}. Check the container list on the job against the ` +
+        'B/L before filing — a Bill of Entry that declares some of the containers is a wrong one, not a short one.',
+    );
   }
 
   // `IGM Sr.No` is mandatory, and nothing we read carries it. Leaving it blank

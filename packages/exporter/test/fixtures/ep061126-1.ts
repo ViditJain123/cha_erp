@@ -31,6 +31,31 @@ export const EP061126_1_DRAFT: ChecklistDraft = {
   customStation: { code: 'INNSA1', name: 'Nhava Sheva Sea' },
   filingStatus: 'Advance',
 
+  // The resolved Bill of Entry header. Every value here is one the exporter
+  // refuses to invent: the custom house is the customer's instruction, the
+  // filing status follows from an IGM that had not been filed when this job was
+  // read, and the importer reference is the one the customer asked us to carry.
+  // The Logi-Sys checklist for this job prints all five, which is what makes
+  // them assertable.
+  boe: {
+    transportMode: { value: 'Sea', source: 'document' },
+    customStation: {
+      value: { code: 'INNSA1', name: 'Nhava Sheva Sea' },
+      source: 'mail',
+      because: 'Named in the customer’s instructions',
+    },
+    beType: { value: 'Home Consumption', source: 'mail' },
+    dutyPaymentStatus: { value: 'T', source: 'default', because: 'Duty paid per transaction' },
+    filingStatus: {
+      value: 'Advance',
+      source: 'operator',
+      because: 'No IGM filed against this BL',
+    },
+    adCode: { value: '0510226', source: 'master' },
+    importerRefNo: { value: 'EP061126-1', source: 'operator' },
+    flags: {},
+  },
+
   importer: {
     name: 'M/S. ELITE POLYPLUS',
     addressLines: [
@@ -88,28 +113,32 @@ export const EP061126_1_DRAFT: ChecklistDraft = {
   },
 
   invoiceMeta: {
-    paymentMethod: 'Transaction',
-    natureOfTransaction: 'Sale',
-    relatedParty: false,
-    exchangeRate: { currency: 'USD', rate: 96.05 },
+    exchangeRates: { USD: 96.05 },
   },
 
-  invoice: {
-    invoiceNumber: 'ASI-EP061126-1',
-    invoiceDate: '2026-06-30',
-    // The invoice reads "MT CNF NHAVASHEVA" — cost and freight, no insurance.
-    // Keyed by hand this became CIF, which would have folded a non-existent
-    // insurance cost into the assessable value.
-    termsOfInvoice: 'C&F',
-    currency: 'USD',
-    invoiceValue: 188924.33,
-    // Notional 1.125%, as the checklist shows (204144.55 INR).
-    insurance: { kind: 'percent', percent: 1.125 },
-  },
+  invoices: [
+    {
+      srNo: 1,
+      invoiceNumber: 'ASI-EP061126-1',
+      invoiceDate: '2026-06-30',
+      // The invoice reads "MT CNF NHAVASHEVA" — cost and freight, no insurance.
+      // Keyed by hand this became CIF, which would have folded a non-existent
+      // insurance cost into the assessable value.
+      termsOfInvoice: 'C&F',
+      currency: 'USD',
+      invoiceValue: 188924.33,
+      // Notional 1.125%, as the checklist shows (204144.55 INR).
+      insurance: { kind: 'percent', percent: 1.125 },
+      paymentMethod: 'Transaction',
+      natureOfTransaction: 'Sale',
+      relatedParty: false,
+    },
+  ],
 
   items: [
     {
       slNo: 1,
+      invoiceSrNo: 1,
       description: 'PP GRANULES (POLYPROPYLENE)',
       // The invoice prints "HS CODE : 3902.10"; the BE wants 8 digits.
       ritc: '39021000',

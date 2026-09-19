@@ -1,15 +1,32 @@
 import {
+  ACCESSORY_STATUS,
+  ADD_BASIS_ASSESSABLE,
   COMP_CESS_NOTIFICATION,
+  CVD_CALCULATED_ON_LANDED,
+  END_USE_CODES,
   IGST_RATE_NOTIFICATION,
   compCessForCth,
+  eximSchemeCode,
   igstRateForCth,
   iso2,
+  logisysNotn,
   pad8,
   tradeDescription,
 } from '@checklist/core';
-import { BLANK, code, decimal, int, isoDate, money, orElse, qty, rate5, text, weight, yn } from '../cell.js';
+import type { DraftItem, NotificationLine, TradeRemedyLine } from '@checklist/extraction';
+import { BLANK, code, decimal, int, isoDate, money, orElse, qty, rate5, text, weight, yn, type Cell } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
+
+/**
+ * ITEMS — one row per line of goods, per invoice.
+ *
+ * The contract for every column is docs/boe-mapping/06-items.md; the section
+ * numbers in the comments below are its sections. The draft arrives with the
+ * document-side facts read by the merge and the master-side facts settled by
+ * `resolveItems` (packages/extraction/src/items-resolve.ts), so this mapper
+ * decides nothing a person or a master has not — it writes, refuses, or warns.
+ */
 
 /**
  * Tolerance on the quantity × unit price = amount check.
@@ -19,14 +36,13 @@ import type { MapContext } from './context.js';
  */
 const AMOUNT_TOLERANCE = 0.005;
 
-/** Logi-Sys' word for "this line carries no central excise". */
+/** §5 — Logi-Sys' word for "this line carries no central excise". */
 const NO_EXCISE = 'NOEXCISE';
 
 /**
- * Brand and model on a bulk-chemical line.
- *
- * Both columns are mandatory and neither has a value for goods sold by tonne
- * under a tariff description. The vendor's own exports write these two words.
+ * Brand and model on a line that carries neither (§8). Mandatory columns; the
+ * vendor's own exports and ICES ("If not applicable declare as N.A.") write
+ * these two words.
  */
 const UNBRANDED = 'UNBRANDED';
 const NO_MODEL = 'NA';
@@ -77,15 +93,27 @@ function countryFromAddress(address: string | undefined): string | undefined {
   return undefined;
 }
 
+/** A notification number in Logi-Sys' `NNN/YYYY` spelling, as a text cell. */
+function notn(value: string | undefined): Cell {
+  return code(logisysNotn(value) ?? value);
+}
+
+/**
+ * §19 — the Plus/Minus/Higher/Lower flag. Written only when it changes the
+ * duty: a purely ad valorem notification computes the same under every flag,
+ * and the desk's hand-filled sheets leave the column blank for those.
+ */
+function flag(value: NotificationLine['flag']): Cell {
+  return value && value !== '+' ? code(value) : BLANK;
+}
+
 /**
  * Columns Logi-Sys writes as an explicit zero on every ITEMS row of its own
  * export, whether or not the duty instrument applies.
  *
- * They are taken verbatim from the I-10793 export, at its decimal places. Two
- * of that file's constants are deliberately absent: `ADD_Basis` ('AV') and
- * `CVD_CalculatedOn` ('1'), which are not zeros but assessment bases, and
- * nothing tells us they hold for a consignment that carries no anti-dumping or
- * countervailing duty.
+ * Taken verbatim from the I-10793 export, at its decimal places (`constant`,
+ * with that file as the evidence). A real value for any of them overwrites the
+ * zero in the row below.
  */
 const ITEM_ZEROS = {
   Inbond_InvSrNo: int(0),
@@ -107,13 +135,37 @@ const ITEM_ZEROS = {
   CVD_Rate: money(0),
 } satisfies SheetRow;
 
-/**
- * ITEMS — one row per line item.
- *
- * The widest sheet at 127 columns. Most describe duty instruments this filing
- * does not use (anti-dumping, safeguard, CVD, tariff values, re-import
- * references); those stay blank.
- */
+/** §21 — the anti-dumping block for one remedy line. */
+function addCells(line: TradeRemedyLine | undefined): SheetRow {
+  if (!line) return {};
+  const specific = line.amountPerUnit !== undefined;
+  return {
+    ADD_Notn: notn(line.notification),
+    ADD_NotnSrNo: code(line.serial ?? line.cthSerial),
+    CTHSrNo: code(line.cthSerial),
+    SuppSrNo: code(line.supplierSerial),
+    ...(line.quantity !== undefined && { ADD_Qty: qty(line.quantity) }),
+    ADD_Basis: specific ? BLANK : code(ADD_BASIS_ASSESSABLE),
+    ...(line.ratePercent !== undefined && { 'ADD_%Rate': decimal(line.ratePercent, 2) }),
+    ADD_Currency: code(line.currency),
+    ...(specific && { ADD_AmountPerUnit: rate5(line.amountPerUnit) }),
+    ADD_AmountUnit: code(line.amountUnit),
+  };
+}
+
+/** §21 — the CVD block. */
+function cvdCells(line: TradeRemedyLine | undefined): SheetRow {
+  if (!line) return {};
+  return {
+    CVD_Notn: notn(line.notification),
+    CVD_NotnSrNo: code(line.serial ?? line.cthSerial),
+    ...(line.ratePercent !== undefined && { CVD_Rate: money(line.ratePercent) }),
+    CVD_CalculatedOn: code(CVD_CALCULATED_ON_LANDED),
+    CVD_ItemSrNo: code(line.cthSerial),
+    CVD_SupplierSrNo: code(line.supplierSerial),
+  };
+}
+
 export function itemsRows(ctx: MapContext): SheetRow[] {
   const { draft } = ctx;
 
@@ -121,114 +173,292 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     ctx.blocker('ITEMS', 'The draft has no line items — there is nothing to declare.');
   }
 
-  return draft.items.map((item, i) => {
+  const svb = draft.supplierRelationship?.isRelated ? draft.supplierRelationship : undefined;
+
+  return draft.items.map((item: DraftItem, i) => {
+    const path = `ITEMS[${i}]`;
+    const label = `Item ${item.invoiceSrNo}/${item.slNo}`;
+
+    // ---- §4 CTH ----
     const cth = pad8(item.ritc);
     if (!cth) {
       ctx.blocker(
-        `ITEMS[${i}].CTH`,
-        `Item ${item.slNo} has no usable tariff code (got "${item.ritc}"). ` +
+        `${path}.CTH`,
+        `${label} has no usable tariff code (got "${item.ritc}"). ` +
           'The CTH determines the duty rate, so it cannot be left for Logi-Sys to fill.',
       );
     }
+    // A description this importer has never filed, not yet looked at. Only
+    // drafts that record provenance can say so; older drafts carry no sources.
+    if (item.sources?.ritc && item.sources.ritc !== 'master' && item.sources.ritc !== 'operator') {
+      ctx.blocker(
+        `${path}.CTH`,
+        `${label}: "${item.description.slice(0, 60)}" is new for this importer — confirm its classification ` +
+          `(CTH ${item.ritc || 'none'}) on the job before it is filed. It is remembered from then on.`,
+      );
+    }
 
-    // Quantity and unit price must agree with the line amount. They come apart
-    // when a unit is converted (156.450 MT at 1,207.57/MT is 156,450 KGS at
-    // 1.20757/KG) and only one side is rescaled — which overstates the line by
-    // a factor of 1000 and would be a misdeclaration.
+    // ---- §3 quantity × price ----
+    // They come apart when a unit is converted (156.450 MT at 1,207.57/MT is
+    // 156,450 KGS at 1.20757/KG) and only one side is rescaled — which
+    // overstates the line by a factor of 1000 and would be a misdeclaration.
     const computed = item.quantity * item.unitPrice;
     if (item.amount > 0 && Math.abs(computed - item.amount) > AMOUNT_TOLERANCE * item.amount) {
       ctx.blocker(
-        `ITEMS[${i}]`,
-        `Item ${item.slNo}: quantity × unit price (${item.quantity} × ${item.unitPrice} = ` +
+        path,
+        `${label}: quantity × unit price (${item.quantity} × ${item.unitPrice} = ` +
           `${computed.toFixed(2)}) does not match the line amount ${item.amount}. ` +
           'This usually means a unit conversion rescaled the quantity but not the price.',
       );
     }
 
+    // ---- §9 end use ----
+    if (!item.endUseCode) {
+      ctx.warn(`${path}.End_Use`, `${label}: no end use — no instruction from the importer and no default. Set it on the job.`);
+    } else if (!END_USE_CODES[item.endUseCode]) {
+      ctx.blocker(`${path}.End_Use`, `${label}: "${item.endUseCode}" is not an ICES end-use code.`);
+    }
+
+    // ---- §11 origin ----
     const originCountry = iso2(item.originCountry ?? draft.shipment.countryOfOrigin);
-    const manufacturerCountry =
-      iso2(item.manufacturerCountry) ?? countryFromAddress(item.manufacturerAddress);
+    if (!originCountry) {
+      ctx.blocker(
+        `${path}.Country_of_Origin`,
+        `${label}: country of origin "${item.originCountry ?? draft.shipment.countryOfOrigin ?? ''}" has no ISO code — ` +
+          'the column is mandatory and coded. Ask the importer.',
+      );
+    }
+
+    // ---- §8 brand ----
+    if (item.sources?.brand === 'default') {
+      ctx.warn(`${path}.Brand`, `${label}: the invoice prints no brand; filed as ${UNBRANDED}. Confirm on the job.`);
+    }
+
+    // ---- §12 accessories ----
+    const accessoryStatus = item.accessoryStatus ?? ACCESSORY_STATUS.NONE;
+    if (accessoryStatus === ACCESSORY_STATUS.SUPPLIED_WITH_ITEM && !item.accessoriesDetails?.trim()) {
+      ctx.blocker(`${path}.Accessories_Details`, `${label}: accessories are declared as supplied with the item, but not described.`);
+    }
+
+    // ---- §10 Exim scheme ----
+    const eximCode = item.eximScheme ? eximSchemeCode(item.eximScheme.code) : undefined;
+    if (item.eximScheme && !eximCode) {
+      ctx.blocker(`${path}.Exim_Code`, `${label}: "${item.eximScheme.code}" is not a known Exim scheme code.`);
+    }
+
+    // ---- §17 preferential origin ----
+    const fta = item.fta;
+    const ftaPath = `${path}.COO`;
+    if (fta?.retroactiveCheck && !fta.retroactiveCheck.compliant) {
+      ctx.blocker(ftaPath, `${label}: ${fta.retroactiveCheck.reason}`);
+    }
+    // The claim that goes in Basic_Notn: an FTA in the BASIC slot, else a
+    // general exemption the notification step chose (45/2025, 24/2005 …).
+    const basicFromFta = fta && fta.slot === 'BASIC' ? fta : undefined;
+    const saptaFromFta = fta && fta.slot === 'SAPTA' ? fta : undefined;
+    // A pre-per-item draft carries its claim only as bcdExemption + ftaClaim.
+    const legacyClaim = !fta && item.bcdExemption ? item.bcdExemption : undefined;
+    const draftClaim = !fta && legacyClaim ? draft.ftaClaim : undefined;
+    const cooNumber = fta?.cooNumber ?? draftClaim?.cooNumber;
+    const claimed = Boolean(fta || draftClaim);
+    if (claimed && !cooNumber) {
+      ctx.blocker(ftaPath, `${label}: a preferential rate is claimed with no certificate of origin number.`);
+    }
 
     const serials = item.notificationSerials ?? {};
-    const fta = draft.ftaClaim;
+    const basicNotn = basicFromFta?.notification ?? legacyClaim?.notification ?? item.bcdNotification;
+    const basicSerial = basicFromFta?.serial ?? legacyClaim?.serial ?? serials.basic;
+    // P only for a preferential (trade-agreement) rate in Basic; a general
+    // exemption like 45/2025 is not a preferential rate.
+    const preferential = Boolean(basicFromFta || (legacyClaim && (legacyClaim.scheme || draftClaim)));
+
+    // ---- §21 trade remedies ----
+    if (item.tradeRemedyCandidates?.length) {
+      ctx.blocker(
+        `${path}.ADD_Notn`,
+        `${label}: ${item.tradeRemedyCandidates.length} trade-remedy row(s) may apply and none is chosen — ` +
+          item.tradeRemedyCandidates
+            .slice(0, 3)
+            .map((c) => `${c.kind} ${c.notification} row ${c.cthSerial ?? '?'} (${c.producer} / ${c.exporter})`)
+            .join('; ') +
+          '. Pick one on the job.',
+      );
+    }
+    const remedy = (kind: TradeRemedyLine['kind']) => item.tradeRemedies?.find((l) => l.kind === kind);
+    const safeguard = remedy('SAFEGUARD');
+
+    // ---- §23 manufacturer ----
+    const manufacturerCountry = iso2(item.manufacturerCountry) ?? countryFromAddress(item.manufacturerAddress);
+
+    // ---- §20 tariff value ----
+    const tv = item.tariffValue;
+
+    // ---- §25 SVB ----
+    const svbCells: SheetRow = svb
+      ? {
+          SVBRefNo: code(svb.svbRefNo),
+          SVBRefDate: isoDate(svb.svbDate),
+          SVBCustomHouse: code(svb.svbCustomHouse),
+          SVB_Loading_Basis: code(svb.loadingBasis),
+          ...(svb.rateAssessable !== undefined && { SVB_Rate_Assessable: rate5(svb.rateAssessable) }),
+          SVB_Status_Assessable: code(svb.statusAssessable),
+          ...(svb.rateDuty !== undefined && { SVB_Rate_Duty: rate5(svb.rateDuty) }),
+          SVB_Status_Duty: code(svb.statusDuty),
+        }
+      : {};
+
+    const prev = item.previousBe;
 
     return {
       ...ITEM_ZEROS,
 
-      InvSrNo: int(1),
+      // §1
+      InvSrNo: int(item.invoiceSrNo),
       ItemSrNo: int(item.slNo),
 
+      // §3
       Product_Description: text(item.description),
       QTY: qty(item.quantity),
       Unit: code(item.unit),
       Unit_Price: qty(item.unitPrice),
+
+      // §4, §5, §6
       CTH: code(cth),
       RITC: code(cth),
-      // Imported goods have no Central Excise Tariff Heading — central excise
-      // survives only on tobacco and petroleum manufactured in India — and
-      // NOEXCISE is the word Logi-Sys puts in the column to say so. We used to
-      // repeat the CTH here, which the vendor's validator accepts (it only ever
-      // said "this field is mandatory") but which asserts an excise
-      // classification that does not exist. Both of the vendor's own exports
-      // say NOEXCISE.
       CETH: code(NO_EXCISE),
-      PolicyPara: BLANK,
-      PolicyYear: BLANK,
+      PolicyPara: code(item.eximScheme?.policyPara),
+      PolicyYear: code(item.eximScheme?.policyYear),
 
-      // Defaults, not decisions: the merge sets all three on the draft, so a
-      // reviewer's edit is what normally arrives here. These fallbacks are for
-      // drafts saved before that — the export route reads the stored draft and
-      // never re-merges it, so an old draft would otherwise export three blanks.
-      General_Description: orElse(
-        text(item.generalDescription),
-        text(tradeDescription(item.description)),
-      ),
+      // §7, §8, §9, §11
+      General_Description: orElse(text(item.generalDescription), text(tradeDescription(item.description))),
       Brand: orElse(text(item.brand), code(UNBRANDED)),
       Model: orElse(text(item.model), code(NO_MODEL)),
-      End_Use: code(item.endUseCode),
+      End_Use: code(item.endUseCode || undefined),
       Country_of_Origin: code(originCountry),
-      Accessories_Details: BLANK,
 
-      // Preferential when an FTA exemption is claimed on this line, standard
-      // otherwise. CONFIRM the exact tokens.
-      Standard_Preferential: code(item.bcdExemption ? 'P' : 'S'),
-      Basic_Notn: code(item.bcdExemption?.notification ?? item.bcdNotification),
-      Basic_NotnSrNo: code(item.bcdExemption?.serial ?? serials.basic),
-      SWS_Notn: BLANK,
-      SWS_NotnSrNo: code(serials.sws),
+      // §12
+      Accessories_Status: int(Number(accessoryStatus)),
+      Accessories_Details: text(item.accessoriesDetails),
 
-      IGST_LevyNotn: orElse(code(item.igstNotification), code(IGST_RATE_NOTIFICATION)),
+      // §10
+      Exim_Code: code(eximCode),
+      Exim_Notn: notn(item.eximScheme?.notification),
+      Exim_NotnSrNo: code(item.eximScheme?.serial),
+
+      // §14, §15
+      Standard_Preferential: code(preferential ? 'P' : 'S'),
+      Basic_Notn: notn(basicNotn),
+      Basic_NotnSrNo: code(basicSerial),
+
+      // §16
+      SWS_Notn: notn(item.swsExemption?.notification),
+      SWS_NotnSrNo: code(item.swsExemption?.serial ?? serials.sws),
+
+      // §18
+      IGST_LevyNotn: orElse(notn(item.igstNotification), code(IGST_RATE_NOTIFICATION)),
       IGST_LevyNotnSrNo: orElse(code(serials.igst), code(igstSerialFor(cth, item.igstNotification))),
-      IGST_CompCessNotn: orElse(code(item.compCessNotification), code(COMP_CESS_NOTIFICATION)),
-      IGST_CompCessNotnSrNo: orElse(
-        code(serials.compCess),
-        code(compCessSerialFor(cth, item.compCessNotification)),
-      ),
+      IGST_LevyNotnFlag: flag(item.igstLevyFlag),
+      IGST_ExemptionNotnType: code(item.igstExemption?.type),
+      IGST_ExemptionNotn: notn(item.igstExemption?.notification),
+      IGST_ExemptionNotnSrNo: code(item.igstExemption?.serial),
+      IGST_ExemptionNotnFlag: flag(item.igstExemption?.flag),
+      IGST_CompCessNotn: orElse(notn(item.compCessNotification), code(COMP_CESS_NOTIFICATION)),
+      IGST_CompCessNotnSrNo: orElse(code(serials.compCess), code(compCessSerialFor(cth, item.compCessNotification))),
+      IGST_CompCessNotnFlag: flag(item.compCessLevyFlag),
+      IGST_CompCessExemptionNotnType: code(item.compCessExemption?.type),
+      IGST_CompCessExemptionNotn: notn(item.compCessExemption?.notification),
+      IGST_CompCessExemptionNotnSrNo: code(item.compCessExemption?.serial),
+      IGST_CompCessExemptionNotnFlag: flag(item.compCessExemption?.flag),
 
-      AIDC_LevyNotn: code(item.aidcNotification),
-      AIDC_LevyNotnSrNo: code(serials.aidc),
+      // §16 — no current levy for these on imports this CHA files
+      Road_Infra_Cess_Notn: BLANK,
+      Road_Infra_Cess_NotnSrNo: BLANK,
+      NCD_Notn: BLANK,
+      NCD_NotnSrNo: BLANK,
+      Aggregate_Duty_Notn: BLANK,
+      Aggregate_Duty_NotnSrNo: BLANK,
 
+      // §21
+      Safeguard_Duty_Notn: notn(safeguard?.notification),
+      Safeguard_Duty_NotnSrNo: code(safeguard?.serial ?? safeguard?.cthSerial),
+
+      // §17 — the SAPTA slot
+      SAPTA_Notn: notn(saptaFromFta?.notification),
+      SAPTA_NotnSrNo: code(saptaFromFta?.serial),
+
+      // §20
+      Tariff_Value_Notn: notn(tv?.notification),
+      Tariff_Value_NotnSrNo: code(tv?.serial),
+      ...(tv && { Tarrif_Value_Qty: weight(tv.quantity) }),
+      Tarrif_Value_Currency: code(tv?.currency),
+      ...(tv && { Tarrif_Value_Amount: money(tv.amountPerUnit) }),
+
+      // §21
+      ...addCells(remedy('ADD')),
+
+      // §22 — operator-only
+      Other_Duty_Notn: BLANK,
+      Other_Duty_NotnSrNo: BLANK,
+      Other_Duty_Flag: BLANK,
+      Other_Duty_AmountUnit: BLANK,
+      Duty_Type: BLANK,
+      Addl_Duty_Flag: BLANK,
+
+      // §23, §24
       MFG_Name: text(item.manufacturerName),
       MFG_Address: text(item.manufacturerAddress),
       MFG_Country: code(manufacturerCountry),
-      MFG_State: BLANK,
-      MFG_PIN: BLANK,
-      Source_Country: BLANK,
-      Transit_Country: BLANK,
+      MFG_State: text(item.manufacturerState),
+      MFG_PIN: code(item.manufacturerPin),
+      Source_Country: code(iso2(item.sourceCountry)),
+      Transit_Country: code(iso2(item.transitCountry) ?? (claimed ? originCountry : undefined)),
 
-      isFTAbenefitClaimed: yn(Boolean(fta)),
-      COO_No: code(fta?.cooNumber),
-      COO_Date_of_Issue: isoDate(fta?.cooDate),
-      COO_Issuing_Country: code(iso2(fta?.countryOfIssue)),
-      COO_Origin_Criteria: code(fta?.originCriterion),
-      COO_Origin_Criteris_Remarks: BLANK,
-      COO_Accumulation_Cumulation: BLANK,
-      COO_Direct_Consignment: fta ? yn(fta.directConsignment) : BLANK,
-      COO_Retroactive_Issuance: fta ? yn(fta.retroactiveIssuance ?? false) : BLANK,
-      COO_TariffShift: BLANK,
-      COO_ItemSrNoCert: BLANK,
+      // §25
+      ...svbCells,
+      DUTY_ExemptionType: BLANK,
 
-      Foc_Item: yn(false),
+      // §16
+      CHealthCess_Notn: notn(item.healthCess?.notification),
+      CHealthCess_NotnSrNo: code(item.healthCess?.serial),
+
+      // §17
+      isFTAbenefitClaimed: yn(claimed),
+      COO_No: code(cooNumber),
+      COO_Date_of_Issue: isoDate(fta?.cooDate ?? draftClaim?.cooDate),
+      COO_Issuing_Country: code(iso2(fta?.countryOfIssue ?? draftClaim?.countryOfIssue)),
+      COO_Origin_Criteria: code(fta?.originCriterion ?? draftClaim?.originCriterion),
+      COO_Origin_Criteris_Remarks: text(fta?.originCriterionRemarks),
+      COO_Accumulation_Cumulation: code(fta?.accumulation),
+      COO_Retroactive_Issuance: claimed
+        ? yn(fta?.retroactiveIssuance ?? draftClaim?.retroactiveIssuance ?? false)
+        : BLANK,
+      COO_Direct_Consignment: claimed ? yn(fta?.directConsignment ?? draftClaim?.directConsignment ?? true) : BLANK,
+      COO_TariffShift: code(fta?.tariffShift),
+      COO_ItemSrNoCert: code(fta?.itemSrNoInCertificate),
+
+      // §26
+      Foc_Item: yn(Boolean(item.foc)),
+
+      // §16 — AIDC
+      AIDC_LevyNotn: notn(item.aidcLevy?.notification ?? item.aidcNotification),
+      AIDC_LevyNotnSrNo: code(item.aidcLevy?.serial ?? serials.aidc),
+      AIDC_ExemptionNotn: notn(item.aidcExemption?.notification),
+      AIDC_ExemptionNotnSrNo: code(item.aidcExemption?.serial),
+      AIDCNotn_Excise: BLANK,
+      ADICNotnSr_Excise: BLANK,
+
+      // §27, §28
+      MaterialCode: code(item.materialCode),
+      Previous_BENo: code(prev?.beNo),
+      Previous_BEDate: isoDate(prev?.beDate),
+      Previous_BEIGMNo: code(prev?.igmNo),
+      Previous_BEIGMDate: isoDate(prev?.igmDate),
+      Previous_BECurrency: code(prev?.currency),
+      ...(prev?.unitPrice !== undefined && { Previous_BEUnitPrice: qty(prev.unitPrice) }),
+      Previous_BECustomHouse: code(prev?.customHouse),
+
+      // §21 — CVD
+      ...cvdCells(remedy('CVD')),
     };
   });
 }

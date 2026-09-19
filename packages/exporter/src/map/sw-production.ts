@@ -5,49 +5,78 @@ import type { MapContext } from './context.js';
 /**
  * SW_PRODUCTION — Single Window batch details.
  *
- * Only food and pharma consignments carry these; the draft populates
- * `DraftItem.batch` for tariff chapters 2–22 (see SINGLE_WINDOW_RULES). For
- * everything else this yields no rows and the sheet stays header-only.
+ * ICES `<TABLE>BE_ITEM_SW_PROD` (BE Message format 2.25, CACHI01 Part 21/24).
+ * **One row per (line × batch)**: the spec says "Production batch nos are
+ * provided along with the consignments", plural, and a consignment of six lots
+ * of one drug declares six rows. Contract: docs/boe-mapping/13-sw-production.md.
  *
- * A row is all-or-nothing: Logi-Sys makes the manufacture, expiry and
- * best-before dates mandatory on every row of this sheet, so a batch number
- * without its dates cannot be declared here at all. A Certificate of Analysis
- * often gives the batch number and nothing else, which is how a lubricant
- * consignment ended up with two half-filled rows and six rejections. Those rows
- * are dropped with a warning rather than emitted incomplete.
+ * Scope is the PGA, not the chapter: mandatory for a Drug Controller case and
+ * for FSSAI ("This table is applicable/Mandatory for FSSAI also"), and nothing
+ * for anything else. `DraftItem.batches` is populated off the invoice line and
+ * the certificate of analysis, so a line with no batch data yields no rows and
+ * the sheet stays exactly as the vendor shipped it.
+ *
+ * A row is all-or-nothing. Logi-Sys makes the manufacture, expiry **and
+ * best-before** dates mandatory on every row — stricter than ICES, which marks
+ * best-before optional — so a batch number without its dates cannot be declared
+ * here at all. A certificate of analysis often gives the batch number and
+ * nothing else, which is how a lubricant consignment ended up with two
+ * half-filled rows and six rejections on the real ErrorList. Those rows are
+ * dropped with a warning naming the batch rather than emitted incomplete.
  */
 export function swProductionRows(ctx: MapContext): SheetRow[] {
   const rows: SheetRow[] = [];
 
   for (const item of ctx.draft.items) {
-    const batch = item.batch;
-    if (!batch) continue;
+    const batches = item.batches ?? [];
+    if (!batches.length) continue;
 
-    if (!batch.manufactureDate || !batch.expiryDate) {
-      ctx.warn(
-        'SW_PRODUCTION',
-        `Item ${item.slNo} has batch ${batch.batchNo ?? '(unnumbered)'} but no ` +
-          `${!batch.manufactureDate ? 'manufacture' : 'expiry'} date, so its batch details were ` +
-          'left out — Logi-Sys requires the manufacture, expiry and best-before dates on every ' +
-          'row of this sheet. Add them in Logi-Sys if the consignment needs them.',
-      );
-      continue;
+    for (const batch of batches) {
+      const missing = [
+        !batch.manufactureDate && 'manufacture',
+        !batch.expiryDate && 'expiry',
+        !batch.bestBeforeDate && 'best-before',
+      ].filter(Boolean) as string[];
+
+      if (missing.length) {
+        ctx.warn(
+          'SW_PRODUCTION',
+          `Item ${item.invoiceSrNo}/${item.slNo} has batch ${batch.batchNo ?? '(unnumbered)'} but no ` +
+            `${missing.join(' or ')} date, so its batch details were left out — Logi-Sys requires ` +
+            'the manufacture, expiry and best-before dates on every row of this sheet. Add them in ' +
+            'Logi-Sys if the consignment needs them.',
+        );
+        continue;
+      }
+
+      rows.push({
+        Inv_SrNo: int(item.invoiceSrNo),
+        Item_SrNo: int(item.slNo),
+        Prod_Batch_ID: text(batch.batchNo),
+        // N(16,6) in the spec. No vendor export holds a batch row, so the
+        // precision is the spec's rather than an observed one.
+        Prod_Batch_Quantity: qty(batch.quantity),
+        Prod_Batch_Unit: text(batch.quantity != null ? item.unit : undefined),
+        Prod_Manufacturer_Date: isoDate(batch.manufactureDate),
+        Prod_Expiry_Date: isoDate(batch.expiryDate),
+        // A quality date, not the safety date above. Writing the expiry into
+        // this column — which this mapper used to do — declares a fact about
+        // the pack that no document on the job supports.
+        Prod_Best_before_Date: isoDate(batch.bestBeforeDate),
+      });
     }
 
-    rows.push({
-      Inv_SrNo: int(1),
-      Item_SrNo: int(item.slNo),
-      Prod_Batch_ID: text(batch.batchNo),
-      // CONFIRM the precision: no vendor export we hold has a batch row.
-      Prod_Batch_Quantity: qty(batch.quantity),
-      Prod_Batch_Unit: text(batch.quantity != null ? item.unit : undefined),
-      Prod_Manufacturer_Date: isoDate(batch.manufactureDate),
-      Prod_Expiry_Date: isoDate(batch.expiryDate),
-      // The draft models no separate best-before date. For the goods that reach
-      // this sheet the two are the same date on the pack, and Logi-Sys will not
-      // accept the row without it.
-      Prod_Best_before_Date: isoDate(batch.expiryDate),
-    });
+    // The lots have to account for the line. A shortfall is a missing batch and
+    // a surplus is a wrong number; neither is ours to adjust.
+    const declared = batches.reduce((sum, b) => sum + (b.quantity ?? 0), 0);
+    if (declared > 0 && item.quantity != null && Math.abs(declared - item.quantity) > 0.000001) {
+      ctx.warn(
+        'SW_PRODUCTION',
+        `Item ${item.invoiceSrNo}/${item.slNo} declares ${declared} ${item.unit} across its batches ` +
+          `but ${item.quantity} ${item.unit} on the line. One batch is missing or one quantity is ` +
+          'wrong — the sheet states what the documents say and does not reconcile them.',
+      );
+    }
   }
 
   return rows;

@@ -68,3 +68,22 @@ export function columnLetter(index: number): string {
   }
   return letters;
 }
+
+/**
+ * `2026-08-14T10:43:00Z` -> `14-08-2026 10:43:00`.
+ *
+ * SUPPORTING_DOCS' `Doc_Upload_DateTime` is the **one** column in the workbook
+ * that is not `DD-MMM-YYYY`: every vendor row writes the eSanchit upload stamp
+ * numerically, `14-08-2026 17:22:00`. It is also the one place in the file
+ * where the day and the month are ambiguous, so it is formatted by its own
+ * function rather than by widening `formatLogisysDate`.
+ *
+ * String slicing again, and for the same reason — a `new Date()` round trip
+ * would shift the date by a day west of Greenwich.
+ */
+export function formatLogisysDateTime(iso: string): string | undefined {
+  const match = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/.exec(iso.trim());
+  if (!match) return undefined;
+  const [, year, month, day, hour, minute, second] = match;
+  return `${day}-${month}-${year} ${hour}:${minute}:${second ?? '00'}`;
+}

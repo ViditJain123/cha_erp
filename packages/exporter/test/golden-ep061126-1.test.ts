@@ -112,6 +112,43 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(row!['NtWtUnitCode']).toBe('KGS');
       expect(typeof row!['GrWt']).toBe('string');
     });
+
+    it('leaves CarrierCode blank and says nothing about it', async () => {
+      // The one genuine constant on this sheet. Five workbooks Logi-Sys
+      // produced or accepted leave it empty on every row, including rows that
+      // name a carrier — it resolves the line from CarrierName alone. An
+      // unfillable column that is *meant* to be empty is not a gap, so it must
+      // not warn; every other blank on this sheet does.
+      const [row] = await readSheet(workbook, 'SHIPMENT');
+      expect(row!['CarrierCode'] ?? '').toBe('');
+      expect(warnings.filter((w) => w.includes('CarrierCode'))).toHaveLength(0);
+    });
+
+    it('carries no house B/L, because this is a master', async () => {
+      const [row] = await readSheet(workbook, 'SHIPMENT');
+      expect(row!['HAWB_HBL_No'] ?? '').toBe('');
+      expect(row!['HAWB_HBL_Date'] ?? '').toBe('');
+    });
+
+    it('is silent about the gateway IGM at a sea port', async () => {
+      // INNSA1 is a gateway station: the vessel reported here, so there is no
+      // second manifest behind it. The three Gateway columns are correctly
+      // blank and must not nag. On an ICD they warn — see shipment.test.ts.
+      const [row] = await readSheet(workbook, 'SHIPMENT');
+      expect(row!['Gateway_IGM_No'] ?? '').toBe('');
+      expect(warnings.filter((w) => w.includes('Gateway'))).toHaveLength(0);
+    });
+
+    it('says nothing about the IGM because nobody has checked ICEGATE', async () => {
+      // This job is an Advance filing: no IGM had been filed when it was read,
+      // and `igmChecked` is false. Warning about an IGM number here would be
+      // nagging for a value that does not exist yet.
+      const [row] = await readSheet(workbook, 'SHIPMENT');
+      expect(row!['IGM_No'] ?? '').toBe('');
+      expect(row!['LineNo'] ?? '').toBe('');
+      expect(warnings.filter((w) => w.includes('SHIPMENT.IGM_No'))).toHaveLength(0);
+      expect(warnings.filter((w) => w.includes('SHIPMENT.LineNo'))).toHaveLength(0);
+    });
   });
 
   describe('CONTAINERS', () => {
@@ -417,8 +454,10 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
         ['1', '0', 'DEC', 'CUV01'],
         ['1', '0', 'DEC', 'CUV02'],
         ['1', '0', 'DEC', 'CUV03'],
-        // Item-scoped, so one per line. This job has one.
+        // Item-scoped, so one per line. This job has one: a chapter 39 polymer
+        // claiming India-Japan CEPA — the checklist prints "PC002,CUF02" at 1/1.
         ['1', '1', 'DEC', 'PC002'],
+        ['1', '1', 'DEC', 'CUF02'],
       ]);
     });
   });
@@ -498,12 +537,36 @@ describe('refusing to misdeclare', () => {
     ).rejects.toThrow(/has no ISO country code/);
   });
 
-  it('throws when there is no exchange rate', async () => {
+  it('throws when the invoice currency has neither a notified rate nor a bank certificate', async () => {
     const broken = structuredClone(EP061126_1_DRAFT);
-    broken.invoiceMeta.exchangeRate = { currency: 'USD', rate: 0 };
+    broken.invoiceMeta.exchangeRates = {};
 
     await expect(
       buildLogisysWorkbook({ draft: broken, job: EP061126_1_JOB }),
-    ).rejects.toThrow(/No exchange rate/);
+    ).rejects.toThrow(/No rate for USD/);
+  });
+
+  it('files a non-notified currency against the bank certificate instead of refusing', async () => {
+    // ICES calls a currency the Ministry of Finance does not notify a
+    // "non-standard currency" and wants the bank's certificate on the row
+    // (error 155) — not an error. See docs/boe-mapping/19-exchange-rate.md.
+    const draft = structuredClone(EP061126_1_DRAFT);
+    draft.invoiceMeta.exchangeRates = {};
+    draft.invoiceMeta.bankRateCertificates = {
+      USD: {
+        rate: 96.05,
+        bankName: 'HDFC BANK LTD',
+        certificateNo: 'FX/2026/00881',
+        certificateDate: draft.shipment.beFilingDate ?? '2026-06-30',
+      },
+    };
+
+    const { buffer } = await buildLogisysWorkbook({ draft, job: EP061126_1_JOB });
+    const rows = await readSheet(buffer, 'EXCHANGE_RATE');
+    expect(rows.map((r) => r['CURRENCY_CODE'])).toEqual(['INR', 'USD']);
+    expect(rows[1]!['EXCHANGE_RATE']).toBe('96.050000');
+    expect(rows[1]!['BANK_NAME']).toBe('HDFC BANK LTD');
+    expect(rows[1]!['BANK_CERTIFICATE']).toBe('FX/2026/00881');
+    expect(rows[1]!['BANK_CERTIFICATE_DATE']).toBeTruthy();
   });
 });

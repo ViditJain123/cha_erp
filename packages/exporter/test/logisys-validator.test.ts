@@ -24,6 +24,17 @@ const AIR_DRAFT: ChecklistDraft = {
   transportMode: 'Air',
   filingStatus: 'Prior',
   customStation: { code: 'INBOM4', name: 'Mumbai Air Cargo' },
+  // The header is what the GENERAL mapper reads; the three fields above are the
+  // draft-level copies applyGeneralResolution keeps in step with it.
+  boe: {
+    ...EP061126_1_DRAFT.boe!,
+    transportMode: { value: 'Air', source: 'document' },
+    customStation: {
+      value: { code: 'INBOM4', name: 'Mumbai Air Cargo' },
+      source: 'mail',
+    },
+    filingStatus: { value: 'Prior', source: 'operator' },
+  },
   shipment: {
     ...EP061126_1_DRAFT.shipment,
     // As extracted from the air waybill, line break and all.
@@ -33,11 +44,12 @@ const AIR_DRAFT: ChecklistDraft = {
     portOfLoading: 'Boston',
     containers: [],
   },
-  invoice: { ...EP061126_1_DRAFT.invoice, termsOfInvoice: 'CFR' },
+  invoices: [{ ...EP061126_1_DRAFT.invoices[0]!, termsOfInvoice: 'CFR' }],
   items: [
     {
       ...EP061126_1_DRAFT.items[0]!,
       slNo: 1,
+      invoiceSrNo: 1,
       description: '880FG-UV-8LB FLUOROCARBON GEL 880FG W/UV DYE 8LB PAIL',
       ritc: '34039900',
       quantity: 10,
@@ -46,7 +58,7 @@ const AIR_DRAFT: ChecklistDraft = {
       amount: 3583.2,
       // A Certificate of Analysis that gives batch numbers and no dates, which
       // is the usual shape for a chemical COA.
-      batch: { batchNo: 'JT260407', quantity: 10 },
+      batches: [{ batchNo: 'JT260407', quantity: 10 }],
     },
     {
       ...EP061126_1_DRAFT.items[0]!,
@@ -57,7 +69,7 @@ const AIR_DRAFT: ChecklistDraft = {
       unit: 'NOS',
       unitPrice: 731.29,
       amount: 11700.64,
-      batch: { batchNo: 'JC260128', quantity: 16 },
+      batches: [{ batchNo: 'JC260128', quantity: 16 }],
     },
   ],
   singleWindowInfo: [],
@@ -149,18 +161,21 @@ describe('the Logi-Sys upload validator, as it rejected job FUCHS-13841', () => 
 });
 
 describe('SW_PRODUCTION when the dates are known', () => {
-  it('emits the row, with best-before standing in for expiry', async () => {
+  it('emits the row', async () => {
     const draft: ChecklistDraft = {
       ...AIR_DRAFT,
       items: [
         {
           ...AIR_DRAFT.items[0]!,
-          batch: {
-            batchNo: 'JT260407',
-            quantity: 10,
-            manufactureDate: '2026-04-07',
-            expiryDate: '2028-04-06',
-          },
+          batches: [
+            {
+              batchNo: 'JT260407',
+              quantity: 10,
+              manufactureDate: '2026-04-07',
+              expiryDate: '2028-04-06',
+              bestBeforeDate: '2027-10-06',
+            },
+          ],
         },
       ],
     };
@@ -169,15 +184,56 @@ describe('SW_PRODUCTION when the dates are known', () => {
     const [row] = await readSheet(buffer, 'SW_PRODUCTION');
     expect(row!['Prod_Batch_ID']).toBe('JT260407');
     // CONFIRM the precision: no vendor export we hold has a SW_PRODUCTION row,
-    // so this follows the 6dp the item quantity columns use.
+    // so this follows the N(16,6) the spec gives the column.
     expect(row!['Prod_Batch_Quantity']).toBe('10.000000');
     expect(row!['Prod_Batch_Unit']).toBe('NOS');
     expect(row!['Prod_Manufacturer_Date']).toBe('07-Apr-2026');
     expect(row!['Prod_Expiry_Date']).toBe('06-Apr-2028');
-    // The draft models no separate best-before date; Logi-Sys makes the column
-    // mandatory, and for these goods it is the same date on the pack.
-    expect(row!['Prod_Best_before_Date']).toBe('06-Apr-2028');
+    // A best-before is a quality date and an expiry a safety date. This mapper
+    // used to write the expiry into both; it no longer does.
+    expect(row!['Prod_Best_before_Date']).toBe('06-Oct-2027');
     expect(warnings.some((w) => w.startsWith('SW_PRODUCTION'))).toBe(false);
+  });
+
+  it('drops the row when only the best-before date is missing', async () => {
+    // Logi-Sys makes all three dates mandatory, stricter than ICES, which marks
+    // Best Before optional. The uploader is what we have to satisfy.
+    const draft: ChecklistDraft = {
+      ...AIR_DRAFT,
+      items: [
+        {
+          ...AIR_DRAFT.items[0]!,
+          batches: [
+            { batchNo: 'JT260407', manufactureDate: '2026-04-07', expiryDate: '2028-04-06' },
+          ],
+        },
+      ],
+    };
+
+    const { buffer, warnings } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
+    expect(await readSheet(buffer, 'SW_PRODUCTION')).toHaveLength(0);
+    expect(warnings.some((w) => w.startsWith('SW_PRODUCTION') && w.includes('best-before'))).toBe(true);
+  });
+
+  it('files one row per lot when the certificate breaks the line into several', async () => {
+    const draft: ChecklistDraft = {
+      ...AIR_DRAFT,
+      items: [
+        {
+          ...AIR_DRAFT.items[0]!,
+          batches: [
+            { batchNo: 'L-1', manufactureDate: '2026-04-07', expiryDate: '2028-04-06', bestBeforeDate: '2028-04-06' },
+            { batchNo: 'L-2', manufactureDate: '2026-05-11', expiryDate: '2028-05-10', bestBeforeDate: '2028-05-10' },
+          ],
+        },
+      ],
+    };
+
+    const { buffer } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
+    const rows = await readSheet(buffer, 'SW_PRODUCTION');
+    expect(rows.map((r) => r['Prod_Batch_ID'])).toEqual(['L-1', 'L-2']);
+    // Both hang off the same line, so both keys repeat.
+    expect(rows.every((r) => r['Inv_SrNo'] === '1' && r['Item_SrNo'] === '1')).toBe(true);
   });
 });
 
@@ -188,10 +244,12 @@ describe('terms of invoice Logi-Sys has no value for', () => {
     // that reaches the exporter some other way.
     const draft: ChecklistDraft = {
       ...AIR_DRAFT,
-      invoice: { ...AIR_DRAFT.invoice, termsOfInvoice: 'EXW' },
+      invoices: [{ ...AIR_DRAFT.invoices[0]!, termsOfInvoice: 'EXW' }],
     };
 
-    await expect(buildLogisysWorkbook({ draft, job: AIR_JOB })).rejects.toThrow(/INVOICES\.TOI/);
+    // The path names the invoice as well as the column: a Bill of Entry can
+    // carry a dozen, and "INVOICES.TOI" would not say which one.
+    await expect(buildLogisysWorkbook({ draft, job: AIR_JOB })).rejects.toThrow(/INVOICES\[1\]\.TOI/);
   });
 });
 
@@ -236,5 +294,33 @@ describe('the Logi-Sys upload validator, as it rejected job dbf3530c', () => {
     // Guessed, so said out loud: the serials are positional, not read off an IGM.
     const warning = warnings.find((w) => w.startsWith('CONTAINERS.IGM Sr.No'));
     expect(warning).toContain('1–4');
+  });
+
+  it('says so when the B/L states more containers than the workbook declares', async () => {
+    // The other way this sheet goes wrong, and the quieter one. Four rows in a
+    // workbook is indistinguishable from a correct workbook unless something
+    // holds the B/L's own total up beside it.
+    const { warnings } = await buildLogisysWorkbook({
+      draft: {
+        ...SEA_DRAFT,
+        shipment: { ...SEA_DRAFT.shipment, containerCountStated: 6 },
+      },
+      job: { id: 'dbf3530c', reference: 'RAJSHREE-1' },
+    });
+
+    const warning = warnings.find((w) => w.startsWith('CONTAINERS.Container No'));
+    expect(warning).toContain('B/L states 6 containers');
+    expect(warning).toContain('declares 4');
+  });
+
+  it('stays quiet when the stated total and the list agree', async () => {
+    const { warnings } = await buildLogisysWorkbook({
+      draft: {
+        ...SEA_DRAFT,
+        shipment: { ...SEA_DRAFT.shipment, containerCountStated: 4 },
+      },
+      job: { id: 'dbf3530c', reference: 'RAJSHREE-1' },
+    });
+    expect(warnings.some((w) => w.startsWith('CONTAINERS.Container No'))).toBe(false);
   });
 });

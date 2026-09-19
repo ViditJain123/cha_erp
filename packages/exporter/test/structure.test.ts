@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { MAPPED_SHEETS, UNMAPPED_SHEETS } from '../src/build.js';
 import { code, text, weight } from '../src/cell.js';
 import { fillTemplate } from '../src/sheet-writer.js';
 import { loadTemplate, templateHash } from '../src/template.js';
@@ -42,6 +43,23 @@ const VENDOR_SHEETS = [
  * any export built against it.
  */
 const TEMPLATE_SHA256 = '12ecee89db39ec23078f7ca01d898ec1ce3d1d74908558705c65b8382060a024';
+
+/**
+ * Every sheet is either mapped or declared unmapped, and never both.
+ *
+ * `UNMAPPED_SHEETS` exists so that "we decided this does not apply" is
+ * distinguishable from "we forgot". Nothing enforced that it stayed truthful,
+ * which is how a sheet can gain a mapper and still be listed as unmapped —
+ * RE-IMPORT was in that list while this test was written.
+ */
+describe('the mapped and unmapped sheet lists', () => {
+  it('account for all 19 vendor sheets exactly once', () => {
+    const mapped = [...MAPPED_SHEETS];
+    const unmapped = [...UNMAPPED_SHEETS];
+    expect(mapped.filter((name) => unmapped.includes(name as never))).toEqual([]);
+    expect([...mapped, ...unmapped].sort()).toEqual([...VENDOR_SHEETS].sort());
+  });
+});
 
 describe('the checked-in vendor template', () => {
   it('is the file we reviewed', () => {
