@@ -15,6 +15,18 @@ dist/
 data/customs-corpus/tariff/
 data/customs-corpus/notifications/
 data/customs-corpus/icegate-specs/
+data/customs-corpus/circulars/
+data/customs-corpus/instructions/
+data/customs-corpus/orders/
+data/customs-corpus/regulations/
+data/customs-corpus/rules/
+# Page text extracted from the above by packages/library extract-corpus.
+data/customs-corpus/text/
+
+# The BDP Customs Tariff 2026-27 books: 162 MB of scanned PDFs, bought not
+# fetched, so there is no re-download command. The parse in
+# packages/core/src/masters/generated/tariff-book/ IS committed.
+data/tariff-books/
 
 # Must stay last: a later pattern wins, and `.env*` above would otherwise
 # re-ignore this file. `vercel link` appends `.env*` on every run, so if this

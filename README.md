@@ -103,6 +103,49 @@ to the operator to complete in Logi-Sys.
 `packages/exporter/test/golden-ep061126-1.test.ts` pins the whole mapping against
 job I-13844/26-27, whose documents and Logi-Sys checklist are in `ex_job6/`.
 
+## The corpus dry run
+
+Thirty-two example jobs sit beside this repo in `ex_job1..31/` and `liv_job1/`,
+each a real folder of shipment documents *and* the checklist Logi-Sys printed
+for it. The dry run puts every one of them through the live path and keeps the
+workbook, so the same jobs can be filed by hand in Logi-Sys and the two
+compared column by column.
+
+```bash
+set -a; . .env.local; set +a
+cd apps/web
+./node_modules/.bin/tsx --conditions react-server scripts/corpus-export.mts
+python3 scripts/corpus-compare.py
+```
+
+The exports, one directory per job, land in `corpus-exports/` along with a
+`report.json` naming what was read, what was withheld and every warning.
+
+Three things about it are worth knowing before reading a result:
+
+- **The answer is withheld.** Each folder also holds the checklist PDF, the
+  processed Bill of Entry or Logi-Sys' own `JobData` export — every field we are
+  trying to predict. `isAnswerKey()` keeps all three out of the job, and the
+  report names what it held back, because "the model never saw it" is the claim
+  the whole comparison rests on. The mail thread is *not* withheld: it is what
+  the broker had in front of them, and the header is read off it in production
+  the same way.
+- **An operator answers what is theirs to answer.** The export refuses on a
+  custom house nobody chose, an unconfirmed classification, an unpicked AD code,
+  an unconfirmed re-import entry and an unchosen trade-remedy row — all of them
+  questions for a person, not failures of extraction. The run answers them the
+  way a broker would, records each answer with its reason in `report.json`, and
+  leaves everything else blocked. A blocked job is a finding, not a crash.
+- **It writes to the live company.** Jobs are created under the company that
+  holds the organization repository, referenced `CORPUS/<folder>` so they can be
+  told apart from real work, and `corpus-exports/state.json` lets a re-run pick
+  up where it left off.
+
+`corpus-compare.py` reads our workbook and Logi-Sys' for the same job — both
+are the same nineteen sheets — and writes a per-job diff and a scorecard
+ranking the columns that go wrong most often. It compares numbers as numbers and
+dates as dates, so a column is not wrong for being formatted differently.
+
 ## The reference masters
 
 The workbook's coded columns are filled from reference documents the CHA
@@ -346,6 +389,76 @@ The First Schedule parse is checked against goods we have already filed:
 `39021000` → Polypropylene, kg, 7.5% is job I-13844, and `29171400` → Maleic
 anhydride, 7.5% is job I-10793. It also reproduces all three rows of the
 hand-typed `TARIFF` seed exactly, which is why it is trusted to replace it.
+
+### The printed tariff
+
+CBIC publishes the *statutory* schedule. What a Bill of Entry needs is the
+*effective* rate — what is left after the exemption notifications — together
+with IGST, the surcharge, and the DGFT policy for the line. No one sells that:
+BDP and CENTAX are print-only, and the global trade-content vendors carry MFN
+and go silent on Indian notification serials. So it is read off the page.
+
+```bash
+python3 packages/core/scripts/build-tariff-book.py
+```
+
+reads BDP's *Customs Tariff with IGST and Foreign Trade Policy* 2026-27 — three
+scanned volumes, 3,218 pages, bought rather than fetched, gitignored in
+`data/tariff-books/` and pinned by digest in
+`packages/core/masters-source/bdp-2026-27.sha256` — into
+`src/masters/generated/tariff-book/`:
+
+| | |
+|---|---|
+| `schedule.json` | ~11,990 tariff items: statutory and effective BCD, IGST, SWS, preferential rate, import and export policy, the notifications the REMARKS column cites, and the concessions printed beneath a row |
+| `product-index.json` | 13,253 product names against the headings they classify under — the only thing in the three volumes that answers "what code is this?" |
+| `drawback.json` | 2,224 All Industry Rates, **unverified** |
+| `chapter-notes.json` | 278 Chapter Notes over 71 chapters — what the General Interpretative Rules classify by, given to the classifier |
+| `notifications.json` | Where each of Volume II's 286 notifications sits, built from its Contents |
+
+Volume II's **text** is not committed: the page map is a fact derived from the
+book, a thousand pages of its prose is the book. The build writes it to
+`data/tariff-books/vol2-text.jsonl` beside the PDFs, and
+`npm run library:index-tariff-book` embeds it into the library as one document
+per notification, each chunk tagged with its notification number. That tag is
+the point — the printed tariff names the notification for most lines, so a
+duty question can read `045/2025` alone instead of searching 1,456 pages for
+text that merely looks similar.
+
+**Why an OCR'd scan can be trusted at all.** The books are copier scans, and OCR
+mis-reads digits silently — a wrong duty rate is not a typo, it is a short
+payment. But the printed row is over-determined: `TOTAL` is a function of the
+other four cells, so every row carries its own checksum. 91.9% reconcile
+outright, and where one cell is garbled the rest pin it — page 390 reads BASIC
+as "750" while EFFECTIVE 7.50, SWS 0.75 and TOTAL 27.735 each independently say
+7.50. Rows that reconcile ship as `verified`, rows recovered from the others as
+`repaired`, and rows that do neither as `unverified` — kept, listed, and never
+applied silently.
+
+The ~980 rows the arithmetic could not settle are read again from the rendered
+page by `pnpm --filter @checklist/extraction repair-tariff-book`, which shows
+the model the image and asks only what is printed. Its answers go through the
+same checksum; one that still does not reconcile is discarded. The model is a
+second pair of eyes, the arithmetic is the judge.
+
+**The book is the second source, not the first.** `tariff-cross-check.ts` reads
+every parsed row against 9/2025-IT(R): 98.3% agree wherever both genuinely state
+a rate. Most of the rest are not conflicts at all — 9/2025 is indexed by code
+while the book is written against the goods, so for heading 0203 a code lookup
+returns the 5% entry whose description reads "all goods, *other than* fresh or
+chilled", and fresh pork legitimately differs from it. Read naively that is
+3,106 disagreements, nearly all false. What is left is ~87 real ones,
+concentrated in demerit goods where the 40% slab is the question, and CBIC wins
+each of them with the book's reading recorded beside it.
+
+Two traps worth stating once:
+
+- **The printed SWS column is not a rate.** It is the surcharge already
+  expressed as a percentage of assessable value — 0.75 against a 7.5% BCD.
+  `duty.ts` wants 10. Copying the column through understates it by 92.5%.
+- **`bcdRate` carries BASIC, not EFFECTIVE.** A concession sits on top of the
+  tariff rate and `packages/extraction` applies 45/2025 itself; seeding the
+  post-exemption figure would apply it twice.
 
 ## The organization repository
 

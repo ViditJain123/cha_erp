@@ -25,6 +25,7 @@
     "worker": "corepack pnpm --filter @checklist/worker start",
     "worker:once": "corepack pnpm --filter @checklist/worker once",
     "worker:test:claim": "corepack pnpm --filter @checklist/worker test:claim",
-    "ingest:test": "corepack pnpm --filter @checklist/ingest test:ingest"
+    "ingest:test": "corepack pnpm --filter @checklist/ingest test:ingest",
+    "library:index-tariff-book": "LIBRARY_DIR=$PWD/apps/web/data/library corepack pnpm --filter @checklist/library index-tariff-book"
   }
 }
