@@ -16,6 +16,7 @@ import { swAddlInfoRows } from './map/sw-addl-info.js';
 import { swProductionRows } from './map/sw-production.js';
 import { fillTemplate, type SheetRow } from './sheet-writer.js';
 import { loadTemplate, templateHash } from './template.js';
+import { validateIces } from './validate/index.js';
 import type { LogisysExportInput, LogisysExportResult } from './types.js';
 
 /**
@@ -132,6 +133,12 @@ export async function buildLogisysWorkbook(
     );
   }
 
+  // What ICES would reject about this workbook. Reported, never blocking: the
+  // point of the first pass is to be able to say how wrong we are, and a
+  // validator that starts by refusing exports cannot be measured against a
+  // corpus it has stopped exporting. See src/validate/index.ts.
+  const ices = validateIces(data);
+
   const template = await loadTemplate();
   const buffer = await fillTemplate(template, data);
 
@@ -145,5 +152,6 @@ export async function buildLogisysWorkbook(
     fileName: `logisys-${safeFileNamePart(reference)}-${stamp}.xlsx`,
     templateVersion: logisysTemplateVersion(),
     warnings: collector.warnings.map((w) => `${w.path}: ${w.message}`),
+    ices,
   };
 }

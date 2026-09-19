@@ -14,3 +14,11 @@ export type {
   LogisysExportResult,
   LogisysJob,
 } from './types.js';
+export {
+  validateIces,
+  icesRuleCoverage,
+  ICES_RULES,
+  type IcesFinding,
+  type IcesValidation,
+  type RuleSource,
+} from './validate/index.js';

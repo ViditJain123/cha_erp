@@ -40,6 +40,7 @@ import {
 } from './data.js';
 import { logisysNotn } from './codes.js';
 import { EXCHANGE_RATE_GAPS } from './generated/exchange-rates.js';
+export { ICES_ERRORS, icesError, type IcesError } from './generated/ices-errors.js';
 import { allExchangeRates, allImporters, allTariff } from './store.js';
 import type { ExchangeRateTable } from '../types.js';
 export {

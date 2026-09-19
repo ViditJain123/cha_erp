@@ -1,4 +1,5 @@
 import type { ChecklistDraft } from '@checklist/extraction';
+import type { IcesValidation } from './validate/index.js';
 
 /** The job record an export is filed against. */
 export interface LogisysJob {
@@ -29,4 +30,10 @@ export interface LogisysExportResult {
    * completes them in Logi-Sys; they are not silent.
    */
   warnings: string[];
+  /**
+   * What ICES would reject, per its own published error codes, and the
+   * Logi-Sys-only rules kept separate from them. Advisory for now — the
+   * workbook is produced either way. See `src/validate/index.ts`.
+   */
+  ices: IcesValidation;
 }

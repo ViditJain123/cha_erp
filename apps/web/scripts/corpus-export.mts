@@ -574,6 +574,8 @@ interface FolderState {
   draftVersion?: number;
   exportFile?: string;
   warnings?: string[];
+  /** ICES rejections this workbook would draw, by published error code. */
+  icesFindings?: number;
   flags?: number;
   /** What the corpus operator answered for this job — see `decide()`. */
   decisions?: OperatorDecision[];
@@ -839,6 +841,11 @@ async function runFolder(folder: string): Promise<FolderState> {
         notRead: unreadable,
         operatorDecisions: decisions,
         warnings: result.warnings,
+        // What ICES would reject about this workbook, per its own published
+        // codes, and the Logi-Sys-only rules kept apart from them. Advisory —
+        // the workbook was produced either way. `scripts/ices-report.mts`
+        // rolls these up across the corpus.
+        ices: result.ices,
         flags: draft.flags,
       },
       null,
@@ -875,7 +882,11 @@ async function runFolder(folder: string): Promise<FolderState> {
     log(`⚠️  workbook written locally but not filed in storage: ${uploadError.message}`);
   }
 
-  log(`✅ ${result.fileName} — ${result.warnings.length} warning(s)`);
+  const icesCount = result.ices.findings.filter((f) => f.source === 'ices').length;
+  log(
+    `✅ ${result.fileName} — ${result.warnings.length} warning(s)` +
+      (icesCount ? `, ${icesCount} ICES rejection(s)` : ''),
+  );
   return {
     folder,
     jobId,
@@ -883,6 +894,7 @@ async function runFolder(folder: string): Promise<FolderState> {
     draftVersion: version,
     exportFile: path.join(folder, result.fileName),
     warnings: result.warnings,
+    icesFindings: icesCount,
     flags: draft.flags.length,
     decisions,
     status: 'ok',
