@@ -3,6 +3,8 @@ import {
   BE_TYPE_CODE,
   FILING_CODE,
   TOI_CODE,
+  VENDOR_TOI_CODE,
+  icesToi,
   TRANSPORT_MODE_CODE,
   iso2,
   normalizePackageUnit,
@@ -167,25 +169,42 @@ describe('normalizePackageUnit', () => {
 });
 
 describe('TOI_CODE', () => {
-  it('collapses CFR to C&F', () => {
-    // The manual attempt wrote CIF here. CIF includes insurance and C&F does
-    // not, so the two produce different assessable values. Logi-Sys accepts
-    // only FOB / CIF / C&F / C&I, and rejected CFR.
-    expect(TOI_CODE['C&F']).toBe('C&F');
-    expect(TOI_CODE.CFR).toBe('C&F');
+  it('collapses CFR to CF', () => {
+    // The manual attempt wrote CIF here. CIF includes insurance and CF does
+    // not, so the two produce different assessable values. ICES accepts only
+    // "CIF CF CI FOB" (BE Message format 2.25, field 42), and rejected CFR.
+    expect(TOI_CODE['C&F']).toBe('CF');
+    expect(TOI_CODE.CFR).toBe('CF');
     expect(TOI_CODE.CIF).toBe('CIF');
   });
 
   it('keeps cost-and-insurance distinct from CIF', () => {
-    // C&I carries no freight. Collapsing it to CIF declared freight that the
+    // CI carries no freight. Collapsing it to CIF declared freight that the
     // invoice never billed.
-    expect(TOI_CODE.CI).toBe('C&I');
+    expect(TOI_CODE.CI).toBe('CI');
   });
 
   it('has no value for Ex-Works, so the export can refuse', () => {
-    // Not one of the four Logi-Sys accepts. mergeDraft normally rewrites EXW to
+    // Not one of the four ICES accepts. mergeDraft normally rewrites EXW to
     // FOB before this point; if one ever reaches the exporter it blocks.
     expect(TOI_CODE.EXW).toBeNull();
+  });
+
+  it('spells for Logi-Sys only where Logi-Sys differs', () => {
+    // The ampersand is the vendor workbook's dialect and nothing else's: its
+    // uploader takes only FOB / CIF / C&F / C&I, ICES rejects the ampersand
+    // outright (error 207). The two are kept apart rather than reconciled.
+    expect(VENDOR_TOI_CODE.CF).toBe('C&F');
+    expect(VENDOR_TOI_CODE.CI).toBe('C&I');
+    expect(VENDOR_TOI_CODE.CIF).toBeUndefined();
+    expect(VENDOR_TOI_CODE.FOB).toBeUndefined();
+  });
+
+  it('reads the ICES term back out of a vendor-spelled cell', () => {
+    expect(icesToi('C&F')).toBe('CF');
+    expect(icesToi('C&I')).toBe('CI');
+    expect(icesToi('CIF')).toBe('CIF');
+    expect(icesToi('')).toBeUndefined();
   });
 });
 

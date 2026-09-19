@@ -118,6 +118,37 @@ const JP_COO = {
   items: [{ itemNumber: '1', description: 'POLYPROPYLENE', hsCode: '3902.10', originCriterion: 'CTH' }],
 };
 
+describe('the levy flag', () => {
+  // 1/2017-Compensation Cess S.No. 8: "21% or Rs. 4170 per thousand, whichever
+  // is higher". The flag is the notification's own wording, and this line used
+  // to ship blank because the resolver stamped the screen's `+` on everything
+  // and the mapper then suppressed it.
+  it('reads H off a compound compensation cess', () => {
+    const out = resolveItems(
+      draft({}, [item({ ritc: '24021010', description: 'CIGARS', compCessNotification: '001/2017' })]),
+      { today: TODAY },
+    );
+    expect(out.items[0]!.compCessLevyFlag).toBe('H');
+    expect(out.flags.some((f) => f.path === 'items.0.compCess')).toBe(true);
+  });
+
+  it('leaves it unset for a purely ad valorem rate', () => {
+    const out = resolveItems(draft({}, [item({ compCessNotification: '001/2017' })]), { today: TODAY });
+    expect(out.items[0]!.compCessLevyFlag).toBeUndefined();
+    // 9/2025-IT(R) states every rate as a bare percentage, so IGST never has one.
+    expect(out.items[0]!.igstLevyFlag).toBeUndefined();
+  });
+
+  it('does not accumulate the compound-rate flag across runs', () => {
+    const once = resolveItems(
+      draft({}, [item({ ritc: '24021010', description: 'CIGARS', compCessNotification: '001/2017' })]),
+      { today: TODAY },
+    );
+    const twice = resolveItems(once, { today: TODAY });
+    expect(twice.flags.filter((f) => f.path === 'items.0.compCess')).toHaveLength(1);
+  });
+});
+
 describe('AIDC', () => {
   it('follows the BCD claim: 19 under a Japan-CEPA claim (ex_job6), 17 without one', () => {
     const claimed = resolveItems(draft({ certificatesOfOrigin: [JP_COO] }), { today: TODAY });

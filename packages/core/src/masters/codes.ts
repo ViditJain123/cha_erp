@@ -618,28 +618,53 @@ export function weightToKg(
  * ------------------------------------------------------------------ */
 
 /**
- * `INVOICES.TOI` — terms of invoice.
+ * `INVOICES.TOI` — terms of invoice, in ICES' own spelling.
  *
- * Logi-Sys accepts exactly four values: "Expected values are FOB / CIF / C&F /
- * C&I." So CFR is written as C&F — they are the same Incoterm and our documents
- * use both spellings. The distinction that matters is against CIF, which the
- * first manual attempt wrote instead: CIF includes insurance and C&F does not,
- * so the two produce different assessable values.
+ * ICES accepts exactly four values, BE Message format 2.25 field 42:
+ * "Terms of invoice — CIF CF CI FOB". CFR is written as CF — they are the same
+ * Incoterm and our documents use both spellings. The distinction that matters
+ * is against CIF, which the first manual attempt wrote instead: CIF includes
+ * insurance and CF does not, so the two produce different assessable values.
  *
- * `null` means "no value Logi-Sys would accept". EXW is a real Incoterm the
- * import file has no slot for, so it blocks the export rather than being
- * silently rounded to the nearest term.
+ * **Logi-Sys spells two of these differently** — `C&F` and `C&I`, with the
+ * ampersand — and its uploader takes nothing else. That is a dialect of the
+ * workbook, not of the declaration, so it lives in `VENDOR_TOI_CODE` below and
+ * is applied where the workbook is written. Everything upstream, and anything
+ * filed to ICES directly, carries the value here.
+ *
+ * `null` means "no value ICES would accept". EXW is a real Incoterm the import
+ * file has no slot for, so it blocks the export rather than being silently
+ * rounded to the nearest term.
  */
 export const TOI_CODE: Record<TermsOfInvoice, string | null> = {
   FOB: 'FOB',
   CIF: 'CIF',
-  CFR: 'C&F',
-  'C&F': 'C&F',
+  CFR: 'CF',
+  'C&F': 'CF',
   // Cost-and-insurance, no freight. Previously collapsed to CIF, which added
-  // freight to the declaration; Logi-Sys has a distinct value for it.
-  CI: 'C&I',
+  // freight to the declaration; ICES has a distinct value for it.
+  CI: 'CI',
   EXW: null,
 };
+
+/**
+ * The Logi-Sys workbook's spelling of the two terms it spells its own way.
+ *
+ * Its uploader rejects anything but "FOB / CIF / C&F / C&I" (ErrorList.htm),
+ * while ICES rejects the ampersand outright — error 207, which our own
+ * validator raised on six corpus jobs before this map existed. Applied when
+ * the workbook cell is written, and undone when a rule needs to know what
+ * would actually be filed.
+ */
+export const VENDOR_TOI_CODE: Record<string, string> = { CF: 'C&F', CI: 'C&I' };
+
+/** The ICES term behind a cell that may carry the vendor's spelling. */
+export function icesToi(cell: string | undefined | null): string | undefined {
+  const raw = cell?.trim().toUpperCase();
+  if (!raw) return undefined;
+  const found = Object.entries(VENDOR_TOI_CODE).find(([, vendor]) => vendor === raw);
+  return found ? found[0] : raw;
+}
 
 /**
  * The single-letter ICES forms, as stated by the Logi-Sys upload validator:
@@ -1152,7 +1177,9 @@ export function eximSchemeName(code: string | undefined | null): string | undefi
  * subtracts the specific from the ad valorem, `H` takes the higher and `L` the
  * lower. With no specific part every flag gives the same duty, which is why
  * the screen defaults to Plus and liv_job1's export writes `+` on every levy
- * line. Other Duties (Section 3(3)) defaults to Higher.
+ * line — a screen default, not a statement of the notification. We write the
+ * flag the notification's own rate wording implies (`notnFlagFromRateText`)
+ * and leave the column blank when there is nothing to combine.
  */
 export const NOTN_FLAG = {
   PLUS: '+',
@@ -1230,16 +1257,23 @@ export const ACCESSORY_STATUS = {
 } as const;
 
 /**
- * `ADD_Basis` — the anti-dumping "Calc. Method" dropdown. The screen default
- * "%age of Assbl. Value" is what liv_job1 exports as `AV`. A specific duty
- * (amount per unit) has no basis letter on the screen; it is carried by
- * `ADD_AmountPerUnit` / `ADD_AmountUnit` instead.
+ * `ADD_Basis` — the "%age of Assbl. Value" option of the anti-dumping
+ * "Calc. Method" dropdown, which liv_job1 exports as `AV`.
+ *
+ * This is the code for one basis, not a value to write on every line: it is
+ * written when the notification states the duty as a percentage of the
+ * assessable value. A specific duty (amount per unit) has no basis letter —
+ * `ADD_AmountPerUnit` / `ADD_AmountUnit` carry it — and no code is proven for
+ * a landed-value basis, so that case warns rather than borrowing this one.
  */
 export const ADD_BASIS_ASSESSABLE = 'AV';
 
 /**
- * `CVD_CalculatedOn` — the Customs CVD "Calc. Method" dropdown. The screen
- * default "%age of Landed Value" is what liv_job1 exports as `1`.
+ * `CVD_CalculatedOn` — the "%age of Landed Value" option of the Customs CVD
+ * "Calc. Method" dropdown, which liv_job1 exports as `1`.
+ *
+ * As with `ADD_BASIS_ASSESSABLE`, the code for one basis. No code is proven
+ * for an assessable-value CVD, so that case warns.
  */
 export const CVD_CALCULATED_ON_LANDED = '1';
 

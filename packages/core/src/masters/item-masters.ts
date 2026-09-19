@@ -135,14 +135,22 @@ function best<T extends CodeCover & { validFrom?: string | null; validUntil?: st
  * ------------------------------------------------------------------ */
 
 /**
- * The Plus/Minus/Higher/Lower flag a notification's rate wording implies.
+ * The Plus/Minus/Higher/Lower flag a notification's rate wording implies, or
+ * `undefined` when the rate has no specific part for a flag to combine.
  *
  * "10% or Rs. 25 per kg, whichever is higher" is `H`; "…whichever is lower" is
- * `L`; "10% plus Rs. 5 per kg" is `+`; "10% minus …" is `-`. A rate with no
- * specific part is `+`, which is the screen's default and gives the same duty.
+ * `L`; "10% plus Rs. 5 per kg" is `+`; "10% minus …" is `-`.
+ *
+ * A purely ad valorem rate has nothing to combine — every flag computes the
+ * same duty — so the answer is `undefined` and the column stays blank. It used
+ * to be `+`, which is the screen's default rather than anything the
+ * notification says, and writing it hid the lines that need a real `H`.
  */
-export function notnFlagFromRateText(text: string | null | undefined): NotnFlag {
+export function notnFlagFromRateText(text: string | null | undefined): NotnFlag | undefined {
   const t = (text ?? '').toLowerCase();
+  // The specific part: an amount in rupees beside the percentage. Without one
+  // the notification states no combination and the flag is not ours to invent.
+  if (!/\brs\.?\s*[\d,]/.test(t)) return undefined;
   if (/whichever\s+is\s+(higher|more|greater)/.test(t)) return 'H';
   if (/whichever\s+is\s+(lower|less)/.test(t)) return 'L';
   if (/\bminus\b|\bless\b/.test(t)) return '-';
@@ -207,7 +215,8 @@ function levies(): LeviesFile | null {
 export interface LevyLine {
   notification: string;
   serial: string;
-  flag: NotnFlag;
+  /** Absent when the entry's rate is purely ad valorem — nothing to combine. */
+  flag?: NotnFlag;
   rate: number | null;
   rateText: string | null;
   /** The entry carries conditions: file it only when the goods meet them. */
@@ -219,10 +228,11 @@ export interface LevyLine {
 
 function lineFrom(notification: string, hit: { entry: LevyEntry; rivals: LevyEntry[] }): LevyLine {
   const { entry, rivals } = hit;
+  const flag = notnFlagFromRateText(entry.rateText);
   return {
     notification: logisysNotn(notification) ?? notification,
     serial: entry.serial,
-    flag: notnFlagFromRateText(entry.rateText),
+    ...(flag && { flag }),
     rate: entry.rate ?? null,
     rateText: entry.rateText ?? null,
     conditional: entry.allGoods !== undefined ? !entry.allGoods : (entry.conditions ?? []).length > 0,

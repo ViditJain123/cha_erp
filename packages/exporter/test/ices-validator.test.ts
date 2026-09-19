@@ -275,13 +275,21 @@ describe('ErrorList.htm — the upload that taught us everything we knew', () =>
     expect(land.findings.filter((f) => f.source === 'logisys')).toHaveLength(1);
 
     // Terms of invoice: ICES spells them `CIF CF CI FOB` (field 42); their
-    // uploader wants the ampersand. We write the vendor's spelling today, so
-    // a direct filing would be rejected — found here rather than by an upload.
+    // uploader wants the ampersand, and that is what this workbook's cell
+    // carries. The term behind the spelling is `CF`, which ICES accepts, so
+    // neither rule fires — the divergence is in the workbook, not the filing.
     const vendorSpelling = validateIces({ INVOICES: [{ InvSrNo: code('1'), TOI: code('C&F') }] });
-    expect(vendorSpelling.findings.filter((f) => f.source === 'ices')).toContainEqual(
+    expect(vendorSpelling.findings.filter((f) => f.column === 'TOI')).toEqual([]);
+
+    // The strictness is not lost with the ampersand: a term neither accepts
+    // still draws 207, and the vendor's own rule still refuses `CF`.
+    const nonsense = validateIces({ INVOICES: [{ InvSrNo: code('1'), TOI: code('CFR') }] });
+    expect(nonsense.findings.filter((f) => f.source === 'ices')).toContainEqual(
       expect.objectContaining({ code: '207' }),
     );
-    expect(vendorSpelling.findings.filter((f) => f.source === 'logisys')).toEqual([]);
+    const icesSpelling = validateIces({ INVOICES: [{ InvSrNo: code('1'), TOI: code('CF') }] });
+    expect(icesSpelling.findings.filter((f) => f.column === 'TOI' && f.source === 'ices')).toEqual([]);
+    expect(icesSpelling.findings.filter((f) => f.column === 'TOI' && f.source === 'logisys')).toHaveLength(1);
   });
 
   it('does not fire on the NOEXCISE sentinel ICES asks for', () => {

@@ -62,7 +62,10 @@ SYNONYMS = [
     {"H", "HOME", "HOME CONSUMPTION"},
     {"W", "WAREHOUSING", "INTO BOND"},
     {"X", "EX-BOND", "EX BOND"},
-    {"C&F", "CFR"},
+    # Logi-Sys spells the term with an ampersand, ICES as `CF`; our workbook
+    # carries the vendor's spelling, but a hand-corrected reference may not.
+    {"C&F", "CFR", "CF"},
+    {"C&I", "CI"},
     {"N", "NORMAL"},
     {"P", "PRIOR"},
 ]

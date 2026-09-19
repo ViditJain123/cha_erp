@@ -69,7 +69,11 @@ describe('code domains', () => {
   it('reads the flag off a notification’s rate wording', () => {
     expect(notnFlagFromRateText('10% or Rs. 25 per kg, whichever is higher')).toBe('H');
     expect(notnFlagFromRateText('12% or Rs 4170 per tonne whichever is lower')).toBe('L');
-    expect(notnFlagFromRateText('7.5%')).toBe('+');
+    expect(notnFlagFromRateText('21% or Rs. 4170 per thousand, whichever is higher')).toBe('H');
+    expect(notnFlagFromRateText('10% plus Rs. 5 per kg')).toBe('+');
+    // Purely ad valorem: nothing to combine, so no flag — not the screen's `+`.
+    expect(notnFlagFromRateText('7.5%')).toBeUndefined();
+    expect(notnFlagFromRateText(null)).toBeUndefined();
   });
 
   it('types an exemption by the notification that grants it', () => {

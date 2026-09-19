@@ -5,6 +5,7 @@ import {
   compCessForCth,
   igstRateForCth,
   lookupTariff,
+  notnFlagFromRateText,
   endUseCodeFromText,
   ftaAgreementForCertificate,
   ftaAgreementsForOrigin,
@@ -68,6 +69,7 @@ const OWNED_FIELDS = [
   'healthCess',
   'igstExemption',
   'compCessExemption',
+  'compCess',
   'fta',
   'tradeRemedies',
   'tariffValue',
@@ -77,7 +79,7 @@ const OWNED_FIELDS = [
   'classification',
 ] as const;
 
-const ownedPath = /^items\.\d+\.(aidc|sws|healthCess|igstExemption|compCessExemption|fta|tradeRemedies|tariffValue|endUseCode|brand|manufacturer|classification)$/;
+const ownedPath = /^items\.\d+\.(aidc|sws|healthCess|igstExemption|compCessExemption|compCess|fta|tradeRemedies|tariffValue|endUseCode|brand|manufacturer|classification)$/;
 
 const isOperator = (item: DraftItem, field: keyof NonNullable<DraftItem['sources']>) =>
   item.sources?.[field] === 'operator';
@@ -224,7 +226,7 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     // ---- SWS exemption ----
     const sws = swsExemptionFor(cth, today);
     if (sws && !sws.conditional && !sws.rivals.length) {
-      item.swsExemption = { notification: sws.notification, serial: sws.serial, flag: sws.flag };
+      item.swsExemption = { notification: sws.notification, serial: sws.serial, ...(sws.flag && { flag: sws.flag }) };
       if (sws.rate !== null) item.swsRate = sws.rate;
     } else {
       delete item.swsExemption;
@@ -240,13 +242,31 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     // ---- Health cess ----
     const hc = healthCessFor(cth, today);
     if (hc && !hc.conditional && !hc.rivals.length) {
-      item.healthCess = { notification: hc.notification, serial: hc.serial, flag: hc.flag };
+      item.healthCess = { notification: hc.notification, serial: hc.serial, ...(hc.flag && { flag: hc.flag }) };
       if (hc.rate !== null) item.healthCessRate = hc.rate;
     }
 
     // ---- IGST / compensation cess ----
-    if (item.igstNotification) item.igstLevyFlag = '+';
-    if (item.compCessNotification) item.compCessLevyFlag = '+';
+    //
+    // The Plus/Minus/Higher/Lower flag comes off the notification's own rate
+    // wording, never off the screen. 9/2025-IT(R) states every rate as a bare
+    // percentage, so IGST has no flag at all; 1/2017-Compensation Cess names
+    // four tobacco serials as "21% or Rs. 4170 per thousand, whichever is
+    // higher", which is `H` and used to ship blank.
+    delete item.igstLevyFlag;
+    delete item.compCessLevyFlag;
+    const cess = item.compCessNotification ? compCessForCth(cth) : undefined;
+    const cessFlag = notnFlagFromRateText(cess?.rateText);
+    if (cessFlag) item.compCessLevyFlag = cessFlag;
+    if (cess && cess.rate === null) {
+      flags.push({
+        severity: 'error',
+        path: at('compCess'),
+        message:
+          `${label}: compensation cess ${cess.notification} S.No. ${cess.entry.serial} is "${cess.rateText}" — ` +
+          'a compound rate this system does not compute. The cess on this line must be worked out by hand.',
+      });
+    }
     for (const [field, candidates] of [
       ['igstExemption', igstExemptionCandidates(cth, today)],
       ['compCessExemption', compCessExemptionCandidates(cth, today)],
@@ -426,7 +446,7 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
           message: `${label}: AIDC ${aidc.notification} S.No. ${[aidc.serial, ...aidc.rivals].join(' / ')} all name CTH ${cth} — the description decides the serial.`,
         });
       } else {
-        item.aidcLevy = { notification: aidc.notification, serial: aidc.serial, flag: aidc.flag };
+        item.aidcLevy = { notification: aidc.notification, serial: aidc.serial, ...(aidc.flag && { flag: aidc.flag }) };
         if (aidc.rate !== null && !aidc.conditional) item.aidcRate = aidc.rate;
       }
     }
@@ -543,7 +563,7 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
       const row =
         tv.rows.length === 1
           ? tv.rows[0]
-          : tv.rows.find((r) => item.description.toUpperCase().includes(r.description.toUpperCase().split(/[\s(,]+/)[0] ?? ' '));
+          : tv.rows.find((r) => item.description.toUpperCase().includes(r.description.toUpperCase().split(/[\s(,]+/)[0] ?? ''));
       if (!row) {
         flags.push({
           severity: 'error',

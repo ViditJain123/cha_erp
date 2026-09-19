@@ -1,4 +1,4 @@
-import { VALID_UQC } from '@checklist/core';
+import { VALID_UQC, icesToi } from '@checklist/core';
 import type { Cell } from '../cell.js';
 import type { IcesRule, SheetData } from './types.js';
 import type { SheetRow } from '../sheet-writer.js';
@@ -60,6 +60,9 @@ function perRow(
 }
 
 /** A coded column that must hold one of a fixed set of values. */
+/** The four terms of invoice ICES accepts — BE Message format 2.25, field 42. */
+const ICES_TOI = ['FOB', 'CIF', 'CF', 'CI'];
+
 function oneOf(
   code: string,
   sheet: string,
@@ -172,11 +175,22 @@ export const ICES_RULES: IcesRule[] = [
   mandatory('204', 'INVOICES', 'Supplier_Name'),
   positive('205', 'INVOICES', 'Product_Value'),
   mandatory('206', 'INVOICES', 'Inv_Currency'),
-  // ICES spells these `CIF CF CI FOB` (BE Message format 2.25, field 42).
-  // Logi-Sys' uploader wants `C&F` and `C&I`, with the ampersand. We currently
-  // write the vendor's spelling, which ICES would reject outright — one for
-  // Phase 1, and found by this validator rather than by an upload.
-  oneOf('207', 'INVOICES', 'TOI', ['FOB', 'CIF', 'CF', 'CI']),
+  // ICES spells these `CIF CF CI FOB` (BE Message format 2.25, field 42);
+  // Logi-Sys' uploader wants `C&F` and `C&I`, with the ampersand, and that is
+  // what this workbook's cell carries. The term behind the vendor's spelling
+  // is what would be filed, so read that — the rule stays strict about the
+  // ICES domain and does not simply accept the ampersand.
+  perRow(
+    '207',
+    'INVOICES',
+    'TOI',
+    (row) => {
+      const v = value(row, 'TOI');
+      if (!v) return null; // emptiness is a different code; see the mandatory rules
+      const ices = icesToi(v);
+      return ices && ICES_TOI.includes(ices) ? null : `wrote ${JSON.stringify(v)}; ICES accepts ${ICES_TOI.join(' / ')}`;
+    },
+  ),
   exchangeDetails('209', 'Inv_Currency'),
   exchangeDetails('220', 'Frt_Currency'),
   exchangeDetails('227', 'Ins_Currency'),

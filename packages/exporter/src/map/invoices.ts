@@ -3,6 +3,7 @@ import {
   RD_BASIS_ASSESSABLE,
   TERMS_OF_PAYMENT,
   TOI_CODE,
+  VENDOR_TOI_CODE,
   branchNameForExport,
   iso2,
   termsOfPayment,
@@ -24,8 +25,8 @@ import type { MapContext } from './context.js';
  */
 const TOI_INCLUDES: Record<string, { freight: boolean; insurance: boolean }> = {
   CIF: { freight: true, insurance: true },
-  'C&F': { freight: true, insurance: false },
-  'C&I': { freight: false, insurance: true },
+  CF: { freight: true, insurance: false },
+  CI: { freight: false, insurance: true },
   FOB: { freight: false, insurance: false },
 };
 
@@ -98,8 +99,8 @@ function invoiceRow(ctx: MapContext, invoice: DraftInvoice, singleCharge: boolea
   if (!toi) {
     ctx.blocker(
       at('TOI'),
-      `Terms of invoice "${invoice.termsOfInvoice}" has no Logi-Sys equivalent — the import file ` +
-        'accepts only FOB, CIF, C&F and C&I. Terms of invoice decides which charges are already ' +
+      `Terms of invoice "${invoice.termsOfInvoice}" has no ICES equivalent — a Bill of Entry ` +
+        'accepts only FOB, CIF, CF and CI. Terms of invoice decides which charges are already ' +
         'in the invoice value, so it cannot be rounded to the nearest one.',
     );
   }
@@ -256,7 +257,9 @@ function invoiceRow(ctx: MapContext, invoice: DraftInvoice, singleCharge: boolea
     InvSrNo: int(invoice.srNo),
     Invoice_No: text(invoice.invoiceNumber),
     Invoice_Date: isoDate(invoice.invoiceDate),
-    TOI: code(toi),
+    // The workbook carries Logi-Sys' spelling of the term; the draft, the
+    // charge gate above and anything filed to ICES carry ICES'.
+    TOI: code(toi ? (VENDOR_TOI_CODE[toi] ?? toi) : undefined),
     // ICES field 76, "Terms Place" — the place named after the Incoterm. Every
     // vendor workbook leaves it empty even where the invoice states one, so it
     // is written only when we read one and never warned about.

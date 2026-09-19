@@ -7,6 +7,7 @@ import {
   IGST_RATE_NOTIFICATION,
   compCessForCth,
   eximSchemeCode,
+  exemptionNotnType,
   igstRateForCth,
   iso2,
   logisysNotn,
@@ -99,12 +100,28 @@ function notn(value: string | undefined): Cell {
 }
 
 /**
- * §19 — the Plus/Minus/Higher/Lower flag. Written only when it changes the
- * duty: a purely ad valorem notification computes the same under every flag,
- * and the desk's hand-filled sheets leave the column blank for those.
+ * §19 — the Plus/Minus/Higher/Lower flag.
+ *
+ * Nothing upstream seeds this any more: `resolveItems` derives it from the
+ * notification's own rate wording and leaves it unset for a purely ad valorem
+ * rate, so a `+` that reaches here means the notification said *plus*. It used
+ * to be suppressed, because `+` was the screen default arriving on every line.
  */
 function flag(value: NotificationLine['flag']): Cell {
-  return value && value !== '+' ? code(value) : BLANK;
+  return code(value);
+}
+
+/**
+ * §18 — the `C` / `G` exemption type (ICES SBEDUTY field 15).
+ *
+ * Which of the two grants the relief is a fact about the notification, not a
+ * dropdown: `-Customs` is `C`, `-Integrated Tax (Rate)` and
+ * `-Compensation Cess (Rate)` are `G`. Read it off the number, and fall back
+ * to the stored type only for a number spelled without its suffix.
+ */
+function exemptionType(line: { notification: string; type: 'C' | 'G' } | undefined): 'C' | 'G' | undefined {
+  if (!line) return undefined;
+  return exemptionNotnType(line.notification) ?? line.type;
 }
 
 /**
@@ -135,7 +152,14 @@ const ITEM_ZEROS = {
   CVD_Rate: money(0),
 } satisfies SheetRow;
 
-/** §21 — the anti-dumping block for one remedy line. */
+/**
+ * §21 — the anti-dumping block for one remedy line.
+ *
+ * `ADD_Basis` follows the notification's own basis, carried on the line by
+ * `remedyLine()` and used by `computeDuty` for the same decision. A specific
+ * duty has no basis letter — the amount per unit carries it — and a basis we
+ * hold no code for is warned about by the caller rather than guessed at.
+ */
 function addCells(line: TradeRemedyLine | undefined): SheetRow {
   if (!line) return {};
   const specific = line.amountPerUnit !== undefined;
@@ -145,7 +169,7 @@ function addCells(line: TradeRemedyLine | undefined): SheetRow {
     CTHSrNo: code(line.cthSerial),
     SuppSrNo: code(line.supplierSerial),
     ...(line.quantity !== undefined && { ADD_Qty: qty(line.quantity) }),
-    ADD_Basis: specific ? BLANK : code(ADD_BASIS_ASSESSABLE),
+    ADD_Basis: !specific && line.basis === 'AV' ? code(ADD_BASIS_ASSESSABLE) : BLANK,
     ...(line.ratePercent !== undefined && { 'ADD_%Rate': decimal(line.ratePercent, 2) }),
     ADD_Currency: code(line.currency),
     ...(specific && { ADD_AmountPerUnit: rate5(line.amountPerUnit) }),
@@ -153,14 +177,14 @@ function addCells(line: TradeRemedyLine | undefined): SheetRow {
   };
 }
 
-/** §21 — the CVD block. */
+/** §21 — the CVD block. `CVD_CalculatedOn` follows the notification's basis. */
 function cvdCells(line: TradeRemedyLine | undefined): SheetRow {
   if (!line) return {};
   return {
     CVD_Notn: notn(line.notification),
     CVD_NotnSrNo: code(line.serial ?? line.cthSerial),
     ...(line.ratePercent !== undefined && { CVD_Rate: money(line.ratePercent) }),
-    CVD_CalculatedOn: code(CVD_CALCULATED_ON_LANDED),
+    CVD_CalculatedOn: line.basis === 'LANDED' ? code(CVD_CALCULATED_ON_LANDED) : BLANK,
     CVD_ItemSrNo: code(line.cthSerial),
     CVD_SupplierSrNo: code(line.supplierSerial),
   };
@@ -284,8 +308,40 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
           '. Pick one on the job.',
       );
     }
+    // ---- §18 the exemption type ----
+    for (const [column, line] of [
+      ['IGST_ExemptionNotnType', item.igstExemption],
+      ['IGST_CompCessExemptionNotnType', item.compCessExemption],
+    ] as const) {
+      const derived = line && exemptionNotnType(line.notification);
+      if (line && derived && derived !== line.type) {
+        ctx.warn(
+          `${path}.${column}`,
+          `${label}: ${line.notification} is a ${derived === 'C' ? 'Customs' : 'GST'} notification, so the exemption type is ${derived}, not the ${line.type} on the job.`,
+        );
+      }
+    }
+
     const remedy = (kind: TradeRemedyLine['kind']) => item.tradeRemedies?.find((l) => l.kind === kind);
     const safeguard = remedy('SAFEGUARD');
+    // The two "Calc. Method" dropdowns have one proven code each — `AV` on
+    // ADD ("%age of Assbl. Value") and `1` on CVD ("%age of Landed Value"),
+    // both off liv_job1. A notification stating the other basis has no code we
+    // can evidence, so the column stays blank and the operator is told.
+    const addLine = remedy('ADD');
+    if (addLine && addLine.amountPerUnit === undefined && addLine.basis !== 'AV') {
+      ctx.warn(
+        `${path}.ADD_Basis`,
+        `${label}: ${addLine.notification} states the anti-dumping duty on the landed value, and no code for that basis is proven. Set the Calc. Method in Logi-Sys.`,
+      );
+    }
+    const cvdLine = remedy('CVD');
+    if (cvdLine && cvdLine.basis !== 'LANDED') {
+      ctx.warn(
+        `${path}.CVD_CalculatedOn`,
+        `${label}: ${cvdLine.notification} states the countervailing duty on the assessable value, and no code for that basis is proven. Set the Calc. Method in Logi-Sys.`,
+      );
+    }
 
     // ---- §23 manufacturer ----
     const manufacturerCountry = iso2(item.manufacturerCountry) ?? countryFromAddress(item.manufacturerAddress);
@@ -358,14 +414,14 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       IGST_LevyNotn: orElse(notn(item.igstNotification), code(IGST_RATE_NOTIFICATION)),
       IGST_LevyNotnSrNo: orElse(code(serials.igst), code(igstSerialFor(cth, item.igstNotification))),
       IGST_LevyNotnFlag: flag(item.igstLevyFlag),
-      IGST_ExemptionNotnType: code(item.igstExemption?.type),
+      IGST_ExemptionNotnType: code(exemptionType(item.igstExemption)),
       IGST_ExemptionNotn: notn(item.igstExemption?.notification),
       IGST_ExemptionNotnSrNo: code(item.igstExemption?.serial),
       IGST_ExemptionNotnFlag: flag(item.igstExemption?.flag),
       IGST_CompCessNotn: orElse(notn(item.compCessNotification), code(COMP_CESS_NOTIFICATION)),
       IGST_CompCessNotnSrNo: orElse(code(serials.compCess), code(compCessSerialFor(cth, item.compCessNotification))),
       IGST_CompCessNotnFlag: flag(item.compCessLevyFlag),
-      IGST_CompCessExemptionNotnType: code(item.compCessExemption?.type),
+      IGST_CompCessExemptionNotnType: code(exemptionType(item.compCessExemption)),
       IGST_CompCessExemptionNotn: notn(item.compCessExemption?.notification),
       IGST_CompCessExemptionNotnSrNo: code(item.compCessExemption?.serial),
       IGST_CompCessExemptionNotnFlag: flag(item.compCessExemption?.flag),
@@ -394,7 +450,7 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       ...(tv && { Tarrif_Value_Amount: money(tv.amountPerUnit) }),
 
       // §21
-      ...addCells(remedy('ADD')),
+      ...addCells(addLine),
 
       // §22 — operator-only
       Other_Duty_Notn: BLANK,
@@ -458,7 +514,7 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       Previous_BECustomHouse: code(prev?.customHouse),
 
       // §21 — CVD
-      ...cvdCells(remedy('CVD')),
+      ...cvdCells(cvdLine),
     };
   });
 }

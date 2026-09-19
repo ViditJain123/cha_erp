@@ -197,15 +197,21 @@ describe('ITEMS §14-§17 preferential origin', () => {
 });
 
 describe('ITEMS §18-§19 GST lines and flags', () => {
-  it('leaves a Plus flag blank — it does not change an ad valorem duty', async () => {
-    const r = await row(standard({ igstLevyFlag: '+', compCessLevyFlag: '+' }));
+  // The flag is decided upstream, by resolveItems, off the notification's own
+  // rate wording; nothing seeds the screen's `+` any more. So the mapper
+  // writes what it is given, and blank means the notification stated no
+  // combination — see packages/extraction/test/items-resolve.test.ts.
+  it('leaves the flag blank when nothing derived one', async () => {
+    const r = await row(standard());
     expect(r['IGST_LevyNotnFlag']).toBeUndefined();
     expect(r['IGST_CompCessNotnFlag']).toBeUndefined();
   });
 
-  it('writes a flag that does change the duty', async () => {
+  it('writes the flag the notification implied', async () => {
     const r = await row(standard({ compCessLevyFlag: 'H' }));
     expect(r['IGST_CompCessNotnFlag']).toBe('H');
+    const plus = await row(standard({ igstLevyFlag: '+' }));
+    expect(plus['IGST_LevyNotnFlag']).toBe('+');
   });
 
   it('writes the exemption type only beside an exemption', async () => {
@@ -215,6 +221,14 @@ describe('ITEMS §18-§19 GST lines and flags', () => {
     expect(withEx['IGST_ExemptionNotnType']).toBe('C');
     expect(withEx['IGST_ExemptionNotn']).toBe('045/2025');
     expect(withEx['IGST_ExemptionNotnSrNo']).toBe('160');
+  });
+
+  it('types the exemption from the notification, not the dropdown', async () => {
+    // A GST notification cannot grant a `C` exemption, whatever the job says.
+    const r = await row(standard({ igstExemption: { type: 'C', notification: '10/2025-Integrated Tax (Rate)', serial: '1' } }));
+    expect(r['IGST_ExemptionNotnType']).toBe('G');
+    const { warnings } = await build(standard({ igstExemption: { type: 'C', notification: '10/2025-Integrated Tax (Rate)', serial: '1' } }));
+    expect(warnings.some((w) => w.includes('IGST_ExemptionNotnType'))).toBe(true);
   });
 });
 
@@ -283,8 +297,8 @@ describe('ITEMS §21 trade remedies', () => {
     const r = await row(
       standard({
         tradeRemedies: [
-          { kind: 'ADD', notification: '05/2025-Customs (ADD)', cthSerial: '1', ratePercent: 12.5 },
-          { kind: 'CVD', notification: '01/2024-Customs (CVD)', cthSerial: '4', supplierSerial: '1', ratePercent: 6 },
+          { kind: 'ADD', notification: '05/2025-Customs (ADD)', cthSerial: '1', ratePercent: 12.5, basis: 'AV' },
+          { kind: 'CVD', notification: '01/2024-Customs (CVD)', cthSerial: '4', supplierSerial: '1', ratePercent: 6, basis: 'LANDED' },
         ],
       }),
     );
@@ -294,6 +308,24 @@ describe('ITEMS §21 trade remedies', () => {
     expect(r['CVD_Rate']).toBe('6.00');
     expect(r['CVD_CalculatedOn']).toBe('1');
     expect(r['CVD_ItemSrNo']).toBe('4');
+  });
+
+  it('leaves the calc method blank, and warns, for a basis no code is proven for', async () => {
+    // Only `AV` on ADD and `1` on CVD are evidenced (liv_job1). The other
+    // basis, and a line stored before the field existed, are not guessed at.
+    const { buffer, warnings } = await build(
+      standard({
+        tradeRemedies: [
+          { kind: 'ADD', notification: '05/2025-Customs (ADD)', cthSerial: '1', ratePercent: 12.5, basis: 'LANDED' },
+          { kind: 'CVD', notification: '01/2024-Customs (CVD)', cthSerial: '4', ratePercent: 6, basis: 'AV' },
+        ],
+      }),
+    );
+    const [r] = await readSheet(buffer, 'ITEMS');
+    expect(r!['ADD_Basis']).toBeUndefined();
+    expect(r!['CVD_CalculatedOn']).toBeUndefined();
+    expect(warnings.some((w) => w.includes('ADD_Basis'))).toBe(true);
+    expect(warnings.some((w) => w.includes('CVD_CalculatedOn'))).toBe(true);
   });
 
   it('refuses while a trade-remedy row is still to be chosen', async () => {
