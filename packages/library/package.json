@@ -13,7 +13,11 @@
     "check-tariff-source": "tsx cli/check-tariff-source.ts",
     "fetch-notification": "tsx cli/fetch-notification.ts",
     "index-docs": "tsx cli/index-docs.ts",
-    "search": "tsx cli/search.ts"
+    "search": "tsx cli/search.ts",
+    "index-tariff-book": "tsx cli/index-tariff-book.ts",
+    "extract-corpus": "tsx cli/extract-corpus.ts",
+    "index-corpus": "tsx cli/index-corpus.ts",
+    "ocr-corpus": "tsx cli/ocr-corpus.ts"
   },
   "dependencies": {
     "openai": "^6.9.0",

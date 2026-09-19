@@ -13,6 +13,7 @@ export {
 export type { PkcePair, TokenSet } from './oauth.js';
 export { graphFetch, graphJson, fetchIdentity, DeltaExpiredError } from './client.js';
 export type { GraphIdentity } from './client.js';
+export { mailBodyToText } from './body.js';
 export { primeDelta, pollDelta } from './delta.js';
 export type { GraphMessage, DeltaResult } from './delta.js';
 export {

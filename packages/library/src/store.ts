@@ -9,7 +9,7 @@ import path from 'node:path';
  *   <LIBRARY_DIR>/index/meta.json             ({model, dims, count})
  */
 
-export type DocKind = 'tariff-chapter' | 'notification' | 'exchange-rate' | 'other';
+export type DocKind = 'tariff-chapter' | 'notification' | 'exchange-rate' | 'tariff-book' | 'other';
 
 export interface LibraryDocMeta {
   id: string;
@@ -22,6 +22,13 @@ export interface LibraryDocMeta {
   fetchedAt: string;
   pages?: number;
   indexedAt?: string;
+  /**
+   * No PDF on disk: the text was supplied already extracted and indexed from
+   * that. The printed tariff arrives this way, because its scan defeats
+   * reading-order extraction and build-tariff-book.py reads it by coordinates
+   * instead. `indexAllPending` must not try to open a PDF for these.
+   */
+  textOnly?: boolean;
 }
 
 export function libraryDir(): string {
@@ -38,6 +45,15 @@ export function saveDoc(meta: LibraryDocMeta, pdf: Buffer): void {
   mkdirSync(docsDir(), { recursive: true });
   writeFileSync(path.join(docsDir(), `${meta.id}.pdf`), pdf);
   writeFileSync(path.join(docsDir(), `${meta.id}.json`), JSON.stringify(meta, null, 2));
+}
+
+/** Record a document whose text is indexed directly, with no PDF behind it. */
+export function saveTextDocMeta(meta: LibraryDocMeta): void {
+  mkdirSync(docsDir(), { recursive: true });
+  writeFileSync(
+    path.join(docsDir(), `${meta.id}.json`),
+    JSON.stringify({ ...meta, textOnly: true }, null, 2),
+  );
 }
 
 export function updateDocMeta(meta: LibraryDocMeta): void {

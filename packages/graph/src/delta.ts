@@ -1,8 +1,16 @@
 import { graphJson } from './client.js';
 
 const DELTA_PATH = '/me/mailFolders/inbox/messages/delta';
+/**
+ * `body` and `bodyPreview` are here because the filing instructions live in
+ * them and nowhere else. Which custom house to file at, whether the goods are
+ * being warehoused, whether duty is deferred, the importer's own reference —
+ * a customer states all of that in prose, and a delta that selects only the
+ * envelope throws it away at the point of ingest. See
+ * `packages/extraction/src/instructions.ts`.
+ */
 const SELECT =
-  '$select=id,subject,conversationId,internetMessageId,receivedDateTime,hasAttachments,isDraft,from';
+  '$select=id,subject,conversationId,internetMessageId,receivedDateTime,hasAttachments,isDraft,from,bodyPreview,body';
 
 export interface GraphMessage {
   id: string;
@@ -13,6 +21,9 @@ export interface GraphMessage {
   hasAttachments: boolean;
   isDraft?: boolean;
   from?: { emailAddress?: { address?: string; name?: string } };
+  /** First ~255 characters, plain text. Always present when `body` is. */
+  bodyPreview?: string | null;
+  body?: { contentType?: 'text' | 'html'; content?: string } | null;
 }
 
 interface DeltaPage {
