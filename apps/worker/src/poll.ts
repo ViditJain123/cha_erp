@@ -5,6 +5,7 @@ import {
   ReauthRequiredError,
   ensureAccessToken,
   fetchAttachments,
+  mailBodyToText,
   pollDelta,
   primeDelta,
   type GraphMessage,
@@ -68,6 +69,11 @@ async function recordMessages(
       from_name: m.from?.emailAddress?.name ?? null,
       received_at: m.receivedDateTime,
       has_attachments: m.hasAttachments,
+      // Stored as text whatever Graph sent. The instruction extractor reads
+      // this; a mail whose body never landed is a job whose custom house and
+      // BE type have no source at all.
+      body_text: m.body?.content ? mailBodyToText(m.body.content) : (m.bodyPreview ?? null),
+      body_preview: m.bodyPreview ?? null,
     })),
     { onConflict: 'connection_id,provider_message_id', ignoreDuplicates: true },
   );

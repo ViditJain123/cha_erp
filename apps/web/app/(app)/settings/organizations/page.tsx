@@ -112,6 +112,10 @@ export default async function OrganizationsPage({
                     isTransporter={org.is_transporter}
                     defaultEndUseCode={org.default_end_use_code}
                     marineOpenPolicyRatePercent={org.marine_open_policy_rate_percent}
+                    marinePolicyNo={org.marine_policy_no}
+                    marinePolicySumInsuredInr={org.marine_policy_sum_insured_inr}
+                    marinePolicyPerSendingLimitInr={org.marine_policy_per_sending_limit_inr}
+                    marinePolicyValidTill={org.marine_policy_valid_till}
                     canManage={canManage}
                   />
                 ))}

@@ -31,6 +31,10 @@ export interface OrgRowProps {
   isTransporter: boolean;
   defaultEndUseCode: string | null;
   marineOpenPolicyRatePercent: number | null;
+  marinePolicyNo: string | null;
+  marinePolicySumInsuredInr: number | null;
+  marinePolicyPerSendingLimitInr: number | null;
+  marinePolicyValidTill: string | null;
   canManage: boolean;
 }
 
@@ -43,7 +47,11 @@ export function OrgRow(props: OrgRowProps) {
   const [open, setOpen] = useState(false);
 
   const roles = ROLE_LABELS.filter(([key]) => props[key]).map(([, label]) => label);
-  const hasDefaults = props.defaultEndUseCode ?? props.marineOpenPolicyRatePercent;
+  const hasDefaults =
+    props.defaultEndUseCode ??
+    props.marineOpenPolicyRatePercent ??
+    props.marinePolicyNo ??
+    props.marinePolicyPerSendingLimitInr;
 
   return (
     <>
@@ -76,8 +84,7 @@ export function OrgRow(props: OrgRowProps) {
         <tr>
           <td colSpan={7} className="bg-slate-50 px-4 py-3">
             <p className="mb-2 text-xs text-slate-500">
-              The two things Logi-Sys does not hold about this party. An upload never overwrites
-              them.
+              What Logi-Sys does not hold about this party. An upload never overwrites any of it.
             </p>
             <form action={formAction} className="flex flex-wrap items-end gap-3">
               <input type="hidden" name="id" value={props.orgId} />
@@ -94,9 +101,12 @@ export function OrgRow(props: OrgRowProps) {
                   defaultValue={props.defaultEndUseCode ?? ''}
                   className={SMALL_FIELD}
                 >
-                  <option value="">Not set (GNX100)</option>
+                  {/* Unset means the operator is asked per line (06-items.md §9). */}
+                  <option value="">Not set — ask on each job</option>
                   <option value="GNX100">GNX100 — trading</option>
                   <option value="GNX200">GNX200 — manufacture / actual use</option>
+                  <option value="GNX810">GNX810 — research &amp; development</option>
+                  <option value="GNX600">GNX600 — repair / refurbishing</option>
                 </select>
               </div>
               <div>
@@ -117,6 +127,69 @@ export function OrgRow(props: OrgRowProps) {
                   className={`w-32 ${SMALL_FIELD}`}
                 />
               </div>
+              <div>
+                <label
+                  htmlFor={`policyNo-${props.orgId}`}
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Marine policy no.
+                </label>
+                <input
+                  id={`policyNo-${props.orgId}`}
+                  name="marinePolicyNo"
+                  defaultValue={props.marinePolicyNo ?? ''}
+                  className={`w-40 ${SMALL_FIELD}`}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor={`sumInsured-${props.orgId}`}
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Sum insured <span className="text-slate-400">(₹)</span>
+                </label>
+                <input
+                  id={`sumInsured-${props.orgId}`}
+                  name="marinePolicySumInsuredInr"
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  defaultValue={props.marinePolicySumInsuredInr ?? ''}
+                  className={`w-36 ${SMALL_FIELD}`}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor={`perSending-${props.orgId}`}
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Per-sending limit <span className="text-slate-400">(₹)</span>
+                </label>
+                <input
+                  id={`perSending-${props.orgId}`}
+                  name="marinePolicyPerSendingLimitInr"
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  defaultValue={props.marinePolicyPerSendingLimitInr ?? ''}
+                  className={`w-36 ${SMALL_FIELD}`}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor={`validTill-${props.orgId}`}
+                  className="mb-1 block text-xs font-medium text-slate-600"
+                >
+                  Policy valid till
+                </label>
+                <input
+                  id={`validTill-${props.orgId}`}
+                  name="marinePolicyValidTill"
+                  type="date"
+                  defaultValue={props.marinePolicyValidTill ?? ''}
+                  className={SMALL_FIELD}
+                />
+              </div>
               <button
                 type="submit"
                 disabled={pending}
@@ -124,6 +197,11 @@ export function OrgRow(props: OrgRowProps) {
               >
                 {pending ? 'Saving…' : 'Save'}
               </button>
+              <p className="w-full text-xs text-slate-400">
+                The per-sending limit is what the export checks a consignment against: a Bill of
+                Entry worth more than this is over-shipped against the cover, and the job says so
+                before it is filed.
+              </p>
               {(state.error ?? state.message) && (
                 <span
                   className={`text-xs ${state.error ? 'text-red-700' : 'text-emerald-700'}`}

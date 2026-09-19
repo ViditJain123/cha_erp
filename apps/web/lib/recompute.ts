@@ -1,14 +1,13 @@
-import { computeJobDuty, type ExchangeRateTable } from '@checklist/core';
-import { toInvoiceInput, type ChecklistDraft } from '@checklist/extraction';
+import { computeBeDuty, type ExchangeRateTable } from '@checklist/core';
+import { toInvoiceInputs, type ChecklistDraft } from '@checklist/extraction';
 
 /** Recompute the duty block after reviewer edits; never throws. */
 export function recomputeDuty(draft: ChecklistDraft): ChecklistDraft {
-  const rates: ExchangeRateTable = {
-    [draft.invoiceMeta.exchangeRate.currency]: draft.invoiceMeta.exchangeRate.rate,
-  };
-  // insurance/misc may be quoted in other currencies (e.g. INR) — INR handled natively
+  // Every currency the BE invoices in. Insurance and misc may be quoted in
+  // others (typically INR), which the engine handles natively.
+  const rates: ExchangeRateTable = { ...draft.invoiceMeta.exchangeRates };
   try {
-    const duty = computeJobDuty(toInvoiceInput(draft), rates);
+    const duty = computeBeDuty(toInvoiceInputs(draft), rates);
     return { ...draft, duty };
   } catch (err) {
     return {

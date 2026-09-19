@@ -1,9 +1,16 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { END_USE_CODES } from '@checklist/core';
+import {
+  END_USE_CODES,
+  describeWarehouseCodeError,
+  parseWarehouseCodeResult,
+} from '@checklist/core';
+import { COMPANY_MANAGER_ROLES } from '@checklist/config/app';
 import type { AppRole, TeamKind } from '@checklist/db';
+import { partyNameKey } from '@checklist/core';
 import { requireCompany, requireCompanyManager } from '@/lib/auth';
+import { searchOrganizations } from '@/lib/parties';
 import { serviceClient } from '@/lib/supabase/admin';
 import { provisionUser } from '@/lib/provision';
 import { parseCcrCsv } from '@/lib/ccr-csv';
@@ -13,6 +20,15 @@ export interface SettingsActionState {
   error?: string;
   message?: string;
   tempPassword?: string;
+  /**
+   * Repository names a typed party could have meant.
+   *
+   * A relationship is keyed on two organizations, so binding the wrong one
+   * would put an SVB order against a party that has none. When a typed name
+   * does not resolve to exactly one row, the action hands back what it found
+   * instead of choosing.
+   */
+  candidates?: { field: string; names: string[] };
 }
 
 const INVITABLE_ROLES: readonly AppRole[] = ['company_admin', 'member'];
@@ -782,6 +798,10 @@ export async function updateOrganizationDefaults(
   const id = String(formData.get('id') ?? '');
   const endUse = String(formData.get('defaultEndUseCode') ?? '').trim().toUpperCase();
   const rate = optionalNumber(formData.get('marineOpenPolicyRatePercent'));
+  const policyNo = String(formData.get('marinePolicyNo') ?? '').trim();
+  const sumInsured = optionalNumber(formData.get('marinePolicySumInsuredInr'));
+  const perSending = optionalNumber(formData.get('marinePolicyPerSendingLimitInr'));
+  const validTill = String(formData.get('marinePolicyValidTill') ?? '').trim();
 
   if (!id) return { error: 'No organization to update.' };
   if (endUse && !(endUse in END_USE_CODES)) {
@@ -791,12 +811,28 @@ export async function updateOrganizationDefaults(
   if (rate !== undefined && (rate < 0 || rate > 100)) {
     return { error: 'Marine open-policy rate is a percentage of C&F value.' };
   }
+  for (const [label, value] of [
+    ['Sum insured', sumInsured],
+    ['Per-sending limit', perSending],
+  ] as const) {
+    if (value === null) return { error: `${label} must be a number, or blank.` };
+    if (value !== undefined && value <= 0) return { error: `${label} must be more than zero.` };
+  }
+  // A limit larger than the policy is a typo, and it is the limit the export
+  // checks against — so it would quietly disable the over-insurance warning.
+  if (sumInsured && perSending && perSending > sumInsured) {
+    return { error: 'The per-sending limit cannot exceed the sum insured for the whole policy.' };
+  }
 
   const { error } = await serviceClient()
     .from('organizations')
     .update({
       default_end_use_code: endUse || null,
       marine_open_policy_rate_percent: rate ?? null,
+      marine_policy_no: policyNo || null,
+      marine_policy_sum_insured_inr: sumInsured ?? null,
+      marine_policy_per_sending_limit_inr: perSending ?? null,
+      marine_policy_valid_till: validTill || null,
     })
     .eq('id', id)
     .eq('company_id', ctx.companyId);
@@ -805,4 +841,263 @@ export async function updateOrganizationDefaults(
 
   revalidatePath('/settings/organizations');
   return { ok: true, message: 'Saved.' };
+}
+
+/* ---------------------------------------------- supplier relationships -- */
+
+/**
+ * Every importer-supplier pair this company has recorded something about.
+ *
+ * Two joins rather than a view, because the party names live on
+ * `organizations` and the pair is what the row is keyed on.
+ */
+export async function listSupplierRelationships() {
+  const ctx = await requireCompany();
+
+  const { data } = await serviceClient()
+    .from('supplier_relationships')
+    .select(
+      '*, importer:organizations!supplier_relationships_importer_org_id_fkey(name, branch_name), supplier:organizations!supplier_relationships_supplier_org_id_fkey(name, branch_name)',
+    )
+    .eq('company_id', ctx.companyId)
+    .order('updated_at', { ascending: false });
+
+  return { ctx, relationships: data ?? [] };
+}
+
+/**
+ * Resolve a typed party name to exactly one repository row.
+ *
+ * Exact on the normalised name wins outright. Anything else hands back the
+ * candidates: this row decides what a Bill of Entry declares about two named
+ * parties, and a fuzzy match is not a good enough reason to declare it.
+ */
+async function resolveOrgByName(
+  companyId: string,
+  field: string,
+  typed: string,
+  role: 'consignee' | 'shipper',
+): Promise<{ id: string; name: string } | SettingsActionState> {
+  const name = typed.trim();
+  if (name.length < 2) return { error: `Enter the ${field} name.` };
+
+  const matches = await searchOrganizations(companyId, name, role, 8);
+  if (matches.length === 0) {
+    return {
+      error: `No organization in the repository matches "${name}". Upload the Logi-Sys organization repository first, or check the spelling.`,
+    };
+  }
+
+  const wanted = partyNameKey(name);
+  const exact = matches.filter((m) => partyNameKey(m.name) === wanted);
+  if (exact.length === 1) return { id: exact[0]!.id, name: exact[0]!.name };
+  if (exact.length > 1) {
+    return {
+      error: `"${name}" matches ${exact.length} branches. Pick the branch you mean.`,
+      candidates: { field, names: exact.map((m) => `${m.name} · ${m.branch_name}`) },
+    };
+  }
+
+  return {
+    error: `"${name}" is not a repository name. Pick one of these, or type it exactly.`,
+    candidates: { field, names: matches.map((m) => m.name) },
+  };
+}
+
+/**
+ * Record, or replace, what is known about one importer buying from one supplier.
+ *
+ * Upserted on the pair, which is what the table is unique on: an SVB order
+ * covers a pair, and a second row for the same two parties would be two
+ * answers to one question.
+ */
+export async function saveSupplierRelationship(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+
+  const isRelated = formData.get('isRelated') === 'on';
+  const base = String(formData.get('base') ?? '').trim();
+  const condition = String(formData.get('condition') ?? '').trim();
+  const svbRefNo = String(formData.get('svbRefNo') ?? '').trim();
+  const svbDate = String(formData.get('svbDate') ?? '').trim();
+  const svbCustomHouse = String(formData.get('svbCustomHouse') ?? '').trim().toUpperCase();
+  const loadingBasis = String(formData.get('svbLoadingBasis') ?? '').trim().toUpperCase();
+  const statusAssessable = String(formData.get('svbStatusAssessable') ?? '').trim().toUpperCase();
+  const statusDuty = String(formData.get('svbStatusDuty') ?? '').trim().toUpperCase();
+  const rateAssessable = optionalNumber(formData.get('svbRateAssessable'));
+  const rateDuty = optionalNumber(formData.get('svbRateDuty'));
+  const deposit = optionalNumber(formData.get('revenueDepositPercent'));
+  const notes = String(formData.get('notes') ?? '').trim();
+
+  for (const [label, value] of [
+    ['SVB load on assessable value', rateAssessable],
+    ['SVB load on duty', rateDuty],
+    ['Revenue deposit', deposit],
+  ] as const) {
+    if (value === null) return { error: `${label} must be a percentage, or blank.` };
+    if (value !== undefined && (value < 0 || value > 100)) {
+      return { error: `${label} is a percentage.` };
+    }
+  }
+  // The same rule the database enforces, said in the operator's language: these
+  // three describe a relationship, so they cannot stand without one.
+  if (!isRelated && (base || condition || deposit !== undefined)) {
+    return {
+      error:
+        'Basis, condition and the revenue deposit only apply to related parties. Tick "buyer and seller are related", or clear them.',
+    };
+  }
+  if (svbCustomHouse && !/^IN[A-Z0-9]{4}$/.test(svbCustomHouse)) {
+    return { error: 'The SVB custom house is a six-character ICES code, e.g. INNSA1.' };
+  }
+
+  const importer = await resolveOrgByName(
+    ctx.companyId,
+    'importer',
+    String(formData.get('importerName') ?? ''),
+    'consignee',
+  );
+  if (!('id' in importer)) return importer;
+  const supplier = await resolveOrgByName(
+    ctx.companyId,
+    'supplier',
+    String(formData.get('supplierName') ?? ''),
+    'shipper',
+  );
+  if (!('id' in supplier)) return supplier;
+
+  const { error } = await serviceClient()
+    .from('supplier_relationships')
+    .upsert(
+      {
+        company_id: ctx.companyId,
+        importer_org_id: importer.id,
+        supplier_org_id: supplier.id,
+        is_related: isRelated,
+        base: base || null,
+        condition: condition || null,
+        svb_ref_no: svbRefNo || null,
+        svb_date: svbDate || null,
+        svb_custom_house: svbCustomHouse || null,
+        svb_loading_basis: loadingBasis === 'A' ? 'A' : null,
+        svb_rate_assessable: rateAssessable ?? null,
+        svb_status_assessable: statusAssessable || null,
+        svb_rate_duty: rateDuty ?? null,
+        svb_status_duty: statusDuty || null,
+        revenue_deposit_percent: deposit ?? null,
+        notes: notes || null,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'importer_org_id,supplier_org_id' },
+    );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/relationships');
+  return {
+    ok: true,
+    message: `${importer.name} buying from ${supplier.name}: saved as ${isRelated ? 'related' : 'unrelated'}.`,
+  };
+}
+
+export async function deleteSupplierRelationship(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const id = String(formData.get('id') ?? '');
+  if (!id) return { error: 'No record to remove.' };
+
+  const { error } = await serviceClient()
+    .from('supplier_relationships')
+    .delete()
+    .eq('id', id)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/relationships');
+  // Deleting is not the same as recording "not related": with no row, nothing
+  // has been said about the pair, and the export says so.
+  return { ok: true, message: 'Removed. Nothing is now recorded about that pair.' };
+}
+
+/* -------------------------------------------------- bonded warehouses -- */
+
+/**
+ * The customs bonded warehouses this company files against.
+ *
+ * The table fills itself: the first job that names a warehouse code resolves it
+ * (offline for the station and licence type, from ICEGATE for the name and
+ * address) and caches the row. This page exists for the two cases that leaves —
+ * a warehouse ICEGATE could not supply, and one it supplied wrongly.
+ */
+export async function listBondedWarehouses() {
+  const ctx = await requireCompany();
+  const db = serviceClient();
+
+  const { data } = await db
+    .from('bonded_warehouses')
+    .select('*')
+    .eq('company_id', ctx.companyId)
+    .order('code');
+
+  return { ctx, warehouses: data ?? [] };
+}
+
+/**
+ * Correct or add a bonded warehouse.
+ *
+ * The code is validated against the custom-house master before anything is
+ * written — its first four characters are an ICES site code, so a code naming
+ * no real station is a typo we can refuse here rather than let Customs refuse
+ * later. Saving marks the row `operator`, so a later ICEGATE lookup does not
+ * overwrite a person's correction.
+ */
+export async function saveBondedWarehouse(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompany();
+  if (!COMPANY_MANAGER_ROLES.includes(ctx.role)) {
+    return { error: 'Only a manager can change the warehouse list.' };
+  }
+
+  const parsed = parseWarehouseCodeResult(String(formData.get('code') ?? ''));
+  if (!parsed.ok) return { error: describeWarehouseCodeError(parsed.error) };
+
+  const value = (key: string) => {
+    const v = String(formData.get(key) ?? '').trim();
+    return v === '' ? null : v;
+  };
+
+  const db = serviceClient();
+  const { error } = await db.from('bonded_warehouses').upsert(
+    {
+      company_id: ctx.companyId,
+      code: parsed.parsed.code,
+      name: value('name'),
+      address1: value('address1'),
+      address2: value('address2'),
+      city: value('city'),
+      pin: value('pin'),
+      country: 'IN',
+      station_code: parsed.parsed.stationCode,
+      warehouse_type: parsed.parsed.type,
+      licensee_name: value('licenseeName'),
+      license_no: value('licenseNo'),
+      license_valid_till: value('licenseValidTill'),
+      source: 'operator' as const,
+      is_active: formData.get('isActive') !== 'off',
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'company_id,code' },
+  );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/warehouses');
+  return {
+    ok: true,
+    message: `${parsed.parsed.code} saved — a ${parsed.parsed.type} warehouse under ${parsed.parsed.station.name}.`,
+  };
 }

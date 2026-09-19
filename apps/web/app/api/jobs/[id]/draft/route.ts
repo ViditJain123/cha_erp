@@ -49,7 +49,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
 
   const { data: documents } = await db
     .from('job_documents')
-    .select('file_name, storage_bucket, storage_path')
+    .select('file_name, storage_bucket, storage_path, mime_type')
     .eq('job_id', id)
     .eq('company_id', ctx.companyId);
 
@@ -66,13 +66,19 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
       if (error || !data) {
         throw new Error(`Could not download ${doc.file_name}: ${error?.message ?? 'no data'}`);
       }
-      return { fileName: doc.file_name, pdf: Buffer.from(await data.arrayBuffer()) };
+      return {
+        fileName: doc.file_name,
+        pdf: Buffer.from(await data.arrayBuffer()),
+        // A scan stored as a JPEG has to be sent to the model as one; sending
+        // it as a PDF is how two jobs came out with no transport document.
+        ...(doc.mime_type ? { mimeType: doc.mime_type } : {}),
+      };
     }),
   );
 
   let draft: ChecklistDraft;
   try {
-    ({ draft } = await buildDraftFromDocuments(files, ctx.companyId));
+    ({ draft } = await buildDraftFromDocuments(files, ctx.companyId, id));
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }

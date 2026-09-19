@@ -11,6 +11,16 @@ import type { ExchangeRateParse, NotificationParse } from '@checklist/extraction
 
 interface MastersData {
   tariff: TariffMaster[];
+  /** Every row the master holds, of which `tariff` is the page being shown. */
+  tariffTotal?: number;
+  tariffMatched?: number;
+  /** Present once the printed tariff has been parsed and committed. */
+  tariffBook?: {
+    edition: string;
+    rowCount: number;
+    checksumPassRate: number;
+    confidence: Record<string, number>;
+  } | null;
   importers: ImporterMaster[];
   exchangeRates: ExchangeRateMaster[];
   productMemory: ProductMemory[];
@@ -19,8 +29,9 @@ interface MastersData {
 const TABS = ['Tariff', 'Importers', 'Exchange rates', 'Notifications', 'Job memory'] as const;
 type Tab = (typeof TABS)[number];
 
-async function refresh(): Promise<MastersData> {
-  return (await (await fetch('/api/legacy/masters')).json()) as MastersData;
+async function refresh(query = ''): Promise<MastersData> {
+  const url = query ? `/api/legacy/masters?q=${encodeURIComponent(query)}` : '/api/legacy/masters';
+  return (await (await fetch(url)).json()) as MastersData;
 }
 
 export default function MastersView({ initial }: { initial: MastersData }) {
@@ -44,7 +55,16 @@ export default function MastersView({ initial }: { initial: MastersData }) {
           </button>
         ))}
       </div>
-      {tab === 'Tariff' && <TariffTab rows={data.tariff} onChanged={async () => setData(await refresh())} />}
+      {tab === 'Tariff' && (
+        <TariffTab
+          rows={data.tariff}
+          total={data.tariffTotal}
+          matched={data.tariffMatched}
+          book={data.tariffBook}
+          onSearch={async (q) => setData(await refresh(q))}
+          onChanged={async () => setData(await refresh())}
+        />
+      )}
       {tab === 'Importers' && <ImportersTab rows={data.importers} />}
       {tab === 'Exchange rates' && <RatesTab tables={data.exchangeRates} onChanged={async () => setData(await refresh())} />}
       {tab === 'Notifications' && <NotificationsTab onChanged={async () => setData(await refresh())} />}
@@ -66,9 +86,24 @@ function Td({ children }: { children: React.ReactNode }) {
 
 /* ---------------- Tariff ---------------- */
 
-function TariffTab({ rows, onChanged }: { rows: TariffMaster[]; onChanged: () => Promise<void> }) {
+function TariffTab({
+  rows,
+  total,
+  matched,
+  book,
+  onSearch,
+  onChanged,
+}: {
+  rows: TariffMaster[];
+  total?: number;
+  matched?: number;
+  book?: MastersData['tariffBook'];
+  onSearch: (query: string) => Promise<void>;
+  onChanged: () => Promise<void>;
+}) {
   const [form, setForm] = useState({ cth: '', description: '', bcdRate: '', igstRate: '' });
   const [busy, setBusy] = useState(false);
+  const [query, setQuery] = useState('');
 
   async function add() {
     setBusy(true);
@@ -90,8 +125,34 @@ function TariffTab({ rows, onChanged }: { rows: TariffMaster[]; onChanged: () =>
 
   return (
     <Panel>
+      <div className="mb-3 flex flex-wrap items-center gap-3">
+        <input
+          placeholder="Search CTH or description…"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            void onSearch(e.target.value);
+          }}
+          className="flex-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm"
+        />
+        <span className="text-xs text-slate-500">
+          {query
+            ? `${matched ?? rows.length} match${(matched ?? rows.length) === 1 ? '' : 'es'}, showing ${rows.length}`
+            : `${rows.length} authored row${rows.length === 1 ? '' : 's'} of ${total ?? rows.length}`}
+        </span>
+      </div>
+      {book && (
+        <p className="mb-3 text-xs text-slate-500">
+          {book.rowCount.toLocaleString()} of these come from the {book.edition} printed tariff.{' '}
+          {(book.checksumPassRate * 100).toFixed(1)}% reconcile against the duty printed beside them;
+          the {(book.confidence.unverified ?? 0).toLocaleString()} that do not are marked
+          &ldquo;unverified&rdquo; and should be checked against the notification before filing.
+          Search to see them — they are not listed here by default, because these are the rows
+          someone has authored or corrected.
+        </p>
+      )}
       <table className="w-full text-sm">
-        <thead><tr><Th>CTH</Th><Th>Description</Th><Th>BCD %</Th><Th>IGST %</Th><Th>IGST notn</Th><Th>PGA</Th></tr></thead>
+        <thead><tr><Th>CTH</Th><Th>Description</Th><Th>BCD %</Th><Th>IGST %</Th><Th>IGST notn</Th><Th>Source</Th><Th>PGA</Th></tr></thead>
         <tbody className="divide-y divide-slate-100">
           {rows.map((r) => (
             <tr key={r.cth}>
@@ -100,6 +161,13 @@ function TariffTab({ rows, onChanged }: { rows: TariffMaster[]; onChanged: () =>
               <Td>{r.bcdRate}%</Td>
               <Td>{r.igstRate}%</Td>
               <Td>{r.igstNotification}</Td>
+              <Td>
+                <span className="text-xs text-slate-500">
+                  {r.provenance?.source === 'book'
+                    ? `tariff p.${r.provenance.page}${r.provenance.confidence === 'verified' ? '' : ` (${r.provenance.confidence})`}`
+                    : (r.provenance?.source ?? 'seed')}
+                </span>
+              </Td>
               <Td>{r.pga ?? ''}</Td>
             </tr>
           ))}

@@ -49,7 +49,7 @@ export default async function JobsPage() {
                   </td>
                   <td className="px-4 py-3">{job.draft?.importer.name ?? '—'}</td>
                   <td className="px-4 py-3">{job.draft?.transportMode ?? '—'}</td>
-                  <td className="px-4 py-3">{job.draft?.invoice.invoiceNumber ?? '—'}</td>
+                  <td className="px-4 py-3">{job.draft?.invoices[0]?.invoiceNumber ?? '—'}</td>
                   <td className="px-4 py-3 tabular-nums">
                     {job.draft?.duty ? `₹${job.draft.duty.dutyPayable.toLocaleString('en-IN')}` : '—'}
                   </td>

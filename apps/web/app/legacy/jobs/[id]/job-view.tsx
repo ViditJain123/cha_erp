@@ -194,7 +194,7 @@ export default function JobView({ initialJob }: { initialJob: JobRecord }) {
           <h1 className="text-xl font-semibold">
             {job.jobNumber}
             <span className="ml-3 rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-700">
-              {draft.transportMode} · {draft.customStation.name}
+              {draft.transportMode}{draft.customStation ? ` · ${draft.customStation.name}` : ''}
             </span>
             {job.status === 'approved' && (
               <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">approved</span>
@@ -250,9 +250,9 @@ export default function JobView({ initialJob }: { initialJob: JobRecord }) {
         <div className="space-y-5 lg:col-span-2">
           <Card title="General">
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              <Select label="Filing status" value={draft.filingStatus} options={['Normal', 'Prior', 'Advance']} onChange={editStr('filingStatus')} />
-              <Field label="Custom station" value={draft.customStation.name} onChange={editStr('customStation.name')} flagged={flag('customStation')} />
-              <Field label="Station code" value={draft.customStation.code} onChange={editStr('customStation.code')} flagged={flag('customStation')} />
+              <Select label="Filing status" value={draft.filingStatus ?? ''} options={['Normal', 'Prior', 'Advance']} onChange={editStr('filingStatus')} />
+              <Field label="Custom station" value={draft.customStation?.name ?? ''} onChange={editStr('customStation.name')} flagged={flag('customStation')} />
+              <Field label="Station code" value={draft.customStation?.code ?? ''} onChange={editStr('customStation.code')} flagged={flag('customStation')} />
               <Field label="Country of origin" value={draft.shipment.countryOfOrigin} onChange={editStr('shipment.countryOfOrigin')} flagged={flag('shipment.countryOfOrigin')} />
             </div>
           </Card>
@@ -305,29 +305,31 @@ export default function JobView({ initialJob }: { initialJob: JobRecord }) {
             )}
           </Card>
 
-          <Card title="Invoice & valuation">
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              <Field label="Invoice No" value={draft.invoice.invoiceNumber} onChange={editStr('invoice.invoiceNumber')} flagged={flag('invoice.invoiceNumber')} />
-              <Field label="Invoice date" value={draft.invoice.invoiceDate} onChange={editStr('invoice.invoiceDate')} type="date" />
-              <Select label="TOI" value={draft.invoice.termsOfInvoice} options={['FOB', 'CIF', 'C&F']} onChange={editStr('invoice.termsOfInvoice')} />
-              <Field label={`Invoice value (${draft.invoice.currency})`} value={draft.invoice.invoiceValue} onChange={editNum('invoice.invoiceValue')} type="number" />
-              <Field
-                label={`Misc charges (${draft.invoice.miscCharges?.currency ?? draft.invoice.currency})`}
-                value={draft.invoice.miscCharges?.amount ?? 0}
-                onChange={(v) => edit('invoice.miscCharges', Number(v) > 0 ? { amount: Number(v), currency: draft.invoice.miscCharges?.currency ?? draft.invoice.currency } : undefined)}
-                type="number"
-              />
-              <Field
-                label="Insurance (INR)"
-                value={draft.invoice.insurance?.kind === 'amount' ? draft.invoice.insurance.value.amount : 0}
-                onChange={(v) => edit('invoice.insurance', Number(v) > 0 ? { kind: 'amount', value: { amount: Number(v), currency: 'INR' } } : undefined)}
-                type="number"
-                flagged={flag('invoice.insurance')}
-              />
-              <Field label={`Exch. rate (${draft.invoiceMeta.exchangeRate.currency})`} value={draft.invoiceMeta.exchangeRate.rate} onChange={editNum('invoiceMeta.exchangeRate.rate')} type="number" />
-              <Field label="Terms of payment" value={draft.invoiceMeta.termsOfPayment} onChange={editStr('invoiceMeta.termsOfPayment')} />
-            </div>
-          </Card>
+          {draft.invoices.map((inv, n) => (
+            <Card key={inv.srNo} title={`Invoice ${inv.srNo} of ${draft.invoices.length}`}>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                <Field label="Invoice No" value={inv.invoiceNumber} onChange={editStr(`invoices.${n}.invoiceNumber`)} flagged={flag(`invoices.${n}.invoiceNumber`)} />
+                <Field label="Invoice date" value={inv.invoiceDate} onChange={editStr(`invoices.${n}.invoiceDate`)} type="date" />
+                <Select label="TOI" value={inv.termsOfInvoice} options={['FOB', 'CIF', 'C&F', 'C&I']} onChange={editStr(`invoices.${n}.termsOfInvoice`)} />
+                <Field label={`Invoice value (${inv.currency})`} value={inv.invoiceValue} onChange={editNum(`invoices.${n}.invoiceValue`)} type="number" />
+                <Field
+                  label={`Misc charges (${inv.miscCharges?.currency ?? inv.currency})`}
+                  value={inv.miscCharges?.amount ?? 0}
+                  onChange={(v) => edit(`invoices.${n}.miscCharges`, Number(v) > 0 ? { amount: Number(v), currency: inv.miscCharges?.currency ?? inv.currency } : undefined)}
+                  type="number"
+                />
+                <Field
+                  label="Insurance (INR)"
+                  value={inv.insurance?.kind === 'amount' ? inv.insurance.value.amount : 0}
+                  onChange={(v) => edit(`invoices.${n}.insurance`, Number(v) > 0 ? { kind: 'amount', value: { amount: Number(v), currency: 'INR' } } : undefined)}
+                  type="number"
+                  flagged={flag(`invoices.${n}.insurance`)}
+                />
+                <Field label={`Exch. rate (${inv.currency})`} value={draft.invoiceMeta.exchangeRates[inv.currency] ?? 1} onChange={editNum(`invoiceMeta.exchangeRates.${inv.currency}`)} type="number" />
+                <Field label="Terms of payment" value={inv.termsOfPayment} onChange={editStr(`invoices.${n}.termsOfPayment`)} />
+              </div>
+            </Card>
+          ))}
 
           <Card title={`Items (${draft.items.length})`}>
             <div className="space-y-4">
@@ -361,11 +363,11 @@ export default function JobView({ initialJob }: { initialJob: JobRecord }) {
                         </button>
                       </p>
                     )}
-                    {it.batch && (
-                      <p className="mt-1 text-xs text-slate-500">
-                        Batch {it.batch.batchNo ?? '?'} · mfg {it.batch.manufactureDate ?? '?'} · exp {it.batch.expiryDate ?? '?'}
+                    {(it.batches ?? []).map((b, bi) => (
+                      <p key={bi} className="mt-1 text-xs text-slate-500">
+                        Batch {b.batchNo ?? '?'} · mfg {b.manufactureDate ?? '?'} · exp {b.expiryDate ?? '?'}
                       </p>
-                    )}
+                    ))}
                   </div>
                 );
               })}

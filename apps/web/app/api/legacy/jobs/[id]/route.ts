@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // structural sanity check before persisting reviewer edits
   if (
     typeof draft !== 'object' || draft === null ||
-    typeof draft.invoice !== 'object' || !Array.isArray(draft.items) ||
+    !Array.isArray(draft.invoices) || !Array.isArray(draft.items) ||
     typeof draft.importer !== 'object' || typeof draft.shipment !== 'object' ||
     draft.tenantId !== job.tenantId
   ) {

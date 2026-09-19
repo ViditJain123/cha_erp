@@ -236,7 +236,7 @@ export async function applyPartyResolution(
   draft: ChecklistDraft,
   companyId: string,
 ): Promise<ChecklistDraft> {
-  const out: ChecklistDraft = { ...draft };
+  let out: ChecklistDraft = { ...draft };
   let importerOrg: OrganizationRow | undefined;
 
   if (draft.importer.matchStatus !== 'manual' && draft.importer.name) {
@@ -260,12 +260,65 @@ export async function applyPartyResolution(
     }
   }
 
+  // Whether these two are related, and under what SVB order. Only answerable
+  // once both parties are bound — the record is keyed on the pair.
+  out = await applySupplierRelationship(out, companyId, importerOrg?.id);
+
   out.flags = [
     ...draft.flags.filter((f) => f.path !== 'importer' && f.path !== 'supplier'),
     ...partyFlags(out),
   ];
 
   return applyImporterDefaults(out, importerOrg);
+}
+
+/**
+ * The related-party and SVB record for this importer buying from this supplier.
+ *
+ * `Is_Related` used to be the constant `N` on every Bill of Entry we produced,
+ * which is a declaration to Customs and was not ours to make. It is now a
+ * lookup, and its absence is reported rather than answered: no record means
+ * nobody has said, which is not the same as saying no.
+ */
+async function applySupplierRelationship(
+  draft: ChecklistDraft,
+  companyId: string,
+  importerOrgId: string | undefined,
+): Promise<ChecklistDraft> {
+  const supplierOrgId = draft.supplier.organizationId;
+  if (!importerOrgId || !supplierOrgId) return draft;
+
+  const { data } = await serviceClient()
+    .from('supplier_relationships')
+    .select('*')
+    .eq('company_id', companyId)
+    .eq('importer_org_id', importerOrgId)
+    .eq('supplier_org_id', supplierOrgId)
+    .maybeSingle();
+  if (!data) return draft;
+
+  const relationship = {
+    isRelated: data.is_related,
+    ...(data.base != null && { base: data.base }),
+    ...(data.condition != null && { condition: data.condition }),
+    ...(data.svb_ref_no != null && { svbRefNo: data.svb_ref_no }),
+    ...(data.svb_date != null && { svbDate: data.svb_date }),
+    ...(data.svb_custom_house != null && { svbCustomHouse: data.svb_custom_house }),
+    ...(data.svb_loading_basis != null && { loadingBasis: data.svb_loading_basis }),
+    ...(data.svb_rate_assessable != null && { rateAssessable: data.svb_rate_assessable }),
+    ...(data.svb_status_assessable != null && { statusAssessable: data.svb_status_assessable }),
+    ...(data.svb_rate_duty != null && { rateDuty: data.svb_rate_duty }),
+    ...(data.svb_status_duty != null && { statusDuty: data.svb_status_duty }),
+    ...(data.revenue_deposit_percent != null && { revenueDepositPercent: data.revenue_deposit_percent }),
+  };
+
+  return {
+    ...draft,
+    supplierRelationship: relationship,
+    // The declaration is per invoice on the sheet, and the relationship is a
+    // fact about the parties, so it applies to all of them.
+    invoices: draft.invoices.map((inv) => ({ ...inv, relatedParty: relationship.isRelated })),
+  };
 }
 
 /**
@@ -286,31 +339,97 @@ function applyImporterDefaults(
     out = {
       ...out,
       items: out.items.map((item) =>
-        item.endUseCode === 'GNX100' ? { ...item, endUseCode: org.default_end_use_code as string } : item,
+        !item.endUseCode ? { ...item, endUseCode: org.default_end_use_code as string, sources: { ...item.sources, endUseCode: 'master' as const } } : item,
       ),
     };
   }
 
+  // The marine open policy covers the importer, so it answers for every invoice
+  // on the job whose terms leave insurance to be added — not just the first.
   const rate = org.marine_open_policy_rate_percent;
-  const toi = out.invoice.termsOfInvoice;
-  if (rate && !out.invoice.insurance && (toi === 'FOB' || toi === 'C&F')) {
+  const uninsured = out.invoices.filter(
+    (inv) => !inv.insurance && (inv.termsOfInvoice === 'FOB' || inv.termsOfInvoice === 'C&F'),
+  );
+  if (rate && uninsured.length) {
+    const covered = new Set(uninsured.map((inv) => inv.srNo));
     out = {
       ...out,
-      invoice: { ...out.invoice, insurance: { kind: 'percent', percent: rate } },
+      invoices: out.invoices.map((inv) =>
+        covered.has(inv.srNo) ? { ...inv, insurance: { kind: 'percent' as const, percent: rate } } : inv,
+      ),
       flags: [
-        ...out.flags.filter((f) => f.path !== 'invoice.insurance'),
-        {
-          severity: 'info',
-          path: 'invoice.insurance',
-          message: `Insurance applied at ${rate}% of C&F per ${org.name}'s marine open policy — replace with the actual premium when available.`,
-        },
+        ...out.flags.filter((f) => !f.path?.endsWith('.insurance')),
+        ...uninsured.map((inv, i) => ({
+          severity: 'info' as const,
+          path: `invoices.${i}.insurance`,
+          message:
+            `Invoice ${inv.invoiceNumber}: insurance applied at ${rate}% of C&F per ${org.name}'s ` +
+            'marine open policy — replace with the actual premium when available.',
+        })),
       ],
     };
-    // The duty block was computed on an invoice with no insurance in it.
+    // The duty block was computed on invoices with no insurance in them.
     out = recomputeDuty(out);
   }
 
+  // The policy has a ceiling, and a consignment worth more than it is insured
+  // for is the customer's problem before it is Customs'. Checked here because
+  // this is where the policy is known, and reported as a flag rather than
+  // silently — the export repeats it on the sheet.
+  out = checkSumInsured(out, org);
+
   return out;
+}
+
+/**
+ * Is this consignment worth more than the policy insures?
+ *
+ * The customer's rule for the insurance column (`INVOICES!L10`): the total
+ * value being claimed must not exceed the total insured, and when it does the
+ * customer has to be told — before the Bill of Entry is filed, not after the
+ * goods are on the water uncovered. A rate alone cannot answer it, so this runs
+ * only for an importer whose per-sending limit has been recorded.
+ *
+ * It is an `error` flag rather than a blocker. Over-shipping against a policy
+ * is the customer's commercial problem, not a misdeclaration: the BE is
+ * correct, the cover is not, and refusing the export would not fix the cover.
+ */
+function checkSumInsured(draft: ChecklistDraft, org: OrganizationRow): ChecklistDraft {
+  const limit = org.marine_policy_per_sending_limit_inr ?? org.marine_policy_sum_insured_inr;
+  const cleared = draft.flags.filter((f) => f.path !== 'invoices.sumInsured');
+  if (!limit) return { ...draft, flags: cleared };
+
+  const rates = draft.invoiceMeta.exchangeRates;
+  // The value being claimed: goods plus every addition, in rupees. Freight and
+  // insurance are part of what is at risk on the water, so they count.
+  const declaredInr = draft.invoices.reduce((total, inv) => {
+    const rate = inv.currency === 'INR' ? 1 : rates[inv.currency];
+    if (!rate) return total;
+    const foreign =
+      inv.invoiceValue +
+      (inv.freight?.amount ?? 0) +
+      (inv.miscCharges?.amount ?? 0) -
+      (inv.discount?.amount ?? 0);
+    return total + foreign * rate;
+  }, 0);
+  if (declaredInr <= limit) return { ...draft, flags: cleared };
+
+  const inr = (n: number) => `₹${Math.round(n).toLocaleString('en-IN')}`;
+  return {
+    ...draft,
+    flags: [
+      ...cleared,
+      {
+        severity: 'error',
+        path: 'invoices.sumInsured',
+        message:
+          `This consignment is worth ${inr(declaredInr)} and ${org.name}'s marine policy` +
+          (org.marine_policy_no ? ` (${org.marine_policy_no})` : '') +
+          ` covers ${inr(limit)} per sending — ${inr(declaredInr - limit)} of it is uninsured. ` +
+          'Tell the customer before filing.',
+      },
+    ],
+  };
 }
 
 function partyFlags(draft: ChecklistDraft): ChecklistDraft['flags'] {

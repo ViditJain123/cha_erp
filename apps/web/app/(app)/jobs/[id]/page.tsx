@@ -12,6 +12,14 @@ import {
   IDENTIFIER_LABELS,
   relativeTime,
 } from '@/lib/jobs';
+import { BeHeaderPanel } from './be-header-panel';
+import { BondPanel } from './bond-panel';
+import { ContainersPanel } from './containers-panel';
+import { EsanchitReference } from './esanchit-reference';
+import { SecuritiesPanel } from './securities-panel';
+import { ItemsPanel } from './items-panel';
+import { BOND_CODES, CERTIFICATE_TYPES, END_USE_CODES, EXIM_SCHEME } from '@checklist/core';
+import { ftaBenefitQuestion, itemRowView } from '@/lib/items';
 import { ChecklistUpload } from './checklist-upload';
 import { DeleteJob } from './delete-job';
 import { LogisysExport } from './logisys-export';
@@ -47,6 +55,12 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
     { data: exports },
     { data: branches },
     { data: latestDraft },
+    { data: beHeader },
+    { data: operatorContainers },
+    { data: firstMail },
+    { data: hssChainRows },
+    { data: securityRows },
+    { data: esanchitRows },
   ] = await Promise.all([
     db.from('job_documents').select('*').eq('job_id', id).order('created_at'),
     db.from('job_identifiers').select('*').eq('job_id', id).order('kind'),
@@ -67,6 +81,52 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
       .order('version', { ascending: false })
       .limit(1)
       .maybeSingle(),
+    // What the operator has decided about the Bill of Entry header. Read
+    // separately from the draft because the form has to round-trip their
+    // entries even before there is a draft to resolve them into.
+    db
+      .from('job_boe_header')
+      .select('*')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId)
+      .maybeSingle(),
+    // The operator's own container list, read separately from the draft for the
+    // same reason as the header: the panel has to show what was typed even
+    // before there is a draft to resolve it into.
+    db
+      .from('job_containers')
+      .select('*')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId)
+      .order('sr_no'),
+    // Who sent the job in: the importer to ask about an unclaimed preferential rate.
+    db
+      .from('mail_messages')
+      .select('from_address')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId)
+      .order('received_at', { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+    // The three operator-held sheet sources, read for the same reason as the
+    // header: the panel must show what was typed even before there is a draft.
+    db
+      .from('job_hss_chain')
+      .select('*')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId)
+      .order('level'),
+    db
+      .from('job_bonds_certificates')
+      .select('*')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId)
+      .order('seq'),
+    db
+      .from('job_document_esanchit')
+      .select('*')
+      .eq('job_id', id)
+      .eq('company_id', ctx.companyId),
   ]);
 
   const hasChecklist = (documents ?? []).some((d) => d.doc_type === 'checklist');
@@ -146,6 +206,23 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
                         {DOC_TYPE_LABELS[doc.doc_type]}
                         {doc.size_bytes ? ` · ${Math.round(Number(doc.size_bytes) / 1024)} kB` : ''}
                         {doc.source === 'upload' ? ' · uploaded' : ''}
+                      </div>
+                      {/* SUPPORTING_DOCS references a document by the number
+                          eSanchit issued for it, so a document with no IRN is
+                          left off the workbook and warned about instead. */}
+                      <div className="mt-0.5">
+                        {(() => {
+                          const ref = (esanchitRows ?? []).find((e) => e.document_id === doc.id);
+                          return (
+                            <EsanchitReference
+                              jobId={job.id}
+                              documentId={doc.id}
+                              irn={ref?.irn ?? ''}
+                              uploadedAt={ref?.uploaded_at?.slice(0, 16) ?? ''}
+                              referenceNo={ref?.reference_no ?? ''}
+                            />
+                          );
+                        })()}
                       </div>
                     </div>
                     <span className="shrink-0 text-xs text-slate-400">
@@ -245,6 +322,173 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               remarks={job.remarks}
             />
           )}
+
+          <BeHeaderPanel
+            jobId={job.id}
+            header={draft?.boe ?? null}
+            entries={{
+              igmNo: beHeader?.igm_no ?? '',
+              igmDate: beHeader?.igm_date ?? '',
+              inwardDate: beHeader?.inward_date ?? '',
+              beFilingDate: beHeader?.be_filing_date ?? '',
+              igmChecked: beHeader?.igm_checked ?? false,
+              lineNo: beHeader?.line_no ?? '',
+              gatewayIgmNo: beHeader?.gateway_igm_no ?? '',
+              gatewayIgmDate: beHeader?.gateway_igm_date ?? '',
+              gatewayInwardDate: beHeader?.gateway_inward_date ?? '',
+              packageUnitCode: beHeader?.package_unit_code ?? '',
+              marksAndNos: beHeader?.marks_and_nos ?? '',
+              customsHouseCode: beHeader?.customs_house_code ?? '',
+              beType: beHeader?.be_type ?? '',
+              dutyPaymentStatus: beHeader?.duty_payment_status ?? '',
+              adCode: beHeader?.ad_code ?? '',
+              importerRefNo: beHeader?.importer_ref_no ?? '',
+              sec46OverrideReason: beHeader?.sec46_override_reason ?? '',
+              flags: {
+                firstCheck: beHeader?.is_first_check ?? false,
+                greenChannel: beHeader?.is_green_channel ?? false,
+                kachchaBe: beHeader?.is_kachcha_be ?? false,
+                hss: beHeader?.is_hss ?? false,
+                bondsCertificates: beHeader?.is_bonds_certificates ?? false,
+                transhipment: beHeader?.is_transhipment ?? false,
+                itcLicDetails: beHeader?.itc_lic_details ?? false,
+                provisionalAssessment: beHeader?.is_under_provisional_assessment ?? false,
+              },
+            }}
+          />
+
+          <ContainersPanel
+            jobId={job.id}
+            fromOperator={(operatorContainers ?? []).length > 0}
+            containers={
+              (operatorContainers ?? []).length > 0
+                ? (operatorContainers ?? []).map((c) => ({
+                    containerNo: c.container_no,
+                    sealNo: c.seal_no ?? '',
+                    sizeType: c.size_type ?? '',
+                  }))
+                : (draft?.shipment.containers ?? []).map((c) => ({
+                    containerNo: c.number,
+                    sealNo: c.sealNo ?? '',
+                    sizeType: c.sizeType ?? '',
+                  }))
+            }
+            {...(draft?.shipment.containerCountStated !== undefined
+              ? { statedCount: draft.shipment.containerCountStated }
+              : {})}
+          />
+
+          {draft && (
+            <ItemsPanel
+              jobId={job.id}
+              items={draft.items.map((_, i) => itemRowView(draft, i))}
+              endUseCodes={Object.entries(END_USE_CODES).map(([code, label]) => ({ code, label }))}
+              eximSchemes={Object.entries(EXIM_SCHEME).map(([code, label]) => ({ code, label }))}
+              {...(() => {
+                const q = ftaBenefitQuestion(draft, job.job_number ?? null);
+                return q ? { ftaQuestion: { ...q, to: firstMail?.from_address ?? '' } } : {};
+              })()}
+            />
+          )}
+
+          {/* Only for a bonded filing: a home-consumption BE has no warehouse. */}
+          {draft?.boe && draft.boe.beType.value !== 'Home Consumption' && (
+            <BondPanel
+              jobId={job.id}
+              beType={draft.boe.beType.value}
+              block={draft.inbondExbond ?? null}
+              packing={draft.items
+                .filter((i) => i.packing)
+                .map((i) => ({
+                  slNo: i.slNo,
+                  description: i.description,
+                  packages: i.packing!.packages,
+                  ...(i.packing!.packageType ? { packageType: i.packing!.packageType } : {}),
+                  ...(i.packing!.perPackageGrossKg !== undefined
+                    ? { perPackageGrossKg: i.packing!.perPackageGrossKg }
+                    : {}),
+                }))}
+              entries={{
+                warehouseCode: beHeader?.warehouse_code ?? '',
+                inbondBeNo: beHeader?.inbond_be_no ?? '',
+                inbondBeDate: beHeader?.inbond_be_date ?? '',
+                bondNo: beHeader?.bond_no ?? '',
+                bondDate: beHeader?.bond_date ?? '',
+                bondExpiryDate: beHeader?.bond_expiry_date ?? '',
+                isWarehouseSale: beHeader?.is_warehouse_sale ?? false,
+                isSec65ManufacturingWh:
+                  beHeader?.is_sec65_manufacturing_wh ??
+                  draft.inbondExbond?.isSec65ManufacturingWh ??
+                  false,
+                exbondClearanceKind: beHeader?.exbond_clearance_kind ?? '',
+                releasedPackages: beHeader?.released_packages?.toString() ?? '',
+                releasedPackageCode: beHeader?.released_package_code ?? '',
+                releasedGrossWeightKg: beHeader?.released_gross_weight_kg?.toString() ?? '',
+                releasedUom: beHeader?.released_uom ?? '',
+              }}
+              // Off the resolved draft rather than the table, so a re-read that
+              // proposed them from a GST invoice shows up here too.
+              finishedGoods={(draft.inbondExbond?.sec65FinishedGoods?.value ?? []).map((g) => ({
+                gstInvoiceNo: g.gstInvoiceNo,
+                gstInvoiceDate: g.gstInvoiceDate,
+                cth: g.cth,
+                description: g.description,
+                quantity: String(g.quantity),
+                uqc: g.uqc,
+                itemSrNos: g.itemSrNos?.join(', ') ?? '',
+              }))}
+              itemSrNos={draft.items.map((i) => i.slNo)}
+            />
+          )}
+
+          <SecuritiesPanel
+            jobId={job.id}
+            isHss={beHeader?.is_hss ?? draft?.boe?.flags?.hss ?? false}
+            chain={(hssChainRows ?? []).map((p) => ({
+              iec: p.iec,
+              branchSrNo: p.branch_sr_no?.toString() ?? '',
+              name: p.name ?? '',
+              branchName: p.branch_name ?? '',
+              adCode: p.ad_code ?? '',
+              address: p.address ?? '',
+              city: p.city ?? '',
+              country: p.country ?? '',
+              postalCode: p.postal_code ?? '',
+            }))}
+            // Off the resolved draft where the operator has keyed nothing, so a
+            // warehouse bond the INBOND_EXBOND block already holds shows here
+            // too — marked as proposed, because it has not been confirmed.
+            securities={
+              (securityRows ?? []).length > 0
+                ? (securityRows ?? []).map((b) => ({
+                    kind: b.kind,
+                    type: b.type,
+                    number: b.number,
+                    date: b.cert_date ?? '',
+                    commissionerate: b.commissionerate ?? '',
+                    division: b.division ?? '',
+                    range: b.range_office ?? '',
+                    registrationPort: b.registration_port ?? '',
+                    proposed: b.proposed,
+                  }))
+                : (draft?.bonds ?? []).map((b) => ({
+                    kind: b.kind,
+                    type: b.type,
+                    number: b.number,
+                    date: b.date ?? '',
+                    commissionerate: b.commissionerate ?? '',
+                    division: b.division ?? '',
+                    range: b.range ?? '',
+                    registrationPort: b.registrationPortCode ?? '',
+                    proposed: b.proposed ?? false,
+                  }))
+            }
+            bondCodes={Object.entries(BOND_CODES).map(([code, label]) => ({ code, label }))}
+            certificateTypes={Object.entries(CERTIFICATE_TYPES).map(([code, label]) => ({
+              code,
+              label,
+            }))}
+          />
 
           {parties.length > 0 && <PartiesPanel jobId={job.id} parties={parties} />}
 

@@ -1,4 +1,4 @@
-import { chaProfile, END_USE_CODES, ESANCHIT_DOC_CODES } from '@checklist/core';
+import { chaProfile, END_USE_CODES, ESANCHIT_DOC_CODES, termsOfPayment } from '@checklist/core';
 import type { ChecklistDraft } from '@checklist/extraction';
 import type { JobRecord } from './store';
 
@@ -26,12 +26,24 @@ function dutyLine(label: string, notn: string | undefined, rate: number, amount:
   </tr>`;
 }
 
+/**
+ * How Logi-Sys prints the payment terms: the code, then the remark in
+ * parentheses — "OTHERS (OTHERS)", "FOC", "DA".
+ */
+function termsOfPaymentLabel(stated: string | undefined): string {
+  const { code, remark } = termsOfPayment(stated);
+  return remark ? `${code} (${remark})` : code;
+}
+
 /** Full printable checklist HTML for a reviewed job (A4, Logi-Sys layout). */
 export function checklistHtml(job: JobRecord): string {
   const d = job.draft as ChecklistDraft;
   const cha = chaProfile();
   const duty = d.duty;
-  const inv = d.invoice;
+  // Logi-Sys' own checklist prints one invoice block in the header and counts
+  // the rest — "Invoice 1 / 12" on `ex_job5`. The item table below carries them
+  // all, each line naming its invoice.
+  const inv = d.invoices[0];
   const sh = d.shipment;
 
   const itemsHtml = d.items
@@ -39,7 +51,7 @@ export function checklistHtml(job: JobRecord): string {
       const r = duty?.items[i];
       return `
       <tr class="item-head">
-        <td>${it.slNo}</td>
+        <td>${it.invoiceSrNo}.${it.slNo}</td>
         <td>${esc(it.ritc)}</td>
         <td colspan="4">${esc(it.description)}</td>
       </tr>
@@ -86,20 +98,22 @@ export function checklistHtml(job: JobRecord): string {
          <thead><tr><th>Inv N</th><th>Item N</th><th>Info Type</th><th>Info Qualifier</th><th>Info Code</th><th>Measurement</th><th>Unit</th></tr></thead>
          <tbody>${swInfo
            .map(
-             (r) => `<tr><td>1</td><td>${r.itemSlNo}</td><td>${esc(r.infoType)}</td><td>${esc(r.qualifier)}</td><td>${esc(r.code ?? '')}</td><td class="right">${r.measurement != null ? r.measurement.toFixed(6) : ''}</td><td>${esc(r.unit ?? '')}</td></tr>`,
+             (r) => `<tr><td>${r.invoiceSrNo ?? 1}</td><td>${r.itemSlNo}</td><td>${esc(r.infoType)}</td><td>${esc(r.qualifier)}</td><td>${esc(r.code ?? '')}</td><td class="right">${r.measurement != null ? r.measurement.toFixed(6) : ''}</td><td>${esc(r.unit ?? '')}</td></tr>`,
            )
            .join('')}</tbody>
        </table>`
     : '';
 
-  const batches = d.items.filter((it) => it.batch);
+  // One row per lot, as SW_PRODUCTION files them. The residual shelf life is
+  // the line's, computed off its shortest-dated lot, so it prints once.
+  const batches = d.items.flatMap((it) => (it.batches ?? []).map((b, i) => ({ it, b, first: i === 0 })));
   const singleWindow = batches.length
     ? `<div class="section-title">SINGLE WINDOW - Production Details</div>
        <table class="grid">
-         <thead><tr><th>Inv No</th><th>Item N</th><th>Batch ID</th><th>Batch Quantity</th><th>Manufacture Date</th><th>Expiry Date</th><th>Residual shelf life</th></tr></thead>
+         <thead><tr><th>Inv No</th><th>Item N</th><th>Batch ID</th><th>Batch Quantity</th><th>Manufacture Date</th><th>Expiry Date</th><th>Best Before</th><th>Residual shelf life</th></tr></thead>
          <tbody>${batches
            .map(
-             (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.batch?.batchNo ?? '')}</td><td>${it.batch?.quantity ?? ''}</td><td>${dt(it.batch?.manufactureDate)}</td><td>${dt(it.batch?.expiryDate)}</td><td>${it.residualShelfLifePercent != null ? `${it.residualShelfLifePercent}%` : ''}</td></tr>`,
+             ({ it, b, first }) => `<tr><td>${it.invoiceSrNo}</td><td>${it.slNo}</td><td>${esc(b.batchNo ?? '')}</td><td>${b.quantity ?? ''}</td><td>${dt(b.manufactureDate)}</td><td>${dt(b.expiryDate)}</td><td>${dt(b.bestBeforeDate)}</td><td>${first && it.residualShelfLifePercent != null ? `${it.residualShelfLifePercent}%` : ''}</td></tr>`,
            )
            .join('')}</tbody>
        </table>`
@@ -110,7 +124,7 @@ export function checklistHtml(job: JobRecord): string {
       <thead><tr><th>Inv No</th><th>Item No</th><th>Code</th><th>Description</th></tr></thead>
       <tbody>${d.items
         .map(
-          (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.endUseCode)}</td><td>${esc(END_USE_CODES[it.endUseCode] ?? '')}</td></tr>`,
+          (it) => `<tr><td>${it.invoiceSrNo}</td><td>${it.slNo}</td><td>${esc(it.endUseCode)}</td><td>${esc(END_USE_CODES[it.endUseCode] ?? '')}</td></tr>`,
         )
         .join('')}</tbody>
     </table>`;
@@ -120,7 +134,7 @@ export function checklistHtml(job: JobRecord): string {
       <thead><tr><th>Inv No</th><th>Item No</th><th>Generic Description</th><th>Model</th><th>Brand</th><th>Origin Countr</th></tr></thead>
       <tbody>${d.items
         .map(
-          (it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.description.slice(0, 50))}</td><td>NA</td><td></td><td>${esc(it.originCountry ?? d.shipment.countryOfOrigin ?? '')}</td></tr>`,
+          (it) => `<tr><td>${it.invoiceSrNo}</td><td>${it.slNo}</td><td>${esc(it.description.slice(0, 50))}</td><td>NA</td><td></td><td>${esc(it.originCountry ?? d.shipment.countryOfOrigin ?? '')}</td></tr>`,
         )
         .join('')}</tbody>
     </table>`;
@@ -165,7 +179,7 @@ export function checklistHtml(job: JobRecord): string {
   <div class="center">
     <h1>${esc(cha.name)}</h1>
     <h2>CheckList - BILL OF ENTRY FOR HOME CONSUMPTION</h2>
-    <div class="stn">[Custom stn: ${esc(d.customStation.name)},${esc(d.customStation.code)}]</div>
+    <div class="stn">${d.customStation ? `[Custom stn: ${esc(d.customStation.name)},${esc(d.customStation.code)}]` : ''}</div>
   </div>
   <div class="meta">
     <span>Printed On&nbsp;&nbsp;${dt(new Date().toISOString())}</span>
@@ -187,12 +201,12 @@ export function checklistHtml(job: JobRecord): string {
       ${!sh.mawbNo ? `<div class="kv"><b>HBL No.</b><span>${esc(sh.hblNo ?? '')}</span></div>` : ''}
       <div class="kv"><b>No Of Pkgs</b><span>${sh.packageCount ?? ''} ${esc(sh.packageUnit ?? '')}</span></div>
       <div class="kv"><b>Marks &amp; Nos</b><span>${esc(sh.marksAndNos ?? '')}</span></div>
-      <div class="kv"><b>Invoice Detail</b><span>Invoice 1 / 1</span></div>
-      <div class="kv"><b>Inv No &amp; Date</b><span>${esc(inv.invoiceNumber)} dt. ${dt(inv.invoiceDate)}</span></div>
-      <div class="kv"><b>Invoice Value</b><span>${n2(inv.invoiceValue)} ${esc(inv.currency)} &nbsp;&nbsp;<b>TOI</b> ${esc(inv.termsOfInvoice)}</span></div>
-      ${inv.insurance && inv.insurance.kind === 'amount' ? `<div class="kv"><b>Insurance</b><span>${n2(inv.insurance.value.amount)} ${esc(inv.insurance.value.currency)}</span></div>` : ''}
-      ${inv.miscCharges ? `<div class="kv"><b>Misc. Charges</b><span>${n2(inv.miscCharges.amount)} ${esc(inv.miscCharges.currency)}</span></div>` : ''}
-      <div class="kv"><b>Exchange Rate</b><span>1 ${esc(inv.currency)} = ${d.invoiceMeta.exchangeRate.rate.toFixed(4)} INR</span></div>
+      <div class="kv"><b>Invoice Detail</b><span>Invoice 1 / ${d.invoices.length}</span></div>
+      <div class="kv"><b>Inv No &amp; Date</b><span>${esc(inv?.invoiceNumber ?? '')} dt. ${dt(inv?.invoiceDate)}</span></div>
+      <div class="kv"><b>Invoice Value</b><span>${n2(inv?.invoiceValue ?? 0)} ${esc(inv?.currency ?? '')} &nbsp;&nbsp;<b>TOI</b> ${esc(inv?.termsOfInvoice ?? '')}</span></div>
+      ${inv?.insurance && inv.insurance.kind === 'amount' ? `<div class="kv"><b>Insurance</b><span>${n2(inv.insurance.value.amount)} ${esc(inv.insurance.value.currency)}</span></div>` : ''}
+      ${inv?.miscCharges ? `<div class="kv"><b>Misc. Charges</b><span>${n2(inv.miscCharges.amount)} ${esc(inv.miscCharges.currency)}</span></div>` : ''}
+      <div class="kv"><b>Exchange Rate</b><span>${Object.entries(d.invoiceMeta.exchangeRates).map(([c, r]) => `1 ${esc(c)} = ${r.toFixed(4)} INR`).join(', ')}</span></div>
     </div>
     <div class="col">
       <div class="kv"><b>Party Ref</b><span></span></div>
@@ -204,15 +218,15 @@ export function checklistHtml(job: JobRecord): string {
       <div class="kv"><b>Port Of Loading</b><span>${esc(sh.portOfLoading ?? '')}</span></div>
       <div class="kv"><b>Cons. Country</b><span>${esc(sh.consCountry ?? '')}</span></div>
       <div class="kv"><b>Gross Weight</b><span>${sh.grossWeightKg != null ? `${sh.grossWeightKg.toFixed(3)} KGS` : ''}</span></div>
-      <div class="kv"><b>Payment Method</b><span>${esc(d.invoiceMeta.paymentMethod)}</span></div>
-      <div class="kv"><b>Nature Of Transaction</b><span>${esc(d.invoiceMeta.natureOfTransaction)}</span></div>
-      <div class="kv"><b>Terms of Payment</b><span>${esc(d.invoiceMeta.termsOfPayment ?? 'OTHERS (OTHERS)')}</span></div>
+      <div class="kv"><b>Payment Method</b><span>${esc(inv?.paymentMethod ?? '')}</span></div>
+      <div class="kv"><b>Nature Of Transaction</b><span>${esc(inv?.natureOfTransaction ?? '')}</span></div>
+      <div class="kv"><b>Terms of Payment</b><span>${esc(termsOfPaymentLabel(inv?.termsOfPayment))}</span></div>
       <div class="kv"><b>Supplier Name</b><span>${esc(d.supplier.name)}</span></div>
       <div class="kv"><b>Supplier Addr</b><span>${d.supplier.addressLines.map(esc).join('<br>')}${d.supplier.country ? `<br>${esc(d.supplier.country)}` : ''}</span></div>
       <div class="kv"><b>Supplier Country</b><span>${esc(d.supplier.country ?? '')}</span></div>
-      <div class="kv"><b>Green Channel</b><span>No &nbsp;&nbsp; <b>Related</b> ${d.invoiceMeta.relatedParty ? 'Yes' : 'No'}</span></div>
+      <div class="kv"><b>Green Channel</b><span>No &nbsp;&nbsp; <b>Related</b> ${inv?.relatedParty ? 'Yes' : 'No'}</span></div>
       <div class="kv"><b>Section 48</b><span>No &nbsp;&nbsp; <b>First Check</b> No</span></div>
-      <div class="kv"><b>Kachha B/E</b><span>No &nbsp;&nbsp; <b>Under SVB</b> No</span></div>
+      <div class="kv"><b>Kachha B/E</b><span>No &nbsp;&nbsp; <b>Under SVB</b> ${d.supplierRelationship?.svbRefNo ? 'Yes' : 'No'}</span></div>
       <div class="kv"><b>Under Provisional Assessment</b><span>No</span></div>
     </div>
   </div>
@@ -265,7 +279,7 @@ export function checklistHtml(job: JobRecord): string {
   <table class="grid">
     <thead><tr><th>Inv No</th><th>Item No</th><th>Name</th><th>Address</th></tr></thead>
     <tbody>${d.items
-      .map((it) => `<tr><td>1</td><td>${it.slNo}</td><td>${esc(it.manufacturerName ?? d.supplier.name)}</td><td>${esc(it.manufacturerAddress ?? d.supplier.addressLines.join(', '))}</td></tr>`)
+      .map((it) => `<tr><td>${it.invoiceSrNo}</td><td>${it.slNo}</td><td>${esc(it.manufacturerName ?? d.supplier.name)}</td><td>${esc(it.manufacturerAddress ?? d.supplier.addressLines.join(', '))}</td></tr>`)
       .join('')}</tbody>
   </table>
 
