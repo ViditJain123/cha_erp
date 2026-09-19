@@ -1,4 +1,6 @@
+import { GENERATED_EXCHANGE_RATES } from '../src/masters/generated/exchange-rates.js';
 import { rateDeterminingDate } from '../src/boe-timing.js';
+import { readFileSync, readdirSync } from 'node:fs';
 import { exchangeRateTableOn, exchangeRatesOn } from '../src/masters/index.js';
 import { describe, expect, it } from 'vitest';
 
@@ -87,5 +89,51 @@ describe('liv_job1, the filing this bug was found on', () => {
   it('does not hand that job whatever rate is current now', () => {
     const now = exchangeRatesOn(new Date().toISOString().slice(0, 10));
     expect(now?.['USD']).not.toBe(86.2);
+  });
+});
+
+describe('the generated master agrees with the source it was built from', () => {
+  /**
+   * The builder needs the CBIC notification PDFs, which are ~1.3 GB and
+   * gitignored, so it cannot run in CI. The ERAM half *is* committed —
+   * `masters-source/eram/*.json`, one file per publication — and that is the
+   * half that moves every fortnight, so this is where drift would appear: a
+   * table fetched and never rebuilt, or a generated file edited by hand.
+   */
+  const eramDir = new URL('../masters-source/eram/', import.meta.url);
+  const files = readdirSync(eramDir).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+
+  it('has every fetched ERAM table in it', () => {
+    expect(files.length).toBeGreaterThan(60);
+    const generated = new Map(GENERATED_EXCHANGE_RATES.map((t) => [t.effectiveFrom, t]));
+    const missing = files.map((f) => f.replace('.json', '')).filter((d) => !generated.has(d));
+    expect(missing, 'fetched but not built — re-run build-exchange-rates.py').toEqual([]);
+  });
+
+  it('carries each one at the rates ICEGATE published, per single unit', () => {
+    const generated = new Map(GENERATED_EXCHANGE_RATES.map((t) => [t.effectiveFrom, t]));
+    for (const f of files) {
+      const source = JSON.parse(readFileSync(new URL(f, eramDir), 'utf8')) as {
+        effectiveFrom: string;
+        rates: Record<string, { import: number; export: number }>;
+      };
+      const built = generated.get(source.effectiveFrom)!;
+      for (const [currency, pair] of Object.entries(source.rates)) {
+        expect(built.rates[currency]?.import, `${source.effectiveFrom} ${currency}`).toBeCloseTo(
+          pair.import,
+          8,
+        );
+      }
+    }
+  });
+
+  it('never leaves two tables claiming the same day', () => {
+    for (let i = 1; i < GENERATED_EXCHANGE_RATES.length; i += 1) {
+      const prev = GENERATED_EXCHANGE_RATES[i - 1]!;
+      const next = GENERATED_EXCHANGE_RATES[i]!;
+      expect(prev.effectiveTo, `${prev.effectiveFrom} is open-ended mid-history`).not.toBeNull();
+      expect(prev.effectiveTo! < next.effectiveFrom).toBe(true);
+    }
+    expect(GENERATED_EXCHANGE_RATES[GENERATED_EXCHANGE_RATES.length - 1]!.effectiveTo).toBeNull();
   });
 });

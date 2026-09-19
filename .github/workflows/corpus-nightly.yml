@@ -1,0 +1,87 @@
+# The only check that reads real PDFs.
+#
+# Every golden exporter test runs off a hand-transcribed draft: they pin the
+# mappers and can never catch an extraction regression, because no model runs.
+# The corpus dry run puts all 32 example folders through the live path — ingest,
+# draft, workbook — with the checklist, the processed BE and the vendor's own
+# export withheld, and scores the result against Logi-Sys' workbooks.
+#
+# It cannot run on a GitHub-hosted runner, for two reasons that are not going
+# away:
+#
+#   1. The corpus is 32 folders of a real customer's shipping documents. They
+#      sit beside the repo and are deliberately not in it.
+#   2. The run makes real OpenAI calls, so it costs money per run. That is why
+#      it is nightly and not per-commit.
+#
+# So it wants a self-hosted runner on a machine that holds the corpus, labelled
+# `corpus`. Until one is registered this workflow is inert — which is honest:
+# an inert workflow is visible, and a "nightly check" nobody runs is not.
+name: Corpus dry run
+
+on:
+  schedule:
+    # 02:30 UTC, which is 08:00 IST — after the day's rates publish and before
+    # anyone files.
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: corpus
+  cancel-in-progress: false
+
+jobs:
+  corpus:
+    name: export the corpus and compare
+    runs-on: [self-hosted, corpus]
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.20.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Export every corpus folder
+        working-directory: apps/web
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CORPUS_COMPANY_ID: ${{ secrets.CORPUS_COMPANY_ID }}
+          CORPUS_PROFILE_ID: ${{ secrets.CORPUS_PROFILE_ID }}
+        run: ./node_modules/.bin/tsx --conditions react-server scripts/corpus-export.mts --fresh
+
+      - name: Score against Logi-Sys' own workbooks
+        working-directory: apps/web
+        run: python3 scripts/corpus-compare.py
+
+      - name: What ICES would reject
+        working-directory: apps/web
+        run: ./node_modules/.bin/tsx --conditions react-server scripts/ices-report.mts
+
+      # The gate. Fails when a job that used to export now blocks, when
+      # agreement drops, or when a workbook starts drawing an ICES rejection it
+      # did not draw before. Improvements are never failures.
+      - name: Regression gate
+        working-directory: apps/web
+        run: ./node_modules/.bin/tsx --conditions react-server scripts/corpus-gate.mts
+
+      - name: Publish the scorecard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: corpus-scorecard
+          retention-days: 30
+          path: |
+            corpus-exports/comparison/SCORECARD.md
+            corpus-exports/comparison/ICES-ERRORS.md
+            corpus-exports/comparison/scorecard.json
+            corpus-exports/comparison/ices.json

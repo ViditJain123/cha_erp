@@ -223,6 +223,33 @@ async function main(): Promise<void> {
   await mkdir(COMPARISON, { recursive: true });
   await writeFile(path.join(COMPARISON, 'ICES-ERRORS.md'), `${lines.join('\n')}\n`);
 
+  // A machine-readable sidecar for scripts/corpus-gate.mts, which fails the
+  // nightly run when a workbook starts drawing a rejection it did not draw
+  // before. The markdown is for people; this is for the gate.
+  await writeFile(
+    path.join(COMPARISON, 'ices.json'),
+    `${JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        clean: clean.length,
+        workbooks: withIces.length,
+        rejections: ices.length,
+        byJob: Object.fromEntries(
+          withIces.map((r) => [
+            r.folder,
+            [
+              ...new Set(
+                (r.ices?.findings ?? []).filter((f) => f.source === 'ices').map((f) => f.code),
+              ),
+            ].sort(),
+          ]),
+        ),
+      },
+      null,
+      2,
+    )}\n`,
+  );
+
   console.log(`${clean.length}/${withIces.length} workbooks clean against the rules we can check`);
   console.log(`${ices.length} ICES rejections, ${byCode.size} distinct codes`);
   console.log(`${vendor.length} Logi-Sys-only findings`);

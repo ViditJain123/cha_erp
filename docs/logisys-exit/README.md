@@ -59,3 +59,31 @@ overall number.
 
 The working tree carries ~180 uncommitted files, including whole untracked
 feature areas. Commit or stash first, or no phase will have a readable diff.
+
+## Running the checks
+
+```bash
+pnpm -r typecheck && pnpm -r test          # what CI gates on every push
+```
+
+The corpus dry run is nightly, not per-commit — it reads real PDFs and makes
+real model calls. After a run:
+
+```bash
+cd apps/web
+./node_modules/.bin/tsx --conditions react-server scripts/corpus-export.mts
+python3 scripts/corpus-compare.py                                    # SCORECARD.md
+./node_modules/.bin/tsx --conditions react-server scripts/ices-report.mts   # ICES-ERRORS.md
+./node_modules/.bin/tsx --conditions react-server scripts/corpus-gate.mts   # fails on regression
+```
+
+`corpus-gate.mts` compares against `apps/web/scripts/corpus-baseline.json` and
+fails when a job that used to export now blocks, when agreement drops, or when a
+workbook starts drawing an ICES rejection it did not draw before. Improvements
+are never failures. Refresh the baseline deliberately, with `--update`, and say
+in the commit message why.
+
+**The corpus run cannot use a GitHub-hosted runner.** The 32 folders are a real
+customer's shipping documents and live beside the repo rather than in it, so
+`.github/workflows/corpus-nightly.yml` wants a self-hosted runner labelled
+`corpus`. Until one is registered it is inert.

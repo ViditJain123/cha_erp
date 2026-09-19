@@ -1,0 +1,98 @@
+# The gate this repo did not have.
+#
+# Until now nothing ran on a push: the working tree carried 180 uncommitted
+# files, there was no `.github/`, and "the tests pass" meant whatever somebody
+# last ran locally. Phase 0.3.
+#
+# What runs here is deliberately only the part that needs no credentials and no
+# model calls. The corpus dry run — the only thing that reads real PDFs and so
+# the only thing that can catch an extraction regression — makes real OpenAI
+# calls and lives in corpus-nightly.yml.
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: typecheck and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          # Pinned by package.json#packageManager; named here too so the setup
+          # step does not have to guess before the file is read.
+          version: 11.20.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm -r typecheck
+
+      - name: Tests
+        run: pnpm -r test
+
+  database:
+    name: RLS and claims
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.20.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Row-level security is the whole multi-tenant boundary, so it is worth a
+      # job of its own. It needs the hosted Supabase, which a fork cannot have:
+      # skip with a reason rather than fail red on a contribution that could
+      # never have passed.
+      - name: Check secrets are present
+        id: secrets
+        run: |
+          if [ -z "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" ]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Supabase credentials are not configured for this ref; skipping the RLS and claims checks."
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Claims
+        if: steps.secrets.outputs.present == 'true'
+        run: pnpm db:check:claims
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CHECK_EMAIL: ${{ secrets.CHECK_EMAIL }}
+          CHECK_PASSWORD: ${{ secrets.CHECK_PASSWORD }}
+
+      - name: RLS
+        if: steps.secrets.outputs.present == 'true'
+        run: pnpm db:test:rls
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

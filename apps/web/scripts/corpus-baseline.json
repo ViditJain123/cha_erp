@@ -1,0 +1,91 @@
+{
+  "takenAt": "2026-09-19",
+  "status": {
+    "ex_job10": "ok",
+    "ex_job3": "ok",
+    "ex_job1": "ok",
+    "ex_job2": "ok",
+    "ex_job6": "ok",
+    "ex_job4": "ok",
+    "ex_job7": "ok",
+    "ex_job8": "ok",
+    "ex_job9": "ok",
+    "ex_job11": "ok",
+    "ex_job12": "ok",
+    "ex_job13": "ok",
+    "ex_job15": "ok",
+    "ex_job14": "ok",
+    "ex_job17": "blocked",
+    "ex_job16": "ok",
+    "ex_job18": "ok",
+    "ex_job19": "blocked",
+    "ex_job20": "ok",
+    "ex_job21": "ok",
+    "ex_job22": "ok",
+    "ex_job23": "blocked",
+    "ex_job24": "blocked",
+    "ex_job25": "ok",
+    "ex_job27": "ok",
+    "ex_job26": "ok",
+    "ex_job28": "ok",
+    "ex_job30": "blocked",
+    "ex_job5": "ok",
+    "liv_job1": "ok",
+    "ex_job31": "blocked",
+    "ex_job29": "ok"
+  },
+  "agreement": {
+    "ex_job6": 49.1,
+    "ex_job20": 43.7,
+    "ex_job21": 43.9,
+    "ex_job25": 40.6,
+    "ex_job26": 45.5,
+    "ex_job28": 32.7,
+    "ex_job29": 51.2,
+    "liv_job1": 77.1
+  },
+  "icesCodes": {
+    "ex_job1": [
+      "207"
+    ],
+    "ex_job10": [
+      "203"
+    ],
+    "ex_job11": [],
+    "ex_job12": [
+      "207"
+    ],
+    "ex_job13": [],
+    "ex_job14": [],
+    "ex_job15": [],
+    "ex_job16": [],
+    "ex_job18": [],
+    "ex_job2": [],
+    "ex_job20": [
+      "207"
+    ],
+    "ex_job21": [
+      "207"
+    ],
+    "ex_job22": [],
+    "ex_job25": [],
+    "ex_job26": [],
+    "ex_job27": [],
+    "ex_job28": [],
+    "ex_job29": [],
+    "ex_job3": [
+      "207"
+    ],
+    "ex_job4": [
+      "203"
+    ],
+    "ex_job5": [],
+    "ex_job6": [
+      "207"
+    ],
+    "ex_job7": [],
+    "ex_job8": [],
+    "ex_job9": [],
+    "liv_job1": []
+  }
+}
