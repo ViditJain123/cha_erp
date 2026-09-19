@@ -4,6 +4,7 @@ import {
   compCessExemptionCandidates,
   compCessForCth,
   igstRateForCth,
+  logisysNotn,
   lookupTariff,
   notnFlagFromRateText,
   endUseCodeFromText,
@@ -24,6 +25,7 @@ import {
   tariffValueCandidates,
   tariffValueQuantity,
   tradeRemediesFor,
+  tradeRemedyEntries,
   type FtaAgreement,
   type TradeRemedyEntry,
 } from '@checklist/core';
@@ -492,6 +494,55 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     // apply and none is chosen" against a line where one had been.
     if (isOperator(item, 'tradeRemedies')) {
       delete item.tradeRemedyCandidates;
+      // A row the operator chose is kept verbatim. But one chosen before the
+      // line carried a `basis` has none, and the basis decides both the duty
+      // (`computeDuty` bases a landed-value remedy on AV + BCD) and the
+      // `ADD_Basis` / `CVD_CalculatedOn` columns. Fill it from the
+      // notification the row already names, rather than leaving the column to
+      // the screen default it used to get.
+      if (item.tradeRemedies?.some((l) => !l.basis)) {
+        const origin = iso2(item.originCountry);
+        const known = tradeRemediesFor({
+          cth,
+          originIso2: origin,
+          exportIso2: iso2(draft.shipment.consCountry) ?? origin,
+          producer: item.manufacturerName,
+          exporter: draft.supplier.name,
+          onIsoDate: today,
+        });
+        item.tradeRemedies = item.tradeRemedies.map((line) => {
+          if (line.basis) return line;
+          // The automatic matcher keys on producer and exporter as well as the
+          // code, and an operator picks rows it does not return — so fall back
+          // to the notification the row itself names, which is the thing the
+          // basis is a property of.
+          const entry =
+            known[line.kind]?.entry ??
+            tradeRemedyEntries().find(
+              (e) =>
+                e.kind === line.kind &&
+                logisysNotn(e.notificationShort ?? e.notification) === logisysNotn(line.notification) &&
+                (!line.cthSerial || e.tableSerial === line.cthSerial),
+            );
+          // A reference-price duty is the shortfall of the landed value below
+          // a reference price: neither a percentage of the assessable value
+          // nor an amount per unit, so it has no "Calc. Method" of its own and
+          // the officer's arithmetic is still missing from the line.
+          if (entry?.basis === 'REFERENCE_PRICE' && line.ratePercent === undefined && line.amountPerUnit === undefined) {
+            flags.push({
+              severity: 'error',
+              path: at('tradeRemedies'),
+              message:
+                `${label}: ${line.kind} ${line.notification} row ${line.cthSerial ?? '?'} is a reference-price duty — ` +
+                `the difference between the landed value and ${entry.currency ?? ''} ${entry.amount} per ${entry.unit}. ` +
+                'Work it out and enter it on the item; the duty and its basis cannot be filed until you do.',
+            });
+            return line;
+          }
+          const basis = entry ? remedyLine(entry, item)?.basis : undefined;
+          return basis ? { ...line, basis } : line;
+        });
+      }
     }
     if (!isOperator(item, 'tradeRemedies')) {
       delete item.tradeRemedies;

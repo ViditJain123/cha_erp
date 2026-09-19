@@ -71,6 +71,21 @@ the 2008 directory. Kept as a separate map so "the ICES directory says so" and
 "we have seen Logi-Sys do it" do not become the same claim. An unknown code is
 still refused; "unknown" now means *in neither source*.
 
+`EXIM_SCHEME_NOTIFICATION` maps the other way: from the Customs notification a
+line claims to the scheme code it implies. Each Foreign Trade Policy is
+implemented by a family of notifications, one per scheme, and the CBIC title
+names the scheme exactly ("Regarding implementation of Advance Authorisation
+Scheme under Foreign Trade Policy, 2023" — `021/2023` → `03`). Titles from
+`data/customs-corpus/index/cbic-notifications.json`, corroborated by the three
+Logi-Sys workbooks that fill the column. `024/2023` is absent because the
+directory has no code for it, and RoDTEP because it is claimed off a scrip
+rather than a notification. See [06-items.md §10](06-items.md).
+
+`ADVANCE_AUTHORISATION_SCHEMES` is read off `EXIM_SCHEME` rather than listed,
+so the two cannot drift: the codes whose directory name begins "Advance
+Licence". It exists because 11/2021-Customs S.No. 18 names the advance
+authorisation in words and carries no notification to match on.
+
 `resolveIndianStation(place)` matches a free-text place of delivery off a bill
 of lading to one of these rows. Matching order: exact ICES code → normalised
 exact name → `ICD <PLACE>` / `<PLACE> ICD` / `CFS <PLACE>` forms → unique

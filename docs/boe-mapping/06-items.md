@@ -161,13 +161,34 @@ use) are the two the goldens use.
 
 ## 10. `Exim_Code`, `Exim_Notn`, `Exim_NotnSrNo`
 
-**Source:** `operator` (or `mail`).
+**Source:** `derived` < `mail` < `operator`.
 
 The "Exim Scheme" dropdown on the General tab — ICES Part 6 field 14, "Item
-category (Scheme Code)", and the same domain as the LICENSE sheet's own scheme
-code. `EXIM_SCHEME` is now the complete ICES/DGFT directory rather than what a
-scrolled screenshot showed, and `VENDOR_EXIM_SCHEME` carries the two codes only
-Logi-Sys writes — see [masters.md](masters.md). Blank is the normal import.
+category (Scheme Code)", `C`, length 2, optional. Same domain as the LICENSE
+sheet's own scheme code. `EXIM_SCHEME` is now the complete ICES/DGFT directory
+rather than what a scrolled screenshot showed, and `VENDOR_EXIM_SCHEME` carries
+the two codes only Logi-Sys writes — see [masters.md](masters.md). Blank is the
+normal import.
+
+**The code is derived from the scheme's notification.** Each Foreign Trade
+Policy is implemented by a family of Customs notifications, one per scheme, and
+the notification names the scheme exactly — `EXIM_SCHEME_NOTIFICATION`:
+
+| Notification | Scheme | `Exim_Code` | Evidence |
+|---|---|---|---|
+| `021/2023`, `018/2015` | Advance Authorisation | `03` | `ex_job25` |
+| `022/2023` | AA, deemed export | `05` | CBIC title |
+| `023/2023` | AA, annual requirement | `17` | CBIC title |
+| `025/2023`, `019/2015` | DFIA | `26` | `ex_job28` |
+| `026/2023`, `016/2015` | EPCG | `12` | `ex_job26` |
+
+A code the operator keyed wins — a licence can say something the notification
+alone does not — and one they did not is derived. `024/2023` (AA for export of
+prohibited goods) is deliberately absent: the directory has no distinct code for
+it, so a line claiming it **warns** rather than borrowing `03`. RoDTEP is absent
+for a different reason — it is claimed by debiting a scrip, not under a
+notification, so `RD` comes from the licence (`ex_job20`, and
+[10-license.md](10-license.md)).
 
 **A scheme brings a licence and the LICENSE sheet with it**, and the two sheets
 have to agree:
@@ -177,7 +198,10 @@ have to agree:
 - `Exim_Notn` / `Exim_NotnSrNo` are present **iff** `Exim_Code` is — ICES
   **330** / **331** / **383**.
 - The scheme exemption is claimed **here and not in `Basic_Notn`**, which is
-  empty on all four licence goldens. Filing both claims the relief twice.
+  empty on all four licence goldens. The scheme's own notification in both
+  slots claims the relief twice and is a **blocker**; a *different* relief
+  beside it **warns** and still files, because a scheme import of
+  preferential-origin goods is a real thing.
 - `IGST_ExemptionNotn` repeats the scheme notification for an Advance
   Authorisation (`021/2023`) and an EPCG (`026/2023`), and is **blank** for a
   DFIA (`025/2023`), a TRQ and a duty-credit scrip — those do not exempt IGST.
@@ -240,7 +264,7 @@ restriction — is **warned**, not filed.
 | Columns | Source | Rule |
 |---|---|---|
 | `SWS_Notn`, `SWS_NotnSrNo` | `master` | The 11/2018-Customs exemption entry for the CTH, when one exempts the surcharge. Blank when SWS applies at 10% (every golden). |
-| `AIDC_LevyNotn`, `AIDC_LevyNotnSrNo` | `master` | 11/2021-Customs and the serial covering the CTH. Every golden files it: `011/2021` `17`, and `19` on polypropylene (`ex_job6`). |
+| `AIDC_LevyNotn`, `AIDC_LevyNotnSrNo` | `master` | 11/2021-Customs and the serial the notification's own table chooses for the line — a code-specific entry (1–16) first, then the BCD relief claimed: a notification the entry names with its serials (45/2025 → `20`), **`18` under an advance authorisation**, `19` under a notification in the ANNEXURE (`ex_job6`, 69/2011), `17` residual. S.No. 18 names the instrument in words and has no notification to match, so it is reached from [§10](#10-exim_code-exim_notn-exim_notnsrno)'s scheme code. |
 | `AIDC_ExemptionNotn`, `AIDC_ExemptionNotnSrNo` | `master` | Only when an exemption notification reduces AIDC. liv_job1 repeats the levy pair here; we do not, until a filing shows it is required. |
 | `AIDCNotn_Excise`, `ADICNotnSr_Excise` | `constant` blank | Excise AIDC: petrol and diesel manufactured in India. |
 | `CHealthCess_Notn`, `CHealthCess_NotnSrNo` | `master` | *"As per notification"*: health cess on medical devices (Finance Act 2020 s.141) and its exemption notification. |
@@ -306,8 +330,8 @@ which the operator sends. Their answer is a `mail` instruction.
 | Columns | Source | Rule |
 |---|---|---|
 | `IGST_LevyNotn`, `IGST_LevyNotnSrNo` | `master` | 9/2025-Integrated Tax (Rate), serial as `<schedule><serial>` (PN 80/2017: *"II3"*). Goldens: `II68`, `I106`, `I67`, `II114`, `II504`. A residual Schedule II match leaves the serial blank. |
-| `IGST_LevyNotnFlag` | `derived` | [§19](#19-the-flags) — only when the levy has a specific part; blank for 9/2025's ad valorem rates. |
-| `IGST_ExemptionNotnType` | `master` | `C` when the exemption is a Customs notification, `G` when a GST notification (PN 80/2017: *"G by Default; C – customs Notfn."*). liv_job1 writes `C` with no exemption; we write the type only beside an exemption. |
+| `IGST_LevyNotnFlag` | `derived` | [§19](#19-the-flags) — only when the levy has a specific part; blank for 9/2025's ad valorem rates, which is all of them. |
+| `IGST_ExemptionNotnType` | `derived` | `C` when the exemption is a Customs notification, `G` when a GST notification (PN 80/2017: *"G by Default; C – customs Notfn."*) — read off the notification's own suffix by `exemptionNotnType()`, not off the dropdown, and **warned** when the job says otherwise. liv_job1 writes `C` with no exemption at all; we write the type only beside an exemption. |
 | `IGST_ExemptionNotn`, `…SrNo`, `…Flag` | `master` | The exemption notification and serial covering the CTH, when one reduces IGST. The customer marked these *"On Kumarpal Doshi"*; the type question is settled by the GST screen. |
 | `IGST_CompCessNotn`, `…SrNo`, `…Flag` | `master` | 1/2017-Compensation Cess (Rate); S.No. 56 for goods no other serial names. |
 | `IGST_CompCessExemptionNotnType`, `…Notn`, `…SrNo`, `…Flag` | `master` | *"Same logic as IGST."* |
@@ -329,8 +353,10 @@ combine — `+` add, `-` subtract, `H` the higher, `L` the lower
 (`combineNotnRate`). With no specific part every flag gives the same duty,
 which is why the screen defaults to Plus. Other Duties defaults to Higher.
 
-**Source:** `master` — read from the notification's own rate wording ("or Rs. X
-per kg, whichever is higher" is `H`).
+**Source:** `derived` — read from the notification's own rate wording by
+`notnFlagFromRateText()` ("or Rs. X per kg, whichever is higher" is `H`).
+`resolveItems` runs it over the schedule entry it actually chose, and the
+mapper writes whatever comes out.
 
 **Written only when the notification has a specific part**, i.e. when the flag
 changes the duty. For a purely ad valorem rate every flag computes the same
@@ -338,6 +364,14 @@ thing and the column is left blank: that is what the desk's own hand-filled
 sheet does (the sample row on `understanding_this_sheet.xlsx`, and
 `logisys-e4a144cd-…`), even though Logi-Sys' export of liv_job1 leaks the screen
 default `+` into it.
+
+That distinction is not cosmetic. 1/2017-Compensation Cess states four tobacco
+serials (8, 9, 17, 18) as *"21% or Rs. 4170 per thousand, whichever is
+higher"* — `H`. While `+` was seeded on every line and the mapper suppressed
+it, those shipped blank with nothing to say they were mis-encoded. A compound
+rate the duty engine cannot compute now raises an **error** flag on the line:
+`computeDuty` prices compensation cess ad valorem only, so the cess on such a
+line has to be worked out by hand.
 
 ## 20. Tariff value
 
@@ -393,7 +427,15 @@ line) and exporter (the seller):
 `ADD_Basis` `AV` is the screen's "%age of Assbl. Value"; `CVD_CalculatedOn` `1`
 its "%age of Landed Value". liv_job1 writes both on a consignment with no duty —
 the screen defaults leaking into the export — and so we write them only beside a
-notification.
+notification, and only when that notification states **that** basis.
+
+**Source:** `derived`. The basis is on the remedy line already
+(`remedyLine()` reads it off the master's `basis`, and `computeDuty` makes the
+same decision from the same field); the two mappers used to ignore it and write
+the code flat. Each column has exactly one proven code — `AV` on ADD and `1` on
+CVD, both off liv_job1 — so the other basis, and a line stored before the field
+existed, leave the column blank and **warn**. Borrowing the one code we have
+for the basis it does not describe would be a guess about the duty.
 
 The zeros (`ADD_Qty 0.000000`, `ADD_%Rate 0.00`, `ADD_AmountPerUnit 0.00000`,
 `CVD_Rate 0.00`) are `constant`: every vendor export writes them.
@@ -407,6 +449,13 @@ The zeros (`ADD_Qty 0.000000`, `ADD_%Rate 0.00`, `ADD_AmountPerUnit 0.00000`,
 **Source:** `operator`. The SBEDUTY table's catch-all for levies with no column
 of their own. The zeros are `constant` (vendor exports); the rest blank unless
 the operator fills a line.
+
+Logi-Sys writes `DUTY_ExemptionType` `N` on every line of four of its own
+exports. It is not written here: `<TABLE>SBEDUTY` is an **optional** segment
+(BE Message format 2.25, Part 4) whose entry is "mandatory if 'Other duties' is
+chosen as 'Y' in item detail entry", so a line with no other duty has no SBEDUTY
+row for the field to belong to. The `N` is the screen's default for a table the
+filing does not contain.
 
 ## 23. Manufacturer
 

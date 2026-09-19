@@ -356,14 +356,17 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     if (addLine && addLine.amountPerUnit === undefined && addLine.basis !== 'AV') {
       ctx.warn(
         `${path}.ADD_Basis`,
-        `${label}: ${addLine.notification} states the anti-dumping duty on the landed value, and no code for that basis is proven. Set the Calc. Method in Logi-Sys.`,
+        `${label}: ${addLine.notification} does not state the anti-dumping duty as a percentage of the assessable value` +
+          `${addLine.basis ? ` (it is on the ${addLine.basis === 'LANDED' ? 'landed value' : addLine.basis})` : ''}, ` +
+          'and `AV` is the only Calc. Method proven. Set it in Logi-Sys.',
       );
     }
     const cvdLine = remedy('CVD');
     if (cvdLine && cvdLine.basis !== 'LANDED') {
       ctx.warn(
         `${path}.CVD_CalculatedOn`,
-        `${label}: ${cvdLine.notification} states the countervailing duty on the assessable value, and no code for that basis is proven. Set the Calc. Method in Logi-Sys.`,
+        `${label}: ${cvdLine.notification} states the countervailing duty on the assessable value, not the landed value, ` +
+          'and `1` (%age of Landed Value) is the only Calc. Method proven. Set it in Logi-Sys.',
       );
     }
 

@@ -53,6 +53,22 @@ A column with no available source does not silently become blank or a default.
 It raises a `warn` (the export happens, the operator is told) or a `blocker`
 (the export refuses), per `packages/exporter/src/map/context.ts`.
 
+Some sheet docs write **`derived`**. That is not a sixth source: it is a
+`master` lookup whose answer is computed from what the master says rather than
+read out of a column — the `+ - H L` flag from a notification's rate wording,
+`C`/`G` from the notification's own suffix, `Exim_Code` from the notification
+that implements the scheme. It is called out because the alternative in each
+case was a screen default, and the point of naming it is that the value is a
+consequence of the notification and not of a dropdown.
+
+**A screen default is not a `constant`.** A constant is a value that is
+genuinely always the same and has the evidence to prove it — every vendor
+export writes `0.000000` in `ADD_Qty`, ICES itself requires `NOEXCISE`. A
+screen default is what the vendor's UI happens to pre-select, which their
+export then leaks; it says nothing about the filing, and copying it makes a
+real value indistinguishable from an absent one. Where Logi-Sys writes one and
+we do not, the column stays blank and the sheet doc says why.
+
 ## Precedence
 
 When more than one source has an opinion, later wins:

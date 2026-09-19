@@ -89,15 +89,24 @@ price. **This is the gate for the whole charge block:**
 | `TOI` | Freight in the price? | Insurance in the price? |
 |---|---|---|
 | `CIF` | yes | yes |
-| `C&F` | yes | **no — `Ins` activates** |
-| `C&I` | **no — `Frt` activates** | yes |
+| `CF` | yes | **no — `Ins` activates** |
+| `CI` | **no — `Frt` activates** | yes |
 | `FOB` | **no** | **no** |
 
-C&F and CFR are the same Incoterm; CIF is not. Keying this by hand once turned a
+CF and CFR are the same Incoterm; CIF is not. Keying this by hand once turned a
 cost-and-freight invoice into cost-insurance-freight, which would have folded a
 non-existent insurance cost into the assessable value.
 
-**Failure mode.** A term with no Logi-Sys equivalent — Ex-Works, CPT, DAP — is a
+**Logi-Sys spells two of them differently.** Its uploader takes `C&F` and `C&I`,
+with the ampersand, and nothing else; ICES rejects the ampersand outright —
+error **207**, which our own validator raised on six corpus jobs. That is a
+dialect of the workbook, not of the declaration: `TOI_CODE` carries ICES'
+spelling everywhere, `VENDOR_TOI_CODE` is applied where the workbook cell is
+written, and `icesToi()` reads the term back out for the ICES rule. The gate
+above is keyed on the ICES value — keying it on the emitted string is how a
+rename would quietly declare freight twice.
+
+**Failure mode.** A term with no ICES equivalent — Ex-Works, CPT, DAP — is a
 **blocker**. Terms of invoice decides which charges are already in the price, so
 it cannot be rounded to the nearest one. (`merge.ts` rewrites EXW to FOB, or to
 C&F when the invoice itself bills the freight, long before this point; the
