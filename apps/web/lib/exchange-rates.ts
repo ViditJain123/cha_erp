@@ -46,6 +46,23 @@ export async function applyExchangeRateResolution(
     .eq('company_id', companyId)
     .maybeSingle();
 
+  return recomputeDuty(valueAtFilingDate(draft, header ?? null));
+}
+
+/** The keyed dates this step reads off `job_boe_header`. */
+export interface RateHeader {
+  be_filing_date?: string | null;
+  inward_date?: string | null;
+}
+
+/**
+ * The decision, with no database in it.
+ *
+ * Split out so it can be tested directly: the rule about *which* date values a
+ * Bill of Entry is the part worth pinning, and it should not need a Supabase
+ * client to exercise. The wrapper above does the read and the duty recompute.
+ */
+export function valueAtFilingDate(draft: ChecklistDraft, header: RateHeader | null): ChecklistDraft {
   // The same precedence the GENERAL header uses: what the operator keyed, then
   // what the documents said.
   const rateDate = rateDeterminingDate({
@@ -71,7 +88,7 @@ export async function applyExchangeRateResolution(
         'Bill of Entry date on the job and the rates, the assessable values and the duty ' +
         'all follow.',
     });
-    return recomputeDuty({ ...draft, flags });
+    return { ...draft, flags };
   }
 
   const found = exchangeRateTableOn(rateDate);
@@ -84,11 +101,7 @@ export async function applyExchangeRateResolution(
         'figure on this Bill of Entry derives from that rate, so it is left unset rather ' +
         'than guessed.',
     });
-    return recomputeDuty({
-      ...draft,
-      flags,
-      invoiceMeta: { ...draft.invoiceMeta, exchangeRates: {} },
-    });
+    return { ...draft, flags, invoiceMeta: { ...draft.invoiceMeta, exchangeRates: {} } };
   }
 
   const needed = draftCurrencies(draft.invoices);
@@ -111,5 +124,5 @@ export async function applyExchangeRateResolution(
         : ''),
   });
 
-  return recomputeDuty({ ...draft, flags, invoiceMeta: { ...draft.invoiceMeta, exchangeRates } });
+  return { ...draft, flags, invoiceMeta: { ...draft.invoiceMeta, exchangeRates } };
 }
