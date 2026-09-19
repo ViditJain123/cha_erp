@@ -20,8 +20,8 @@ on the one thing we do not control.
 
 | Phase | Title | Depends on | Moves |
 |---|---|---|---|
-| [0](phase-0-correctness.md) | Correctness debts | — | a live wrong-duty bug; the safety net |
-| [1](phase-1-ices-conventions.md) | ICES encoding conventions | 0 | ~175 column misses, cheaply |
+| [0](phase-0-correctness.md) | Correctness debts | — | ✅ a live wrong-duty bug; the safety net |
+| [1](phase-1-ices-conventions.md) | ICES encoding conventions | 0 | ✅ ICES rejections 8 → 2; the screen defaults removed |
 | [2](phase-2-operator-data.md) | Operator data + IGM enquiry | — | ~270 warnings across 7 fields |
 | [3](phase-3-esanchit.md) | eSANCHIT | 0 | SUPPORTING_DOCS off 0% |
 | [4](phase-4-licence-ledger.md) | Licence ledger | 0 | LICENSE off 0% |
@@ -57,8 +57,14 @@ overall number.
 
 ## Before starting anything
 
-The working tree carries ~180 uncommitted files, including whole untracked
-feature areas. Commit or stash first, or no phase will have a readable diff.
+Phases 0 and 1 are done; the working tree is clean and CI gates every push.
+
+**The baseline needs refreshing.** Phase 1 stopped writing `ADD_Basis` where
+the notification does not state that basis, which costs `liv_job1` one cell it
+used to match Logi-Sys on — about 0.6 of an agreement point, past
+`corpus-gate.mts`' tolerance. The next nightly run will fail on it. Refresh
+with `--update` and say in the commit message that the cell is a screen default
+we now refuse.
 
 ## Running the checks
 
