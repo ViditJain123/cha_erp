@@ -2,7 +2,6 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import path from 'node:path';
 import {
   DECLARATIONS,
-  EXCHANGE_RATES,
   FTA_SCHEMES,
   IMPORTERS,
   PORTS,
@@ -14,6 +13,7 @@ import {
   type PortMaster,
   type TariffMaster,
 } from './data.js';
+import { GENERATED_EXCHANGE_RATES } from './generated/exchange-rates.js';
 import { tariffBookMasters } from './tariff-book.js';
 
 /**
@@ -148,12 +148,22 @@ export function allImporters(): ImporterMaster[] {
   return [...overlay, ...IMPORTERS.filter((i) => !keys.has(i.gstin || i.name))];
 }
 
+/**
+ * Every notified table, oldest first, with the operator's overlay on top.
+ *
+ * The overlay is the escape hatch for a fortnight ICEGATE has published but
+ * this deployment predates: `fetch-eram.py` plus a rebuild is the normal route,
+ * and keying the table on the masters screen is the one that does not need a
+ * deploy. An overlay entry replaces the generated table for the same
+ * `effectiveFrom` rather than sitting beside it.
+ */
 export function allExchangeRates(): ExchangeRateMaster[] {
   const overlay = readOverlay('exchangeRates');
   const dates = new Set(overlay.map((e) => e.effectiveFrom));
-  return [...EXCHANGE_RATES.filter((e) => !dates.has(e.effectiveFrom)), ...overlay].sort((a, b) =>
-    a.effectiveFrom.localeCompare(b.effectiveFrom),
-  );
+  return [
+    ...GENERATED_EXCHANGE_RATES.filter((e) => !dates.has(e.effectiveFrom)),
+    ...overlay,
+  ].sort((a, b) => a.effectiveFrom.localeCompare(b.effectiveFrom));
 }
 
 export function allProductMemory(): ProductMemory[] {

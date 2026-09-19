@@ -1423,18 +1423,36 @@ export const RE_IMPORT_NOTIFICATIONS: ReImportEntry[] = [
   },
 ];
 
+/**
+ * One notified table of exchange rates, with the window it was in force for.
+ *
+ * Section 14 of the Customs Act fixes the rate by the **date the Bill of Entry
+ * is presented**, not by the date anyone runs the pipeline, so this is a
+ * history rather than a current-rate lookup. The window is closed at both ends
+ * on purpose: an open-ended table is how a rate from June gets applied to a
+ * September filing, which is a wrong assessable value on every line.
+ *
+ * Rates are **per single unit** of the foreign currency. ICEGATE and the older
+ * notifications both quote the yen and the won per 100 units; the division
+ * happens at build time so nothing downstream has to remember. See
+ * `packages/core/scripts/build-exchange-rates.py`.
+ */
 export interface ExchangeRateMaster {
-  effectiveFrom: string; // ISO date
-  rates: { [currency: string]: number };
+  /** ISO date the table takes effect. */
+  effectiveFrom: string;
+  /** Inclusive last day, or `null` while this is the table in force. */
+  effectiveTo: string | null;
+  /** The notification number, or the ERAM publication it came from. */
+  source: string;
+  rates: {
+    [currency: string]: {
+      /** INR per unit, for imported goods. */
+      import: number;
+      /** INR per unit, for export goods. CBIC notifies both; only imports are used today. */
+      export: number;
+    };
+  };
 }
-
-/** CBIC customs exchange rates (ERAM). Refreshed fortnightly — Phase 2 automates this. */
-export const EXCHANGE_RATES: ExchangeRateMaster[] = [
-  {
-    effectiveFrom: '2026-06-01',
-    rates: { USD: 95.3, EUR: 103.15, GBP: 121.4, JPY: 0.6412, CNY: 13.25, AED: 26.1, SGD: 71.2, CHF: 105.9 },
-  },
-];
 
 export interface ImporterMaster {
   name: string;

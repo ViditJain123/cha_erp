@@ -1,0 +1,94 @@
+{
+ "effectiveFrom": "2025-04-12",
+ "source": "ICEGATE ERAM 2025-04-12",
+ "rates": {
+  "AED": {
+   "import": 24.05,
+   "export": 22.65
+  },
+  "AUD": {
+   "import": 55.15,
+   "export": 52.55
+  },
+  "BHD": {
+   "import": 236.2,
+   "export": 219.15
+  },
+  "CAD": {
+   "import": 61.25,
+   "export": 59.2
+  },
+  "CHF": {
+   "import": 105.5,
+   "export": 100.9
+  },
+  "CNY": {
+   "import": 12.0,
+   "export": 11.6
+  },
+  "DKK": {
+   "import": 12.7,
+   "export": 12.4
+  },
+  "EUR": {
+   "import": 100.05,
+   "export": 96.5
+  },
+  "GBP": {
+   "import": 114.0,
+   "export": 110.15
+  },
+  "HKD": {
+   "import": 11.15,
+   "export": 10.85
+  },
+  "JPY": {
+   "import": 0.591,
+   "export": 0.571
+  },
+  "KRW": {
+   "import": 0.06,
+   "export": 0.0565
+  },
+  "KWD": {
+   "import": 287.35,
+   "export": 269.65
+  },
+  "NOK": {
+   "import": 8.35,
+   "export": 8.15
+  },
+  "NZD": {
+   "import": 50.55,
+   "export": 48.0
+  },
+  "QAR": {
+   "import": 25.45,
+   "export": 22.2
+  },
+  "SAR": {
+   "import": 23.6,
+   "export": 22.25
+  },
+  "SEK": {
+   "import": 8.8,
+   "export": 8.6
+  },
+  "SGD": {
+   "import": 64.95,
+   "export": 62.7
+  },
+  "TRY": {
+   "import": 2.35,
+   "export": 2.2
+  },
+  "USD": {
+   "import": 86.6,
+   "export": 84.9
+  },
+  "ZAR": {
+   "import": 4.7,
+   "export": 4.4
+  }
+ }
+}

@@ -10,6 +10,7 @@ import {
   type IntoBondBeExtract,
 } from '@checklist/extraction';
 import { applyContainerResolution } from './containers';
+import { applyExchangeRateResolution } from './exchange-rates';
 import { applyGeneralResolution } from './general';
 import { applyInbondExbondResolution } from './inbond';
 import { applySecuritiesResolution } from './securities';
@@ -71,6 +72,14 @@ export interface DraftPipelineFile {
  *      status, the AD codes and the reference policy, and it needs the job to
  *      find the customer's mail thread. Thirteen of that sheet's columns used
  *      to be constants in code; this is where they get an actual source.
+ *
+ *  8b. `applyExchangeRateResolution` re-values the draft at the rate of exchange
+ *      the filing date actually carries. It has to follow the header, because
+ *      the header is where the Bill of Entry date and the entry-inwards date
+ *      are settled, and it has to precede everything below, because every step
+ *      after it recomputes duty off `invoiceMeta.exchangeRates`. The merge can
+ *      only seed a provisional table from the day it ran — section 14 fixes the
+ *      rate by the date of presentation, which no shipping document states.
  *
  *   9. `applyContainerResolution` settles the container list — the CONTAINERS
  *      sheet. The merge reads it off the bills of lading; this adds the numbers
@@ -152,7 +161,11 @@ export async function applyJobResolution(
 ): Promise<ChecklistDraft> {
   const withHeader = await applyItemResolution(
     await applyContainerResolution(
-      await applyGeneralResolution(draft, companyId, jobId),
+      await applyExchangeRateResolution(
+        await applyGeneralResolution(draft, companyId, jobId),
+        companyId,
+        jobId,
+      ),
       companyId,
       jobId,
     ),

@@ -28,7 +28,7 @@ if ! mkdir $LOCK 2>/dev/null; then
 fi
 trap 'rmdir $LOCK' EXIT
 
-for other in fetch-loop.sh cli/extract-corpus cli/ocr-corpus cli/index-corpus fetch-corpus.py; do
+for other in fetch-loop.sh cli/extract-corpus cli/ocr-corpus cli/index-corpus fetch-corpus.py fetch-eram.py; do
   if pgrep -f $other >/dev/null; then
     echo "$(date '+%F %T') $other is already running; skipping this refresh"
     exit 0
@@ -39,6 +39,15 @@ step() { echo "\n=== $1 $(date '+%F %T')"; }
 
 step "fetch updates"
 python3 -u $ROOT/packages/core/scripts/fetch-corpus.py update || echo "fetch reported failures; continuing with what arrived"
+
+# ICEGATE publishes the exchange rates at 18:00 on the first and third Thursday,
+# effective from the following midnight, so a daily run never misses a
+# fortnight. Only the days since the last run are probed. The generated master
+# is committed, so a new table still needs a commit and a deploy to reach
+# production; until then the masters screen is the escape hatch.
+step "exchange rates"
+python3 -u $ROOT/packages/core/scripts/fetch-eram.py || echo "ERAM fetch failed; the master keeps the tables it already holds"
+python3 -u $ROOT/packages/core/scripts/build-exchange-rates.py || echo "exchange rate build failed"
 
 cd $LIB
 # One type per process throughout: the notification text alone is ~55 MB of

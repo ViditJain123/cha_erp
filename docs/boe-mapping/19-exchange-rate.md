@@ -94,13 +94,19 @@ So:
 | `BANK_NAME` / `BANK_CERTIFICATE` / `BANK_CERTIFICATE_DATE` | blank | **mandatory, all three** |
 | certificate date | — | **must equal the BE filing date** |
 
-**We already hold the standard-currency list and did not know it.**
-`EXCHANGE_RATES` (`packages/core/src/masters/data.ts:1432`) *is* the Ministry of
-Finance notification — that is your dictation, and it is what
-`exchangeRatesOn()` reads. A currency in that master is standard by
-construction; a currency absent from it is non-standard. No second list is
-needed, and the spec's Annexure C (where standard codes are marked `*`) is a
-cross-check rather than a dependency.
+**We already hold the standard-currency list and did not know it.** The master
+at `packages/core/src/masters/generated/exchange-rates.ts` *is* the Ministry of
+Finance notification, and it is what `exchangeRatesOn()` reads. A currency in
+the table that applies is standard by construction; a currency absent from it is
+non-standard. No second list is needed, and the spec's Annexure C (where
+standard codes are marked `*`) is a cross-check rather than a dependency.
+
+The master is generated, not typed: `build-exchange-rates.py` parses every CBIC
+Customs (N.T.) exchange rate notification up to 20 June 2024 and merges the
+ICEGATE ERAM tables that replaced them from 4 July 2024, which `fetch-eram.py`
+pulls from `POST /cbu/icegateapi/igexratesubscribe` — unauthenticated, and the
+captcha on ICEGATE's own page gates the form rather than the service. 398 tables
+from 2012 to the fortnight in force.
 
 Today a currency with no rate in the master is a flat **blocker**:
 
@@ -127,8 +133,9 @@ that declares one of those two values eleven invoices at the wrong rate.
 
 Note the `100 JPY` — **some currencies are notified per hundred units**, which
 is what ICES field 9, `Unit in Rs.`, exists for and what the vendor sheet has no
-column for. Logi-Sys derives it. `EXCHANGE_RATES` stores `JPY: 0.6412`, the
-per-unit figure, so the arithmetic is right; but an operator reading the
+column for. Logi-Sys derives it. The master stores the **per-unit** figure —
+`JPY: 0.6245` where ICEGATE says `62.45` and flags `units: "100.0"` — so the
+arithmetic is right; but an operator reading the
 workbook sees `0.641200` where the notification says `60.8000`, and that is
 worth knowing before someone "fixes" it. See
 [open-questions.md](open-questions.md#exchange-rate-unit).
@@ -186,8 +193,11 @@ USD invoice needs a EUR row, and ICES rejects the BE without one.
 ## Upstream
 
 `invoiceMeta.exchangeRates` is `Record<string, number>`
-(`extraction/src/draft.ts:854`), filled by `exchangeRatesOn(today)` in
-`merge.ts:911`. Two things it does not carry and this sheet needs:
+(`extraction/src/draft.ts`). The merge seeds it **provisionally** from the day
+it runs and flags it as such; `applyExchangeRateResolution`
+(`apps/web/lib/exchange-rates.ts`) then re-values the draft at the rate the
+filing date actually carries, and re-runs on every header change. Two things it
+does not carry and this sheet needs:
 
 1. **The bank-certificate particulars** — name, number, date — for a
    non-standard currency. A new `bank_certificate` document type, or an operator
@@ -196,10 +206,17 @@ USD invoice needs a EUR row, and ICES rejects the BE without one.
    rate seeded for XXX"* per invoice currency and does not look at the freight,
    insurance or misc currencies at all.
 
-One more, not this sheet's to fix but its to flag: **`EXCHANGE_RATES` holds a
-single entry, effective `2026-06-01`.** The notification is fortnightly. A job
-filed today converts at a rate three months old, and `exchangeRatesOn()` will
-return it without complaint. Automating that refresh is Phase 2 per the master's
-own comment; until it lands, the rate on every export is as current as whoever
-last edited `data.ts`. See
-[open-questions.md](open-questions.md#exchange-rate-staleness).
+**Staleness is settled** (Phase 0.1). The master was a single hand-typed table
+effective `2026-06-01` with no end date, and `exchangeRatesOn()` returned it for
+any date without complaint — which is why `liv_job1` filed USD at 96.05 where
+Logi-Sys' own workbook says 86.20, about 11% on the assessable value of every
+line. Every table now carries a closed window, the lookup returns `undefined`
+outside one, and the fortnights CBIC published only as image scans are listed in
+`EXCHANGE_RATE_GAPS` so a date inside one is refused rather than answered with
+its neighbour.
+
+**Which date.** Section 14 fixes the rate by the date the Bill of Entry is
+presented; the second proviso to section 46(3) deems a prior BE presented on the
+date of entry inwards. `rateDeterminingDate()` in `packages/core/src/boe-timing.ts`
+is the single place that decides, and it answers `undefined` rather than falling
+back to today.

@@ -1128,3 +1128,30 @@ export function toInvoiceInputs(draft: ChecklistDraft): InvoiceInput[] {
 }
 
 export type { TermsOfInvoice };
+
+/**
+ * Every currency a Bill of Entry actually converts at.
+ *
+ * The invoices' own currencies, plus any a freight, insurance or miscellaneous
+ * charge is billed in: ICES wants an EXCHANGE_RATE row for each of those even
+ * when no invoice uses it (errors 220 / 227 / 234), and `ex_job29` is a GBP
+ * invoice with its freight certified in EUR. INR is not one of them — it is the
+ * currency being converted *to*, and the exporter writes its parity row itself.
+ *
+ * Shared by the merge and by the job-level rate resolution so the two cannot
+ * disagree about which rows the sheet needs.
+ */
+export function draftCurrencies(
+  invoices: Pick<DraftInvoice, 'currency' | 'freight' | 'insurance' | 'miscCharges'>[],
+): string[] {
+  return [
+    ...new Set(
+      invoices.flatMap((i) => [
+        i.currency,
+        i.freight?.currency,
+        i.insurance?.kind === 'amount' ? i.insurance.value.currency : undefined,
+        i.miscCharges?.currency,
+      ]),
+    ),
+  ].filter((c): c is string => !!c && c !== 'INR');
+}

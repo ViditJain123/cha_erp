@@ -56,6 +56,7 @@ import type {
   ShippingBillExtract,
 } from './schemas.js';
 import {
+  draftCurrencies,
   toInvoiceInputs,
   type ChecklistDraft,
   type DraftBatch,
@@ -1007,7 +1008,34 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
   // Every rule below is per invoice: terms of invoice, currency, charges and
   // the insurance gap all belong to one sale, and a BE that carries twelve
   // sales carries twelve answers.
-  const rates = exchangeRatesOn(today);
+  // Provisional, and flagged as such. The rate of exchange is fixed by the date
+  // the Bill of Entry is presented, and nobody has keyed that yet — it lands on
+  // `job_boe_header` long after the documents are read. `today` is the only
+  // date a pure merge over documents has, so it is used to get a workable draft
+  // and then overwritten by `applyExchangeRateResolution` once the header is
+  // settled. What it must never do is reach back to a table that expired: a
+  // stale rate is a wrong assessable value on every line, and the whole point
+  // of this seam is that it says so instead.
+  const rates = exchangeRatesOn(today) ?? {};
+  if (!exchangeRatesOn(today))
+    flags.push({
+      severity: 'error',
+      path: 'invoiceMeta.exchangeRates',
+      message:
+        `No customs exchange rate table covers ${today}. Run ` +
+        'packages/core/scripts/fetch-eram.py and rebuild the master, or key the ' +
+        'fortnight on the masters screen — every rupee figure on this Bill of Entry ' +
+        'derives from it.',
+    });
+  else
+    flags.push({
+      severity: 'info',
+      path: 'invoiceMeta.exchangeRates',
+      message:
+        `Exchange rates are provisional: they are the table in force on ${today}, because ` +
+        'no Bill of Entry date has been keyed yet. Section 14 fixes the rate by the date ' +
+        'of presentation, so key the BE date on the job and the rates and duty follow.',
+    });
 
   // A bank's certificate stands in for the notification on a currency the
   // Ministry of Finance does not notify — ICES calls those "non-standard" and
@@ -1867,17 +1895,8 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       // refuse a Bill of Entry over a rate the notification does carry.
       // `ex_job29` is a GBP invoice with its freight certified in EUR.
       exchangeRates: Object.fromEntries(
-        [
-          ...new Set(
-            invoices.flatMap((i) => [
-              i.currency,
-              i.freight?.currency,
-              i.insurance?.kind === 'amount' ? i.insurance.value.currency : undefined,
-              i.miscCharges?.currency,
-            ]),
-          ),
-        ]
-          .filter((c): c is string => !!c && c !== 'INR' && rates[c] != null)
+        draftCurrencies(invoices)
+          .filter((c) => rates[c] != null)
           .map((c) => [c, rates[c]!]),
       ),
       ...(Object.keys(bankRateCertificates).length && { bankRateCertificates }),

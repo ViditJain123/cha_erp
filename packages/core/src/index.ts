@@ -5,6 +5,7 @@ export {
   filingStatusFrom,
   isUnderSec46,
   isUnderSec48,
+  rateDeterminingDate,
   type BoeTimingInput,
 } from './boe-timing.js';
 export { numberToIndianWords, rupeesInWords, tradeDescription } from './words.js';

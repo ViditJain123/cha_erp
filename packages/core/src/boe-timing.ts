@@ -94,3 +94,27 @@ export function daysLate(input: BoeTimingInput): number | undefined {
   const days = daysBetween(input.inwardDate, input.beFilingDate);
   return days !== undefined && days > 0 ? days : undefined;
 }
+
+/**
+ * The date that fixes the rate of exchange.
+ *
+ * Section 14(1) values imported goods at the rate of exchange in force on the
+ * **date a Bill of Entry is presented under section 46**. The second proviso to
+ * section 46(3) then says that a Bill of Entry presented *before* the vessel
+ * arrives is deemed to have been presented on the date of entry inwards — so a
+ * Prior filing converts at the entry-inwards rate, not at the rate on the day
+ * the paperwork was lodged. Between a fortnightly notification and a vessel
+ * running a week late, those are routinely different tables.
+ *
+ * `undefined` when the filing date is not known, which is the ordinary state of
+ * a job at ingest: the date is keyed by an operator on `job_boe_header`, long
+ * after the documents are read. Callers seed provisional rates and say so
+ * rather than treating "not keyed yet" as "today".
+ */
+export function rateDeterminingDate(input: BoeTimingInput): string | undefined {
+  const filed = input.beFilingDate?.trim();
+  if (!filed) return undefined;
+  const inward = input.inwardDate?.trim();
+  if (inward && filed < inward) return inward;
+  return filed;
+}

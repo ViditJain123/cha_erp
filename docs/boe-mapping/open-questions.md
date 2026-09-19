@@ -943,17 +943,37 @@ in the corpus.
 
 ## EXCHANGE_RATE: the CBIC rate master is not refreshed {#exchange-rate-staleness}
 
-`EXCHANGE_RATES` (`packages/core/src/masters/data.ts:1432`) holds **one** entry,
-effective `2026-06-01`. The notification is fortnightly. `exchangeRatesOn()`
-returns that entry for a job filed today without complaint, so every export
-converts at whatever rate was last typed into `data.ts`.
+**Settled — Phase 0.1.**
 
-This is the largest silent error surface in the workbook — every INR figure on
-the Bill of Entry descends from it — and it is invisible because nothing is
-missing.
+The master held **one** hand-typed entry effective `2026-06-01` with no end
+date, and `exchangeRatesOn()` returned it for any date without complaint, so
+every export converted at whatever rate was last typed into `data.ts`. That is
+what filed `liv_job1` at USD 96.05 where Logi-Sys' own workbook says 86.20 —
+about 11% on the assessable value of every line, and invisible because nothing
+was missing.
 
-**Interim:** the master's own comment says *"Phase 2 automates this"*.
+Three things changed:
 
-**To settle:** automate the fortnightly pull, and until then have
-`exchangeRatesOn()` **warn** when the effective date it returns is more than a
-fortnight behind the filing date, rather than answering silently.
+1. **The master is generated.** `packages/core/scripts/build-exchange-rates.py`
+   parses every CBIC Customs (N.T.) exchange rate notification through 20 June
+   2024, folding the amendment notifications (which substitute a single currency
+   row) onto the table in force rather than reading them as tables of their own.
+   From 4 July 2024 the notifications stop: CBIC moved publication to the
+   Exchange Rate Automation Module on ICEGATE, and `fetch-eram.py` pulls those.
+   398 tables, 2012 to the fortnight in force.
+2. **Every table has a closed window**, and the lookup returns `undefined`
+   outside one. The fortnights CBIC published only as image scans are listed in
+   `EXCHANGE_RATE_GAPS`, so a date inside one is refused rather than answered
+   with its neighbour's rates.
+3. **The date is the filing date.** `rateDeterminingDate()`
+   (`packages/core/src/boe-timing.ts`) applies section 14 and the second proviso
+   to section 46(3), and `applyExchangeRateResolution`
+   (`apps/web/lib/exchange-rates.ts`) re-values the draft whenever the header
+   changes. The merge still seeds from the day it runs, because a pure function
+   over shipping documents has no other date — but it says so on the draft.
+
+**Still open:** the refresh is a script somebody runs, not a schedule. ERAM
+publishes at 18:00 on the first and third Thursday, so `fetch-eram.py` plus a
+rebuild belongs on the same cron as `refresh-corpus.sh`.
+
+

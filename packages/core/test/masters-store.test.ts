@@ -4,6 +4,7 @@ import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   addExchangeRateTable,
+  exchangeRateTableOn,
   exchangeRatesOn,
   lookupImporter,
   lookupTariff,
@@ -53,10 +54,39 @@ describe('masters overlay store', () => {
     expect(lookupTariff('17021110')?.bcdRate).toBe(30);
   });
 
-  it('newer exchange-rate tables take effect from their date', () => {
-    addExchangeRateTable({ effectiveFrom: '2026-08-01', rates: { USD: 96.1 } });
-    expect(exchangeRatesOn('2026-08-05')['USD']).toBe(96.1);
-    expect(exchangeRatesOn('2026-07-01')['USD']).toBe(95.3);
+  it('an operator-keyed table takes effect for its own window only', () => {
+    // The escape hatch for a fortnight ICEGATE has published but this build
+    // predates. It replaces the generated table for the same effectiveFrom.
+    addExchangeRateTable({
+      effectiveFrom: '2026-08-21',
+      effectiveTo: '2026-09-03',
+      source: 'keyed on the masters screen',
+      rates: { USD: { import: 96.1, export: 94.4 } },
+    });
+    expect(exchangeRatesOn('2026-08-25')?.['USD']).toBe(96.1);
+
+    // And emphatically not for a date the notified history already answers.
+    expect(exchangeRatesOn('2024-06-25')?.['USD']).toBe(84.3);
+  });
+
+  it('refuses a date no table covers rather than reaching for a neighbour', () => {
+    // Before the history starts. The old lookup fell back to the first table.
+    expect(exchangeRatesOn('2001-01-01')).toBeUndefined();
+    expect(exchangeRateTableOn('2001-01-01')).toMatchObject({ ok: false, reason: 'before-history' });
+
+    // A fortnight CBIC published as an image-only scan. Its neighbour's rates
+    // are not the rates that were in force, so there is no answer to give.
+    expect(exchangeRatesOn('2022-11-20')).toBeUndefined();
+    expect(exchangeRateTableOn('2022-11-20')).toMatchObject({
+      ok: false,
+      reason: 'unreadable-notification',
+    });
+  });
+
+  it('quotes the yen per single unit, not per hundred', () => {
+    // 45/2024-Cus (N.T) Schedule II says `100 Japanese Yen = 53.60`. Filing
+    // 53.60 against one yen is a 100x error on the assessable value.
+    expect(exchangeRatesOn('2024-06-25')?.['JPY']).toBeCloseTo(0.536, 6);
   });
 
   it('learns and recalls importers', () => {

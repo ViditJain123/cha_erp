@@ -28,6 +28,7 @@ import {
   type CompCessEntry,
   type CustomHouseMaster,
   type DeclarationMaster,
+  type ExchangeRateMaster,
   type ForeignPortMaster,
   type FtaSchemeMaster,
   type IgstScheduleEntry,
@@ -38,6 +39,7 @@ import {
   type TariffMaster,
 } from './data.js';
 import { logisysNotn } from './codes.js';
+import { EXCHANGE_RATE_GAPS } from './generated/exchange-rates.js';
 import { allExchangeRates, allImporters, allTariff } from './store.js';
 import type { ExchangeRateTable } from '../types.js';
 export {
@@ -531,14 +533,78 @@ export function lookupFtaScheme(cooSchemeText: string, originCountry: string): F
   );
 }
 
-/** Exchange rates effective on a given date (latest table not after the date). */
-export function exchangeRatesOn(isoDate: string): ExchangeRateTable {
-  const applicable = allExchangeRates().filter((e) => e.effectiveFrom <= isoDate).sort((a, b) =>
-    a.effectiveFrom.localeCompare(b.effectiveFrom),
+/**
+ * Why the rate of exchange has to be answered with `undefined`.
+ *
+ * Section 14 of the Customs Act fixes the rate by the date the Bill of Entry is
+ * presented. The master is a history of fortnightly tables, so a date either
+ * falls inside one of them or it does not, and "does not" has three real causes
+ * — a date before the history starts, a date past the newest table we hold, and
+ * a fortnight CBIC published as an image-only scan that never parsed.
+ *
+ * None of those is an excuse to hand back a neighbouring table. This function
+ * previously returned the newest table *not after* the date, with no upper
+ * bound, which is how `liv_job1` filed USD at 96.05 when its filing date
+ * carried 86.20 — about 11% on the assessable value of every line, straight
+ * into the duty. Refusing is recoverable; a confident wrong rate is not.
+ */
+export type ExchangeRateLookup =
+  | { ok: true; table: ExchangeRateMaster; rates: ExchangeRateTable }
+  | { ok: false; reason: 'before-history' | 'after-coverage' | 'unreadable-notification'; detail: string };
+
+/** The full record in force on a date, with provenance, or why there is none. */
+export function exchangeRateTableOn(isoDate: string): ExchangeRateLookup {
+  const gap = EXCHANGE_RATE_GAPS.find((g) => g.from <= isoDate && isoDate <= g.to);
+  if (gap)
+    return {
+      ok: false,
+      reason: 'unreadable-notification',
+      detail:
+        `CBIC notification ${gap.source} governs ${isoDate} and could not be read ` +
+        `(${gap.reason}), so the rates in force then are not the ones this master holds.`,
+    };
+
+  const tables = allExchangeRates();
+  const first = tables[0];
+  if (!first) return { ok: false, reason: 'before-history', detail: 'no exchange rate tables seeded' };
+  if (isoDate < first.effectiveFrom)
+    return {
+      ok: false,
+      reason: 'before-history',
+      detail: `the exchange rate master starts at ${first.effectiveFrom}`,
+    };
+
+  const table = tables.find(
+    (e) => e.effectiveFrom <= isoDate && (e.effectiveTo === null || isoDate <= e.effectiveTo),
   );
-  const table = applicable[applicable.length - 1] ?? allExchangeRates()[0];
-  if (!table) throw new Error('no exchange rate tables seeded');
-  return table.rates;
+  if (!table) {
+    const last = tables[tables.length - 1]!;
+    return {
+      ok: false,
+      reason: 'after-coverage',
+      detail:
+        `the newest table this master holds ran to ${last.effectiveTo ?? last.effectiveFrom}. ` +
+        'Run packages/core/scripts/fetch-eram.py and rebuild, or key the table on the masters screen.',
+    };
+  }
+
+  const rates: ExchangeRateTable = {};
+  for (const [currency, pair] of Object.entries(table.rates)) rates[currency] = pair.import;
+  return { ok: true, table, rates };
+}
+
+/**
+ * Import rates in force on a date, or `undefined` when none is.
+ *
+ * `undefined` is a real answer and every caller has to treat it as one — see
+ * `exchangeRateTableOn` for why. It is emphatically not the same as a currency
+ * being absent from a table that *does* apply: that means ICES considers the
+ * currency non-standard and wants the importer's bank certificate instead
+ * (error 155), which the exporter already models.
+ */
+export function exchangeRatesOn(isoDate: string): ExchangeRateTable | undefined {
+  const found = exchangeRateTableOn(isoDate);
+  return found.ok ? found.rates : undefined;
 }
 
 function normalizeName(name: string): string {
