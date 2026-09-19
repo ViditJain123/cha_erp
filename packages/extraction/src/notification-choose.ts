@@ -11,6 +11,7 @@ import {
   type BcdExemptionEntry,
   type CompCessEntry,
   type IgstScheduleEntry,
+  lookupTariff,
 } from '@checklist/core';
 import { MODELS, structuredTextCall } from './openai.js';
 import type { ChecklistDraft } from './draft.js';
@@ -145,7 +146,14 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
     if (!/^\d{8}$/.test(item.ritc)) continue;
 
     const igst = igstRateForCth(item.ritc);
-    const bcdCandidates = item.bcdExemption ? [] : bcdExemptionMatches(item.ritc);
+    // A re-import claims its relief on the RE-IMPORT sheet and nowhere else:
+    // 45/2017 exempts the duty on goods coming home, and a 45/2025 concession
+    // filed beside it claims the same relief twice. The exporter refuses that
+    // pairing, which is right — but the pairing should never be proposed, and
+    // it was: ex_job3 came back with a re-import row and a basic-duty
+    // notification, and the job could not be filed at all.
+    const bcdCandidates =
+      item.bcdExemption || item.reImport ? [] : bcdExemptionMatches(item.ritc);
     const igstOpen = Boolean(igst && !igst.residual && igst.alternatives.length);
     // Same test on the cess side: the merge left the serial blank because two
     // entries name this code, and only the goods description separates them.
@@ -202,6 +210,20 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
 
     if (choice.bcd) {
       const entry = choice.bcd.entry;
+      // The printed tariff names the concession it expects against this code —
+      // "Ntfn 45/2025-Cus. - Sl No.24" in the REMARKS column. Where it does,
+      // the model's choice has an independent second opinion, and saying which
+      // way it went turns "verify against the goods" from a standing
+      // instruction into a specific one. The book is never allowed to pick:
+      // its serial is corroboration or a discrepancy, never the answer.
+      const printed = lookupTariff(item.ritc)?.notificationRefs?.find(
+        (r) => r.notification === bcdExemptionNotification() && r.serial,
+      );
+      const corroboration = !printed
+        ? ''
+        : printed.serial === entry.serial
+          ? ` The printed tariff cites the same entry (S.No. ${printed.serial}), which is independent agreement.`
+          : ` The printed tariff cites S.No. ${printed.serial} for this code instead — one of the two is wrong about these goods.`;
       // A stale entry has been overtaken by an amendment we could not apply,
       // so the rate we hold was read from text that is no longer in force.
       // Propose it — it is still the best evidence of what the concession was —
@@ -220,6 +242,7 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
           `${bcdExemptionNotification()} Table ${entry.table} S.No. ${entry.serial} (p.${entry.page}), ` +
           `rate "${entry.bcdRateText}"${entry.condition ? `, condition ${entry.condition}` : ', unconditional'}: ` +
           `${choice.bcd.reason} — confirm the goods meet the description${entry.condition ? ' and the condition' : ''} before filing.` +
+          corroboration +
           (isStale(entry)
             ? ` NOT APPLIED: ${entry.staleBy!.join(', ')} amend this entry and have not been folded into the masters — read the amendment before claiming it.`
             : ''),

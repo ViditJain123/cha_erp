@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@checklist/config": "workspace:*",
+    "@checklist/core": "workspace:*",
     "@checklist/db": "workspace:*",
     "@checklist/extraction": "workspace:*",
     "@supabase/supabase-js": "^2.112.0",

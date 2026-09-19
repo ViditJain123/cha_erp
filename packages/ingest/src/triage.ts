@@ -5,9 +5,13 @@ import type { Database } from '@checklist/db';
 export type DocumentType = Database['public']['Enums']['document_type'];
 
 /**
- * The document classes the watcher recognises. A superset of the legacy
- * pipeline's seven — `license` and `svb_order` matter for customs clearance and
- * `unknown` replaces the old `other`.
+ * The document classes the watcher recognises.
+ *
+ * This list and `DOC_TYPES` in `@checklist/extraction` are two classifiers over
+ * the same post, and they have drifted before: the freight and insurance
+ * certificates were added there and not here, so a mail carrying only those
+ * triaged as `unknown`. A new type belongs in three places — here, in
+ * `DOC_TYPES`, and in the Postgres `document_type` enum.
  */
 export const TRIAGE_DOC_TYPES = [
   'invoice',
@@ -16,6 +20,11 @@ export const TRIAGE_DOC_TYPES = [
   'packing_list',
   'certificate_of_origin',
   'certificate_of_analysis',
+  // The export leg of a re-import. Enough on its own to open a job: a mail
+  // carrying a shipping bill is a re-import being set up.
+  'shipping_bill',
+  'freight_certificate',
+  'insurance_certificate',
   'license',
   'svb_order',
   'unknown',
@@ -29,6 +38,9 @@ export const TRADE_DOCUMENT_TYPES: readonly DocumentType[] = [
   'packing_list',
   'certificate_of_origin',
   'certificate_of_analysis',
+  'shipping_bill',
+  'freight_certificate',
+  'insurance_certificate',
   'license',
   'svb_order',
 ];
@@ -73,6 +85,9 @@ Document types:
 - packing_list: package/carton breakdown with weights and dimensions
 - certificate_of_origin: COO, including preferential/FTA certificates
 - certificate_of_analysis: COA, test or analysis report for the goods
+- shipping_bill: an ICES SHIPPING BILL — an Indian EXPORT document, headed "INDIAN CUSTOMS EDI SYSTEM" with a "Port Code", "SB No" and "SB Date" header block. Attached when goods that were exported are being re-imported. An import checklist is not one.
+- freight_certificate: a forwarder's or carrier's certificate of the freight charged on this consignment
+- insurance_certificate: a marine insurance certificate or a declaration under an open policy
 - license: an import licence or permit (DGFT, FSSAI, WPC, drug licence, etc.)
 - svb_order: a Special Valuation Branch order or SVB investigation letter
 - unknown: anything else, including cover letters, quotations and signatures

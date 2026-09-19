@@ -1,3 +1,4 @@
+import { isValidContainerNumber as isValid } from '@checklist/core';
 import type { Database } from '@checklist/db';
 
 export type IdentifierKind = Database['public']['Enums']['identifier_kind'];
@@ -23,33 +24,16 @@ function alnum(value: string): string {
 }
 
 /**
- * Validates an ISO 6346 container number including its check digit.
+ * The ISO 6346 check-digit validator, which now lives in `@checklist/core`
+ * beside the size/type helpers.
  *
- * The check digit matters: OCR and hurried typing produce plausible-looking
- * container numbers, and an invalid one used as a match key would merge two
- * unrelated shipments.
+ * It moved because the CONTAINERS sheet needs it too: extraction has to be able
+ * to tell a misread container number from a real one, and depending on the
+ * ingest package to do that would have the mail pipeline sitting underneath the
+ * Bill of Entry pipeline. Re-exported here so every existing caller and the
+ * identifier tests keep their import.
  */
-export function isValidContainerNumber(value: string): boolean {
-  const v = alnum(value);
-  if (!/^[A-Z]{4}[0-9]{7}$/.test(v)) return false;
-
-  const letterValues: Record<string, number> = {};
-  let n = 10;
-  for (let c = 65; c <= 90; c++) {
-    if (n % 11 === 0) n++;
-    letterValues[String.fromCharCode(c)] = n;
-    n++;
-  }
-
-  let sum = 0;
-  for (let i = 0; i < 10; i++) {
-    const ch = v[i] as string;
-    const digit = i < 4 ? (letterValues[ch] as number) : Number(ch);
-    sum += digit * 2 ** i;
-  }
-  const check = (sum % 11) % 10;
-  return check === Number(v[10]);
-}
+export { isValidContainerNumber } from '@checklist/core';
 
 export function normaliseBl(raw: string): string | null {
   const v = alnum(raw);
@@ -71,7 +55,7 @@ export function normaliseInvoice(raw: string): string | null {
 
 export function normaliseContainer(raw: string): string | null {
   const v = alnum(raw);
-  return isValidContainerNumber(v) ? v : null;
+  return isValid(v) ? v : null;
 }
 
 export function normalisePo(raw: string): string | null {

@@ -9,8 +9,10 @@
     "./openai": "./src/openai.ts"
   },
   "scripts": {
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "eval": "tsx eval/run.ts"
+    "eval": "tsx eval/run.ts",
+    "repair-tariff-book": "tsx cli/repair-tariff-book.ts"
   },
   "dependencies": {
     "@checklist/core": "workspace:*",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/node": "^26.1.2",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
   }
 }
