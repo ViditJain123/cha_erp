@@ -10,10 +10,93 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.17"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
+      bonded_warehouses: {
+        Row: {
+          address1: string | null
+          address2: string | null
+          city: string | null
+          code: string
+          company_id: string
+          country: string
+          created_at: string
+          fetched_at: string | null
+          id: string
+          is_active: boolean
+          is_sec65: boolean | null
+          license_no: string | null
+          license_valid_till: string | null
+          licensee_name: string | null
+          name: string | null
+          pin: string | null
+          sec65_permission_date: string | null
+          sec65_permission_no: string | null
+          source: Database["public"]["Enums"]["warehouse_source"]
+          station_code: string | null
+          updated_at: string
+          warehouse_type: Database["public"]["Enums"]["warehouse_type"] | null
+        }
+        Insert: {
+          address1?: string | null
+          address2?: string | null
+          city?: string | null
+          code: string
+          company_id: string
+          country?: string
+          created_at?: string
+          fetched_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_sec65?: boolean | null
+          license_no?: string | null
+          license_valid_till?: string | null
+          licensee_name?: string | null
+          name?: string | null
+          pin?: string | null
+          sec65_permission_date?: string | null
+          sec65_permission_no?: string | null
+          source?: Database["public"]["Enums"]["warehouse_source"]
+          station_code?: string | null
+          updated_at?: string
+          warehouse_type?: Database["public"]["Enums"]["warehouse_type"] | null
+        }
+        Update: {
+          address1?: string | null
+          address2?: string | null
+          city?: string | null
+          code?: string
+          company_id?: string
+          country?: string
+          created_at?: string
+          fetched_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_sec65?: boolean | null
+          license_no?: string | null
+          license_valid_till?: string | null
+          licensee_name?: string | null
+          name?: string | null
+          pin?: string | null
+          sec65_permission_date?: string | null
+          sec65_permission_no?: string | null
+          source?: Database["public"]["Enums"]["warehouse_source"]
+          station_code?: string | null
+          updated_at?: string
+          warehouse_type?: Database["public"]["Enums"]["warehouse_type"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bonded_warehouses_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       branches: {
         Row: {
           code: string | null
@@ -301,6 +384,266 @@ export type Database = {
             columns: ["shipping_line_id"]
             isOneToOne: false
             referencedRelation: "shipping_lines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_boe_header: {
+        Row: {
+          ad_code: string | null
+          be_filing_date: string | null
+          be_type: Database["public"]["Enums"]["be_type"] | null
+          bond_date: string | null
+          bond_expiry_date: string | null
+          bond_no: string | null
+          company_id: string
+          created_at: string
+          customs_house_code: string | null
+          duty_payment_status: string | null
+          exbond_clearance_kind:
+            | Database["public"]["Enums"]["exbond_clearance_kind"]
+            | null
+          filing_status: Database["public"]["Enums"]["filing_status"] | null
+          gateway_igm_date: string | null
+          gateway_igm_no: string | null
+          gateway_inward_date: string | null
+          igm_checked: boolean
+          igm_date: string | null
+          igm_no: string | null
+          importer_ref_no: string | null
+          inbond_be_date: string | null
+          inbond_be_no: string | null
+          inward_date: string | null
+          is_bonds_certificates: boolean | null
+          is_first_check: boolean | null
+          is_green_channel: boolean | null
+          is_hss: boolean | null
+          is_kachcha_be: boolean | null
+          is_sec65_manufacturing_wh: boolean | null
+          is_transhipment: boolean | null
+          is_under_provisional_assessment: boolean | null
+          is_under_sec46: boolean | null
+          is_under_sec48: boolean | null
+          is_warehouse_sale: boolean | null
+          itc_lic_details: boolean | null
+          job_id: string
+          line_no: string | null
+          marks_and_nos: string | null
+          package_unit_code: string | null
+          released_gross_weight_kg: number | null
+          released_package_code: string | null
+          released_packages: number | null
+          released_uom: string | null
+          sec46_override_reason: string | null
+          transport_mode: Database["public"]["Enums"]["transport_mode"] | null
+          updated_at: string
+          updated_by: string | null
+          warehouse_code: string | null
+        }
+        Insert: {
+          ad_code?: string | null
+          be_filing_date?: string | null
+          be_type?: Database["public"]["Enums"]["be_type"] | null
+          bond_date?: string | null
+          bond_expiry_date?: string | null
+          bond_no?: string | null
+          company_id: string
+          created_at?: string
+          customs_house_code?: string | null
+          duty_payment_status?: string | null
+          exbond_clearance_kind?:
+            | Database["public"]["Enums"]["exbond_clearance_kind"]
+            | null
+          filing_status?: Database["public"]["Enums"]["filing_status"] | null
+          gateway_igm_date?: string | null
+          gateway_igm_no?: string | null
+          gateway_inward_date?: string | null
+          igm_checked?: boolean
+          igm_date?: string | null
+          igm_no?: string | null
+          importer_ref_no?: string | null
+          inbond_be_date?: string | null
+          inbond_be_no?: string | null
+          inward_date?: string | null
+          is_bonds_certificates?: boolean | null
+          is_first_check?: boolean | null
+          is_green_channel?: boolean | null
+          is_hss?: boolean | null
+          is_kachcha_be?: boolean | null
+          is_sec65_manufacturing_wh?: boolean | null
+          is_transhipment?: boolean | null
+          is_under_provisional_assessment?: boolean | null
+          is_under_sec46?: boolean | null
+          is_under_sec48?: boolean | null
+          is_warehouse_sale?: boolean | null
+          itc_lic_details?: boolean | null
+          job_id: string
+          line_no?: string | null
+          marks_and_nos?: string | null
+          package_unit_code?: string | null
+          released_gross_weight_kg?: number | null
+          released_package_code?: string | null
+          released_packages?: number | null
+          released_uom?: string | null
+          sec46_override_reason?: string | null
+          transport_mode?: Database["public"]["Enums"]["transport_mode"] | null
+          updated_at?: string
+          updated_by?: string | null
+          warehouse_code?: string | null
+        }
+        Update: {
+          ad_code?: string | null
+          be_filing_date?: string | null
+          be_type?: Database["public"]["Enums"]["be_type"] | null
+          bond_date?: string | null
+          bond_expiry_date?: string | null
+          bond_no?: string | null
+          company_id?: string
+          created_at?: string
+          customs_house_code?: string | null
+          duty_payment_status?: string | null
+          exbond_clearance_kind?:
+            | Database["public"]["Enums"]["exbond_clearance_kind"]
+            | null
+          filing_status?: Database["public"]["Enums"]["filing_status"] | null
+          gateway_igm_date?: string | null
+          gateway_igm_no?: string | null
+          gateway_inward_date?: string | null
+          igm_checked?: boolean
+          igm_date?: string | null
+          igm_no?: string | null
+          importer_ref_no?: string | null
+          inbond_be_date?: string | null
+          inbond_be_no?: string | null
+          inward_date?: string | null
+          is_bonds_certificates?: boolean | null
+          is_first_check?: boolean | null
+          is_green_channel?: boolean | null
+          is_hss?: boolean | null
+          is_kachcha_be?: boolean | null
+          is_sec65_manufacturing_wh?: boolean | null
+          is_transhipment?: boolean | null
+          is_under_provisional_assessment?: boolean | null
+          is_under_sec46?: boolean | null
+          is_under_sec48?: boolean | null
+          is_warehouse_sale?: boolean | null
+          itc_lic_details?: boolean | null
+          job_id?: string
+          line_no?: string | null
+          marks_and_nos?: string | null
+          package_unit_code?: string | null
+          released_gross_weight_kg?: number | null
+          released_package_code?: string | null
+          released_packages?: number | null
+          released_uom?: string | null
+          sec46_override_reason?: string | null
+          transport_mode?: Database["public"]["Enums"]["transport_mode"] | null
+          updated_at?: string
+          updated_by?: string | null
+          warehouse_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_boe_header_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_boe_header_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: true
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_boe_header_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_bonds_certificates: {
+        Row: {
+          cert_date: string | null
+          commissionerate: string | null
+          company_id: string
+          created_at: string
+          division: string | null
+          id: string
+          job_id: string
+          kind: Database["public"]["Enums"]["bond_or_certificate"]
+          number: string
+          proposed: boolean
+          range_office: string | null
+          registration_port: string | null
+          seq: number
+          source: string
+          type: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          cert_date?: string | null
+          commissionerate?: string | null
+          company_id: string
+          created_at?: string
+          division?: string | null
+          id?: string
+          job_id: string
+          kind: Database["public"]["Enums"]["bond_or_certificate"]
+          number: string
+          proposed?: boolean
+          range_office?: string | null
+          registration_port?: string | null
+          seq: number
+          source?: string
+          type: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          cert_date?: string | null
+          commissionerate?: string | null
+          company_id?: string
+          created_at?: string
+          division?: string | null
+          id?: string
+          job_id?: string
+          kind?: Database["public"]["Enums"]["bond_or_certificate"]
+          number?: string
+          proposed?: boolean
+          range_office?: string | null
+          registration_port?: string | null
+          seq?: number
+          source?: string
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_bonds_certificates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_bonds_certificates_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_bonds_certificates_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -656,6 +999,67 @@ export type Database = {
           {
             foreignKeyName: "job_clearance_queries_resolved_by_fkey"
             columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_containers: {
+        Row: {
+          company_id: string
+          container_no: string
+          created_at: string
+          id: string
+          job_id: string
+          seal_no: string | null
+          size_type: string | null
+          sr_no: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          company_id: string
+          container_no: string
+          created_at?: string
+          id?: string
+          job_id: string
+          seal_no?: string | null
+          size_type?: string | null
+          sr_no: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          company_id?: string
+          container_no?: string
+          created_at?: string
+          id?: string
+          job_id?: string
+          seal_no?: string | null
+          size_type?: string | null
+          sr_no?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_containers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_containers_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_containers_updated_by_fkey"
+            columns: ["updated_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -1163,6 +1567,92 @@ export type Database = {
           },
         ]
       }
+      job_document_esanchit: {
+        Row: {
+          company_id: string
+          created_at: string
+          doc_type_code: string | null
+          document_id: string
+          expiry_date: string | null
+          id: string
+          invoice_sr_no: number | null
+          irn: string
+          issue_date: string | null
+          issued_at: string | null
+          item_sr_no: number | null
+          job_id: string
+          reference_no: string | null
+          updated_at: string
+          updated_by: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          doc_type_code?: string | null
+          document_id: string
+          expiry_date?: string | null
+          id?: string
+          invoice_sr_no?: number | null
+          irn: string
+          issue_date?: string | null
+          issued_at?: string | null
+          item_sr_no?: number | null
+          job_id: string
+          reference_no?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          uploaded_at: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          doc_type_code?: string | null
+          document_id?: string
+          expiry_date?: string | null
+          id?: string
+          invoice_sr_no?: number | null
+          irn?: string
+          issue_date?: string | null
+          issued_at?: string | null
+          item_sr_no?: number | null
+          job_id?: string
+          reference_no?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_document_esanchit_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_document_esanchit_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: true
+            referencedRelation: "job_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_document_esanchit_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_document_esanchit_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_document_requests: {
         Row: {
           ccr_code: string | null
@@ -1507,6 +1997,88 @@ export type Database = {
           },
         ]
       }
+      job_hss_chain: {
+        Row: {
+          ad_code: string | null
+          address: string | null
+          branch_name: string | null
+          branch_sr_no: number | null
+          city: string | null
+          company_id: string
+          country: string | null
+          created_at: string
+          id: string
+          iec: string
+          job_id: string
+          level: number
+          name: string | null
+          postal_code: string | null
+          source: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          ad_code?: string | null
+          address?: string | null
+          branch_name?: string | null
+          branch_sr_no?: number | null
+          city?: string | null
+          company_id: string
+          country?: string | null
+          created_at?: string
+          id?: string
+          iec: string
+          job_id: string
+          level: number
+          name?: string | null
+          postal_code?: string | null
+          source?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          ad_code?: string | null
+          address?: string | null
+          branch_name?: string | null
+          branch_sr_no?: number | null
+          city?: string | null
+          company_id?: string
+          country?: string | null
+          created_at?: string
+          id?: string
+          iec?: string
+          job_id?: string
+          level?: number
+          name?: string | null
+          postal_code?: string | null
+          source?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_hss_chain_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_hss_chain_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_hss_chain_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_identifiers: {
         Row: {
           company_id: string
@@ -1552,6 +2124,254 @@ export type Database = {
           },
         ]
       }
+      job_items: {
+        Row: {
+          classification_confirmed: boolean
+          company_id: string
+          created_at: string
+          fields: Json
+          id: string
+          invoice_sr_no: number
+          item_sr_no: number
+          job_id: string
+          re_import: Json | null
+          re_import_confirmed: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          classification_confirmed?: boolean
+          company_id: string
+          created_at?: string
+          fields?: Json
+          id?: string
+          invoice_sr_no: number
+          item_sr_no: number
+          job_id: string
+          re_import?: Json | null
+          re_import_confirmed?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          classification_confirmed?: boolean
+          company_id?: string
+          created_at?: string
+          fields?: Json
+          id?: string
+          invoice_sr_no?: number
+          item_sr_no?: number
+          job_id?: string
+          re_import?: Json | null
+          re_import_confirmed?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_items_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_items_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_items_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_mail_instructions: {
+        Row: {
+          be_type: Database["public"]["Enums"]["be_type"] | null
+          be_type_quote: string | null
+          bond_no: string | null
+          bond_quote: string | null
+          branch_name: string | null
+          branch_quote: string | null
+          claim_fta_benefit: boolean | null
+          claim_fta_benefit_quote: string | null
+          company_id: string
+          customs_house: string | null
+          customs_house_code: string | null
+          customs_house_quote: string | null
+          deferred_duty: boolean | null
+          deferred_duty_quote: string | null
+          end_use: string | null
+          end_use_quote: string | null
+          extracted_at: string
+          importer_ref_no: string | null
+          importer_ref_quote: string | null
+          inbond_be_no: string | null
+          inbond_be_quote: string | null
+          job_id: string
+          message_count: number
+          other_instructions: string[]
+          warehouse: string | null
+          warehouse_code: string | null
+          warehouse_quote: string | null
+        }
+        Insert: {
+          be_type?: Database["public"]["Enums"]["be_type"] | null
+          be_type_quote?: string | null
+          bond_no?: string | null
+          bond_quote?: string | null
+          branch_name?: string | null
+          branch_quote?: string | null
+          claim_fta_benefit?: boolean | null
+          claim_fta_benefit_quote?: string | null
+          company_id: string
+          customs_house?: string | null
+          customs_house_code?: string | null
+          customs_house_quote?: string | null
+          deferred_duty?: boolean | null
+          deferred_duty_quote?: string | null
+          end_use?: string | null
+          end_use_quote?: string | null
+          extracted_at?: string
+          importer_ref_no?: string | null
+          importer_ref_quote?: string | null
+          inbond_be_no?: string | null
+          inbond_be_quote?: string | null
+          job_id: string
+          message_count?: number
+          other_instructions?: string[]
+          warehouse?: string | null
+          warehouse_code?: string | null
+          warehouse_quote?: string | null
+        }
+        Update: {
+          be_type?: Database["public"]["Enums"]["be_type"] | null
+          be_type_quote?: string | null
+          bond_no?: string | null
+          bond_quote?: string | null
+          branch_name?: string | null
+          branch_quote?: string | null
+          claim_fta_benefit?: boolean | null
+          claim_fta_benefit_quote?: string | null
+          company_id?: string
+          customs_house?: string | null
+          customs_house_code?: string | null
+          customs_house_quote?: string | null
+          deferred_duty?: boolean | null
+          deferred_duty_quote?: string | null
+          end_use?: string | null
+          end_use_quote?: string | null
+          extracted_at?: string
+          importer_ref_no?: string | null
+          importer_ref_quote?: string | null
+          inbond_be_no?: string | null
+          inbond_be_quote?: string | null
+          job_id?: string
+          message_count?: number
+          other_instructions?: string[]
+          warehouse?: string | null
+          warehouse_code?: string | null
+          warehouse_quote?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_mail_instructions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_mail_instructions_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: true
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_sec65_finished_goods: {
+        Row: {
+          applies_to_items: number[] | null
+          company_id: string
+          created_at: string
+          finished_cth: string
+          finished_desc: string
+          finished_qty: number
+          finished_uqc: string
+          gst_invoice_date: string
+          gst_invoice_no: string
+          id: string
+          job_id: string
+          seq: number
+          source: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          applies_to_items?: number[] | null
+          company_id: string
+          created_at?: string
+          finished_cth: string
+          finished_desc: string
+          finished_qty: number
+          finished_uqc: string
+          gst_invoice_date: string
+          gst_invoice_no: string
+          id?: string
+          job_id: string
+          seq: number
+          source?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          applies_to_items?: number[] | null
+          company_id?: string
+          created_at?: string
+          finished_cth?: string
+          finished_desc?: string
+          finished_qty?: number
+          finished_uqc?: string
+          gst_invoice_date?: string
+          gst_invoice_no?: string
+          id?: string
+          job_id?: string
+          seq?: number
+          source?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_sec65_finished_goods_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sec65_finished_goods_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sec65_finished_goods_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
           assigned_to: string | null
@@ -1564,6 +2384,7 @@ export type Database = {
           hs_codes: string[]
           id: string
           importer_name: string | null
+          into_bond_job_id: string | null
           job_number: string | null
           reference: string | null
           remarks: string | null
@@ -1586,6 +2407,7 @@ export type Database = {
           hs_codes?: string[]
           id?: string
           importer_name?: string | null
+          into_bond_job_id?: string | null
           job_number?: string | null
           reference?: string | null
           remarks?: string | null
@@ -1608,6 +2430,7 @@ export type Database = {
           hs_codes?: string[]
           id?: string
           importer_name?: string | null
+          into_bond_job_id?: string | null
           job_number?: string | null
           reference?: string | null
           remarks?: string | null
@@ -1646,6 +2469,13 @@ export type Database = {
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_into_bond_job_id_fkey"
+            columns: ["into_bond_job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
             referencedColumns: ["id"]
           },
           {
@@ -1750,6 +2580,8 @@ export type Database = {
       mail_messages: {
         Row: {
           attempts: number
+          body_preview: string | null
+          body_text: string | null
           company_id: string
           connection_id: string
           conversation_id: string | null
@@ -1771,6 +2603,8 @@ export type Database = {
         }
         Insert: {
           attempts?: number
+          body_preview?: string | null
+          body_text?: string | null
           company_id: string
           connection_id: string
           conversation_id?: string | null
@@ -1792,6 +2626,8 @@ export type Database = {
         }
         Update: {
           attempts?: number
+          body_preview?: string | null
+          body_text?: string | null
           company_id?: string
           connection_id?: string
           conversation_id?: string | null
@@ -1880,6 +2716,54 @@ export type Database = {
           },
         ]
       }
+      organization_ad_codes: {
+        Row: {
+          ad_code: string
+          bank_branch: string | null
+          bank_name: string | null
+          company_id: string
+          created_at: string
+          id: string
+          is_default: boolean
+          organization_id: string
+        }
+        Insert: {
+          ad_code: string
+          bank_branch?: string | null
+          bank_name?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          organization_id: string
+        }
+        Update: {
+          ad_code?: string
+          bank_branch?: string | null
+          bank_name?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          organization_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_ad_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_ad_codes_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organization_imports: {
         Row: {
           company_id: string
@@ -1943,6 +2827,9 @@ export type Database = {
           address1: string | null
           address2: string | null
           address3: string | null
+          aeo_certificate_no: string | null
+          aeo_status: Database["public"]["Enums"]["aeo_status"]
+          aeo_valid_till: string | null
           alias: string | null
           bin: string | null
           branch_name: string
@@ -1953,12 +2840,14 @@ export type Database = {
           country: string | null
           country_code: string | null
           created_at: string
+          default_custom_house: string | null
           default_end_use_code: string | null
           email: string | null
           gst_state_code: string | null
           gstin: string | null
           id: string
           iec: string | null
+          importer_ref_required: boolean
           is_active: boolean
           is_agent: boolean
           is_consignee: boolean
@@ -1968,6 +2857,10 @@ export type Database = {
           last_import_id: string | null
           lut_number: string | null
           marine_open_policy_rate_percent: number | null
+          marine_policy_no: string | null
+          marine_policy_per_sending_limit_inr: number | null
+          marine_policy_sum_insured_inr: number | null
+          marine_policy_valid_till: string | null
           name: string
           name_key: string
           pan: string | null
@@ -1986,6 +2879,9 @@ export type Database = {
           address1?: string | null
           address2?: string | null
           address3?: string | null
+          aeo_certificate_no?: string | null
+          aeo_status?: Database["public"]["Enums"]["aeo_status"]
+          aeo_valid_till?: string | null
           alias?: string | null
           bin?: string | null
           branch_name?: string
@@ -1996,12 +2892,14 @@ export type Database = {
           country?: string | null
           country_code?: string | null
           created_at?: string
+          default_custom_house?: string | null
           default_end_use_code?: string | null
           email?: string | null
           gst_state_code?: string | null
           gstin?: string | null
           id?: string
           iec?: string | null
+          importer_ref_required?: boolean
           is_active?: boolean
           is_agent?: boolean
           is_consignee?: boolean
@@ -2011,6 +2909,10 @@ export type Database = {
           last_import_id?: string | null
           lut_number?: string | null
           marine_open_policy_rate_percent?: number | null
+          marine_policy_no?: string | null
+          marine_policy_per_sending_limit_inr?: number | null
+          marine_policy_sum_insured_inr?: number | null
+          marine_policy_valid_till?: string | null
           name: string
           name_key: string
           pan?: string | null
@@ -2029,6 +2931,9 @@ export type Database = {
           address1?: string | null
           address2?: string | null
           address3?: string | null
+          aeo_certificate_no?: string | null
+          aeo_status?: Database["public"]["Enums"]["aeo_status"]
+          aeo_valid_till?: string | null
           alias?: string | null
           bin?: string | null
           branch_name?: string
@@ -2039,12 +2944,14 @@ export type Database = {
           country?: string | null
           country_code?: string | null
           created_at?: string
+          default_custom_house?: string | null
           default_end_use_code?: string | null
           email?: string | null
           gst_state_code?: string | null
           gstin?: string | null
           id?: string
           iec?: string | null
+          importer_ref_required?: boolean
           is_active?: boolean
           is_agent?: boolean
           is_consignee?: boolean
@@ -2054,6 +2961,10 @@ export type Database = {
           last_import_id?: string | null
           lut_number?: string | null
           marine_open_policy_rate_percent?: number | null
+          marine_policy_no?: string | null
+          marine_policy_per_sending_limit_inr?: number | null
+          marine_policy_sum_insured_inr?: number | null
+          marine_policy_valid_till?: string | null
           name?: string
           name_key?: string
           pan?: string | null
@@ -2080,6 +2991,98 @@ export type Database = {
             columns: ["last_import_id"]
             isOneToOne: false
             referencedRelation: "organization_imports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_master: {
+        Row: {
+          brand: string | null
+          company_id: string
+          confirmed_at: string
+          confirmed_by: string | null
+          created_at: string
+          cth: string
+          description: string
+          description_key: string
+          end_use_code: string | null
+          exim_scheme_code: string | null
+          general_description: string | null
+          id: string
+          importer_org_id: string
+          model: string | null
+          notifications: Json
+          source_job_id: string | null
+          times_used: number
+          updated_at: string
+        }
+        Insert: {
+          brand?: string | null
+          company_id: string
+          confirmed_at?: string
+          confirmed_by?: string | null
+          created_at?: string
+          cth: string
+          description: string
+          description_key: string
+          end_use_code?: string | null
+          exim_scheme_code?: string | null
+          general_description?: string | null
+          id?: string
+          importer_org_id: string
+          model?: string | null
+          notifications?: Json
+          source_job_id?: string | null
+          times_used?: number
+          updated_at?: string
+        }
+        Update: {
+          brand?: string | null
+          company_id?: string
+          confirmed_at?: string
+          confirmed_by?: string | null
+          created_at?: string
+          cth?: string
+          description?: string
+          description_key?: string
+          end_use_code?: string | null
+          exim_scheme_code?: string | null
+          general_description?: string | null
+          id?: string
+          importer_org_id?: string
+          model?: string | null
+          notifications?: Json
+          source_job_id?: string | null
+          times_used?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_master_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_master_confirmed_by_fkey"
+            columns: ["confirmed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_master_importer_org_id_fkey"
+            columns: ["importer_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_master_source_job_id_fkey"
+            columns: ["source_job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -2149,6 +3152,66 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      reference_chunks: {
+        Row: {
+          category: string | null
+          chunk_no: number
+          doc_date: string | null
+          embedding: unknown
+          id: number
+          indexed_at: string
+          is_amended: boolean
+          is_current: boolean
+          number: string | null
+          number_key: string | null
+          page: number
+          source_id: number
+          source_type: string
+          source_url: string | null
+          text: string
+          text_hash: string
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          chunk_no: number
+          doc_date?: string | null
+          embedding: unknown
+          id?: never
+          indexed_at?: string
+          is_amended?: boolean
+          is_current?: boolean
+          number?: string | null
+          number_key?: string | null
+          page: number
+          source_id: number
+          source_type: string
+          source_url?: string | null
+          text: string
+          text_hash: string
+          title: string
+        }
+        Update: {
+          category?: string | null
+          chunk_no?: number
+          doc_date?: string | null
+          embedding?: unknown
+          id?: never
+          indexed_at?: string
+          is_amended?: boolean
+          is_current?: boolean
+          number?: string | null
+          number_key?: string | null
+          page?: number
+          source_id?: number
+          source_type?: string
+          source_url?: string | null
+          text?: string
+          text_hash?: string
+          title?: string
+        }
+        Relationships: []
       }
       shippers: {
         Row: {
@@ -2295,6 +3358,94 @@ export type Database = {
           },
         ]
       }
+      supplier_relationships: {
+        Row: {
+          base: string | null
+          company_id: string
+          condition: string | null
+          created_at: string
+          id: string
+          importer_org_id: string
+          is_related: boolean
+          notes: string | null
+          revenue_deposit_percent: number | null
+          supplier_org_id: string
+          svb_custom_house: string | null
+          svb_date: string | null
+          svb_loading_basis: string | null
+          svb_rate_assessable: number | null
+          svb_rate_duty: number | null
+          svb_ref_no: string | null
+          svb_status_assessable: string | null
+          svb_status_duty: string | null
+          updated_at: string
+        }
+        Insert: {
+          base?: string | null
+          company_id: string
+          condition?: string | null
+          created_at?: string
+          id?: string
+          importer_org_id: string
+          is_related?: boolean
+          notes?: string | null
+          revenue_deposit_percent?: number | null
+          supplier_org_id: string
+          svb_custom_house?: string | null
+          svb_date?: string | null
+          svb_loading_basis?: string | null
+          svb_rate_assessable?: number | null
+          svb_rate_duty?: number | null
+          svb_ref_no?: string | null
+          svb_status_assessable?: string | null
+          svb_status_duty?: string | null
+          updated_at?: string
+        }
+        Update: {
+          base?: string | null
+          company_id?: string
+          condition?: string | null
+          created_at?: string
+          id?: string
+          importer_org_id?: string
+          is_related?: boolean
+          notes?: string | null
+          revenue_deposit_percent?: number | null
+          supplier_org_id?: string
+          svb_custom_house?: string | null
+          svb_date?: string | null
+          svb_loading_basis?: string | null
+          svb_rate_assessable?: number | null
+          svb_rate_duty?: number | null
+          svb_ref_no?: string | null
+          svb_status_assessable?: string | null
+          svb_status_duty?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_relationships_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supplier_relationships_importer_org_id_fkey"
+            columns: ["importer_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "supplier_relationships_supplier_org_id_fkey"
+            columns: ["supplier_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -2341,6 +3492,38 @@ export type Database = {
       }
       custom_access_token_hook: { Args: { event: Json }; Returns: Json }
       is_platform_admin: { Args: never; Returns: boolean }
+      match_reference_chunks: {
+        Args: {
+          match_count?: number
+          only_current?: boolean
+          query_embedding: unknown
+          source_types?: string[]
+        }
+        Returns: {
+          category: string
+          chunk_no: number
+          doc_date: string
+          id: number
+          is_current: boolean
+          number: string
+          page: number
+          similarity: number
+          source_id: number
+          source_type: string
+          source_url: string
+          text: string
+          title: string
+        }[]
+      }
+      reference_chunks_stats: {
+        Args: never
+        Returns: {
+          chunks: number
+          database_bytes: number
+          documents: number
+          source_type: string
+        }[]
+      }
       search_organizations: {
         Args: {
           p_company: string
@@ -2353,6 +3536,9 @@ export type Database = {
           address1: string | null
           address2: string | null
           address3: string | null
+          aeo_certificate_no: string | null
+          aeo_status: Database["public"]["Enums"]["aeo_status"]
+          aeo_valid_till: string | null
           alias: string | null
           bin: string | null
           branch_name: string
@@ -2363,12 +3549,14 @@ export type Database = {
           country: string | null
           country_code: string | null
           created_at: string
+          default_custom_house: string | null
           default_end_use_code: string | null
           email: string | null
           gst_state_code: string | null
           gstin: string | null
           id: string
           iec: string | null
+          importer_ref_required: boolean
           is_active: boolean
           is_agent: boolean
           is_consignee: boolean
@@ -2378,6 +3566,10 @@ export type Database = {
           last_import_id: string | null
           lut_number: string | null
           marine_open_policy_rate_percent: number | null
+          marine_policy_no: string | null
+          marine_policy_per_sending_limit_inr: number | null
+          marine_policy_sum_insured_inr: number | null
+          marine_policy_valid_till: string | null
           name: string
           name_key: string
           pan: string | null
@@ -2402,7 +3594,10 @@ export type Database = {
       show_trgm: { Args: { "": string }; Returns: string[] }
     }
     Enums: {
+      aeo_status: "none" | "T1" | "T2" | "T3"
       app_role: "platform_admin" | "company_owner" | "company_admin" | "member"
+      be_type: "home_consumption" | "warehousing" | "ex_bond"
+      bond_or_certificate: "bond" | "certificate"
       clearance_query_status: "open" | "replied" | "closed"
       clearance_status:
         | "noting"
@@ -2446,6 +3641,21 @@ export type Database = {
         | "svb_order"
         | "checklist"
         | "unknown"
+        | "into_bond_be"
+        | "freight_certificate"
+        | "insurance_certificate"
+        | "purchase_order"
+        | "contract"
+        | "gst_tax_invoice"
+        | "shipping_bill"
+        | "bank_certificate"
+        | "high_seas_agreement"
+      exbond_clearance_kind:
+        | "resultant_product"
+        | "as_such"
+        | "capital_goods"
+        | "job_work_return"
+      filing_status: "advance" | "prior" | "normal"
       identifier_kind:
         | "bl"
         | "awb"
@@ -2468,7 +3678,10 @@ export type Database = {
       noc_status: "not_required" | "pending" | "received"
       rms_route: "facilitated" | "assessment" | "examination"
       team_kind: "scrutiny" | "do" | "customs" | "cfs" | "customer_support"
+      transport_mode: "sea" | "air" | "land"
       user_status: "invited" | "active" | "disabled"
+      warehouse_source: "icegate" | "operator" | "document"
+      warehouse_type: "public" | "private" | "special"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2484,12 +3697,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2513,11 +3726,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2538,11 +3751,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2563,11 +3776,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2580,11 +3793,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2596,7 +3809,10 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      aeo_status: ["none", "T1", "T2", "T3"],
       app_role: ["platform_admin", "company_owner", "company_admin", "member"],
+      be_type: ["home_consumption", "warehousing", "ex_bond"],
+      bond_or_certificate: ["bond", "certificate"],
       clearance_query_status: ["open", "replied", "closed"],
       clearance_status: [
         "noting",
@@ -2643,7 +3859,23 @@ export const Constants = {
         "svb_order",
         "checklist",
         "unknown",
+        "into_bond_be",
+        "freight_certificate",
+        "insurance_certificate",
+        "purchase_order",
+        "contract",
+        "gst_tax_invoice",
+        "shipping_bill",
+        "bank_certificate",
+        "high_seas_agreement",
       ],
+      exbond_clearance_kind: [
+        "resultant_product",
+        "as_such",
+        "capital_goods",
+        "job_work_return",
+      ],
+      filing_status: ["advance", "prior", "normal"],
       identifier_kind: [
         "bl",
         "awb",
@@ -2668,7 +3900,10 @@ export const Constants = {
       noc_status: ["not_required", "pending", "received"],
       rms_route: ["facilitated", "assessment", "examination"],
       team_kind: ["scrutiny", "do", "customs", "cfs", "customer_support"],
+      transport_mode: ["sea", "air", "land"],
       user_status: ["invited", "active", "disabled"],
+      warehouse_source: ["icegate", "operator", "document"],
+      warehouse_type: ["public", "private", "special"],
     },
   },
 } as const
