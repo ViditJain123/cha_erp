@@ -1,4 +1,5 @@
 import {
+  eximSchemeForNotification,
   lookupTariff,
   normalizeMemoryKeys,
   upsertProductMemory,
@@ -69,7 +70,12 @@ function tariffLesson(
   return null;
 }
 
-export function learnFromApprovedJob(draft: ChecklistDraft, jobNumber: string): string[] {
+export function learnFromApprovedJob(
+  draft: ChecklistDraft,
+  jobNumber: string,
+  opts?: { rememberNotifications?: boolean },
+): string[] {
+
   const learned: string[] = [];
 
   for (const item of draft.items) {
@@ -105,7 +111,16 @@ export function learnFromApprovedJob(draft: ChecklistDraft, jobNumber: string): 
         bcdRate: item.bcdRate,
         igstRate: item.igstRate,
         ...(item.igstNotification && { igstNotification: item.igstNotification }),
-        ...(item.bcdNotification && { bcdNotification: item.bcdNotification }),
+        // A licence's notification is a property of the consignment, not of
+        // the goods: remembering 021/2023 against "polypropylene" would claim
+        // an advance authorisation on the next importer's ordinary import.
+        // And only when asked: a proposal the model made is not a fact about
+        // the goods until a person says it is.
+        ...(opts?.rememberNotifications &&
+          item.bcdNotification &&
+          !eximSchemeForNotification(item.bcdNotification) && { bcdNotification: item.bcdNotification }),
+
+
         learnedFrom: jobNumber,
         learnedAt: new Date().toISOString().slice(0, 10),
       });

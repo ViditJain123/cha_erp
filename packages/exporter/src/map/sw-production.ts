@@ -1,3 +1,4 @@
+import { singleWindowRuleForChapter } from '@checklist/core';
 import { int, isoDate, qty, text } from '../cell.js';
 import type { SheetRow } from '../sheet-writer.js';
 import type { MapContext } from './context.js';
@@ -12,9 +13,21 @@ import type { MapContext } from './context.js';
  *
  * Scope is the PGA, not the chapter: mandatory for a Drug Controller case and
  * for FSSAI ("This table is applicable/Mandatory for FSSAI also"), and nothing
- * for anything else. `DraftItem.batches` is populated off the invoice line and
- * the certificate of analysis, so a line with no batch data yields no rows and
- * the sheet stays exactly as the vendor shipped it.
+ * for anything else. That was the docstring long before it was the code — the
+ * mapper used to emit for any line carrying a batch number, which is most of
+ * them, because a certificate of analysis states lots for lubricants and resins
+ * too. It cost 34 of the corpus's warnings, every one of them on a chapter with
+ * no participating agency: 39, 34, 29, 27, 17, 12. Logi-Sys agrees — its own
+ * export ships this sheet empty on all eight jobs we can compare against,
+ * including the five that carry batch numbers.
+ *
+ * So a line is considered here only when `singleWindowRuleForChapter` knows an
+ * agency for its chapter, the same gate `statement.ts` and `single-window.ts`
+ * already use. `SINGLE_WINDOW_RULES` is incomplete — it holds FSSAI and no
+ * Drug Controller entry — so this under-declares rather than over-declares
+ * today. That is the right way round: a batch row Logi-Sys did not want is a
+ * rejected upload, and the fix for the missing agency is the master, not a
+ * guess here.
  *
  * A row is all-or-nothing. Logi-Sys makes the manufacture, expiry **and
  * best-before** dates mandatory on every row — stricter than ICES, which marks
@@ -30,6 +43,9 @@ export function swProductionRows(ctx: MapContext): SheetRow[] {
   for (const item of ctx.draft.items) {
     const batches = item.batches ?? [];
     if (!batches.length) continue;
+
+    const chapter = Number(item.ritc.replace(/\D/g, '').slice(0, 2));
+    if (!(chapter > 0 && singleWindowRuleForChapter(chapter))) continue;
 
     for (const batch of batches) {
       const missing = [

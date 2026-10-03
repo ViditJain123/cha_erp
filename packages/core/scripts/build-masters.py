@@ -689,8 +689,12 @@ def rate_value(text: str) -> float | None:
 # 1..n, so none can be silently skipped; and each cites the serial it acts on,
 # so it can be applied to exactly one entry and asserted first.
 
-# In the order they were issued. Order matters: 15/2026 substitutes a rate that
-# 02/2026 may already have moved.
+# In the order they were issued, with the date each was issued. Order matters:
+# 15/2026 substitutes a rate that 02/2026 may already have moved. The date an
+# amendment takes *effect* is read off its own text (see IN_FORCE), because it
+# is often not the date it was issued: 02/2026 was issued on Budget day and
+# comes into force the day after, and most of its omissions not until April or
+# May.
 BCD_AMENDMENTS = [
     ("bcd-amendment-corrigendum-2025-10-31.pdf", "Corrigendum", "2025-10-31"),
     ("bcd-amendment-02-2026.pdf", "02/2026-Customs", "2026-02-01"),
@@ -699,6 +703,34 @@ BCD_AMENDMENTS = [
     ("bcd-amendment-corrigendum-2026-06-12.pdf", "Corrigendum", "2026-06-12"),
     ("bcd-amendment-25-2026.pdf", "25/2026-Customs", "2026-07-08"),
 ]
+
+# "2. This notification shall come into force on the 13th day of May, 2026."
+# Absent, a notification is in force from the day it is issued.
+IN_FORCE = re.compile(
+    r"shall come into force on the (\d{1,2})(?:st|nd|rd|th)? day of ([A-Z][a-z]+),?\s+(\d{4})", re.I
+)
+# "S. No. 4 ... shall be omitted with effect from the 1st day of May, 2026" —
+# one instruction overriding the notification's own date.
+WITH_EFFECT = re.compile(
+    r"with effect from the (\d{1,2})(?:st|nd|rd|th)? day of ([A-Z][a-z]+),?\s+(\d{4})", re.I
+)
+# The closing clause, which is about the notification and not an instruction.
+CLOSING = re.compile(r"\b2\.\s+(?:Save as otherwise provided|This notification shall)", re.I)
+
+# An amending notification is divided by roman numeral into what it amends:
+# "I. in TABLE I", "II. in the ANNEXURE to TABLE I", "III. in the LISTS
+# appended to TABLE I", "IV. in the TABLE II", "VII. In Table IV". Only part I
+# numbers its instructions (1)..(n); the others letter them (a), (b), ... —
+# which is why reading the notification as one numbered run silently lost
+# everything after part I: the Table II sunset extensions, a condition rate,
+# the Table IV omission.
+SECTION = re.compile(
+    r"\b(?P<roman>II|III|IV|V|VI|VII|VIII|IX|X)\.\s+[Ii]n\s+(?:the\s+)?"
+    r"(?:ANNEXURE\s+to\s+TABLE\s+(?P<annex>IV|I{1,3})\b"
+    r"|LISTS\s+appended\s+to\s+TABLE\s+(?P<lists>IV|I{1,3})\b"
+    r"|TABLE\s+(?P<table>IV|I{1,3})\b)",
+    re.I,
+)
 
 # The start of a numbered instruction: "(77) against S. No. 160, ...".
 INSTRUCTION_START = re.compile(r"\((\d{1,3})\)\s+(?=against|S\. ?No|in |after|for )")
@@ -713,7 +745,8 @@ INSTRUCTION_FORMS = [
         r"and word\s*[“\"‘'](?P<old>[^”\"’']+)[”\"’'], the figures, letters and word"
         r"\s*[“\"‘'](?P<new>[^”\"’']+)[”\"’']",
     ),
-    ("omit", r"S\. ?No\. (?P<serial>\d+[A-Z]?) and the entries relating thereto shall be omitted"),
+    # "S. No." in part I, "Sl. No." in part VII — the same instruction.
+    ("omit", r"Sl?\. ?No\. (?P<serial>\d+[A-Z]?) and the entries relating thereto shall be omitted"),
     (
         "rate",
         r"against S\. ?No\. (?P<serial>\d+[A-Z]?), in column \(4\), for the entry\s*[“\"‘']"
@@ -736,6 +769,19 @@ INSTRUCTION_FORMS = [
 APPLIED_FORMS = {"sunset", "omit", "rate"}
 
 
+def iso_date(day: str, month: str, year: str) -> str:
+    number = MONTHS.get(month.lower())
+    if not number:
+        raise SystemExit(f"unreadable month {month!r} in a date clause")
+    return f"{year}-{number:02d}-{int(day):02d}"
+
+
+def day_before(iso: str) -> str:
+    from datetime import date, timedelta
+
+    return (date.fromisoformat(iso) - timedelta(days=1)).isoformat()
+
+
 def classify_instruction(text: str) -> dict | None:
     for kind, pattern in INSTRUCTION_FORMS:
         m = re.search(pattern, text, re.I)
@@ -744,37 +790,100 @@ def classify_instruction(text: str) -> dict | None:
     return None
 
 
-def read_amendment(filename: str, notification: str, date: str) -> list[dict]:
+def lettered_clauses(text: str) -> list[str]:
+    """A part's instructions, split on (a), (b), (c) — in sequence only.
+
+    Only the next expected letter counts as a boundary, so an "(i)" inside a
+    quoted condition is not mistaken for the ninth instruction. A part with
+    no lettering is a single instruction.
+    """
+    cuts: list[tuple[int, int]] = []
+    expected = "a"
+    for m in re.finditer(r"\(([a-z])\)\s+", text):
+        if m.group(1) == expected:
+            cuts.append((m.start(), m.end()))
+            expected = chr(ord(expected) + 1)
+    if not cuts:
+        return [text.strip(" ,-—:;")]
+    bounds = cuts + [(len(text), len(text))]
+    return [text[bounds[i][1] : bounds[i + 1][0]].strip(" ,-—:;") for i in range(len(cuts))]
+
+
+def read_amendment(filename: str, notification: str, issued: str) -> list[dict]:
     """The instructions one amending notification carries, in document order.
 
     Instructions are numbered, and the numbering is the safety net: if the
     count of markers and the count we classify disagree, one has been read as
     part of its neighbour and the build stops rather than applying a partial
     amendment.
+
+    Each instruction carries the table it acts on and the date it takes
+    effect: the notification's own in-force date, unless the instruction
+    names a later one.
     """
     text = re.sub(r"\s+", " ", "".join(page.get_text() for page in fitz.open(SOURCE / filename)))
-    markers = list(INSTRUCTION_START.finditer(text))
+    found = IN_FORCE.search(text)
+    in_force = iso_date(*found.groups()) if found else issued
+    closing = CLOSING.search(text)
+    body = text[: closing.start()] if closing else text
 
+    sections = list(SECTION.finditer(body))
+    part_one = body[: sections[0].start()] if sections else body
+    markers = list(INSTRUCTION_START.finditer(part_one))
+
+    # (target, clause) pairs. Target is ("table", "I"), ("annexure", "I") or ("lists", "I").
+    clauses: list[tuple[tuple[str, str], int, str]] = []
     if markers:
         serials = [int(m.group(1)) for m in markers]
         if serials != list(range(1, len(serials) + 1)):
             raise SystemExit(f"{notification}: instructions are numbered {serials[:5]}…, expected 1..n")
-        bounds = [m.start() for m in markers] + [len(text)]
-        segments = [text[bounds[i] : bounds[i + 1]] for i in range(len(markers))]
+        bounds = [m.start() for m in markers] + [len(part_one)]
+        for i in range(len(markers)):
+            for clause in split_clauses(part_one[bounds[i] : bounds[i + 1]]):
+                clauses.append((("table", "I"), i + 1, clause))
     else:
         # A corrigendum, or an amendment carrying a single unnumbered edit.
-        segments = [text[text.find("G.S.R") :]]
+        clauses.append((("table", "I"), 1, part_one[part_one.find("G.S.R") :]))
+
+    for n, section in enumerate(sections):
+        stop = sections[n + 1].start() if n + 1 < len(sections) else len(body)
+        target = next((k, v.upper()) for k in ("annex", "lists", "table") if (v := section.group(k)))
+        for position, clause in enumerate(lettered_clauses(body[section.end() : stop]), start=1):
+            clauses.append(((target[0].replace("annex", "annexure"), target[1]), position, clause))
 
     instructions = []
-    for position, segment in enumerate(segments, start=1):
-        for clause in split_clauses(segment):
-            found = classify_instruction(clause)
-            if not found:
-                raise SystemExit(
-                    f"{notification}: instruction {position} matches no known form — "
-                    f"{clause[:160]!r}. Add a form or the amendment cannot be trusted."
-                )
-            instructions.append({"notification": notification, "date": date, "position": position, **found})
+    for (scope, table), position, clause in clauses:
+        if scope == "annexure":
+            # A condition rewritten ("against Condition No. 5") or a new one
+            # inserted ("after Condition No. 87"). Conditions are not versioned
+            # in the masters, so a rewrite is recorded against the condition it
+            # changes; an insertion changes nothing that already exists.
+            number = re.search(r"against Condition No\.?\s*(\d+)", clause)
+            found_kind = {"kind": "annexure", **({"condition": number.group(1)} if number else {})}
+        elif scope == "lists":
+            found_kind = {"kind": "list"}
+        else:
+            found_kind = classify_instruction(clause)
+        if not found_kind:
+            raise SystemExit(
+                f"{notification}: instruction {position} of TABLE {table} matches no known form — "
+                f"{clause[:160]!r}. Add a form or the amendment cannot be trusted."
+            )
+        effect = in_force
+        if found_kind["kind"] in ("omit", "rate"):
+            own = WITH_EFFECT.search(clause)
+            if own:
+                effect = iso_date(*own.groups())
+        instructions.append(
+            {
+                "notification": notification,
+                "date": issued,
+                "inForce": effect,
+                "position": position,
+                "table": table,
+                **found_kind,
+            }
+        )
     return instructions
 
 
@@ -801,61 +910,111 @@ def split_clauses(instruction: str) -> list[str]:
     return [f"against S. No. {serial}, {part.strip()}" for part in parts if part.strip()]
 
 
-def apply_bcd_amendments(entries: list[dict]) -> list[dict]:
-    """Apply what can be applied; mark the rest stale on the entry it touches.
+def apply_bcd_amendments(entries: list[dict], conditions: list[dict]) -> list[dict]:
+    """Apply what can be applied, as dated versions; mark the rest stale.
 
     Only three forms are applied, and each asserts before it writes: the serial
     must exist, and the text being replaced must actually be there. An
     amendment that does not match what we hold means our parse of the base
     notification is wrong, which is worth stopping for.
 
+    Nothing is overwritten in a way that loses the past. A Bill of Entry is
+    assessed under the text in force on the day it is presented, and an
+    amendment to an old one is assessed under the old text:
+
+    - an omitted serial is kept, ending the day before the omission takes
+      effect (most of 02/2026's omissions wait until April or May);
+    - a substituted rate splits the entry into two versions, the old rate
+      ending the day before the new one starts.
+
     Everything else — an inserted serial, a substituted row, a new description,
     an amended List, a corrigendum against a printed page — is recorded. The
     entry it names is marked stale, and callers must not apply its rate.
     """
-    by_serial = {(e["table"], e["serial"]): e for e in entries}
+    import copy
+
+    newest = {(e["table"], e["serial"]): e for e in entries}
+    by_condition = {(c["table"], c["no"]): c for c in conditions}
     unapplied: list[dict] = []
 
-    for filename, notification, date in BCD_AMENDMENTS:
-        for instruction in read_amendment(filename, notification, date):
+    for filename, notification, issued in BCD_AMENDMENTS:
+        for instruction in read_amendment(filename, notification, issued):
             kind = instruction["kind"]
             serial = instruction.get("serial")
-            # Every amendment to 45/2025 so far edits TABLE I. When one edits
-            # another table this will stop finding its serial and say so.
-            entry = by_serial.get(("I", serial)) if serial else None
+            table = instruction["table"]
+            entry = newest.get((table, serial)) if serial else None
 
             if kind in APPLIED_FORMS and entry is None:
                 raise SystemExit(
                     f"{notification} instruction {instruction['position']} amends "
-                    f"S.No. {serial}, which is not in Table I of the base notification"
+                    f"S.No. {serial}, which is not in Table {table} of the base notification"
                 )
 
             if kind == "sunset":
                 old, new = instruction["old"], instruction["new"]
                 if old not in entry["description"]:
                     raise SystemExit(
-                        f"{notification} replaces {old!r} in S.No. {serial}, which does not contain it"
+                        f"{notification} replaces {old!r} in Table {table} S.No. {serial}, which does not contain it"
                     )
                 entry["description"] = entry["description"].replace(old, new)
                 entry.setdefault("amendedBy", []).append(f"{notification} ({kind})")
             elif kind == "omit":
-                entry["omitted"] = {"notification": notification, "date": date}
+                entry["omitted"] = {"notification": notification, "date": instruction["inForce"]}
             elif kind == "rate":
                 old, new = instruction["old"], instruction["new"]
                 if old not in entry["bcdRateText"]:
                     raise SystemExit(
-                        f"{notification} replaces rate {old!r} on S.No. {serial}, "
+                        f"{notification} replaces rate {old!r} on Table {table} S.No. {serial}, "
                         f"which reads {entry['bcdRateText']!r}"
                     )
                 count = -1 if instruction.get("both") else 1
-                entry["bcdRateText"] = entry["bcdRateText"].replace(old, new, count)
-                entry.setdefault("amendedBy", []).append(f"{notification} ({kind})")
+                version = copy.deepcopy(entry)
+                version["bcdRateText"] = entry["bcdRateText"].replace(old, new, count)
+                version["validFrom"] = instruction["inForce"]
+                version.setdefault("amendedBy", []).append(f"{notification} ({kind})")
+                entry["supersededFrom"] = instruction["inForce"]
+                entries.insert(entries.index(entry) + 1, version)
+                newest[(table, serial)] = version
+            elif kind == "annexure":
+                unapplied.append(instruction)
+                condition = by_condition.get((table, instruction.get("condition")))
+                if condition is not None:
+                    condition.setdefault("staleBy", []).append(f"{notification} (annexure)")
             else:
                 unapplied.append(instruction)
                 if entry is not None:
                     entry.setdefault("staleBy", []).append(f"{notification} ({kind})")
+                    # Stale only from the day the amendment takes effect: a
+                    # filing before then is assessed under the text we hold.
+                    since = entry.get("staleFrom")
+                    entry["staleFrom"] = min(since, instruction["inForce"]) if since else instruction["inForce"]
 
     return unapplied
+
+
+def date_entries(entries: list[dict], in_force: str) -> list[dict]:
+    """Give every entry the dates it is in force, inclusive at both ends.
+
+    From: the base notification's in-force date, or the day a substituted rate
+    took over. Until: the earliest of its own sunset proviso, the day before
+    it was omitted, and the day before a later version replaced it. An entry
+    omitted before it ever took effect never existed for any filing, and is
+    dropped.
+    """
+    dated = []
+    for e in entries:
+        e.setdefault("validFrom", in_force)
+        ends = [sunset_date(e["description"])]
+        if e.get("omitted"):
+            ends.append(day_before(e["omitted"]["date"]))
+        if e.get("supersededFrom"):
+            ends.append(day_before(e["supersededFrom"]))
+        ends = [d for d in ends if d]
+        e["validUntil"] = min(ends) if ends else None
+        if e["validUntil"] and e["validUntil"] < e["validFrom"]:
+            continue
+        dated.append(e)
+    return dated
 
 
 def build_bcd_exemptions() -> tuple[list[dict], list[dict], list[dict]]:
@@ -959,9 +1118,12 @@ def build_bcd_exemptions() -> tuple[list[dict], list[dict], list[dict]]:
     # Amendments first: a sunset date moved by 02/2026 must be in the
     # description before validity is read off it, and a rate substituted by
     # 15/2026 must be in the cell before the sub-items are split on it.
-    unapplied = apply_bcd_amendments(entries)
+    unapplied = apply_bcd_amendments(entries, conditions)
+    found = IN_FORCE.search(re.sub(r"\s+", " ", "".join(page.get_text() for page in doc)))
+    if not found:
+        raise SystemExit("45/2025: no in-force clause found in the base notification")
+    entries[:] = date_entries(entries, iso_date(*found.groups()))
     omitted = [e for e in entries if e.get("omitted")]
-    entries[:] = [e for e in entries if not e.get("omitted")]
 
     for entry in entries:
         entry["subEntries"] = split_sub_entries(entry)
@@ -972,7 +1134,7 @@ def build_bcd_exemptions() -> tuple[list[dict], list[dict], list[dict]]:
     applied = sum(len(e.get("amendedBy", [])) for e in entries)
     stale = [e for e in entries if e.get("staleBy")]
     print(
-        f"  45/2025 amendments: {applied} applied, {len(omitted)} serials omitted, "
+        f"  45/2025 amendments: {applied} applied, {len(omitted)} serials omitted (kept, dated), "
         f"{len(unapplied)} instructions left for a human ({len(stale)} entries marked stale)"
     )
 
@@ -1049,6 +1211,7 @@ CONDITION_SLOT = re.compile(r"\d+(?:\s+and\s+\d+)*|-")
 # "(i) newsprint; (ii) paper and paperboard; ..." — the enumerated end uses a
 # single serial can carry, each with its own rate and its own conditions.
 SUB_ITEM = re.compile(r"\((i|ii|iii|iv|v|vi|vii|viii|ix|x)\)\s*", re.I)
+ROMAN = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"]
 
 
 def split_sub_entries(entry: dict) -> list[dict] | None:
@@ -1079,6 +1242,11 @@ def split_sub_entries(entry: dict) -> list[dict] | None:
         return None
     labels = [parts[i].lower() for i in range(1, len(parts), 2)]
     texts = [parts[i].strip(" ;.-") for i in range(2, len(parts), 2)]
+    # The labels must run (i), (ii), (iii)… A repeat means a cross-reference
+    # was read as an item — S.No. 315's "(ii) other than (i) above" split into
+    # i, ii, i — and the rates would be matched to the wrong goods.
+    if labels != ROMAN[: len(labels)]:
+        return None
 
     # The raw cell, not entry["condition"], which has already had a lone "-"
     # normalised away — here the dashes are positional and must be kept.
@@ -1276,7 +1444,7 @@ def main() -> None:
         BANNER.format(source="bcd-exemption-notification-45-2025.pdf"),
         "import type { BcdAmendmentInstruction, BcdConditionMaster, BcdExemptionEntry } from '../data.js';",
         "",
-        f"/** {len(exemptions)} entries of notification 45/2025-Customs, 24 October 2025. */",
+        f"/** {len(exemptions)} dated entries of notification 45/2025-Customs, 24 October 2025, as amended. */",
         "export const GENERATED_BCD_EXEMPTIONS: BcdExemptionEntry[] = [",
     ]
     for e in exemptions:
@@ -1304,12 +1472,16 @@ def main() -> None:
             f"condition: {ts(e['condition'] or None)}",
             "conditions: [" + ", ".join(ts(n) for n in cited) + "]",
         ]
-        if sunset_date(e["description"]):
-            fields.append(f"validUntil: {ts(sunset_date(e['description']))}")
+        fields.append(f"validFrom: {ts(e['validFrom'])}")
+        if e["validUntil"]:
+            fields.append(f"validUntil: {ts(e['validUntil'])}")
+        if e.get("omitted"):
+            fields.append(f"omittedBy: {ts(e['omitted']['notification'])}")
         if e.get("amendedBy"):
             fields.append("amendedBy: [" + ", ".join(ts(a) for a in e["amendedBy"]) + "]")
         if e.get("staleBy"):
             fields.append("staleBy: [" + ", ".join(ts(a) for a in e["staleBy"]) + "]")
+            fields.append(f"staleFrom: {ts(e['staleFrom'])}")
         if e["subEntries"]:
             subs = ", ".join(
                 "{ "
@@ -1343,6 +1515,7 @@ def main() -> None:
             "  { "
             + ", ".join(
                 [f"table: {ts(c['table'])}", f"no: {ts(c['no'])}", f"kinds: {kinds}", f"text: {ts(c['text'])}"]
+                + (["staleBy: [" + ", ".join(ts(a) for a in c["staleBy"]) + "]"] if c.get("staleBy") else [])
             )
             + " },"
         )
@@ -1359,9 +1532,17 @@ def main() -> None:
         "export const GENERATED_BCD_UNAPPLIED: BcdAmendmentInstruction[] = [",
     ]
     for i in unapplied_instructions:
-        fields = [f"notification: {ts(i['notification'])}", f"date: {ts(i['date'])}", f"kind: {ts(i['kind'])}"]
+        fields = [
+            f"notification: {ts(i['notification'])}",
+            f"date: {ts(i['date'])}",
+            f"inForce: {ts(i['inForce'])}",
+            f"table: {ts(i['table'])}",
+            f"kind: {ts(i['kind'])}",
+        ]
         if i.get("serial"):
             fields.append(f"serial: {ts(i['serial'])}")
+        if i.get("condition"):
+            fields.append(f"condition: {ts(i['condition'])}")
         lines.append("  { " + ", ".join(fields) + " },")
     lines.append("];")
     write(OUT / "bcd-exemptions.ts", "\n".join(lines) + "\n")

@@ -15,6 +15,21 @@ Entry as a whole.
 **Wired**, at `packages/exporter/src/map/sw-production.ts`, with three defects
 this document records and closes.
 
+**Scoped by the agency, not by whether a lot number happened to be printed.**
+The mapper emitted for any line carrying a batch number, which is most of them —
+a certificate of analysis states lots for lubricants and resins as readily as
+for food. That cost 34 of the corpus's warnings, every one on a chapter with no
+participating agency: 39, 34, 29, 27. A line is considered here only when
+`singleWindowRuleForChapter()` knows an agency for its chapter, the same gate
+`statement.ts` and `single-window.ts` already use, and the two warnings that
+survive are both genuinely FSSAI lines (`ex_job2`, `ex_job3`).
+
+`SINGLE_WINDOW_RULES` is incomplete — it holds FSSAI (chapters 2–22 and 35) and
+no Drug Controller entry, although the SWIFT Quick Referencer obliges one. So
+this under-declares rather than over-declares today, which is the right way
+round: a batch row Logi-Sys did not want is a rejected upload, and the fix for
+the missing agency belongs in the master, not in a guess here.
+
 Evidence, in order of authority:
 
 - `BE Message format 2.25 (16Feb2026).pdf` — the field list, the types, and the
@@ -113,19 +128,22 @@ which is what FSSAI's 60 % residual-shelf-life rule is checked against. A row
 dropped for want of a date silently drops that check too — which is the second
 reason the drop is warned about rather than swallowed.
 
-## 8. `Prod_Best_before_Date` — the defect to fix
+## 8. `Prod_Best_before_Date` — closed
 
-**The mapper writes the expiry date into this column, and that is wrong.** The
-comment admits it (*"the draft models no separate best-before date"*), and for
-the goods that reach this sheet the two dates are routinely different: a
-best-before is a quality date and an expiry is a safety date, and food packs
-carry both. Writing one into the other declares a fact about the goods that no
-document supports.
+**Source:** `document`, from the invoice line or the certificate of analysis.
 
-`CoaProductSchema` (`packages/extraction/src/schemas.ts:432`) has no
-`bestBeforeDate` field at all. Adding one, and dropping the row when it is
-unknown, is the honest behaviour and the one this sheet's own all-or-nothing
-rule already implies.
+The mapper used to write the *expiry* into this column. A best-before is a
+quality date and an expiry a safety date, food packs carry both, and writing one
+into the other declares a fact about the goods no document supports. That was
+stopped first — and then the column could never be filled, because neither
+`InvoiceDocSchema` nor `CoaProductSchema` had a `bestBeforeDate` field, so every
+batch on a regulated line was dropped for want of a date nothing could supply.
+
+Both schemas now carry it, both extraction prompts name it and say in as many
+words that it is distinct from the expiry and never a copy of it, and `merge.ts`
+carries it into `DraftBatch` on the single-lot and multi-lot paths alike.
+`packages/extraction/test/batches-merge.test.ts` pins all of it, including that
+a document printing only an expiry yields only an expiry.
 
 ---
 
@@ -182,8 +200,9 @@ rule already implies.
 
 Two gaps upstream, in this order:
 
-1. **`CoaProductSchema` keeps one date pair and no best-before.** Add
-   `bestBeforeDate`, and keep every product row rather than `find()`ing one.
+1. ~~**`CoaProductSchema` keeps one date pair and no best-before.**~~ Done —
+   see §8. Every product row is kept, not `find()`ed, and `bestBeforeDate` is
+   on both schemas.
 2. **There is no PGA-by-CTH lookup.** `singleWindowRuleForChapter()`
    (`masters/index.ts:656`) is a chapter range. The SWIFT referencer's CTH-PGA
    mapping — 160 pages of it, in the repo — is what says whether FSSAI or CDSCO

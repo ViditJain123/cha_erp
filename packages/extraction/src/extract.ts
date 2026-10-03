@@ -40,7 +40,8 @@ The types:
 - contract: a sale contract or purchase agreement between the two.
 - bank_certificate: a bank's certificate of the exchange rate for a currency, issued to the importer. States a bank's name, a certificate number and date, a currency and a rate in rupees. Attached when the invoice currency is one the Ministry of Finance does not notify a customs rate for.
 - high_seas_agreement: a HIGH SEAS SALE agreement — a contract selling goods while they are afloat, signed after shipment and before the Bill of Entry. Usually titled "High Seas Sale Agreement"; names a seller and a buyer, quotes the original supplier's invoice and/or the B/L, and states the high-seas sale value. It is not the supplier's own invoice and not an ordinary sale contract.
-- other: anything else (licences, test reports, correspondence...)
+- other: anything else (licences, test reports, correspondence...). A DGFT authorisation, licence or scrip — Advance Authorisation, EPCG, DFIA, TRQ, RoDTEP — is "other" even though it prints a table of items with quantities, CIF values and HS codes, and names the Customs notification it is issued under. Nothing on it is an invoice line and its notification number is not a duty claim on the goods; it is read from the licence master, not from the file.
+
 A pre-filing "CheckList - Bill of Entry" print for a HOME CONSUMPTION BE is "other"; the same print for a WAREHOUSING BE is "into_bond_be".
 Do not list "other" alongside real types: a bundle that also contains an insurance certificate and a grade certificate is still just the types you recognise. Only return ["other"] when the file contains nothing else.`;
 
@@ -68,9 +69,10 @@ Item rules, per invoice:
 - termsOfInvoice: normalise the Incoterm (CIF/C&F(CFR)/FOB/EXW/CPT). "Ex-Works" is EXW.
 - sellerAddressLines: use the seller's own/remit-to address block that identifies the selling entity, not office/plant contact addresses printed in footers.
 - sellerCity: the city (or prefecture/province where that is what the address states) from that same block, on its own — the Bill of Entry declares it in a separate field from the address. For "HAMAMATSU SHI, SHIZUOKA KEN, 430-0942 JAPAN" that is "Shizuoka".
-- Capture batch/manufacture/expiry details when printed near items.
-- brand / model: only when the line prints a brand name or a model/grade/type designation. A seller's part number is not a model unless the invoice labels it as one. Null otherwise — do not write "UNBRANDED" or "NA".
-- countryOfOrigin on a line: only when the invoice states origin per line; the document-level origin goes in countryOfOrigin on the invoice.
+- Capture batch/manufacture/expiry details when printed near items. A best-before or use-by date is a separate field from the expiry — record each only where the document prints it, and never copy one into the other.
+- Do not separate out a brand, a model, a grade or a part number. Leave them inside the description exactly as printed; the Bill of Entry does not declare them from the invoice.
+- countryOfOrigin on a line
+: only when the invoice states origin per line; the document-level origin goes in countryOfOrigin on the invoice.
 - noCommercialValue: true when the line (or the whole invoice) says NCV, "no commercial value", FOC, "free of charge", or "value for customs purpose only".
 - manufacturerName / manufacturerAddressLines: only when the invoice names a manufacturer or producer separately from the seller. Null and [] otherwise.
 - natureOfTransaction: what the invoice records. Most commercial invoices are an ordinary SALE and say nothing about it — answer UNKNOWN rather than SALE only when the document positively suggests something else and you cannot tell what. FREE_OF_COST covers "free of charge", "no commercial value", "value for customs purposes only", and a returning re-import billed with no payment due ("Payment: N/A"). SAMPLE, REPLACEMENT, GIFT, HIRE, RENT and SALE_ON_CONSIGNMENT only when the document says so.
@@ -128,7 +130,7 @@ certificateNumber: the certificate's own serial/reference number only (e.g. "058
   },
   certificate_of_analysis: {
     system: `${EXTRACT_COMMON}
-This is a certificate of analysis / conformance. One certificate may cover multiple products — return one entry per product with batch number, manufacture date and expiry date when printed.`,
+This is a certificate of analysis / conformance. One certificate may cover multiple products — return one entry per product with batch number, manufacture date, expiry date and best-before date when printed. Best-before (or use-by) is a quality date and expiry is a safety date: a pack often prints both, they are different fields, and neither is ever a copy of the other. Null the one the certificate does not print.`,
     user: 'Extract the certificate of analysis data.',
   },
   into_bond_be: {

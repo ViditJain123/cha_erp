@@ -34,23 +34,49 @@ import type { ChecklistDraft } from './draft.js';
 /** Entries offered to the model. Beyond this the list is noise, not choice. */
 const CANDIDATES = 8;
 
+// Reason before index, on every line. Structured output is produced in field
+// order, so with the index first the model committed to an entry and then
+// wrote a reason for it — and three corpus jobs came back with a serial whose
+// own reason said the condition was not met. Writing the reason first makes
+// the index a conclusion of it rather than the other way round.
 const ChoiceSchema = z.object({
+  igstReason: z.string(),
   /** Index into the IGST candidate list, or null when none of them describes the goods. */
   igstIndex: z.number().nullable(),
-  igstReason: z.string(),
+  bcdReason: z.string(),
   /** Index into the BCD candidate list, or null when no concession applies. */
   bcdIndex: z.number().nullable(),
-  bcdReason: z.string(),
+  compCessReason: z.string(),
   /** Index into the compensation cess candidate list, or null when none describes the goods. */
   compCessIndex: z.number().nullable(),
-  compCessReason: z.string(),
 });
 
 export interface NotificationChoice {
   igst?: { entry: IgstScheduleEntry; reason: string };
   bcd?: { entry: BcdExemptionEntry; reason: string };
   compCess?: { entry: CompCessEntry; reason: string };
+  /**
+   * A BCD entry the model picked and, in the same breath, said does not apply.
+   * Kept so the reviewer sees what was considered; never applied.
+   */
+  bcdRefused?: { entry: BcdExemptionEntry; reason: string };
 }
+
+/**
+ * Whether a reason for choosing a concession actually argues against it.
+ *
+ * ex_job21: "limited to goods imported by a 'specified person' … which the
+ * invoice does not establish" — filed. ex_job26: "does not identify the
+ * hydrogen plant as a List 12 good" — filed. liv_job1: "which the invoice does
+ * not establish" — filed. A reason that says the condition is not met is a
+ * null answer whatever index sits beside it.
+ */
+export function bcdReasonRefuses(reason: string): boolean {
+  return /\b(does not|doesn't|do not|don't|cannot|can't|not|never|nothing)\s+(\w+\s+){0,3}(establish|confirm|identif|show|state|demonstrat|indicat|support|evidenc|meet|satisf)|no evidence|not evident|unclear|unknown whether|not established|not met|cannot be confirmed|insufficient/i.test(
+    reason,
+  );
+}
+
 
 function igstCandidateText(entries: IgstScheduleEntry[]): string {
   return entries
@@ -85,14 +111,22 @@ function bcdCandidateText(entries: BcdExemptionEntry[]): string {
  * unambiguous never reaches the model, and a model that finds no entry fitting
  * the goods says so.
  */
-export async function chooseNotificationEntries(item: {
-  ritc: string;
-  description: string;
-  /** Trade description / end use, where the documents gave one. */
-  context?: string;
-}): Promise<NotificationChoice> {
+export async function chooseNotificationEntries(
+  item: {
+    ritc: string;
+    description: string;
+    /** Trade description / end use, where the documents gave one. */
+    context?: string;
+  },
+  opts?: { filingDate?: string },
+): Promise<NotificationChoice> {
   const igstCandidates = igstScheduleMatches(item.ritc).slice(0, CANDIDATES);
-  const bcdCandidates = bcdExemptionMatches(item.ritc).slice(0, CANDIDATES);
+  // Only what is in force on the day the Bill of Entry is presented. Undated,
+  // the table is offered whole — but a lapsed proviso is not a choice.
+  const bcdCandidates = bcdExemptionMatches(item.ritc, {
+    ...(opts?.filingDate && { onIsoDate: opts.filingDate }),
+  }).slice(0, CANDIDATES);
+
   // Only the entries that actually name the code. The residual S.No. 56 covers
   // every CTH and describes no goods, so offering it as a candidate would
   // invite the model to "choose" the answer the lookup already gives for free.
@@ -122,14 +156,18 @@ Reasons: one sentence, quoting the words of the entry that decided it.`,
   });
 
   const igstEntry = choice.igstIndex == null ? undefined : igstCandidates[choice.igstIndex];
-  const bcdEntry = choice.bcdIndex == null ? undefined : bcdCandidates[choice.bcdIndex];
+  const bcdPicked = choice.bcdIndex == null ? undefined : bcdCandidates[choice.bcdIndex];
+  const bcdRefused = bcdPicked && bcdReasonRefuses(choice.bcdReason);
+  const bcdEntry = bcdRefused ? undefined : bcdPicked;
   const cessEntry = choice.compCessIndex == null ? undefined : cessCandidates[choice.compCessIndex];
   return {
     ...(igstEntry && { igst: { entry: igstEntry, reason: choice.igstReason } }),
     ...(bcdEntry && { bcd: { entry: bcdEntry, reason: choice.bcdReason } }),
+    ...(bcdRefused && bcdPicked && { bcdRefused: { entry: bcdPicked, reason: choice.bcdReason } }),
     ...(cessEntry && { compCess: { entry: cessEntry, reason: choice.compCessReason } }),
   };
 }
+
 
 /**
  * Post-merge enrichment: settle the notification entries the code lookup left
@@ -141,11 +179,39 @@ Reasons: one sentence, quoting the words of the entry that decided it.`,
  * row, and items carrying an FTA claim (whose BCD comes from the trade
  * agreement, not from 45/2025), are left alone.
  */
-export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promise<ChecklistDraft> {
+export async function enrichDraftFromNotifications(
+  draft: ChecklistDraft,
+  opts?: { filingDate?: string },
+): Promise<ChecklistDraft> {
+  // The day the Bill of Entry is presented decides which notifications are in
+  // force. The header's date when a person has set one, else the caller's
+  // (the mail thread's date on the corpus), else today.
+  const filingDate =
+    draft.shipment.beFilingDate ?? opts?.filingDate ?? new Date().toISOString().slice(0, 10);
+
   for (const [idx, item] of draft.items.entries()) {
     if (!/^\d{8}$/.test(item.ritc)) continue;
 
-    const igst = igstRateForCth(item.ritc);
+    const igst = igstRateForCth(item.ritc, { onIsoDate: filingDate });
+    // A filing dated before 9/2025 took effect is assessed under 1/2017-IT(R),
+    // whose schedule is not parsed. The number is corrected here; the serial
+    // cannot be, and the line says so rather than carrying the new schedule's.
+    if (igst && !igst.scheduleKnown) {
+      item.igstNotification = igst.notification;
+      if (item.notificationSerials?.igst) {
+        const { igst: _serial, ...rest } = item.notificationSerials;
+        item.notificationSerials = rest;
+      }
+      draft.flags.push({
+        severity: 'error',
+        path: `items.${idx}.igstRate`,
+        message:
+          `This Bill of Entry is dated ${filingDate}, before 9/2025-IT(R) took effect, so IGST is under ` +
+          `${igst.notification} — whose schedule the masters do not hold. Read the serial off 1/2017-IT(R) ` +
+          `and confirm the rate (${igst.rate}% is the current schedule's answer for CTH ${item.ritc}).`,
+      });
+    }
+
     // A re-import claims its relief on the RE-IMPORT sheet and nowhere else:
     // 45/2017 exempts the duty on goods coming home, and a 45/2025 concession
     // filed beside it claims the same relief twice. The exporter refuses that
@@ -153,8 +219,9 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
     // it was: ex_job3 came back with a re-import row and a basic-duty
     // notification, and the job could not be filed at all.
     const bcdCandidates =
-      item.bcdExemption || item.reImport ? [] : bcdExemptionMatches(item.ritc);
-    const igstOpen = Boolean(igst && !igst.residual && igst.alternatives.length);
+      item.bcdExemption || item.reImport ? [] : bcdExemptionMatches(item.ritc, { onIsoDate: filingDate });
+    const igstOpen = Boolean(igst && igst.scheduleKnown && !igst.residual && igst.alternatives.length);
+
     // Same test on the cess side: the merge left the serial blank because two
     // entries name this code, and only the goods description separates them.
     const cess = compCessForCth(item.ritc);
@@ -163,14 +230,29 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
 
     let choice: NotificationChoice;
     try {
-      choice = await chooseNotificationEntries({
-        ritc: item.ritc,
-        description: item.description,
-        ...(item.generalDescription ? { context: item.generalDescription } : {}),
-      });
+      choice = await chooseNotificationEntries(
+        {
+          ritc: item.ritc,
+          description: item.description,
+          ...(item.generalDescription ? { context: item.generalDescription } : {}),
+        },
+        { filingDate },
+      );
     } catch {
       continue; // no model available — the deterministic flags from the merge stand
     }
+
+    if (choice.bcdRefused) {
+      const entry = choice.bcdRefused.entry;
+      draft.flags.push({
+        severity: 'info',
+        path: `items.${idx}.bcdRate`,
+        message:
+          `BCD concession ${bcdExemptionNotification()} Table ${entry.table} S.No. ${entry.serial} was considered and ` +
+          `NOT applied — the reasoning says the goods do not meet it: ${choice.bcdRefused.reason}`,
+      });
+    }
+
 
     if (igstOpen && choice.igst) {
       const entry = choice.igst.entry;
@@ -228,7 +310,7 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
       // so the rate we hold was read from text that is no longer in force.
       // Propose it — it is still the best evidence of what the concession was —
       // but never file it.
-      const applied = entry.bcdRate != null && !isStale(entry);
+      const applied = entry.bcdRate != null && !isStale(entry, filingDate);
       if (applied) {
         item.bcdRate = entry.bcdRate!;
         item.bcdNotification = bcdExemptionNotification();
@@ -243,7 +325,7 @@ export async function enrichDraftFromNotifications(draft: ChecklistDraft): Promi
           `rate "${entry.bcdRateText}"${entry.condition ? `, condition ${entry.condition}` : ', unconditional'}: ` +
           `${choice.bcd.reason} — confirm the goods meet the description${entry.condition ? ' and the condition' : ''} before filing.` +
           corroboration +
-          (isStale(entry)
+          (isStale(entry, filingDate)
             ? ` NOT APPLIED: ${entry.staleBy!.join(', ')} amend this entry and have not been folded into the masters — read the amendment before claiming it.`
             : ''),
       });

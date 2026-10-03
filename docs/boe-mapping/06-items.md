@@ -132,14 +132,30 @@ product master's confirmed value wins over the seed.
 
 ## 8. `Brand`, `Model`
 
-**Source:** `document` < `master` < `operator`.
+**Source:** `master` < `operator`, defaulting to `UNBRANDED` / `NA`. **Never
+`document`.**
 
-- **Brand** — *"As per invoice or ask operator"*. The invoice line's brand when
-  it prints one; else the product master; else **warn** and offer `UNBRANDED`
-  (what every bulk-chemical golden files).
-- **Model** — *"As per invoice else NA if blank in invoice"*. The invoice's
-  model/grade/part when it prints one, else `NA`. ICES: *"Must be given. If not
-  applicable declare as N.A."*; the vendor writes `NA`.
+- **Brand** — `UNBRANDED` unless the product master or the operator holds a
+  brand, **with nothing said**. It used to warn, 29 times across the corpus.
+  `UNBRANDED` is not a guess being apologised for — it is the convention, and
+  the vendor shares it: Logi-Sys writes `UNBRANDED` on every item row of the
+  nine vendor exports we hold, six importers and chapters 27, 29, 34, 39, 84
+  and 88 between them. A brand the *product master* holds is stamped
+  `sources.brand = 'master'`, so it never reaches the default.
+- **Model** — `NA` unless the product master or the operator holds one. ICES:
+  *"Must be given. If not applicable declare as N.A."*; the vendor writes `NA`
+  on every row but one (`ex_job31`, where the operator keyed the aircraft type).
+
+**Why the invoice is not a source.** The extraction schema used to carry a
+`brand` and a `model` per line, "only when the line prints one". What came back
+was the manufacturer's grade code (`BE961MO` on ex_job25, `HE3490LS HD` on
+ex_job27, `T305`, `LAJA`, `RH668MO`), a seller's part number, or a trade name
+lifted out of the description — and the vendor filed `UNBRANDED` / `NA` on
+every one of those lines. A model reading a description and deciding which
+token is "the brand" is exactly the hallucination this system is built to
+refuse, so the two fields are gone from the schema and the merge writes the
+defaults. The operator's items panel and the product master still set both.
+
 
 ## 9. `End_Use`
 
@@ -258,6 +274,18 @@ The serial is the notification's own. A 45/2025 entry with sub-entries files the
 sub-entry the goods fall under (S.No. 160 on job I-40127 enumerates four).
 A candidate the goods may not qualify for — condition 3 (IGCR), an end-use
 restriction — is **warned**, not filed.
+
+**A licence's notification is never a value here.** `021/2023`, `026/2023`,
+`025/2023` and the 2015 family are the notifications an authorisation is
+*issued under*, printed on its face, and they kept arriving in this slot — an
+operator keying the number off the licence, or the product master remembering
+a licence job as though the exemption were a property of the goods.
+`resolveItems` now moves any such notification into the Exim slot (§10) and
+says so; `learnFromApprovedJob` and `rememberProduct` refuse to store one as
+`basic`; and the mapper **blocks** a draft that still carries one. The
+classifier is also told that a DGFT authorisation is `other`, whatever tables
+it prints, so nothing on it is ever read as a line of the invoice.
+
 
 ## 16. SWS, AIDC, health cess, and the other customs lines
 

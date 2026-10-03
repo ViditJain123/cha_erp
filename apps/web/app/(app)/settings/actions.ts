@@ -7,7 +7,7 @@ import {
   parseWarehouseCodeResult,
 } from '@checklist/core';
 import { COMPANY_MANAGER_ROLES } from '@checklist/config/app';
-import type { AppRole, TeamKind } from '@checklist/db';
+import type { AppRole, Database, TeamKind } from '@checklist/db';
 import { partyNameKey } from '@checklist/core';
 import { requireCompany, requireCompanyManager } from '@/lib/auth';
 import { searchOrganizations } from '@/lib/parties';
@@ -774,13 +774,203 @@ export async function listOrganizations(query: string) {
       .limit(1),
   ]);
 
+  // AD codes for the rows on this page only. The table is small but it is
+  // per-organization, and fetching it for five thousand rows to render twenty
+  // would be the kind of query that is fine until it is not.
+  const ids = (organizations ?? []).map((o) => o.id);
+  const { data: adCodes } = ids.length
+    ? await db
+        .from('organization_ad_codes')
+        .select('*')
+        .eq('company_id', ctx.companyId)
+        .in('organization_id', ids)
+        .order('is_default', { ascending: false })
+        .order('ad_code')
+    : { data: [] };
+
+  // A plain object, not a Map. Every export of a 'use server' module is a
+  // server action, and what one returns has to survive serialisation — a Map
+  // does not.
+  type AdCodeRow = Database['public']['Tables']['organization_ad_codes']['Row'];
+  const byOrg: Record<string, AdCodeRow[]> = {};
+  for (const row of (adCodes ?? []) as AdCodeRow[]) {
+    (byOrg[row.organization_id] ??= []).push(row);
+  }
+
   return {
     ctx,
     organizations: organizations ?? [],
+    adCodesByOrg: byOrg,
     activeCount: count ?? 0,
     lastImport: imports?.[0] ?? null,
     pageSize: ORGANIZATION_PAGE_SIZE,
   };
+}
+
+// ------------------------------------------------------- AD codes --------
+
+/**
+ * The bank branches an importer remits through.
+ *
+ * `organizations.ad_code` carries one AD code straight off the repository, and
+ * that is the default. This is the rest of them — and it had a table, an index
+ * and a reader from the day the BE header was built, and no way at all to put a
+ * row in it.
+ *
+ * It is load-bearing rather than a convenience, which is easy to assume the
+ * wrong way round. Only 188 of the company's 4,010 consignee rows carry an AD
+ * code at all, and the repository frequently does not hold the one actually
+ * filed: RAJSHREE's `0510146` is on no RAJSHREE row, FUCHS files `6550001`
+ * against its AMBERNATH branch while the repository holds that code on
+ * KARNATAKA, and ELITE POLYPLUS files `0510226` where its row says `0410002`.
+ * In Logi-Sys the branch and the AD code are independent selections, so binding
+ * the party does not answer this.
+ */
+
+/** Seven digits in the directory, and the leading zero is part of it. */
+const AD_CODE_RE = /^[0-9]{6,8}$/;
+
+export async function addOrganizationAdCode(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const organizationId = String(formData.get('organizationId') ?? '');
+  // Trimmed, never parsed as a number: 0023340 as a number is 23340, a
+  // different bank branch, and the BE would be filed against it.
+  const adCode = String(formData.get('adCode') ?? '').trim();
+  const bankName = String(formData.get('bankName') ?? '').trim();
+  const bankBranch = String(formData.get('bankBranch') ?? '').trim();
+  const isDefault = formData.get('isDefault') === 'on';
+
+  if (!organizationId) return { error: 'No organization to add an AD code to.' };
+  if (!AD_CODE_RE.test(adCode)) {
+    return { error: 'An AD code is six to eight digits, leading zero included.' };
+  }
+
+  const db = serviceClient();
+  const { data: org } = await db
+    .from('organizations')
+    .select('id')
+    .eq('id', organizationId)
+    .eq('company_id', ctx.companyId)
+    .maybeSingle();
+  if (!org) return { error: 'That organization is not in this company’s repository.' };
+
+  if (isDefault) {
+    // `organization_ad_codes_one_default` is a partial unique index, so the old
+    // default has to go before the new one lands.
+    await db
+      .from('organization_ad_codes')
+      .update({ is_default: false })
+      .eq('company_id', ctx.companyId)
+      .eq('organization_id', organizationId);
+  }
+
+  const { error } = await db.from('organization_ad_codes').upsert(
+    {
+      company_id: ctx.companyId,
+      organization_id: organizationId,
+      ad_code: adCode,
+      bank_name: bankName || null,
+      bank_branch: bankBranch || null,
+      is_default: isDefault,
+    },
+    { onConflict: 'organization_id,ad_code' },
+  );
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/organizations');
+  return { ok: true, message: `AD code ${adCode} saved.` };
+}
+
+export async function setDefaultOrganizationAdCode(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const id = String(formData.get('id') ?? '');
+  const organizationId = String(formData.get('organizationId') ?? '');
+  if (!id || !organizationId) return { error: 'No AD code to make the default.' };
+
+  const db = serviceClient();
+  await db
+    .from('organization_ad_codes')
+    .update({ is_default: false })
+    .eq('company_id', ctx.companyId)
+    .eq('organization_id', organizationId);
+
+  const { error } = await db
+    .from('organization_ad_codes')
+    .update({ is_default: true })
+    .eq('id', id)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/organizations');
+  return { ok: true, message: 'Default AD code set.' };
+}
+
+export async function deleteOrganizationAdCode(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const id = String(formData.get('id') ?? '');
+  if (!id) return { error: 'No AD code to remove.' };
+
+  // Deleted, not deactivated, unlike an organization: a job that was filed
+  // against this code copied the string onto its own BE header, so nothing
+  // already filed depends on the row surviving.
+  const { error } = await serviceClient()
+    .from('organization_ad_codes')
+    .delete()
+    .eq('id', id)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  revalidatePath('/settings/organizations');
+  return { ok: true, message: 'AD code removed.' };
+}
+
+// -------------------------------------------------- remembered parties ----
+
+/**
+ * Which repository branch a name off the documents means.
+ *
+ * Written from the job screen when someone picks a party and ticks "remember".
+ * This is the other half of that: without a way to see and undo a binding, a
+ * wrong one is unreachable and quietly wrong on every job after.
+ */
+export async function listPartyBindings() {
+  const ctx = await requireCompany();
+  const { data } = await serviceClient()
+    .from('party_bindings')
+    .select('*, organizations(name, branch_name, city, ad_code)')
+    .eq('company_id', ctx.companyId)
+    .order('source_name');
+  return { ctx, bindings: data ?? [] };
+}
+
+export async function deletePartyBinding(
+  _prev: SettingsActionState,
+  formData: FormData,
+): Promise<SettingsActionState> {
+  const ctx = await requireCompanyManager();
+  const id = String(formData.get('id') ?? '');
+  if (!id) return { error: 'No binding to remove.' };
+
+  const { error } = await serviceClient()
+    .from('party_bindings')
+    .delete()
+    .eq('id', id)
+    .eq('company_id', ctx.companyId);
+  if (error) return { error: error.message };
+
+  // The binding is read at resolution time, so nothing needs rewriting: the
+  // next re-resolve of any job asks the question again.
+  revalidatePath('/settings/organizations');
+  return { ok: true, message: 'Forgotten. That name will be asked about again.' };
 }
 
 /**

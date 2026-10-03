@@ -1,7 +1,9 @@
 import JSZip from 'jszip';
 import type { Cell } from './cell.js';
 import { columnLetter, escapeXml } from './format.js';
+import { MAX_CELL_CHARS } from './limits.js';
 import type { LoadedTemplate } from './template.js';
+
 
 /**
  * Writes data rows into the vendor template without disturbing anything else.
@@ -26,7 +28,15 @@ function renderCell(ref: string, cell: Cell): string {
       // column on a Bill of Entry means.
       return '';
     case 'text':
+      // The hard stop behind `enforceCellLimits`. `buildLogisysWorkbook` has
+      // already cut and warned; this is for any other path into the writer.
+      if (cell.value.length > MAX_CELL_CHARS) {
+        throw new Error(
+          `Cell ${ref} is ${cell.value.length} characters; no cell may exceed ${MAX_CELL_CHARS}.`,
+        );
+      }
       // Inline strings, not shared strings: xl/sharedStrings.xml is never
+
       // rewritten, so the header row's string indexes cannot be perturbed.
       // Logi-Sys reads them: the ErrorList it returned for job FUCHS-13841
       // enumerated our products by serial, which it could only do having

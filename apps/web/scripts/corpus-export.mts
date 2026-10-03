@@ -44,7 +44,9 @@ import { resolveIndianStation } from '@checklist/core';
 import { processUpload } from '@checklist/ingest';
 import { buildLogisysWorkbook } from '@checklist/exporter';
 import type { ChecklistDraft } from '@checklist/extraction';
-import { applyJobResolution, buildDraftFromDocuments } from '@/lib/draft-pipeline';
+import { recordAgentRun } from '@/lib/agent-runs';
+import { applyJobResolution, buildDraftFromDocuments, jobAgentMode } from '@/lib/draft-pipeline';
+
 import { serviceClient } from '@/lib/supabase/admin';
 
 const ERP_ROOT = path.resolve(import.meta.dirname, '../../..', '..');
@@ -726,10 +728,11 @@ async function runFolder(folder: string): Promise<FolderState> {
   //    does, down to reading them back out of storage rather than off disk.
   const { data: documents } = await db
     .from('job_documents')
-    .select('file_name, storage_bucket, storage_path, mime_type')
+    .select('file_name, storage_bucket, storage_path, mime_type, doc_type')
     .eq('job_id', jobId)
     .eq('company_id', COMPANY_ID);
   if (!documents?.length) {
+
     return { folder, status: 'failed', error: 'The job has no stored documents.', jobId, fed, withheld, unreadable };
   }
   // Belt and braces: an answer key can only be here if a previous run put it
@@ -746,13 +749,23 @@ async function runFolder(folder: string): Promise<FolderState> {
         fileName: doc.file_name,
         pdf: Buffer.from(await data.arrayBuffer()),
         ...(doc.mime_type ? { mimeType: doc.mime_type } : {}),
+        ...(doc.doc_type ? { hint: doc.doc_type } : {}),
       };
     }),
   );
 
   const t0 = Date.now();
-  let { draft, docs } = await buildDraftFromDocuments(files, COMPANY_ID, jobId);
+  let { draft, docs, agentRun } = await buildDraftFromDocuments(files, COMPANY_ID, jobId);
   log(`draft built in ${((Date.now() - t0) / 1000).toFixed(0)}s — ${draft.items.length} line(s), ${draft.flags.length} flag(s)`);
+  if (agentRun) {
+    const u = agentRun.usage;
+    log(
+      `🤖 job agent ${agentRun.status} (${jobAgentMode()}): ${agentRun.turns} turn(s), ${agentRun.toolCalls.length} tool call(s), ` +
+        `${agentRun.webSources.length} web search(es), ${u.input + u.cached} in / ${u.output} out tokens, ` +
+        `${agentRun.decisions.filter((d) => d.applied).length} applied of ${agentRun.decisions.length} decision(s)${agentRun.error ? ` — ${agentRun.error}` : ''}`,
+    );
+  }
+
 
   const { data: latest } = await db
     .from('job_drafts')
@@ -769,12 +782,19 @@ async function runFolder(folder: string): Promise<FolderState> {
       company_id: COMPANY_ID,
       job_id: jobId,
       draft: draft as never,
+      docs: docs as never,
       version,
       created_by: UPLOADED_BY,
     })
     .select('id')
     .single();
   if (draftError || !draftRow) throw new Error(`Could not file the draft: ${draftError?.message}`);
+  if (agentRun) {
+    await recordAgentRun({ companyId: COMPANY_ID, jobId, draftId: draftRow.id, draftVersion: version, run: agentRun }).catch((err: Error) =>
+      log(`⚠️  agent run not recorded: ${err.message}`),
+    );
+  }
+
 
   // 4. The workbook — with the operator answering the questions that are
   //    theirs to answer, and the draft re-resolved after each answer exactly
@@ -847,11 +867,30 @@ async function runFolder(folder: string): Promise<FolderState> {
         // rolls these up across the corpus.
         ices: result.ices,
         flags: draft.flags,
+        // What the job agent did on this job, if it ran. Compared across
+        // runs the way warnings are: what it decided, what it refused, what
+        // it cost.
+        ...(agentRun && {
+          agent: {
+            status: agentRun.status,
+            mode: jobAgentMode(),
+            model: agentRun.model,
+            filingDate: agentRun.filingDate,
+            turns: agentRun.turns,
+            toolCalls: agentRun.toolCalls.map((c) => ({ name: c.name, args: c.args, ms: c.ms, ...(c.error && { error: c.error }) })),
+            webSources: agentRun.webSources,
+            usage: agentRun.usage,
+            decisions: agentRun.decisions,
+            registry: agentRun.registry,
+            ...(agentRun.error && { error: agentRun.error }),
+          },
+        }),
       },
       null,
       2,
     )}\n`,
   );
+
 
   // File it where the app files it, so the export is downloadable from the job
   // page as well as sitting on disk here.

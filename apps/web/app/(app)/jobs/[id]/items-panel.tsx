@@ -14,7 +14,8 @@ import { BUTTON, Note, PRIMARY, SMALL_FIELD } from './ui';
  * model and end use for the next job.
  */
 
-export type ItemSource = 'document' | 'master' | 'mail' | 'operator' | 'default';
+export type ItemSource = 'document' | 'master' | 'mail' | 'operator' | 'default' | 'agent';
+
 
 export interface ItemRowView {
   invoiceSrNo: number;
@@ -40,6 +41,13 @@ export interface ItemRowView {
   sources: Partial<Record<string, ItemSource>>;
   /** Notification lines as they will be filed, for display. */
   duties: { label: string; value: string }[];
+  /** What the job agent decided on this line and why, when it ran. */
+  agent?: {
+    model: string;
+    decisions: { field: string; value: string; applied: boolean; reason: string; confidence: 'high' | 'medium' | 'low'; evidence: string[] }[];
+    openQuestions: string[];
+  };
+
   fta?: { scheme: string; notification: string; serial: string; cooNumber: string; retroactive: string; compliant: boolean };
   tradeRemedyCandidates: { label: string }[];
   tradeRemedies: string[];
@@ -98,7 +106,9 @@ const SOURCE_STYLE: Record<ItemSource, string> = {
   mail: 'bg-sky-50 text-sky-700',
   operator: 'bg-emerald-50 text-emerald-700',
   default: 'bg-amber-50 text-amber-700',
+  agent: 'bg-violet-50 text-violet-700',
 };
+
 
 function Source({ source }: { source: ItemSource | undefined }) {
   if (!source) return null;
@@ -224,6 +234,16 @@ function ItemForm({ jobId, row, endUseCodes, eximSchemes }: { jobId: string; row
           <input type="checkbox" name="confirm" defaultChecked={needsConfirm(row)} />
           I have checked this line — remember it for this importer
         </label>
+        {/* The duty lines are the model's proposals until a person says
+            otherwise, so they are remembered only on request — a wrong pick
+            used to travel to every later job through the product master. */}
+        {(row.sources.notifications === 'agent' || row.agent) && (
+          <label className="flex items-center gap-2 text-xs text-slate-600">
+            <input type="checkbox" name="rememberNotifications" />
+            also remember the BCD / IGST / cess notifications
+          </label>
+        )}
+
         <button type="submit" className={PRIMARY} disabled={pending}>
           {pending ? 'Saving…' : 'Save item'}
         </button>
@@ -410,6 +430,38 @@ export function ItemsPanel({ jobId, items, endUseCodes, eximSchemes, ftaQuestion
                       </div>
                     ))}
                   </div>
+                  {row.agent && (
+                    <details className="mx-5 mb-2 rounded border border-violet-100 bg-violet-50/40 px-3 py-2 text-[11px] text-slate-700">
+                      <summary className="cursor-pointer font-medium text-violet-800">
+                        Why these values — the job agent ({row.agent.decisions.filter((d) => d.applied).length} applied,{' '}
+                        {row.agent.decisions.filter((d) => !d.applied).length} proposed)
+                      </summary>
+                      <ul className="mt-2 space-y-1.5">
+                        {row.agent.decisions.map((d, i) => (
+                          <li key={i}>
+                            <span className="font-medium">{d.field}</span>
+                            {d.value ? ` → ${d.value}` : ' → none'}{' '}
+                            <span className={d.applied ? 'text-emerald-700' : 'text-amber-700'}>{d.applied ? 'applied' : 'proposed'}</span>
+                            <span className="text-slate-400"> · {d.confidence}</span>
+                            <div className="text-slate-600">{d.reason}</div>
+                            {d.evidence.length > 0 && (
+                              <ul className="ml-3 list-disc text-slate-500">
+                                {d.evidence.map((e, j) => (
+                                  <li key={j}>{e}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                        {row.agent.openQuestions.map((q, i) => (
+                          <li key={`q${i}`} className="text-amber-800">
+                            Open: {q}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+
                   {row.flags.length > 0 && (
                     <ul className="mx-5 mb-2 space-y-1">
                       {row.flags.map((f, i) => (

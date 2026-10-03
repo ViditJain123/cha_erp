@@ -37,6 +37,10 @@ import {
   type ReImportEntry,
   type TariffCodeSpec,
   type TariffMaster,
+  IGST_RATE_NOTIFICATION_EFFECTIVE_FROM,
+  IGST_RATE_PREDECESSOR,
+  BCD_EXEMPTION_EFFECTIVE_FROM,
+  BCD_EXEMPTION_PREDECESSOR,
 } from './data.js';
 import { logisysNotn } from './codes.js';
 import { EXCHANGE_RATE_GAPS } from './generated/exchange-rates.js';
@@ -48,6 +52,9 @@ export {
   tariffBook,
   tariffBookMasters,
   tariffEdition,
+  tariffBookInForceFrom,
+  tariffRowCovers,
+  TARIFF_BOOK_IN_FORCE_FROM,
   type ProductIndexEntry,
   type ProductIndexFile,
   type TariffBookFile,
@@ -75,6 +82,7 @@ export * from './codes.js';
 export * from './party-name.js';
 export * from './stations.js';
 export * from './warehouse-code.js';
+export * from './db-rows.js';
 export {
   standardUqcFile,
   standardUqcForCth,
@@ -196,7 +204,15 @@ export interface IgstRateResult {
   residual: boolean;
   /** Equally specific entries naming a *different* rate — a human must read the descriptions. */
   alternatives: IgstScheduleEntry[];
+  /**
+   * Whether `entry` belongs to `notification`. False for a filing dated before
+   * 9/2025 took effect: the notification is then its predecessor, whose
+   * schedule is not parsed, and `entry` is the current text's answer offered
+   * as a proposal — its serial must not be filed beside the older number.
+   */
+  scheduleKnown: boolean;
 }
+
 
 /**
  * The IGST rate for a CTH under notification 9/2025-IT(R).
@@ -207,9 +223,15 @@ export interface IgstRateResult {
  * entries disagree, which means the description decides and the answer here is
  * only the first candidate.
  */
-export function igstRateForCth(cth: string): IgstRateResult | undefined {
+export function igstRateForCth(cth: string, opts?: { onIsoDate?: string }): IgstRateResult | undefined {
   const code = cth.replace(/\D/g, '');
   if (code.length < 4) return undefined;
+  // A filing dated before 9/2025 took effect is assessed under 1/2017-IT(R),
+  // whose schedule these masters do not hold. The current entry is still the
+  // best available proposal for the rate, but the number filed is the
+  // predecessor's and the serial has to be read from it.
+  const scheduleKnown = !opts?.onIsoDate || opts.onIsoDate >= IGST_RATE_NOTIFICATION_EFFECTIVE_FROM;
+  const notification = scheduleKnown ? IGST_RATE_NOTIFICATION : IGST_RATE_PREDECESSOR;
   // "Any Chapter" entries (intellectual property, actionable claims) cover
   // every code and describe none of these goods; they are not a rate for a
   // CTH, only the residual entry below is.
@@ -217,10 +239,11 @@ export function igstRateForCth(cth: string): IgstRateResult | undefined {
   if (!named.length) {
     return {
       rate: IGST_RESIDUAL_ENTRY.rate,
-      notification: IGST_RATE_NOTIFICATION,
+      notification,
       entry: IGST_RESIDUAL_ENTRY,
       residual: true,
       alternatives: [],
+      scheduleKnown,
     };
   }
   const best = specMatch(named[0]!, code);
@@ -228,12 +251,14 @@ export function igstRateForCth(cth: string): IgstRateResult | undefined {
   const entry = equal[0]!;
   return {
     rate: entry.rate,
-    notification: IGST_RATE_NOTIFICATION,
+    notification,
     entry,
     residual: false,
     alternatives: equal.slice(1).filter((e) => e.rate !== entry.rate),
+    scheduleKnown,
   };
 }
+
 
 /**
  * Compensation cess entries covering a CTH, most specific first.
@@ -332,16 +357,82 @@ export function compCessNotification(): string {
  */
 export function bcdExemptionMatches(
   cth: string,
-  opts?: { includeAnyChapter?: boolean },
+  opts?: { includeAnyChapter?: boolean; onIsoDate?: string },
 ): BcdExemptionEntry[] {
+  // Dated: nothing before the notification took effect (the filing is under
+  // 50/2017, which is not parsed), and nothing whose proviso has lapsed by
+  // then. Undated: the whole table, for callers that want to show what lapsed.
+  if (opts?.onIsoDate && opts.onIsoDate < BCD_EXEMPTION_EFFECTIVE_FROM) return [];
   const matches = matchesFor(BCD_EXEMPTIONS, cth);
-  return opts?.includeAnyChapter ? matches : matches.filter((e) => (specMatch(e, cth) ?? 0) > 0);
+  const named = opts?.includeAnyChapter ? matches : matches.filter((e) => (specMatch(e, cth) ?? 0) > 0);
+  const date = opts?.onIsoDate;
+  return date ? named.filter((e) => isInForce(e, date)) : named;
+}
+
+/**
+ * Entries covering a CTH that had lapsed by a date, with no later version of
+ * the same serial in force then.
+ *
+ * Not simply "not in force": the 5% version of a serial whose rate 15/2026
+ * raised to 10% ended on 12 May 2026, but the serial did not lapse — the 10%
+ * version took over the next day. Only a serial with nothing left in force is
+ * a concession the filing has lost.
+ */
+export function bcdExemptionLapsed(cth: string, onIsoDate: string): BcdExemptionEntry[] {
+  const covering = bcdExemptionMatches(cth);
+  const live = new Set(covering.filter((e) => isInForce(e, onIsoDate)).map((e) => `${e.table}/${e.serial}`));
+  const lapsed = covering.filter(
+    (e) => e.validUntil !== undefined && e.validUntil < onIsoDate && !live.has(`${e.table}/${e.serial}`),
+  );
+  // One per serial: the version that ended last is the one that lapsed.
+  const last = new Map<string, BcdExemptionEntry>();
+  for (const e of lapsed) {
+    const key = `${e.table}/${e.serial}`;
+    const seen = last.get(key);
+    if (!seen || (seen.validUntil ?? '') < (e.validUntil ?? '')) last.set(key, e);
+  }
+  return [...last.values()];
+}
+
+/**
+ * One entry of 45/2025 by table and serial, as it read on a date.
+ *
+ * A serial can have several dated versions; this returns the one in force on
+ * `onIsoDate`, or — undated, or when none was in force — the latest version,
+ * which is what a reviewer reading the notification today would see.
+ */
+export function bcdExemptionEntry(
+  table: BcdExemptionEntry['table'],
+  serial: string,
+  onIsoDate?: string,
+): BcdExemptionEntry | undefined {
+  const versions = BCD_EXEMPTIONS.filter((e) => e.table === table && e.serial === serial);
+  if (onIsoDate) {
+    const live = versions.find((e) => isInForce(e, onIsoDate));
+    if (live) return live;
+  }
+  return versions.reduce<BcdExemptionEntry | undefined>(
+    (latest, e) => (!latest || e.validFrom > latest.validFrom ? e : latest),
+    undefined,
+  );
 }
 
 /** ICES-form number of the BCD exemption notification, e.g. "045/2025". */
 export function bcdExemptionNotification(): string {
   return BCD_EXEMPTION_NOTIFICATION;
 }
+
+/**
+ * The effective-rate notification a filing on a given date is assessed under.
+ *
+ * 45/2025 from 1 November 2025; 50/2017 before that. Only the former is
+ * parsed, so a concession on an earlier filing is a number with no serial the
+ * masters can supply.
+ */
+export function bcdExemptionNotificationOn(isoDate: string): string {
+  return isoDate >= BCD_EXEMPTION_EFFECTIVE_FROM ? BCD_EXEMPTION_NOTIFICATION : BCD_EXEMPTION_PREDECESSOR;
+}
+
 
 /**
  * The conditions an exemption entry cites, in citation order.
@@ -370,7 +461,7 @@ export function bcdConditionTexts(entry: BcdExemptionEntry): string[] {
  * move it have been applied, which is why this and `isStale` belong together.
  */
 export function isInForce(entry: BcdExemptionEntry, onIsoDate: string): boolean {
-  return !entry.validUntil || entry.validUntil >= onIsoDate;
+  return entry.validFrom <= onIsoDate && (!entry.validUntil || entry.validUntil >= onIsoDate);
 }
 
 /**
@@ -380,8 +471,10 @@ export function isInForce(entry: BcdExemptionEntry, onIsoDate: string): boolean 
  * is still worth showing — but its rate must not be applied, because the text
  * it was read from is no longer the text in force.
  */
-export function isStale(entry: BcdExemptionEntry): boolean {
-  return Boolean(entry.staleBy?.length);
+export function isStale(entry: BcdExemptionEntry, onIsoDate?: string): boolean {
+  if (!entry.staleBy?.length) return false;
+  // Dated before the amendment took effect, the text we hold is the text in force.
+  return !(onIsoDate && entry.staleFrom && onIsoDate < entry.staleFrom);
 }
 
 /**

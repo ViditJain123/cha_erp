@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
-import type { ChecklistDraft } from '@checklist/extraction';
+import type { ChecklistDraft, ExtractedDoc, JobAgentRun } from '@checklist/extraction';
+import { recordAgentRun } from '@/lib/agent-runs';
 import { requireCompany } from '@/lib/auth';
 import { buildDraftFromDocuments } from '@/lib/draft-pipeline';
+
 import { serviceClient } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
@@ -49,7 +51,8 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
 
   const { data: documents } = await db
     .from('job_documents')
-    .select('file_name, storage_bucket, storage_path, mime_type')
+    .select('file_name, storage_bucket, storage_path, mime_type, doc_type')
+
     .eq('job_id', id)
     .eq('company_id', ctx.companyId);
 
@@ -72,14 +75,19 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
         // A scan stored as a JPEG has to be sent to the model as one; sending
         // it as a PDF is how two jobs came out with no transport document.
         ...(doc.mime_type ? { mimeType: doc.mime_type } : {}),
+        // Ingest's label, so the job agent knows a licence is on the job.
+        ...(doc.doc_type ? { hint: doc.doc_type } : {}),
       };
     }),
   );
 
   let draft: ChecklistDraft;
+  let docs: ExtractedDoc[];
+  let agentRun: JobAgentRun | undefined;
   try {
-    ({ draft } = await buildDraftFromDocuments(files, ctx.companyId, id));
+    ({ draft, docs, agentRun } = await buildDraftFromDocuments(files, ctx.companyId, id));
   } catch (err) {
+
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }
 
@@ -96,18 +104,30 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
 
   const version = (latest?.version ?? 0) + 1;
 
-  const { error: insertError } = await db.from('job_drafts').insert({
-    company_id: ctx.companyId,
-    job_id: id,
-    // The draft's shape belongs to @checklist/extraction, not to the generated
-    // database types; the column is deliberately schemaless jsonb.
-    draft: draft as never,
-    version,
-    created_by: ctx.userId,
-  });
+  const { data: inserted, error: insertError } = await db
+    .from('job_drafts')
+    .insert({
+      company_id: ctx.companyId,
+      job_id: id,
+      // The draft's shape belongs to @checklist/extraction, not to the generated
+      // database types; the column is deliberately schemaless jsonb.
+      draft: draft as never,
+      // The per-document reads behind it, for the agent and for replays.
+      docs: docs as never,
+      version,
+      created_by: ctx.userId,
+    })
+    .select('id')
+    .single();
   if (insertError) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
+  if (agentRun) {
+    await recordAgentRun({ companyId: ctx.companyId, jobId: id, draftId: inserted?.id ?? null, draftVersion: version, run: agentRun }).catch(
+      (err: Error) => console.error(`job agent run for ${id} not recorded: ${err.message}`),
+    );
+  }
+
 
   await db.from('job_events').insert({
     company_id: ctx.companyId,

@@ -89,8 +89,10 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       expect(row!['FlightNo_VoyageNo']).toBe('S022');
       expect(row!['CarrierName']).toBe('INTERASIA LINES');
       expect(row!['Marks_&_Nos']).toBe('AS PER BL');
-      expect(row!['Port_of_Reporting']).toBe('INNSA1');
+      // Filed at the sea port the vessel reported at: no intermediary port.
+      expect(row!['Port_of_Reporting'] ?? '').toBe('');
     });
+
 
     it('dates the B/L when it was issued, as text', async () => {
       // The manual attempt wrote a raw Excel serial for today's date (46242)
@@ -167,12 +169,15 @@ describe('golden: EP061126-1 / I-13844/26-27 (sea, Nhava Sheva, Japan CEPA)', ()
       ]);
     });
 
-    it('numbers every container against the IGM', async () => {
+    it('numbers every container positionally, the way Logi-Sys does', async () => {
       // Mandatory, and nothing we read carries it — leaving it blank is what
       // Logi-Sys rejected job dbf3530c on, four errors for four containers.
+      // The serial is a row number, not an IGM line: every vendor export that
+      // fills this column writes exactly 1..n with no gap. So it is filled and
+      // not remarked on, while the list agrees with the B/L.
       const rows = await readSheet(workbook, 'CONTAINERS');
       expect(rows.map((r) => r['IGM Sr.No'])).toEqual(['1', '2', '3', '4', '5', '6']);
-      expect(warnings.some((w) => w.startsWith('CONTAINERS.IGM Sr.No'))).toBe(true);
+      expect(warnings.some((w) => w.startsWith('CONTAINERS.IGM Sr.No'))).toBe(false);
     });
 
     it('carries each container’s seal', async () => {

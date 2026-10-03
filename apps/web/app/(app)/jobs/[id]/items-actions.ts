@@ -72,6 +72,8 @@ export async function saveItem(_prev: ItemActionState, formData: FormData): Prom
   const invoiceSrNo = Number(str(formData, 'invoiceSrNo'));
   const itemSrNo = Number(str(formData, 'itemSrNo'));
   const confirm = str(formData, 'confirm') === 'on';
+  // The duty lines are remembered only on request — see productMasterNotifications.
+  const rememberNotifications = str(formData, 'rememberNotifications') === 'on';
   const { ctx, db } = await ownedJob(jobId);
 
   const latest = await latestDraft(db, ctx.companyId, jobId);
@@ -249,6 +251,7 @@ export async function saveItem(_prev: ItemActionState, formData: FormData): Prom
       remembered = ' Not remembered: bind the importer to the organization repository first.';
     } else if (confirmed) {
       const out = await rememberProduct({
+      rememberNotifications,
         companyId: ctx.companyId,
         importerOrgId,
         jobId,

@@ -9,6 +9,7 @@ import {
   bcdExemptionMatches,
   igstRateForCth,
   igstScheduleMatches,
+  isInForce,
 } from '../src/masters/index.js';
 
 /**
@@ -73,19 +74,24 @@ describe('IGST rate schedule — notification 9/2025-IT(R)', () => {
 
 describe('BCD exemptions — notification 45/2025-Customs', () => {
   it('carries Tables I to IV and their conditions, as amended', () => {
-    // 539 entries as published, 454 after 02/2026 omitted 85 serials. The
-    // count moved because the notification did, not because the parse got
-    // worse — the master is the notification *as in force*, not as printed.
+    // 539 serials as published. 02/2026 omits 86 of them and 15/2026 adds a
+    // second, dated version to seven, so the master holds every version that
+    // was ever in force — which ones apply is a question for a date.
     expect(BCD_EXEMPTIONS.length).toBeGreaterThan(400);
     expect(new Set(BCD_EXEMPTIONS.map((e) => e.table))).toEqual(new Set(['I', 'II', 'III', 'IV']));
     expect(BCD_CONDITIONS.length).toBeGreaterThan(100);
   });
 
-  it('no longer carries a serial that has been omitted', () => {
-    // S.No. 1 — animals and birds imported by a zoo — was omitted by
-    // 02/2026. Holding it would offer a concession that no longer exists.
-    expect(BCD_EXEMPTIONS.find((e) => e.table === 'I' && e.serial === '1')).toBeUndefined();
-    expect(BCD_EXEMPTIONS.find((e) => e.table === 'I' && e.serial === '161')).toBeUndefined();
+  it('does not offer a serial after it has been omitted', () => {
+    // S.No. 1 — animals and birds imported by a zoo — was omitted by 02/2026
+    // from 2 February 2026. It is kept, dated, for filings before then;
+    // offering it after would be a concession that no longer exists.
+    const zoo = BCD_EXEMPTIONS.find((e) => e.table === 'I' && e.serial === '1')!;
+    expect(zoo.omittedBy).toBe('02/2026-Customs');
+    expect(isInForce(zoo, '2026-02-01')).toBe(true);
+    expect(isInForce(zoo, '2026-02-02')).toBe(false);
+    const rayon = BCD_EXEMPTIONS.find((e) => e.table === 'I' && e.serial === '161')!;
+    expect(isInForce(rayon, '2026-10-08')).toBe(false);
   });
 
   it('every cited condition resolves to its text', () => {
@@ -133,5 +139,31 @@ describe('BCD exemptions — notification 45/2025-Customs', () => {
   it('is filed under its ICES notification number', () => {
     expect(BCD_EXEMPTION_NOTIFICATION).toBe('045/2025');
     expect(IGST_RATE_NOTIFICATION).toBe('009/2025');
+  });
+});
+
+describe('the filing date decides which notification is in force', () => {
+  it('names 1/2017-IT(R) for a Bill of Entry dated before 9/2025 took effect', () => {
+    // ex_job21 was filed on 2025-03-13 under 001/2017 S.No. III61B; the
+    // masters, undated, answered 009/2025 II68 and the export said so.
+    const before = igstRateForCth('39021000', { onIsoDate: '2025-03-13' });
+    expect(before?.notification).toBe('001/2017');
+    expect(before?.scheduleKnown).toBe(false);
+    // The current schedule's rate is still offered, as a proposal.
+    expect(before?.rate).toBe(18);
+
+    const after = igstRateForCth('39021000', { onIsoDate: '2025-09-22' });
+    expect(after?.notification).toBe('009/2025');
+    expect(after?.scheduleKnown).toBe(true);
+    expect(igstRateForCth('39021000')?.scheduleKnown).toBe(true);
+  });
+
+  it('offers no 45/2025 concession before it took effect, and only in-force ones after', () => {
+    expect(bcdExemptionMatches('90211000', { onIsoDate: '2025-10-31' })).toEqual([]);
+    const dated = bcdExemptionMatches('90211000', { onIsoDate: '2026-09-01' });
+    expect(dated.length).toBeGreaterThan(0);
+    for (const entry of dated) expect(!entry.validUntil || entry.validUntil >= '2026-09-01').toBe(true);
+    // Undated, the whole table — callers that show lapsed entries need it.
+    expect(bcdExemptionMatches('90211000').length).toBeGreaterThanOrEqual(dated.length);
   });
 });

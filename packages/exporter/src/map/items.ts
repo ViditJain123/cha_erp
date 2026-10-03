@@ -7,6 +7,7 @@ import {
   IGST_RATE_NOTIFICATION,
   compCessForCth,
   eximSchemeCode,
+  eximSchemeForNotification,
   exemptionNotnType,
   igstRateForCth,
   iso2,
@@ -253,10 +254,15 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
       );
     }
 
-    // ---- §8 brand ----
-    if (item.sources?.brand === 'default') {
-      ctx.warn(`${path}.Brand`, `${label}: the invoice prints no brand; filed as ${UNBRANDED}. Confirm on the job.`);
-    }
+    // ---- §8 brand, model ----
+    //
+    // Nothing to warn about. The documents are not a source for either: the
+    // merge writes UNBRANDED / NA, and only the product master or the operator
+    // replaces them. `UNBRANDED` is not a guess we are apologising for — it is
+    // the convention, and the vendor shares it on every item row of every
+    // workbook we hold. Asking an operator to confirm a value that has never
+    // once been anything else is 29 warnings buying nothing.
+
 
     // ---- §12 accessories ----
     const accessoryStatus = item.accessoryStatus ?? ACCESSORY_STATUS.NONE;
@@ -303,9 +309,22 @@ export function itemsRows(ctx: MapContext): SheetRow[] {
     // P only for a preferential (trade-agreement) rate in Basic; a general
     // exemption like 45/2025 is not a preferential rate.
     const preferential = Boolean(basicFromFta || (legacyClaim && (legacyClaim.scheme || draftClaim)));
+    // §10 / §15: a licence's notification never files as a basic-duty
+    // exemption. `resolveItems` moves one it finds into the Exim slot; this is
+    // the stop for a draft that did not pass through it, or that was edited
+    // afterwards. The four licence goldens all leave Basic_Notn empty.
+    const basicScheme = eximSchemeForNotification(basicNotn);
+    if (basicNotn && basicScheme && logisysNotn(basicNotn) !== logisysNotn(item.eximScheme?.notification)) {
+      ctx.blocker(
+        `${path}.Basic_Notn`,
+        `${label}: ${basicNotn} is the notification a licence is issued under (scheme ${basicScheme}), ` +
+          'not a basic-duty exemption. It goes in Exim_Notn beside the scheme code, never in Basic_Notn.',
+      );
+    }
     // §10: the scheme exemption is claimed in the Exim slot and not in
     // `Basic_Notn`, which is empty on all four licence goldens.
     if (eximCode && basicNotn) {
+
       const sameNotification = logisysNotn(item.eximScheme?.notification) === logisysNotn(basicNotn);
       const detail = `${label}: the relief is claimed under scheme ${eximCode} (${item.eximScheme?.notification ?? 'no notification'}) and again under ${basicNotn} in Basic_Notn.`;
       if (sameNotification) {

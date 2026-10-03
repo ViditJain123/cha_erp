@@ -53,6 +53,17 @@ A column with no available source does not silently become blank or a default.
 It raises a `warn` (the export happens, the operator is told) or a `blocker`
 (the export refuses), per `packages/exporter/src/map/context.ts`.
 
+> **No cell may be longer than 120 characters.**
+
+The second hard rule, `MAX_CELL_CHARS` in `packages/exporter/src/limits.ts`.
+`buildLogisysWorkbook` cuts every longer cell to 120 and warns, naming the
+sheet, row and column and the original length; `fillTemplate` refuses a longer
+cell outright, so nothing can write one by another path. The number sits above
+every ICES field width the mapping has met, so a cell that reaches it is a
+description that ran on (ex_job13's 363-character plant description), not a
+value being clipped.
+
+
 Some sheet docs write **`derived`**. That is not a sixth source: it is a
 `master` lookup whose answer is computed from what the master says rather than
 read out of a column — the `+ - H L` flag from a notification's rate wording,

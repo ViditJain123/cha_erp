@@ -35,14 +35,28 @@ export function containersRows(ctx: MapContext): SheetRow[] {
   // `IGM Sr.No` is mandatory, and nothing we read carries it. Leaving it blank
   // is what rejected job dbf3530c: Logi-Sys returned four errors, one per
   // container, and refused the whole workbook — so the invoice and the products
-  // never landed either. Number them positionally, as Logi-Sys' own export
-  // does (1, 2, 3, 4 across its four containers), and say so out loud.
-  if (containers.length) {
+  // never landed either. Number them positionally.
+  //
+  // Positionally is also what Logi-Sys does. Across all seven of its own
+  // exports that fill this column the values are exactly 1..n, contiguous,
+  // never an IGM line number with a gap in it — so this is a row serial, and
+  // the consignment's actual IGM line is SHIPMENT.LineNo, one per bill of
+  // lading rather than one per box. The old warning said the opposite and fired
+  // on every job with containers, 24 times across the corpus, for a value that
+  // agrees with the vendor's whenever our list does.
+  //
+  // What can still be wrong is the *order*, and only the order. On ex_job28
+  // Logi-Sys files GCXU5831530 first where the arrival notice prints it last,
+  // and no rule we can see decides that — it is the order the list was keyed
+  // from the IGM, a document we do not hold. So this is raised only where the
+  // list itself is in doubt, and the count check above is the thing that says
+  // so. A single container cannot be in the wrong order at all.
+  if (containers.length > 1 && containerCountStated != null && containerCountStated !== containers.length) {
     ctx.warn(
       'CONTAINERS.IGM Sr.No',
-      `Numbered the ${containers.length} container${containers.length === 1 ? '' : 's'} ` +
-        `1–${containers.length} in B/L order. Logi-Sys makes this column mandatory and no ` +
-        'document we read carries the IGM line number — check them against the IGM before filing.',
+      `Numbered the ${containers.length} containers 1–${containers.length} in B/L order, but the ` +
+        'container list does not agree with the B/L, so the serials will not either. Fix the list ' +
+        'on the job; Logi-Sys numbers these rows positionally in IGM order.',
     );
   }
 

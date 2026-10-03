@@ -53,3 +53,18 @@ export {
   type NotificationChoice,
 } from './notification-choose.js';
 export { resolveItems, retargetItemCth, type ResolveItemsOptions } from './items-resolve.js';
+export {
+  runJobAgent,
+  JOB_AGENT_INSTRUCTIONS,
+  type JobAgentInput,
+  type JobAgentOutcome,
+  type JobAgentRun,
+} from './agent/job-agent.js';
+export { applyAgentResult, type ApplyOutcome } from './agent/apply.js';
+export { renderJobContext } from './agent/context.js';
+export { JobAgentResultSchema, reasonRefuses, type JobAgentResult } from './agent/output.js';
+export { CandidateRegistry } from './agent/registry.js';
+export { jobAgentTools, type ToolContext } from './agent/tools.js';
+export { runToolLoop, DEFAULT_BUDGET, type AnyToolDef, type LoopBudget, type LoopResult, type ResponsesClient, type ToolDef } from './agent/loop.js';
+export { lookupNotifications, notificationIndex } from './agent/notification-index.js';
+export type { AgentFile } from './agent/documents.js';

@@ -132,16 +132,21 @@ describe('the Logi-Sys upload validator, as it rejected job FUCHS-13841', () => 
     }
   });
 
-  it('drops batch rows that have no manufacture or expiry date, and says so', async () => {
+  it('files no batch rows at all for a chapter with no agency, and says nothing', async () => {
     // SW_PRODUCTION : Prod_Manufacturer_Date : Invoice No. #1 Product No. #1
     // This field is mandatory (and the same for expiry and best-before)
+    //
+    // Six of the ErrorList's rejections were half-filled rows on this sheet.
+    // The mapper used to answer them by dropping the incomplete row and warning
+    // about the missing dates — which is the wrong answer to the right error.
+    // These are lubricants, 34039900, and no participating agency asks for a
+    // batch declaration on chapter 34 at all. The sheet is empty because the
+    // consignment is out of scope, not because a date is missing, so there is
+    // nothing for an operator to go and find. Logi-Sys agrees: its own export
+    // ships SW_PRODUCTION empty on every job we can compare against.
     const wb = await openWorkbook(workbook);
     expect(wb.getWorksheet('SW_PRODUCTION')!.rowCount).toBe(1);
-
-    const dropped = warnings.filter((w) => w.startsWith('SW_PRODUCTION'));
-    expect(dropped).toHaveLength(2);
-    expect(dropped.join(' ')).toContain('JT260407');
-    expect(dropped.join(' ')).toContain('JC260128');
+    expect(warnings.filter((w) => w.startsWith('SW_PRODUCTION'))).toHaveLength(0);
   });
 
   it('lists no supporting documents at all', async () => {
@@ -161,12 +166,29 @@ describe('the Logi-Sys upload validator, as it rejected job FUCHS-13841', () => 
 });
 
 describe('SW_PRODUCTION when the dates are known', () => {
-  it('emits the row', async () => {
+  /**
+   * A line a participating agency actually regulates.
+   *
+   * The sheet is scoped by the agency, not by whether a certificate of analysis
+   * happened to print a lot number, so the date rules below only ever run on a
+   * chapter `SINGLE_WINDOW_RULES` knows. 22029990 is a beverage — FSSAI.
+   */
+  const regulated = (
+    batches: NonNullable<ChecklistDraft['items'][number]['batches']>,
+  ): ChecklistDraft => ({
+    ...AIR_DRAFT,
+    items: [{ ...AIR_DRAFT.items[0]!, ritc: '22029990', batches }],
+  });
+
+  it('files nothing, and says nothing, for a chapter no agency regulates', async () => {
     const draft: ChecklistDraft = {
       ...AIR_DRAFT,
       items: [
         {
           ...AIR_DRAFT.items[0]!,
+          // Lubricating preparations. Complete batch details, and still not a
+          // row: chapter 34 has no participating agency.
+          ritc: '34039900',
           batches: [
             {
               batchNo: 'JT260407',
@@ -179,6 +201,22 @@ describe('SW_PRODUCTION when the dates are known', () => {
         },
       ],
     };
+
+    const { buffer, warnings } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
+    expect(await readSheet(buffer, 'SW_PRODUCTION')).toHaveLength(0);
+    expect(warnings.some((w) => w.startsWith('SW_PRODUCTION'))).toBe(false);
+  });
+
+  it('emits the row', async () => {
+    const draft: ChecklistDraft = regulated([
+      {
+        batchNo: 'JT260407',
+        quantity: 10,
+        manufactureDate: '2026-04-07',
+        expiryDate: '2028-04-06',
+        bestBeforeDate: '2027-10-06',
+      },
+    ]);
 
     const { buffer, warnings } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
     const [row] = await readSheet(buffer, 'SW_PRODUCTION');
@@ -198,17 +236,9 @@ describe('SW_PRODUCTION when the dates are known', () => {
   it('drops the row when only the best-before date is missing', async () => {
     // Logi-Sys makes all three dates mandatory, stricter than ICES, which marks
     // Best Before optional. The uploader is what we have to satisfy.
-    const draft: ChecklistDraft = {
-      ...AIR_DRAFT,
-      items: [
-        {
-          ...AIR_DRAFT.items[0]!,
-          batches: [
-            { batchNo: 'JT260407', manufactureDate: '2026-04-07', expiryDate: '2028-04-06' },
-          ],
-        },
-      ],
-    };
+    const draft: ChecklistDraft = regulated([
+      { batchNo: 'JT260407', manufactureDate: '2026-04-07', expiryDate: '2028-04-06' },
+    ]);
 
     const { buffer, warnings } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
     expect(await readSheet(buffer, 'SW_PRODUCTION')).toHaveLength(0);
@@ -216,18 +246,10 @@ describe('SW_PRODUCTION when the dates are known', () => {
   });
 
   it('files one row per lot when the certificate breaks the line into several', async () => {
-    const draft: ChecklistDraft = {
-      ...AIR_DRAFT,
-      items: [
-        {
-          ...AIR_DRAFT.items[0]!,
-          batches: [
-            { batchNo: 'L-1', manufactureDate: '2026-04-07', expiryDate: '2028-04-06', bestBeforeDate: '2028-04-06' },
-            { batchNo: 'L-2', manufactureDate: '2026-05-11', expiryDate: '2028-05-10', bestBeforeDate: '2028-05-10' },
-          ],
-        },
-      ],
-    };
+    const draft: ChecklistDraft = regulated([
+      { batchNo: 'L-1', manufactureDate: '2026-04-07', expiryDate: '2028-04-06', bestBeforeDate: '2028-04-06' },
+      { batchNo: 'L-2', manufactureDate: '2026-05-11', expiryDate: '2028-05-10', bestBeforeDate: '2028-05-10' },
+    ]);
 
     const { buffer } = await buildLogisysWorkbook({ draft, job: AIR_JOB });
     const rows = await readSheet(buffer, 'SW_PRODUCTION');
@@ -291,9 +313,30 @@ describe('the Logi-Sys upload validator, as it rejected job dbf3530c', () => {
       expect(String(row['IGM Sr.No'])).not.toBe('');
     }
 
-    // Guessed, so said out loud: the serials are positional, not read off an IGM.
+    // Positional is not a guess: every Logi-Sys export that fills this column
+    // writes exactly 1..n, so the serial is a row number and the consignment's
+    // real IGM line is SHIPMENT.LineNo. Nothing to warn about while the list
+    // itself agrees with the B/L.
+    expect(warnings.some((w) => w.startsWith('CONTAINERS.IGM Sr.No'))).toBe(false);
+  });
+
+  it('warns about the serials only when the container list is in doubt', async () => {
+    const short: ChecklistDraft = {
+      ...SEA_DRAFT,
+      shipment: {
+        ...SEA_DRAFT.shipment,
+        containers: SEA_DRAFT.shipment.containers.slice(0, 3),
+        containerCountStated: 4,
+      },
+    };
+
+    const { warnings } = await buildLogisysWorkbook({
+      draft: short,
+      job: { id: 'dbf3530c', reference: 'RAJSHREE-1' },
+    });
     const warning = warnings.find((w) => w.startsWith('CONTAINERS.IGM Sr.No'));
-    expect(warning).toContain('1–4');
+    expect(warning).toContain('1–3');
+    expect(warning).toContain('does not agree with the B/L');
   });
 
   it('says so when the B/L states more containers than the workbook declares', async () => {

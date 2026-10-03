@@ -77,11 +77,22 @@ export const InvoiceItemSchema = z.object({
   batchNo: z.string().nullable(),
   manufactureDate: z.string().nullable(),
   expiryDate: z.string().nullable(),
-  /** Brand name printed against the line, when the invoice prints one. */
-  brand: z.string().nullable(),
-  /** Model, grade or type designation printed against the line. */
-  model: z.string().nullable(),
+  /**
+   * Best-before / use-by, which is not the expiry.
+   *
+   * An expiry is a safety date and a best-before a quality one, and a pack
+   * often prints both. Logi-Sys makes all three mandatory on a SW_PRODUCTION
+   * row — stricter than ICES, which marks best-before optional — so a batch
+   * without it cannot be declared at all.
+   */
+  bestBeforeDate: z.string().nullable(),
+  // No brand and no model. They were fields here, and what came back was the
+  // polymer grade (BE961MO, HE3490LS HD), the seller's part number or a trade
+  // name lifted out of the description — none of which the Bill of Entry
+  // declares. ITEMS.Brand is UNBRANDED and ITEMS.Model is NA unless the product
+  // master or the operator says otherwise; see docs/boe-mapping/06-items.md §8.
   /** Country of origin printed against this line, when the invoice gives it per line. */
+
   countryOfOrigin: z.string().nullable(),
   /** The line says NCV / no commercial value / FOC / free of charge / value for customs purpose only. */
   noCommercialValue: z.boolean(),
@@ -516,6 +527,8 @@ export const CoaProductSchema = z.object({
   batchNo: z.string().nullable(),
   manufactureDate: z.string().nullable(),
   expiryDate: z.string().nullable(),
+  /** Best-before / use-by. A quality date, distinct from the expiry above. */
+  bestBeforeDate: z.string().nullable(),
 });
 
 export const CoaExtractSchema = z.object({

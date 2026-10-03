@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import type { PartyMatchStatus } from '@checklist/extraction';
+import type { PartyCandidate, PartyMatchStatus } from '@checklist/extraction';
 import { setJobParty } from './actions';
 import { BUTTON, SMALL_FIELD } from './ui';
 
@@ -30,11 +30,16 @@ export interface PartyState {
   gstin?: string;
   adCode?: string;
   status?: PartyMatchStatus;
+  /** The branches this name matched, when resolution found more than one. */
+  candidates?: PartyCandidate[];
+  /** A remembered binding pointed at a row that is retired or has lost the role. */
+  staleBinding?: boolean;
 }
 
 const PILLS: Record<PartyMatchStatus, { text: string; className: string }> = {
   exact: { text: 'from repository', className: 'bg-emerald-100 text-emerald-800' },
   manual: { text: 'chosen', className: 'bg-emerald-100 text-emerald-800' },
+  remembered: { text: 'remembered', className: 'bg-emerald-100 text-emerald-800' },
   fuzzy: { text: 'matched by approximate name', className: 'bg-amber-100 text-amber-900' },
   ambiguous: { text: 'several branches match', className: 'bg-amber-100 text-amber-900' },
   none: { text: 'not in repository', className: 'bg-amber-100 text-amber-900' },
@@ -70,8 +75,14 @@ function Party({ jobId, party }: { jobId: string; party: PartyState }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, startSaving] = useTransition();
+  // Defaulted on for a branch question and off otherwise. 'ambiguous' recurs
+  // word for word on every job of that importer, so remembering it is the
+  // point; a name with no match at all is more often a one-off misreading, and
+  // teaching the system a misreading is worse than being asked twice.
+  const [remember, setRemember] = useState(party.status === 'ambiguous');
 
   const pill = party.status ? PILLS[party.status] : undefined;
+  const branches = party.candidates ?? [];
   const detail = [
     party.branchName && `branch ${party.branchName}`,
     party.city,
@@ -82,10 +93,10 @@ function Party({ jobId, party }: { jobId: string; party: PartyState }) {
     .filter(Boolean)
     .join(' · ');
 
-  function choose(candidate: Candidate) {
+  function choose(id: string) {
     setError(null);
     startSaving(async () => {
-      const result = await setJobParty(jobId, party.slot, candidate.id);
+      const result = await setJobParty(jobId, party.slot, id, remember);
       if (result.error) {
         setError(result.error);
         return;
@@ -108,6 +119,15 @@ function Party({ jobId, party }: { jobId: string; party: PartyState }) {
       <div className="mt-1 text-sm font-medium">{party.name || '—'}</div>
       {detail && <div className="text-xs text-slate-500">{detail}</div>}
 
+      {/* Said here as well as in the job's flags, because this is where it is
+          acted on: the previous answer is gone and a new one is needed. */}
+      {party.staleBinding && (
+        <div className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+          This name was bound to a repository row that is no longer active, so the binding was
+          ignored — the last upload retired the row it pointed at. Pick the party again.
+        </div>
+      )}
+
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -123,7 +143,66 @@ function Party({ jobId, party }: { jobId: string; party: PartyState }) {
         </div>
       )}
 
-      {open && <Picker role={party.role} initialQuery={party.name} onChoose={choose} />}
+      {open && (
+        <div className="mt-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+          {/* The branches resolution actually found, open by default. Making
+              someone re-type a name the app has already matched, to reach a
+              list it has already built, is the step this panel existed to
+              avoid and did not. */}
+          {branches.length > 0 && (
+            <>
+              <p className="mb-2 text-xs text-slate-500">
+                {branches.length} branches of this party are in the repository. The branch names are
+                often just numbers &mdash; the city is usually what tells them apart.
+              </p>
+              <ul className="mb-3 max-h-64 divide-y divide-slate-200 overflow-y-auto">
+                {branches.map((branch) => (
+                  <li key={branch.id}>
+                    <button
+                      type="button"
+                      disabled={saving}
+                      onClick={() => choose(branch.id)}
+                      className="w-full px-1 py-2 text-left hover:bg-white disabled:opacity-50"
+                    >
+                      <div className="text-sm font-medium">{branch.name}</div>
+                      <div className="text-xs text-slate-500">
+                        {[
+                          branch.branchName && `branch ${branch.branchName}`,
+                          branch.city,
+                          branch.iec && `IEC ${branch.iec}`,
+                          branch.adCode && `AD ${branch.adCode}`,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          <label className="flex items-start gap-2 text-xs text-slate-600">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              Remember: <span className="font-medium">{party.name}</span> means this party on every
+              job from now on. Undo it under Settings &rarr; Organizations &rarr; Remembered parties.
+            </span>
+          </label>
+
+          <details className="mt-3" open={branches.length === 0}>
+            <summary className="cursor-pointer text-xs text-slate-500">
+              {branches.length > 0 ? 'Search the repository instead' : 'Search the repository'}
+            </summary>
+            <Picker role={party.role} initialQuery={party.name} onChoose={choose} />
+          </details>
+        </div>
+      )}
     </div>
   );
 }
@@ -143,7 +222,7 @@ function Picker({
 }: {
   role: 'consignee' | 'shipper';
   initialQuery: string;
-  onChoose: (candidate: Candidate) => void;
+  onChoose: (id: string) => void;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<Candidate[]>([]);
@@ -171,7 +250,7 @@ function Picker({
   }, [query, role]);
 
   return (
-    <div className="mt-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+    <div className="mt-2">
       <input
         type="search"
         value={query}
@@ -192,7 +271,7 @@ function Picker({
           <li key={candidate.id}>
             <button
               type="button"
-              onClick={() => onChoose(candidate)}
+              onClick={() => onChoose(candidate.id)}
               className="w-full px-1 py-2 text-left hover:bg-white"
             >
               <div className="text-sm font-medium">{candidate.name}</div>

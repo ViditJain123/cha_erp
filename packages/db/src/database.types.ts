@@ -388,6 +388,97 @@ export type Database = {
           },
         ]
       }
+      job_agent_runs: {
+        Row: {
+          company_id: string
+          created_at: string
+          decisions: Json
+          draft_id: string | null
+          draft_version: number | null
+          error: string | null
+          filing_date: string | null
+          finished_at: string
+          flags_added: number
+          id: string
+          job_id: string
+          mode: string
+          model: string
+          response_ids: string[]
+          started_at: string
+          status: string
+          tool_calls: Json
+          turns: number
+          usage: Json
+          web_sources: Json
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          decisions?: Json
+          draft_id?: string | null
+          draft_version?: number | null
+          error?: string | null
+          filing_date?: string | null
+          finished_at: string
+          flags_added?: number
+          id?: string
+          job_id: string
+          mode: string
+          model: string
+          response_ids?: string[]
+          started_at: string
+          status: string
+          tool_calls?: Json
+          turns?: number
+          usage?: Json
+          web_sources?: Json
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          decisions?: Json
+          draft_id?: string | null
+          draft_version?: number | null
+          error?: string | null
+          filing_date?: string | null
+          finished_at?: string
+          flags_added?: number
+          id?: string
+          job_id?: string
+          mode?: string
+          model?: string
+          response_ids?: string[]
+          started_at?: string
+          status?: string
+          tool_calls?: Json
+          turns?: number
+          usage?: Json
+          web_sources?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_agent_runs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_agent_runs_draft_id_fkey"
+            columns: ["draft_id"]
+            isOneToOne: false
+            referencedRelation: "job_drafts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_agent_runs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_boe_header: {
         Row: {
           ad_code: string | null
@@ -407,6 +498,7 @@ export type Database = {
           gateway_igm_date: string | null
           gateway_igm_no: string | null
           gateway_inward_date: string | null
+          gateway_port: string | null
           igm_checked: boolean
           igm_date: string | null
           igm_no: string | null
@@ -458,6 +550,7 @@ export type Database = {
           gateway_igm_date?: string | null
           gateway_igm_no?: string | null
           gateway_inward_date?: string | null
+          gateway_port?: string | null
           igm_checked?: boolean
           igm_date?: string | null
           igm_no?: string | null
@@ -509,6 +602,7 @@ export type Database = {
           gateway_igm_date?: string | null
           gateway_igm_no?: string | null
           gateway_inward_date?: string | null
+          gateway_port?: string | null
           igm_checked?: boolean
           igm_date?: string | null
           igm_no?: string | null
@@ -1817,6 +1911,7 @@ export type Database = {
           company_id: string
           created_at: string
           created_by: string | null
+          docs: Json | null
           draft: Json
           id: string
           job_id: string
@@ -1830,6 +1925,7 @@ export type Database = {
           company_id: string
           created_at?: string
           created_by?: string | null
+          docs?: Json | null
           draft: Json
           id?: string
           job_id: string
@@ -1843,6 +1939,7 @@ export type Database = {
           company_id?: string
           created_at?: string
           created_by?: string | null
+          docs?: Json | null
           draft?: Json
           id?: string
           job_id?: string
@@ -2768,6 +2865,7 @@ export type Database = {
         Row: {
           company_id: string
           created_at: string
+          error: string | null
           file_name: string
           id: string
           imported_by: string | null
@@ -2775,12 +2873,14 @@ export type Database = {
           retired_count: number
           row_count: number
           sha256: string
+          status: Database["public"]["Enums"]["organization_import_status"]
           updated_count: number
           warnings: string[]
         }
         Insert: {
           company_id: string
           created_at?: string
+          error?: string | null
           file_name: string
           id?: string
           imported_by?: string | null
@@ -2788,12 +2888,14 @@ export type Database = {
           retired_count?: number
           row_count?: number
           sha256: string
+          status?: Database["public"]["Enums"]["organization_import_status"]
           updated_count?: number
           warnings?: string[]
         }
         Update: {
           company_id?: string
           created_at?: string
+          error?: string | null
           file_name?: string
           id?: string
           imported_by?: string | null
@@ -2801,6 +2903,7 @@ export type Database = {
           retired_count?: number
           row_count?: number
           sha256?: string
+          status?: Database["public"]["Enums"]["organization_import_status"]
           updated_count?: number
           warnings?: string[]
         }
@@ -2991,6 +3094,77 @@ export type Database = {
             columns: ["last_import_id"]
             isOneToOne: false
             referencedRelation: "organization_imports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      party_bindings: {
+        Row: {
+          company_id: string
+          created_at: string
+          decided_at: string
+          decided_by: string | null
+          id: string
+          name_key: string
+          organization_id: string
+          role: string
+          source_job_id: string | null
+          source_name: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          decided_at?: string
+          decided_by?: string | null
+          id?: string
+          name_key: string
+          organization_id: string
+          role: string
+          source_job_id?: string | null
+          source_name: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          decided_at?: string
+          decided_by?: string | null
+          id?: string
+          name_key?: string
+          organization_id?: string
+          role?: string
+          source_job_id?: string | null
+          source_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "party_bindings_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "party_bindings_decided_by_fkey"
+            columns: ["decided_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "party_bindings_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "party_bindings_source_job_id_fkey"
+            columns: ["source_job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -3676,6 +3850,7 @@ export type Database = {
       mail_outcome: "created_job" | "attached" | "skipped" | "error"
       mail_provider: "microsoft"
       noc_status: "not_required" | "pending" | "received"
+      organization_import_status: "running" | "done" | "failed"
       rms_route: "facilitated" | "assessment" | "examination"
       team_kind: "scrutiny" | "do" | "customs" | "cfs" | "customer_support"
       transport_mode: "sea" | "air" | "land"
@@ -3898,6 +4073,7 @@ export const Constants = {
       mail_outcome: ["created_job", "attached", "skipped", "error"],
       mail_provider: ["microsoft"],
       noc_status: ["not_required", "pending", "received"],
+      organization_import_status: ["running", "done", "failed"],
       rms_route: ["facilitated", "assessment", "examination"],
       team_kind: ["scrutiny", "do", "customs", "cfs", "customer_support"],
       transport_mode: ["sea", "air", "land"],

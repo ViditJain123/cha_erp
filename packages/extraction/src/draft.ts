@@ -12,9 +12,32 @@ import type { DocType } from './schemas.js';
  *
  * Logi-Sys resolves its parties by name, so an unbound party is a name we
  * guessed at rather than one we looked up. 'manual' means a person chose the
- * row, and re-reading the documents must not undo that.
+ * row on *this job*, and re-reading the documents must not undo that.
+ *
+ * 'remembered' is the other kind of decision: a person chose the row once, for
+ * this name, and it is kept in `party_bindings` for every job after. It is
+ * deliberately not 'manual', because the two must behave differently on a
+ * re-read — 'manual' short-circuits resolution and 'remembered' has to run
+ * through it, so that a repository upload or a later correction takes effect
+ * rather than being frozen into an old draft.
  */
-export type PartyMatchStatus = 'exact' | 'fuzzy' | 'ambiguous' | 'none' | 'manual';
+export type PartyMatchStatus =
+  | 'exact'
+  | 'fuzzy'
+  | 'ambiguous'
+  | 'none'
+  | 'manual'
+  | 'remembered';
+
+/** One branch a party name could mean, as the job screen has to show it. */
+export interface PartyCandidate {
+  id: string;
+  name: string;
+  branchName: string;
+  city?: string;
+  adCode?: string;
+  iec?: string;
+}
 
 /** A reviewer-facing warning attached to the draft. */
 export interface DraftFlag {
@@ -124,8 +147,7 @@ export interface DraftInvoice extends Omit<InvoiceInput, 'items'> {
    * between this and `invoiceValue` is the loading the BE declares.
    */
   hssValue?: number;
-  /** The place named after the Incoterm — "CIF NHAVA SHEVA" → "NHAVA SHEVA". */
-  termsPlace?: string;
+
   /** Payment terms exactly as the invoice prints them, before coding. */
   termsOfPayment?: string;
   paymentMethod: string;
@@ -144,11 +166,13 @@ export interface DraftInvoice extends Omit<InvoiceInput, 'items'> {
  * (`BoeFieldSource`), recorded per decidable field so the items panel can say
  * which values a person confirmed and which nobody has looked at yet.
  */
-export type ItemFieldSource = 'document' | 'master' | 'mail' | 'operator' | 'default';
+export type ItemFieldSource = 'document' | 'master' | 'mail' | 'operator' | 'default' | 'agent';
 
 /** The ITEMS fields a person can decide, and so the ones provenance is kept for. */
 export type ItemDecidableField =
   | 'ritc'
+  | 'notifications'
+
   | 'generalDescription'
   | 'brand'
   | 'model'
@@ -441,7 +465,34 @@ export interface DraftItem {
   }[];
   /** Which source decided each operator-decidable field. */
   sources?: Partial<Record<ItemDecidableField, ItemFieldSource>>;
+  /**
+   * What the job agent decided about this line and why — every decision it
+   * made, applied or refused, with the quotes and tool results it rested on.
+   * See docs/extraction-agents.md and src/agent/.
+   */
+  agent?: AgentItemEvidence;
 }
+
+/** One decision the job agent took on a line. */
+export interface AgentDecision {
+  /** `cth`, `bcd`, `igst`, `compCess`, `exim`, `conflict`, `web`. */
+  field: string;
+  value: string | null;
+  /** Written to the line, or only proposed (a flag says why). */
+  applied: boolean;
+  reason: string;
+  confidence: 'high' | 'medium' | 'low';
+  /** `"<quote>" — <file>` lines, or a URL. */
+  evidence: string[];
+}
+
+export interface AgentItemEvidence {
+  model: string;
+  at: string;
+  decisions: AgentDecision[];
+  openQuestions: string[];
+}
+
 
 /**
  * A certificate of origin as the item resolver needs it: which goods it covers
@@ -884,6 +935,18 @@ export interface ChecklistDraft {
     /** Row in the uploaded organization repository this party is bound to. */
     organizationId?: string;
     matchStatus?: PartyMatchStatus;
+    /**
+     * The branches this name matched, when it matched more than one.
+     *
+     * Kept on the draft rather than re-searched by the job screen: the panel is
+     * a server component reading a snapshot, and the choice it has to offer is
+     * the one resolution actually made, not whatever a fresh search returns.
+     * Denormalised for the same reason — city is what tells branch '7' from
+     * branch '11', and it should not cost fourteen row reads to show it.
+     */
+    candidates?: PartyCandidate[];
+    /** A binding for this name pointed at a row that is retired or no longer holds the role. */
+    staleBinding?: boolean;
   };
   supplier: {
     name: string;
@@ -897,6 +960,18 @@ export interface ChecklistDraft {
     gstin?: string;
     organizationId?: string;
     matchStatus?: PartyMatchStatus;
+    /**
+     * The branches this name matched, when it matched more than one.
+     *
+     * Kept on the draft rather than re-searched by the job screen: the panel is
+     * a server component reading a snapshot, and the choice it has to offer is
+     * the one resolution actually made, not whatever a fresh search returns.
+     * Denormalised for the same reason — city is what tells branch '7' from
+     * branch '11', and it should not cost fourteen row reads to show it.
+     */
+    candidates?: PartyCandidate[];
+    /** A binding for this name pointed at a row that is retired or no longer holds the role. */
+    staleBinding?: boolean;
   };
 
   shipment: {
@@ -926,6 +1001,17 @@ export interface ChecklistDraft {
     gatewayIgmNo?: string;
     gatewayIgmDate?: string;
     gatewayInwardDate?: string;
+    /**
+     * The gateway port itself: the ICES code of the sea port the vessel
+     * reported at before the goods moved inland by road or rail to the station
+     * this BE is filed at. `SHIPMENT.Port_of_Reporting` carries it, and only on
+     * an inland filing — on a direct-port filing there is no intermediary port
+     * and the column is empty (03-shipment.md §20). Resolved off the bill of
+     * lading's port of discharge when that names a sea port; keyed on the job
+     * screen otherwise.
+     */
+    gatewayPort?: string;
+
     /**
      * Whether anyone has actually looked ICEGATE up for an IGM against this BL.
      * Without it, an absent `igmNo` cannot be told apart from an unchecked one,

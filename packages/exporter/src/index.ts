@@ -5,6 +5,8 @@ export {
   UNMAPPED_SHEETS,
 } from './build.js';
 export { loadTemplate, templateHash } from './template.js';
+export { MAX_CELL_CHARS, enforceCellLimits } from './limits.js';
+
 export { LOGISYS_DATE_FORMAT } from './format.js';
 export type { LoadedTemplate, TemplateSheet } from './template.js';
 export type { SheetData, SheetRow } from './sheet-writer.js';

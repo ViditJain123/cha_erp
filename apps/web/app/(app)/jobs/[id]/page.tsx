@@ -336,6 +336,8 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               gatewayIgmNo: beHeader?.gateway_igm_no ?? '',
               gatewayIgmDate: beHeader?.gateway_igm_date ?? '',
               gatewayInwardDate: beHeader?.gateway_inward_date ?? '',
+              gatewayPort: beHeader?.gateway_port ?? '',
+
               packageUnitCode: beHeader?.package_unit_code ?? '',
               marksAndNos: beHeader?.marks_and_nos ?? '',
               customsHouseCode: beHeader?.customs_house_code ?? '',
@@ -625,5 +627,9 @@ function partyState(
     // A draft written before the repository existed has no status at all,
     // which is different from having been looked for and not found.
     ...(party.matchStatus ? { status: party.matchStatus } : {}),
+    // The branches resolution found, so the panel offers the choice it already
+    // made rather than sending the operator back to the search box.
+    ...(party.candidates?.length ? { candidates: party.candidates } : {}),
+    ...(party.staleBinding ? { staleBinding: true } : {}),
   };
 }

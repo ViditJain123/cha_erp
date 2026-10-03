@@ -92,7 +92,17 @@ describe('ITEMS §10 Exim scheme', () => {
     await expect(build(draft)).rejects.toThrow(/claims it twice/);
   });
 
+  it('refuses a licence notification in Basic_Notn with no scheme on the line', async () => {
+    // The number printed on an EPCG authorisation, keyed as if it were a BCD
+    // exemption. resolveItems moves it; a draft that skipped the resolver is
+    // stopped here rather than filed with the relief in the wrong slot.
+    await expect(build(standard({ bcdNotification: '026/2023', notificationSerials: { basic: '1' } }))).rejects.toThrow(
+      /issued under/,
+    );
+  });
+
   it('warns, but files, when a different relief sits beside a scheme', async () => {
+
     const { warnings } = await build(
       withItem({ eximScheme: { code: '03', notification: '021/2023', serial: '1' } }),
     );

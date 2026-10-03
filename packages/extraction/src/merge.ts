@@ -2,11 +2,11 @@ import { mergeContainerLists } from './containers.js';
 import {
   declarationStatements,
   declarationTexts,
+  bcdExemptionLapsed,
   bcdExemptionMatches,
   bcdExemptionNotification,
   compCessForCth,
   compCessNotification,
-  isInForce,
   isValidContainerNumber,
   chaProfile,
   computeBeDuty,
@@ -19,6 +19,7 @@ import {
   lookupTariff,
   lookupTariffByPrefix,
   resolveTariffPrefix,
+  tariffRowCovers,
   NATURE_OF_TRANSACTION,
   normalizePackageUnit,
   normalizeUqc,
@@ -110,24 +111,6 @@ function normalizeToi(t: InvoiceDoc['termsOfInvoice']): TermsOfInvoice {
     default:
       return t;
   }
-}
-
-/**
- * The place named after the Incoterm — ICES field 76, "Terms Place".
- *
- * "CIF NHAVA SHEVA" names Nhava Sheva; "Ex-Works Taunton, MA" names Taunton.
- * Returns nothing when the invoice prints the term alone, which is the common
- * case, rather than inventing a port from the shipment.
- */
-function termsPlaceOf(doc: InvoiceDoc): string | undefined {
-  const raw = doc.deliveryTermsRaw?.trim();
-  if (!raw) return undefined;
-  const withoutTerm = raw.replace(
-    /^\s*(cost[,\s]+insurance\s*(and|&)?\s*freight|cost\s*(and|&)\s*freight|ex[-\s]?works|free\s+on\s+board|carriage\s+paid\s+to|c\s*&\s*f|cif|cfr|cnf|c\s*&\s*i|fob|exw|cpt|cip|fca|dap|ddp|dpu)\b[\s:,-]*/i,
-    '',
-  );
-  const place = withoutTerm.trim().replace(/^[,\s-]+|[,\s-]+$/g, '');
-  return place && place.toLowerCase() !== raw.toLowerCase() ? place : undefined;
 }
 
 /**
@@ -1231,7 +1214,6 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       });
     }
 
-    const termsPlace = termsPlaceOf(doc);
     return {
       srNo,
       invoiceNumber: doc.invoiceNumber,
@@ -1239,7 +1221,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       termsOfInvoice: effectiveToi === 'EXW' ? 'FOB' : effectiveToi,
       currency,
       invoiceValue: goodsValue,
-      ...(termsPlace && { termsPlace }),
+
       ...(chargesTotal > 0 && { miscCharges: { amount: chargesTotal, currency: chargesCurrency } }),
       ...(freight && { freight }),
       ...(insurance && { insurance }),
@@ -1342,17 +1324,30 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
         });
       }
     }
+    // The printed tariff is a reading as of its edition. A filing dated
+    // before that is not contradicted by it, but not proven by it either.
+    if (tariff && !tariffRowCovers(tariff, today)) {
+      flags.push({
+        severity: 'info',
+        path: `items.${idx}.bcdRate`,
+        message:
+          `Tariff row ${tariff.cth} is read from the ${tariff.provenance?.edition ?? 'current'} tariff, the law as amended ` +
+          `on ${tariff.validFrom}. This filing is dated ${today} — confirm the First Schedule rate was the same then.`,
+      });
+    }
     // The tariff master has a row per CTH the CHA has filed before. For
     // everything else the two standing CBIC notifications still answer half
     // the question: 9/2025-IT(R) gives the IGST rate outright, and
     // 45/2025-Customs offers the BCD concessions the goods might qualify for.
-    const igst = igstRateForCth(ritc);
+    const igst = igstRateForCth(ritc, { onIsoDate: today });
     // "II114" — the schedule and serial the Bill of Entry files beside the
     // notification number. The tariff master carries neither, but a serial
     // only belongs to its own notification: a master row filed under some
-    // other one keeps its number bare.
+    // other one keeps its number bare — and a filing dated before 9/2025 took
+    // effect gets the predecessor's number with no serial at all.
     const igstSerial =
-      igst && !igst.residual && (!tariff || tariff.igstNotification === igst.notification)
+      igst && igst.scheduleKnown && !igst.residual && (!tariff || tariff.igstNotification === igst.notification)
+
         ? `${igst.entry.schedule}${igst.entry.serial}`
         : undefined;
     // Compensation cess. Every Bill of Entry declares 1/2017 and a serial,
@@ -1371,7 +1366,22 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       (!tariff || tariff.compCessNotification === cess.notification)
         ? cess.entry.serial
         : undefined;
-    const igstNotn = tariff?.igstNotification ?? igst?.notification;
+    // A filing dated before 9/2025 took effect is assessed under 1/2017-IT(R),
+    // whose schedule is not parsed: the predecessor's number goes on the line,
+    // no serial does, and the line says so. The tariff master's own number
+    // is the current one and does not apply to that day either.
+    const igstNotn = igst && !igst.scheduleKnown ? igst.notification : (tariff?.igstNotification ?? igst?.notification);
+    if (igst && !igst.scheduleKnown) {
+      flags.push({
+        severity: 'error',
+        path: `items.${idx}.igstRate`,
+        message:
+          `This Bill of Entry is dated ${today}, before 9/2025-IT(R) took effect, so IGST is under ${igst.notification} — ` +
+          `whose schedule the masters do not hold. Read the serial off 1/2017-IT(R) and confirm the rate ` +
+          `(${igst.rate}% is the current schedule's answer for CTH ${ritc}).`,
+      });
+    }
+
     const cessNotn = tariff?.compCessNotification ?? cess?.notification;
     const serials =
       igstSerial || cessSerial
@@ -1588,9 +1598,8 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     // it is the filing date, not today — and it is only right because the
     // amendments that move these provisos have been applied: 02/2026 alone
     // pushed 93 of them from March 2026 to March 2028.
-    const covering = bcdExemptionMatches(ritc);
-    const lapsed = covering.filter((e) => !isInForce(e, today));
-    const exemptions = covering.filter((e) => isInForce(e, today)).slice(0, 3);
+    const lapsed = bcdExemptionLapsed(ritc, today);
+    const exemptions = bcdExemptionMatches(ritc, { onIsoDate: today }).slice(0, 3);
     if (lapsed.length) {
       flags.push({
         severity: 'info',
@@ -1650,6 +1659,7 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
     const batchNo = gi.batchNo ?? coaProduct?.batchNo ?? undefined;
     const mfg = gi.manufactureDate ?? coaProduct?.manufactureDate ?? undefined;
     const exp = gi.expiryDate ?? coaProduct?.expiryDate ?? undefined;
+    const bbd = gi.bestBeforeDate ?? coaProduct?.bestBeforeDate ?? undefined;
     // The invoice line's own batch takes the line quantity; a certificate that
     // breaks the line into lots states each lot's own, which we do not have —
     // so extra lots carry their dates and no quantity rather than the line's.
@@ -1659,15 +1669,17 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
             ...(pr.batchNo && { batchNo: pr.batchNo }),
             ...(pr.manufactureDate && { manufactureDate: pr.manufactureDate }),
             ...(pr.expiryDate && { expiryDate: pr.expiryDate }),
+            ...(pr.bestBeforeDate && { bestBeforeDate: pr.bestBeforeDate }),
             // No quantity: the line quantity belongs to the line, and splitting
             // it evenly across lots would be inventing a figure.
           }))
-        : batchNo ?? mfg ?? exp
+        : batchNo ?? mfg ?? exp ?? bbd
           ? [
               {
                 ...(batchNo && { batchNo }),
                 ...(mfg && { manufactureDate: mfg }),
                 ...(exp && { expiryDate: exp }),
+                ...(bbd && { bestBeforeDate: bbd }),
                 ...(gi.quantity != null && { quantity: gi.quantity }),
               },
             ]
@@ -1718,13 +1730,19 @@ export function mergeToDraft(docs: ExtractedDoc[], opts?: { today?: string }): C
       // Seeded from the invoice description (the customer's "same as column E"),
       // refined by enrichDraftDescriptions(), and replaced by the product master.
       generalDescription: tradeDescription(gi.description),
-      // "As per invoice or ask operator" / "as per invoice else NA".
-      brand: gi.brand?.trim() || 'UNBRANDED',
-      model: gi.model?.trim() || 'NA',
+      // Never read off the invoice line. What a model promoted to "brand" or
+      // "model" was the polymer grade (BE961MO, HE3490LS HD), a part number or
+      // a trade name from the description — and every vendor workbook writes
+      // UNBRANDED / NA on lines exactly like those. The product master and the
+      // operator can still set both; the documents cannot (06-items.md §8).
+      brand: 'UNBRANDED',
+      model: 'NA',
+
       ...((gi.noCommercialValue || doc.natureOfTransaction === 'FREE_OF_COST') && { foc: true }),
       sources: {
         ritc: ritcSource,
-        brand: gi.brand?.trim() ? 'document' : 'default',
+        brand: 'default',
+
         generalDescription: 'document',
         originCountry: lineCoo?.originCountry || gi.countryOfOrigin || doc.countryOfOrigin ? 'document' : 'default',
         manufacturer: manufacturer.manufacturerName && manufacturer.manufacturerName !== doc.sellerName ? 'document' : 'default',

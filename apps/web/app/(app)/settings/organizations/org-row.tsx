@@ -1,7 +1,13 @@
 'use client';
 
 import { useActionState, useState } from 'react';
-import { updateOrganizationDefaults, type SettingsActionState } from '../actions';
+import {
+  addOrganizationAdCode,
+  deleteOrganizationAdCode,
+  setDefaultOrganizationAdCode,
+  updateOrganizationDefaults,
+  type SettingsActionState,
+} from '../actions';
 
 const EMPTY: SettingsActionState = {};
 
@@ -35,6 +41,8 @@ export interface OrgRowProps {
   marinePolicySumInsuredInr: number | null;
   marinePolicyPerSendingLimitInr: number | null;
   marinePolicyValidTill: string | null;
+  /** The other bank branches this importer remits through. */
+  adCodes: { id: string; adCode: string; bankName: string | null; bankBranch: string | null; isDefault: boolean }[];
   canManage: boolean;
 }
 
@@ -210,9 +218,132 @@ export function OrgRow(props: OrgRowProps) {
                 </span>
               )}
             </form>
+
+            <AdCodes {...props} />
           </td>
         </tr>
       )}
     </>
+  );
+}
+
+/**
+ * The bank branches this importer remits through.
+ *
+ * `organizations.ad_code` above is the one the repository carries, and it is
+ * the default. These are the alternatives, and they are not a nicety: only 188
+ * of five thousand rows carry an AD code at all, and the repository often does
+ * not hold the one actually filed — Logi-Sys picks the branch and the AD code
+ * independently, so binding the party does not answer this.
+ *
+ * `GENERAL.AD_Code` blocks the export when an importer has several and none is
+ * chosen for the shipment. That is deliberate: which bank realises the
+ * remittance is not something to guess on a customs document.
+ */
+function AdCodes(props: OrgRowProps) {
+  const [addState, addAction, adding] = useActionState(addOrganizationAdCode, EMPTY);
+  const [defaultState, defaultAction] = useActionState(setDefaultOrganizationAdCode, EMPTY);
+  const [deleteState, deleteAction] = useActionState(deleteOrganizationAdCode, EMPTY);
+  const note = addState.error ?? defaultState.error ?? deleteState.error ?? addState.message;
+
+  return (
+    <div className="mt-4 border-t border-slate-200 pt-3">
+      <p className="mb-2 text-xs font-medium text-slate-600">AD codes</p>
+      <p className="mb-2 text-xs text-slate-500">
+        The bank branch a Bill of Entry is remitted against.{' '}
+        {props.adCode
+          ? `The repository carries ${props.adCode} for this row; add the others here.`
+          : 'The repository carries none for this row.'}
+      </p>
+
+      {props.adCodes.length > 0 && (
+        <ul className="mb-3 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+          {props.adCodes.map((code) => (
+            <li key={code.id} className="flex items-center gap-3 px-3 py-2">
+              <span className="font-mono text-xs">{code.adCode}</span>
+              <span className="flex-1 text-xs text-slate-500">
+                {[code.bankName, code.bankBranch].filter(Boolean).join(' · ') || '—'}
+              </span>
+              {code.isDefault ? (
+                <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800">
+                  default
+                </span>
+              ) : (
+                <form action={defaultAction}>
+                  <input type="hidden" name="id" value={code.id} />
+                  <input type="hidden" name="organizationId" value={props.orgId} />
+                  <button type="submit" className="text-xs text-slate-500 hover:text-slate-900">
+                    make default
+                  </button>
+                </form>
+              )}
+              <form action={deleteAction}>
+                <input type="hidden" name="id" value={code.id} />
+                <button type="submit" className="text-xs text-red-600 hover:text-red-800">
+                  remove
+                </button>
+              </form>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <form action={addAction} className="flex flex-wrap items-end gap-2">
+        <input type="hidden" name="organizationId" value={props.orgId} />
+        <div>
+          <label
+            htmlFor={`adCode-${props.orgId}`}
+            className="mb-1 block text-xs font-medium text-slate-600"
+          >
+            AD code
+          </label>
+          {/* Text, never a number input: 0023340 as a number is 23340, which is
+              a different bank branch. */}
+          <input
+            id={`adCode-${props.orgId}`}
+            name="adCode"
+            inputMode="numeric"
+            placeholder="0023340"
+            className={`${SMALL_FIELD} font-mono`}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor={`bankName-${props.orgId}`}
+            className="mb-1 block text-xs font-medium text-slate-600"
+          >
+            Bank
+          </label>
+          <input id={`bankName-${props.orgId}`} name="bankName" className={SMALL_FIELD} />
+        </div>
+        <div>
+          <label
+            htmlFor={`bankBranch-${props.orgId}`}
+            className="mb-1 block text-xs font-medium text-slate-600"
+          >
+            Branch
+          </label>
+          <input id={`bankBranch-${props.orgId}`} name="bankBranch" className={SMALL_FIELD} />
+        </div>
+        <label className="flex items-center gap-1.5 pb-1.5 text-xs text-slate-600">
+          <input type="checkbox" name="isDefault" />
+          Default
+        </label>
+        <button
+          type="submit"
+          disabled={adding}
+          className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-xs font-medium hover:bg-white disabled:opacity-60"
+        >
+          {adding ? 'Adding…' : 'Add'}
+        </button>
+        {note && (
+          <span
+            className={`text-xs ${addState.error ?? defaultState.error ?? deleteState.error ? 'text-red-700' : 'text-emerald-700'}`}
+          >
+            {note}
+          </span>
+        )}
+      </form>
+    </div>
   );
 }

@@ -362,3 +362,21 @@ describe('duty engine: trade remedies and tariff value', () => {
     expect(d.totalAssessableValue).toBe(1214 * 100 * 90);
   });
 });
+
+describe('what a licence claim files beside the scheme code', () => {
+  it('has an entry for every scheme notification the code map knows', async () => {
+    const { EXIM_SCHEME_ENTRIES, EXIM_SCHEME_NOTIFICATION, eximSchemeEntry } = await import('../src/masters/codes.js');
+    for (const notification of Object.keys(EXIM_SCHEME_NOTIFICATION)) {
+      expect(EXIM_SCHEME_ENTRIES[notification], notification).toBeDefined();
+    }
+    // ex_job25: 021/2023 serial 1 in the Exim slot and again as the IGST exemption.
+    expect(eximSchemeEntry('21/2023')).toEqual({
+      notification: '021/2023',
+      serial: '1',
+      igstExemption: { notification: '021/2023', serial: '1' },
+    });
+    // ex_job28: a DFIA exempts basic duty only.
+    expect(eximSchemeEntry('025/2023')?.igstExemption).toBeNull();
+    expect(eximSchemeEntry('099/1999')).toBeUndefined();
+  });
+});

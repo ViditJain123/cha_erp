@@ -145,7 +145,45 @@ describe('the Exim scheme', () => {
     expect(out.items[0]!.eximScheme?.code).toBe('');
     expect(out.flags.some((f) => f.path === 'items.0.eximScheme')).toBe(true);
   });
+
+  // The notification printed on the licence is the one it is issued under,
+  // and it kept arriving in the basic-duty slot — keyed off the licence, or
+  // remembered by the product master from an earlier licence job. All four
+  // licence goldens leave Basic_Notn empty and file it in the Exim slot.
+  it('moves a licence notification out of Basic_Notn into the Exim slot', () => {
+    const out = resolveItems(
+      draft({}, [item({ bcdNotification: '021/2023', notificationSerials: { basic: '1', igst: 'II114' } })]),
+      { today: TODAY },
+    );
+    const line = out.items[0]!;
+    expect(line.bcdNotification).toBeUndefined();
+    expect(line.notificationSerials?.basic).toBeUndefined();
+    expect(line.notificationSerials?.igst).toBe('II114');
+    expect(line.eximScheme).toMatchObject({ code: '03', notification: '021/2023', serial: '1' });
+    expect(out.flags.some((f) => f.path === 'items.0.eximScheme' && /moved from Basic_Notn/.test(f.message))).toBe(true);
+  });
+
+  it('drops a licence notification claimed as an exemption when the scheme is already on the line', () => {
+    const out = resolveItems(
+      draft({}, [
+        item({
+          eximScheme: { code: '12', notification: '026/2023', serial: '1' },
+          bcdExemption: { notification: '026/2023', serial: '1', percent: 100 },
+        }),
+      ]),
+      { today: TODAY },
+    );
+    expect(out.items[0]!.bcdExemption).toBeUndefined();
+    expect(out.items[0]!.eximScheme).toMatchObject({ code: '12', notification: '026/2023' });
+  });
+
+  it('leaves a general exemption in the basic slot alone', () => {
+    const out = resolveItems(draft({}, [item({ bcdNotification: '045/2025', notificationSerials: { basic: '24' } })]), { today: TODAY });
+    expect(out.items[0]!.bcdNotification).toBe('045/2025');
+    expect(out.items[0]!.eximScheme).toBeUndefined();
+  });
 });
+
 
 describe('the levy flag', () => {
   // 1/2017-Compensation Cess S.No. 8: "21% or Rs. 4170 per thousand, whichever

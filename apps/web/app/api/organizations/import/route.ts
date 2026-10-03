@@ -1,8 +1,6 @@
-import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { requireCompanyManager } from '@/lib/auth';
-import { parseOrganizationRepository } from '@/lib/org-repository';
-import { serviceClient } from '@/lib/supabase/admin';
+import { applyOrganizationImport, importFailed } from '@/lib/org-import';
 import { MAX_UPLOAD_BYTES, sniffMime } from '@/lib/upload';
 
 export const runtime = 'nodejs';
@@ -13,15 +11,10 @@ export const maxDuration = 300;
 /**
  * Loads the Organization Repository export out of Logi-Sys.
  *
- * A Logi-Sys export is a full snapshot, so this is applied as one: every row
- * in the file is upserted, and every row that was here before and is not in
- * the file is deactivated. Nothing is deleted — a job filed last month still
- * has to resolve the party it was filed against.
+ * Who may upload, and that the bytes really are an xlsx. The snapshot itself is
+ * applied by `applyOrganizationImport`, so a script can run the same code — see
+ * the note there about the three concurrent imports that retired 3,000 parties.
  */
-
-/** Rows per upsert. Large enough to be few round trips, small enough to send. */
-const CHUNK = 1000;
-
 export async function POST(request: Request) {
   const ctx = await requireCompanyManager();
 
@@ -46,102 +39,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const { rows, warnings, errors } = await parseOrganizationRepository(data);
-  if (errors.length > 0) {
-    return NextResponse.json({ error: errors.join(' ') }, { status: 400 });
+  const outcome = await applyOrganizationImport({
+    companyId: ctx.companyId,
+    userId: ctx.userId,
+    fileName: file.name,
+    data,
+  });
+
+  if (importFailed(outcome)) {
+    return NextResponse.json({ error: outcome.error }, { status: outcome.status });
   }
 
-  const db = serviceClient();
-  const sha256 = createHash('sha256').update(data).digest('hex');
-
-  // How many of these rows the company already had, so the result can say what
-  // arrived and what merely changed. Counted before the upsert, because after
-  // it every row belongs to this import.
-  const { count: existingCount } = await db
-    .from('organizations')
-    .select('id', { count: 'exact', head: true })
-    .eq('company_id', ctx.companyId);
-
-  const { data: importRow, error: importError } = await db
-    .from('organization_imports')
-    .insert({
-      company_id: ctx.companyId,
-      file_name: file.name,
-      sha256,
-      row_count: rows.length,
-      warnings,
-      imported_by: ctx.userId,
-    })
-    .select('id')
-    .single();
-
-  if (importError || !importRow) {
-    return NextResponse.json(
-      { error: `Could not record the import: ${importError?.message ?? 'unknown error'}` },
-      { status: 500 },
-    );
-  }
-
-  for (let i = 0; i < rows.length; i += CHUNK) {
-    const chunk = rows.slice(i, i + CHUNK).map((row) => ({
-      ...row,
-      company_id: ctx.companyId,
-      last_import_id: importRow.id,
-    }));
-    const { error } = await db
-      .from('organizations')
-      .upsert(chunk, { onConflict: 'company_id,name,branch_name,branch_sr_no' });
-    if (error) {
-      return NextResponse.json(
-        {
-          error: `Loaded ${i} of ${rows.length} organizations, then stopped: ${error.message}`,
-        },
-        { status: 500 },
-      );
-    }
-  }
-
-  // Anything the file did not mention is gone from Logi-Sys. Deactivated, not
-  // deleted: an old job's party still has to resolve.
-  const { data: retired, error: retireError } = await db
-    .from('organizations')
-    .update({ is_active: false })
-    .eq('company_id', ctx.companyId)
-    .eq('is_active', true)
-    .or(`last_import_id.is.null,last_import_id.neq.${importRow.id}`)
-    .select('id');
-
-  if (retireError) {
-    return NextResponse.json(
-      { error: `Loaded the file but could not retire the old rows: ${retireError.message}` },
-      { status: 500 },
-    );
-  }
-
-  const before = existingCount ?? 0;
-  const { count: afterCount } = await db
-    .from('organizations')
-    .select('id', { count: 'exact', head: true })
-    .eq('company_id', ctx.companyId);
-
-  const inserted = Math.max(0, (afterCount ?? before) - before);
-  const result = {
-    rowCount: rows.length,
-    inserted,
-    updated: rows.length - inserted,
-    retired: retired?.length ?? 0,
-    warnings,
-  };
-
-  await db
-    .from('organization_imports')
-    .update({
-      inserted_count: result.inserted,
-      updated_count: result.updated,
-      retired_count: result.retired,
-    })
-    .eq('id', importRow.id)
-    .eq('company_id', ctx.companyId);
-
+  const { importId: _importId, ...result } = outcome;
   return NextResponse.json(result);
 }

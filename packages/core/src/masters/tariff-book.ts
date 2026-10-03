@@ -206,6 +206,27 @@ export function tariffBook(): TariffBookFile | null {
  * rather than a year when the book is not built: naming an edition we did not
  * read would make the citation a lie.
  */
+/**
+ * The day the printed tariff is a reading of. BDP's 60th edition (February
+ * 2026) is "updated to incorporate … the Union Budget 2026-27", whose customs
+ * changes took effect on 2 February 2026. A new edition moves this.
+ */
+export const TARIFF_BOOK_IN_FORCE_FROM: Record<string, string> = { '2026-27': '2026-02-02' };
+
+/** The first day the loaded edition's rows are known to be the law, if known. */
+export function tariffBookInForceFrom(): string | undefined {
+  const edition = tariffBook()?.edition;
+  return edition ? TARIFF_BOOK_IN_FORCE_FROM[edition] : undefined;
+}
+
+/**
+ * Whether a tariff row is known to state the law on a date. Undated rows (the
+ * seed, reviewer edits) make no claim either way and answer true.
+ */
+export function tariffRowCovers(row: TariffMaster, onIsoDate: string): boolean {
+  return !row.validFrom || row.validFrom <= onIsoDate;
+}
+
 export function tariffEdition(): string {
   return tariffBook()?.edition ?? 'current';
 }
@@ -236,6 +257,7 @@ export function tariffBookMasters(): TariffMaster[] {
   const file = tariffBook();
   if (!file) return [];
   const out: TariffMaster[] = [];
+  const validFrom = tariffBookInForceFrom();
   for (const row of file.rows) {
     const bcd = row.basicBcdRate ?? row.effectiveBcdRate;
     if (bcd === undefined || row.igstRate === undefined) continue;
@@ -270,6 +292,7 @@ export function tariffBookMasters(): TariffMaster[] {
         edition: file.edition,
         confidence: row.confidence,
       },
+      ...(validFrom && { validFrom }),
     });
   }
   return out;

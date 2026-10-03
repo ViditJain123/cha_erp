@@ -2,6 +2,13 @@ import 'server-only';
 import { branchNameForExport, partyNameKey } from '@checklist/core';
 import type { ChecklistDraft, PartyMatchStatus } from '@checklist/extraction';
 import type { Database } from '@checklist/db';
+import {
+  addressLinesOf,
+  candidateOf,
+  importerFrom,
+  supplierFrom,
+  type OrganizationRow,
+} from '@/lib/party-binding';
 import { recomputeDuty } from '@/lib/recompute';
 import { serviceClient } from '@/lib/supabase/admin';
 
@@ -19,7 +26,6 @@ import { serviceClient } from '@/lib/supabase/admin';
  * the download would not tell them anything the warning does not.
  */
 
-export type OrganizationRow = Database['public']['Tables']['organizations']['Row'];
 
 /** Which slot on the job the party fills, and so which repository flag it needs. */
 export type PartyRole = 'consignee' | 'shipper' | 'agent' | 'transporter';
@@ -35,6 +41,12 @@ export interface PartyMatch {
   org?: OrganizationRow;
   /** Set when the status is 'ambiguous': the branches to choose between. */
   candidates?: OrganizationRow[];
+  /**
+   * A binding existed for this name but its row is retired or no longer holds
+   * the role, so it was ignored. The person who made that decision has to make
+   * it again, and needs telling why rather than being asked twice in silence.
+   */
+  staleBinding?: boolean;
 }
 
 /**
@@ -112,12 +124,43 @@ export async function organizationById(
 }
 
 /**
+ * A decision someone already made about this exact name.
+ *
+ * Only ever an exact `name_key` lookup — see the migration. A binding is a
+ * person's answer to "which branch", and letting a near-miss name inherit it
+ * would be the coin toss the binding exists to avoid.
+ *
+ * Returns nothing when the bound row has since been retired or has lost the
+ * role flag, so a stale decision cannot resurrect a party Logi-Sys has
+ * switched off. The caller falls back to ordinary resolution and says so.
+ */
+async function rememberedBinding(
+  companyId: string,
+  role: PartyRole,
+  key: string,
+): Promise<{ org: OrganizationRow; stale: false } | { org?: undefined; stale: boolean }> {
+  const db = serviceClient();
+  const { data } = await db
+    .from('party_bindings')
+    .select('organization_id')
+    .eq('company_id', companyId)
+    .eq('role', role)
+    .eq('name_key', key)
+    .maybeSingle();
+  if (!data) return { stale: false };
+
+  const org = await organizationById(companyId, data.organization_id);
+  if (!org || !org.is_active || !org[roleColumn(role)]) return { stale: true };
+  return { org, stale: false };
+}
+
+/**
  * The repository row for a name off a document.
  *
- * Exact on the normalised name first, because that is the answer whenever
- * there is one. Trigram only when there is not: it is what catches a name the
- * documents abbreviate, and it is also what could pick the wrong party, so it
- * has to clear a threshold and be alone in doing so.
+ * A remembered decision first, then exact on the normalised name, because that
+ * is the answer whenever there is one. Trigram only when there is neither: it
+ * is what catches a name the documents abbreviate, and it is also what could
+ * pick the wrong party, so it has to clear a threshold and be alone in doing so.
  */
 export async function resolveParty(
   companyId: string,
@@ -130,6 +173,9 @@ export async function resolveParty(
   const db = serviceClient();
   const flag = roleColumn(role);
 
+  const remembered = await rememberedBinding(companyId, role, key);
+  if (remembered.org) return { status: 'remembered', org: remembered.org };
+
   const { data: exact } = await db
     .from('organizations')
     .select('*')
@@ -140,16 +186,24 @@ export async function resolveParty(
     .order('branch_name')
     .limit(MAX_CANDIDATES + 1);
 
-  if (exact && exact.length === 1) return { status: 'exact', org: exact[0] as OrganizationRow };
+  const staleBinding = remembered.stale;
+
+  if (exact && exact.length === 1) {
+    return { status: 'exact', org: exact[0] as OrganizationRow, staleBinding };
+  }
   if (exact && exact.length > 1) {
     // SIEMENS LIMITED is 52 rows, one per branch, and they differ by the AD
     // code the Bill of Entry is filed against. Picking one here would be a
     // coin toss printed on a customs document.
-    return { status: 'ambiguous', candidates: exact.slice(0, MAX_CANDIDATES) as OrganizationRow[] };
+    return {
+      status: 'ambiguous',
+      candidates: exact.slice(0, MAX_CANDIDATES) as OrganizationRow[],
+      staleBinding,
+    };
   }
 
   const near = await searchOrganizations(companyId, name, role, MAX_CANDIDATES);
-  if (near.length === 0) return { status: 'none' };
+  if (near.length === 0) return { status: 'none', staleBinding };
 
   const scored = near
     .map((org) => ({ org, score: similarity(partyNameKey(org.name), key) }))
@@ -157,74 +211,24 @@ export async function resolveParty(
 
   const best = scored[0];
   if (!best || best.score < FUZZY_MIN_SIMILARITY) {
-    return { status: 'none', candidates: near.slice(0, MAX_CANDIDATES) };
+    return { status: 'none', candidates: near.slice(0, MAX_CANDIDATES), staleBinding };
   }
 
   // Several rows equally close means several branches of one party, or two
   // parties with near-identical names. Either way it is not ours to decide.
   const tied = scored.filter((s) => best.score - s.score < 0.001);
   if (tied.length > 1) {
-    return { status: 'ambiguous', candidates: tied.map((s) => s.org).slice(0, MAX_CANDIDATES) };
+    return {
+      status: 'ambiguous',
+      candidates: tied.map((s) => s.org).slice(0, MAX_CANDIDATES),
+      staleBinding,
+    };
   }
 
-  return { status: 'fuzzy', org: best.org };
+  return { status: 'fuzzy', org: best.org, staleBinding };
 }
 
-/** The address lines of a repository row, in the order Logi-Sys holds them. */
-export function addressLinesOf(org: OrganizationRow): string[] {
-  return [org.address1, org.address2, org.address3].filter(
-    (line): line is string => typeof line === 'string' && line.trim() !== '',
-  );
-}
-
-/** A draft's importer, rewritten from a repository row. */
-export function importerFrom(
-  org: OrganizationRow,
-  status: PartyMatchStatus,
-): ChecklistDraft['importer'] {
-  return {
-    name: org.name,
-    addressLines: addressLinesOf(org),
-    ...(org.iec ? { iec: org.iec } : {}),
-    ...(org.pan ? { pan: org.pan } : {}),
-    ...(org.gstin ? { gstin: org.gstin } : {}),
-    ...(org.gst_state_code ? { gstStateCode: org.gst_state_code } : {}),
-    ...(org.state ? { gstStateName: org.state } : {}),
-    ...(org.ad_code ? { adCode: org.ad_code } : {}),
-    ...(org.branch_sr_no ? { branchSno: org.branch_sr_no } : {}),
-    // "0", "." and "NA" are how Logi-Sys spells "no branch", and the workbook
-    // that imported cleanly left the column empty for exactly such a row.
-    ...(branchNameForExport(org.branch_name)
-      ? { branchName: branchNameForExport(org.branch_name) as string }
-      : {}),
-    ...(org.city ? { city: org.city } : {}),
-    matchedFromMasters: true,
-    organizationId: org.id,
-    matchStatus: status,
-  };
-}
-
-/** A draft's supplier, rewritten from a repository row. */
-export function supplierFrom(
-  org: OrganizationRow,
-  status: PartyMatchStatus,
-): ChecklistDraft['supplier'] {
-  return {
-    name: org.name,
-    addressLines: addressLinesOf(org),
-    ...(org.city ? { city: org.city } : {}),
-    ...(org.state ? { state: org.state } : {}),
-    ...(org.postal_code ? { postalCode: org.postal_code } : {}),
-    ...(org.country ? { country: org.country } : {}),
-    ...(branchNameForExport(org.branch_name)
-      ? { branchName: branchNameForExport(org.branch_name) as string }
-      : {}),
-    ...(org.iec ? { iec: org.iec } : {}),
-    ...(org.gstin ? { gstin: org.gstin } : {}),
-    organizationId: org.id,
-    matchStatus: status,
-  };
-}
+export { addressLinesOf, importerFrom, supplierFrom, type OrganizationRow };
 
 /**
  * Bind a freshly built draft's parties to the repository.
@@ -241,11 +245,21 @@ export async function applyPartyResolution(
 
   if (draft.importer.matchStatus !== 'manual' && draft.importer.name) {
     const match = await resolveParty(companyId, 'consignee', draft.importer.name);
+    const extra = {
+      ...(match.candidates?.length ? { candidates: match.candidates.map(candidateOf) } : {}),
+      ...(match.staleBinding ? { staleBinding: true } : {}),
+    };
     if (match.org) {
       importerOrg = match.org;
-      out.importer = importerFrom(match.org, match.status);
+      // The repository's spelling wins — Logi-Sys keys its parties on it — but
+      // only for what the repository actually holds. It is a party master, not
+      // a shipping document: two thirds of its rows carry no city, and binding
+      // a party used to drop the one the invoice printed. Then the export
+      // warned that the city "was not extracted", which by then was untrue of
+      // the documents and true only of us.
+      out.importer = { ...draft.importer, ...importerFrom(match.org, match.status), ...extra };
     } else {
-      out.importer = { ...draft.importer, matchStatus: match.status };
+      out.importer = { ...draft.importer, matchStatus: match.status, ...extra };
     }
   } else if (draft.importer.organizationId) {
     importerOrg = (await organizationById(companyId, draft.importer.organizationId)) ?? undefined;
@@ -253,10 +267,16 @@ export async function applyPartyResolution(
 
   if (draft.supplier.matchStatus !== 'manual' && draft.supplier.name) {
     const match = await resolveParty(companyId, 'shipper', draft.supplier.name);
+    const extra = {
+      ...(match.candidates?.length ? { candidates: match.candidates.map(candidateOf) } : {}),
+      ...(match.staleBinding ? { staleBinding: true } : {}),
+    };
     if (match.org) {
-      out.supplier = supplierFrom(match.org, match.status);
+      // See the importer above: repository first, documents for what it does
+      // not hold.
+      out.supplier = { ...draft.supplier, ...supplierFrom(match.org, match.status), ...extra };
     } else {
-      out.supplier = { ...draft.supplier, matchStatus: match.status };
+      out.supplier = { ...draft.supplier, matchStatus: match.status, ...extra };
     }
   }
 
@@ -439,6 +459,13 @@ function partyFlags(draft: ChecklistDraft): ChecklistDraft['flags'] {
     ['supplier', draft.supplier],
   ] as const) {
     const what = path === 'importer' ? 'Importer' : 'Supplier';
+    if (party.staleBinding) {
+      flags.push({
+        severity: 'warning',
+        path,
+        message: `${what} "${party.name}" was bound to a repository row that is no longer active, so the binding was ignored. Pick the party again — the last repository upload retired the row it pointed at.`,
+      });
+    }
     switch (party.matchStatus) {
       case 'none':
         flags.push({
@@ -459,6 +486,16 @@ function partyFlags(draft: ChecklistDraft): ChecklistDraft['flags'] {
           severity: 'info',
           path,
           message: `${what} matched "${party.name}" in the organization repository by approximate name — confirm it is the right party.`,
+        });
+        break;
+      case 'remembered':
+        // A decision, not a gap. Said once as information so the person can
+        // see *why* a party that used to ask no longer does, and go and unbind
+        // it if it was wrong.
+        flags.push({
+          severity: 'info',
+          path,
+          message: `${what} "${party.name}" is bound to the branch someone chose for this name before. Change it on this job, or unbind it in Settings → Organizations → Remembered parties.`,
         });
         break;
       default:

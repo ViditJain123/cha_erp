@@ -260,10 +260,14 @@ function invoiceRow(ctx: MapContext, invoice: DraftInvoice, singleCharge: boolea
     // The workbook carries Logi-Sys' spelling of the term; the draft, the
     // charge gate above and anything filed to ICES carry ICES'.
     TOI: code(toi ? (VENDOR_TOI_CODE[toi] ?? toi) : undefined),
-    // ICES field 76, "Terms Place" — the place named after the Incoterm. Every
-    // vendor workbook leaves it empty even where the invoice states one, so it
-    // is written only when we read one and never warned about.
-    TOI_Place: text(invoice.termsPlace),
+    // ICES field 76, "Terms Place". Always blank, as a decision: the place
+    // named after the Incoterm ("CIF NHAVA SHEVA") is not declared on the Bill
+    // of Entry, and all eleven vendor workbooks leave the cell empty, including
+    // the ones whose invoice names a place. It used to be parsed off the
+    // delivery terms and written, which put "NHAVA SHEYA" and "Ahemdabad" —
+    // the supplier's typos — on a customs declaration for nothing.
+    TOI_Place: BLANK,
+
     Inv_Currency: invoiceCurrency,
     Product_Value: money(invoice.invoiceValue),
     Is_Single_Frt_Ins_Other_Chrg: yn(singleCharge),

@@ -113,9 +113,13 @@ C&F when the invoice itself bills the freight, long before this point; the
 blocker is the safety net.)
 
 `TOI_Place` is ICES field 76, the place named after the Incoterm — "CIF NHAVA
-SHEVA" names Nhava Sheva. Parsed off `deliveryTermsRaw` and written when the
-invoice states one. **It never warns**: every vendor workbook leaves it empty,
-including ones whose invoice names a place, so a blank here is not a gap.
+SHEVA" names Nhava Sheva. **Source: `constant` — blank, always.** Every one of
+the eleven vendor workbooks leaves it empty, including the ones whose invoice
+names a place, and the place is not part of the declaration. It used to be
+parsed off `deliveryTermsRaw` and written, which put the supplier's own typos
+("NHAVA SHEYA", "Ahemdabad") on the Bill of Entry for no return. Nothing in the
+draft carries it any more; the mapper writes `BLANK` and never warns.
+
 
 ---
 

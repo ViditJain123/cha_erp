@@ -251,18 +251,17 @@ different rules.
 read the value back off the Logi-Sys invoice screen. If it lands on the
 dropdown's Rule 3 or on nothing, the default changes and only that table does.
 
-## `TOI_Place`
+## `TOI_Place` — settled
 
 ICES field 76, "Terms Place" — the place named after the Incoterm. Invoices
 routinely state one ("CIF NHAVA SHEVA", "Ex-Works Taunton, MA") and **every
 vendor workbook leaves the column empty**, including ones whose invoice names a
 place.
 
-**Interim:** parsed off `deliveryTermsRaw` and written when we read one; never
-warned about, so a blank is not reported as a gap.
+**Settled (2026-09-26):** not written, ever. The place is not declared, and
+what the parser was putting there was the supplier's spelling of an Indian port.
+See [05-invoices.md §3](05-invoices.md).
 
-**To settle:** whether Logi-Sys wants it at all, or resolves the place from the
-port of loading. Cheap to check on the next upload.
 
 ## The AEO trio on INVOICES
 

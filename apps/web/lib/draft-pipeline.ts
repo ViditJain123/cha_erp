@@ -4,11 +4,15 @@ import {
   enrichDraftClassification,
   enrichDraftFromLibrary,
   enrichDraftFromNotifications,
+  runJobAgent,
   runPipeline,
   type ChecklistDraft,
   type GstTaxInvoiceExtract,
   type IntoBondBeExtract,
+  type JobAgentRun,
 } from '@checklist/extraction';
+import { readMailInstructions } from './general';
+
 import { applyContainerResolution } from './containers';
 import { applyExchangeRateResolution } from './exchange-rates';
 import { applyGeneralResolution } from './general';
@@ -17,13 +21,35 @@ import { applySecuritiesResolution } from './securities';
 import { applyItemResolution } from './items';
 import { applyPartyResolution } from './parties';
 import { recomputeDuty } from './recompute';
+import { serviceClient } from './supabase/admin';
+
 
 export interface DraftPipelineFile {
   fileName: string;
   pdf: Buffer;
   /** The stored media type, so a photographed document is sent as one. */
   mimeType?: string;
+  /**
+   * Ingest's own label for the file (`job_documents.doc_type`). Extraction
+   * types a licence as `other` and reads nothing off it; this is what tells
+   * the job agent there is a licence on the job worth opening.
+   */
+  hint?: string;
 }
+
+
+/**
+ * How the job agent runs: `off` never; `shadow` runs and records, the
+ * deterministic path still decides; `on` decides, with the deterministic
+ * path as the fallback when it fails or runs out of budget.
+ */
+export type JobAgentMode = 'off' | 'shadow' | 'on';
+
+export function jobAgentMode(): JobAgentMode {
+  const raw = (process.env.JOB_AGENT ?? 'shadow').trim().toLowerCase();
+  return raw === 'on' || raw === 'off' ? raw : 'shadow';
+}
+
 
 /**
  * Read a job's documents into a reviewable checklist draft.
@@ -123,22 +149,68 @@ export async function buildDraftFromDocuments(
   files: DraftPipelineFile[],
   companyId?: string,
   jobId?: string,
-): Promise<{ draft: ChecklistDraft; docs: Awaited<ReturnType<typeof runPipeline>>['docs'] }> {
-  const { draft, docs } = await runPipeline(files);
-  const enriched = recomputeDuty(
-    await enrichDraftFromNotifications(
-      await enrichDraftDescriptions(
-        await enrichDraftFromLibrary(await enrichDraftClassification(draft)),
-      ),
-    ),
-  );
-  if (!companyId) return { draft: enriched, docs };
+): Promise<{ draft: ChecklistDraft; docs: Awaited<ReturnType<typeof runPipeline>>['docs']; agentRun?: JobAgentRun }> {
+  const filing = companyId && jobId ? await resolveFilingDate(companyId, jobId) : undefined;
+  const today = filing?.date ?? new Date().toISOString().slice(0, 10);
+  const { draft, docs } = await runPipeline(files, { today });
+  if (filing && filing.source !== 'header') {
+    draft.flags.push({
+      severity: 'info',
+      message:
+        `Notifications are judged as at ${filing.date}, ${filing.source === 'mail' ? 'the date of the latest mail on this job' : 'today'} — ` +
+        'no Bill of Entry date has been set on the header. Set one if the filing is on another day.',
+    });
+  }
 
-  const bound = await applyPartyResolution(enriched, companyId);
-  if (!jobId) return { draft: bound, docs };
+  // The general description is cheap and feeds the agent's context, so it
+  // runs first whichever path decides the rest. So does party binding, when
+  // there is a company to bind against: the agent should see the importer
+  // Logi-Sys knows, not the B/L's "TO THE ORDER OF HDFC BANK" — on ex_job26
+  // it refused an EPCG claim because the consignee was not the licence holder.
+  const described = companyId
+    ? await applyPartyResolution(recomputeDuty(await enrichDraftDescriptions(draft)), companyId)
+    : await enrichDraftDescriptions(draft);
 
-  return { draft: await applyJobResolution(bound, docs, companyId, jobId), docs };
+  // The job agent: all documents in one context, the masters as tools. In
+  // `shadow` it runs and is recorded and nothing it says is applied; in `on`
+  // its answer is the draft, unless it failed or ran out of budget, in which
+  // case the one-shot path below decides as before.
+  const mode = jobAgentMode();
+  let enriched = described;
+  let agentRun: JobAgentRun | undefined;
+  if (mode !== 'off') {
+    const instructions = companyId && jobId ? (await readMailInstructions(jobId, companyId)).instructions : null;
+    const outcome = await runJobAgent({
+      draft: structuredClone(described),
+
+      docs,
+      files: files.map((f) => ({ fileName: f.fileName, pdf: f.pdf, ...(f.mimeType && { mimeType: f.mimeType }), ...(f.hint && { hint: f.hint }) })),
+      filingDate: today,
+      filingDateSource: filing?.source ?? 'today',
+      instructions,
+    });
+    agentRun = outcome.run;
+    if (mode === 'on' && outcome.status === 'ok') enriched = outcome.draft;
+  }
+  if (enriched === described) {
+    enriched = await enrichDraftFromNotifications(
+      await enrichDraftFromLibrary(await enrichDraftClassification(described)),
+      { filingDate: today },
+    );
+    if (agentRun && mode === 'on') {
+      enriched.flags.push({
+        severity: 'warning',
+        message: `The job agent did not finish (${agentRun.status}${agentRun.error ? `: ${agentRun.error}` : ''}); the one-shot notification path decided instead.`,
+      });
+    }
+  }
+  enriched = recomputeDuty(enriched);
+  if (!companyId || !jobId) return { draft: enriched, docs, ...(agentRun && { agentRun }) };
+
+  return { draft: await applyJobResolution(enriched, docs, companyId, jobId), docs, ...(agentRun && { agentRun }) };
 }
+
+
 
 /**
  * Steps 8–11 above: everything that comes off the job rather than off a
@@ -194,4 +266,40 @@ export async function applyJobResolution(
     companyId,
     jobId,
   });
+}
+
+/**
+ * The day this Bill of Entry is (or was) presented, for judging which
+ * notifications are in force.
+ *
+ * The header's date when a person has set one. Otherwise the latest mail on
+ * the job: the corpus threads carry the dates the consignments were actually
+ * handled, and ex_job21 — filed in March 2025 — was being assessed under a
+ * notification that took effect the following September because the pipeline
+ * only knew today. Today is the last resort, and the caller says so.
+ */
+export async function resolveFilingDate(
+  companyId: string,
+  jobId: string,
+): Promise<{ date: string; source: 'header' | 'mail' | 'today' }> {
+  const db = serviceClient();
+  const { data: header } = await db
+    .from('job_boe_header')
+    .select('be_filing_date')
+    .eq('job_id', jobId)
+    .eq('company_id', companyId)
+    .maybeSingle();
+  if (header?.be_filing_date) return { date: header.be_filing_date, source: 'header' };
+
+  const { data: mail } = await db
+    .from('mail_messages')
+    .select('received_at')
+    .eq('job_id', jobId)
+    .eq('company_id', companyId)
+    .order('received_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (mail?.received_at) return { date: mail.received_at.slice(0, 10), source: 'mail' };
+
+  return { date: new Date().toISOString().slice(0, 10), source: 'today' };
 }

@@ -1,5 +1,5 @@
 import 'server-only';
-import { productDescriptionKey, eximSchemeCode } from '@checklist/core';
+import { eximSchemeCode, eximSchemeForNotification, productDescriptionKey } from '@checklist/core';
 import {
   resolveItems,
   retargetItemCth,
@@ -151,9 +151,17 @@ export function applyProductMaster(item: DraftItem, row: ProductMasterRow): Draf
       ...out.notificationSerials,
       ...(notes.basic.serial && { basic: notes.basic.serial }),
     };
+    sources.notifications = 'master';
   }
-  if (notes.igst?.serial) out.notificationSerials = { ...out.notificationSerials, igst: notes.igst.serial };
-  if (notes.compCess?.serial) out.notificationSerials = { ...out.notificationSerials, compCess: notes.compCess.serial };
+  if (notes.igst?.serial) {
+    out.notificationSerials = { ...out.notificationSerials, igst: notes.igst.serial };
+    sources.notifications = 'master';
+  }
+  if (notes.compCess?.serial) {
+    out.notificationSerials = { ...out.notificationSerials, compCess: notes.compCess.serial };
+    sources.notifications = 'master';
+  }
+
   out = { ...out, sources };
   return out;
 }
@@ -283,21 +291,21 @@ function withoutRitc(fields: Json): Json {
 }
 
 /**
- * Remember a confirmed item in the importer's product master. Called when the
- * operator confirms a line; the next job with the same description uses it
- * without asking.
+ * The notification choices a confirmed line teaches the product master.
+ *
+ * A licence's notification is never remembered as the product's basic
+ * exemption: the licence belongs to one consignment, the master to every
+ * later one. And nothing is remembered unless the person confirming says so:
+ * the choices on a line are, more often than not, the model's proposals, and
+ * "confirm this classification" used to write them into the master where
+ * `applyProductMaster` handed them to every later job as a `master` fact. A
+ * wrong pick then travelled. Now the duty lines are remembered only when the
+ * operator ticks the box for it.
  */
-export async function rememberProduct(input: {
-  companyId: string;
-  importerOrgId: string;
-  jobId: string;
-  userId: string;
-  item: DraftItem;
-}): Promise<{ error?: string }> {
-  const { item } = input;
-  const db = serviceClient();
-  const notifications: ProductMasterNotifications = {
-    ...(item.bcdNotification && {
+export function productMasterNotifications(item: DraftItem, remember: boolean): ProductMasterNotifications | undefined {
+  if (!remember) return undefined;
+  return {
+    ...(item.bcdNotification && !eximSchemeForNotification(item.bcdNotification) && {
       basic: {
         notification: item.bcdNotification,
         ...(item.notificationSerials?.basic && { serial: item.notificationSerials.basic }),
@@ -306,6 +314,20 @@ export async function rememberProduct(input: {
     ...(item.notificationSerials?.igst && { igst: { serial: item.notificationSerials.igst } }),
     ...(item.notificationSerials?.compCess && { compCess: { serial: item.notificationSerials.compCess } }),
   };
+}
+
+export async function rememberProduct(input: {
+  companyId: string;
+  importerOrgId: string;
+  jobId: string;
+  userId: string;
+  item: DraftItem;
+  /** Also remember the duty lines (BCD/IGST/cess notification choices). Off unless asked. */
+  rememberNotifications?: boolean;
+}): Promise<{ error?: string }> {
+  const { item } = input;
+  const db = serviceClient();
+  const notifications = productMasterNotifications(item, Boolean(input.rememberNotifications));
   const { error } = await db.from('product_master').upsert(
     {
       company_id: input.companyId,
@@ -318,7 +340,9 @@ export async function rememberProduct(input: {
       model: item.model ?? null,
       end_use_code: item.endUseCode || null,
       exim_scheme_code: item.eximScheme?.code ?? null,
-      notifications: notifications as unknown as Json,
+      // Left out of the upsert when not asked, so an existing row keeps what
+      // a person once chose to remember and a new row gets the column default.
+      ...(notifications && { notifications: notifications as unknown as Json }),
       confirmed_by: input.userId,
       confirmed_at: new Date().toISOString(),
       source_job_id: input.jobId,
@@ -419,6 +443,14 @@ export function itemRowView(draft: ChecklistDraft, index: number): ItemRowView {
     },
     sources: { ...item.sources },
     duties,
+    ...(item.agent && {
+      agent: {
+        model: item.agent.model,
+        decisions: item.agent.decisions.map((d) => ({ field: d.field, value: d.value ?? '', applied: d.applied, reason: d.reason, confidence: d.confidence, evidence: d.evidence })),
+        openQuestions: item.agent.openQuestions,
+      },
+    }),
+
     ...(item.reImport && {
       reImport: {
         sbNo: item.reImport.sbNo.value,

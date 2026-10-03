@@ -87,3 +87,43 @@ describe('branch names', () => {
     expect(branchNameForExport('Bangalore 2')).toBe('Bangalore 2');
   });
 });
+
+/**
+ * `partyNameKey` is also the key a remembered party binding is stored under —
+ * `party_bindings (company_id, role, name_key)`. That makes its bluntness
+ * load-bearing in a second way: everything it collapses is covered by one
+ * operator decision, and everything it keeps apart is asked about separately.
+ *
+ * Getting this wrong is not a failed lookup, it is a wrong party on a customs
+ * document, so the two directions are pinned here rather than left implied.
+ */
+describe('what one remembered binding covers', () => {
+  const sameKey = (a: string, b: string) => partyNameKey(a) === partyNameKey(b);
+
+  it('covers the spellings of one company the documents vary between', () => {
+    // The real corpus pairs: the invoice abbreviates what the repository spells
+    // out, and one decision has to answer both.
+    expect(sameKey('SIGMA CHEMTRADE PVT. LTD', 'SIGMA CHEMTRADE PRIVATE LIMITED')).toBe(true);
+    expect(sameKey('Sigma Chemtrade Pvt. Ltd', 'SIGMA CHEMTRADE PRIVATE LIMITED')).toBe(true);
+    expect(sameKey('FUCHS LUBRICANTS (INDIA) PVT. LTD.', 'FUCHS LUBRICANTS (INDIA) PRIVATE LIMITED')).toBe(true);
+    expect(sameKey('FUCHS LUBRICANTS (INDIA) PVT.LTD.', 'FUCHS LUBRICANTS (INDIA) PRIVATE LIMITED')).toBe(true);
+    expect(sameKey('M/S. ELITE POLYPLUS', 'ELITE POLYPLUS')).toBe(true);
+    expect(sameKey('A ONE CHEM TRADE PRIVATE LIMITED', 'A-ONE CHEM-TRADE PRIVATE LIMITED')).toBe(true);
+  });
+
+  it('does not let a decision about one company answer for another', () => {
+    // A different company that merely starts the same way must keep asking.
+    expect(sameKey('SIGMA CHEMTRADE PVT. LTD', 'SIGMA CHEMTRADE INTERNATIONAL')).toBe(false);
+    expect(sameKey('CELLMARK AB', 'CELLMARK ASIA PTE LTD')).toBe(false);
+    expect(sameKey('MLM INDIA LTD', 'MLM INFRA PRIVATE LTD')).toBe(false);
+    expect(sameKey('GUJARAT FLUOROCHEMICALS LIMITED', 'GUJARAT AMBUJA EXPORTS LTD')).toBe(false);
+  });
+
+  it('never binds on an empty key', () => {
+    // `party_bindings.name_key` refuses a blank, because a binding on one would
+    // capture every party whose name we failed to read.
+    for (const blank of ['', '   ', 'M/S.', 'PVT LTD']) {
+      expect(partyNameKey(blank)).toBe('');
+    }
+  });
+});

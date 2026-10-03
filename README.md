@@ -80,7 +80,21 @@ one, where an email that happens to carry a signature image has not. And an
 ambiguous match is handed back to that person with the candidate jobs named,
 rather than parked in the log for someone to find later.
 
+## Reading the documents
+
+A job's documents are read by `packages/extraction` — one structured call per
+(file, document type), merged deterministically. After the merge the **job
+agent** (`packages/extraction/src/agent/`) sees every document at once and,
+with the duty masters as tools and OpenAI's web search for product facts,
+decides the tariff item, the concessions and the licence scheme per line. It
+can only file a value a tool returned in the run; anything else becomes a
+flag. `JOB_AGENT=off|shadow|on` (default `shadow`) controls it, and every run
+is recorded in `job_agent_runs`. The design, and the wider one for the readers
+themselves, is [docs/extraction-agents.md](docs/extraction-agents.md).
+
+
 ## Exporting to Logi-Sys
+
 
 A job's documents are read into a `ChecklistDraft` (`packages/extraction`) and
 filed as a version in `job_drafts`. `packages/exporter` turns that draft into
@@ -160,7 +174,7 @@ files kept beside them in `packages/core/masters-source/`:
 | `country-code-list.pdf` | 238 alpha-3 codes | every `iso2()` caller |
 | `igst-rate-notification-09-2025.pdf` | 1,195 IGST schedule entries | `ITEM.IGST_Rate`, `IGST_LevyNotn`, `IGST_LevyNotnSrNo` |
 | `bcd-exemption-notification-45-2025.pdf` | 539 exemptions + 125 conditions | `ITEM.BCD_Rate`, `Basic_Notn`, `Basic_NotnSrNo` |
-| `bcd-amendment-*.pdf` (6) | 100 applied, 85 omitted, 31 recorded | keeps the above in force rather than as published |
+| `bcd-amendment-*.pdf` (6) | 102 applied, 86 omitted (kept, dated), 38 recorded | keeps the above as in force on each date rather than as published |
 | `igcr-rules-74-2022-nt.pdf` + `igcr-amendment-07-2025-nt.pdf` | the procedure condition 3 points at | reference for the IIN + continuity bond a claim needs |
 
 Before this, the foreign-port master was 27 hand-typed rows and the custom-house
@@ -240,11 +254,21 @@ the base PDF alone it is **wrong about a third of its entries**:
 
 | | entries | if we trusted the base text |
 |---|---|---|
-| sunsets 02/2026 extended to 2028 | **93** | deny a concession that is live |
-| serials 02/2026 omitted | **85** | grant one that no longer exists |
+| sunsets 02/2026 extended to 2028 | **95** | deny a concession that is live |
+| serials 02/2026 omitted | **86** | grant one that no longer exists |
 
 So the build reads the amendments too, from `masters-source/bcd-amendment-*.pdf`,
-in the order they were issued.
+in the order they were issued — and dates each one by when it **takes effect**,
+read off its own text, not when it was issued. 02/2026 was issued on Budget day
+and is in force from 2 February 2026; most of its omissions say "with effect
+from the 1st day of April" or "May, 2026"; 15/2026 was issued on 12 May and is
+in force from the 13th.
+
+An amending notification is divided by roman numeral into what it amends —
+"I. in TABLE I", "II. in the ANNEXURE to TABLE I", "IV. in the TABLE II",
+"VII. In Table IV" — and only part I numbers its instructions. The build reads
+every part; it used to read part I as one numbered run, which silently lost the
+Table II sunset extensions, a condition rate and the Table IV omission.
 
 Two properties make that safe to automate. Instructions are **numbered 1..n**,
 so none can be skipped — the build asserts the numbering and stops if a
@@ -253,18 +277,30 @@ be applied to exactly one entry, after asserting the entry exists and the text
 being replaced is really there. An amendment that does not match what we hold
 means our parse of the base notification is wrong, which is worth stopping for.
 
-Three forms are applied — a sunset date substituted in column (3), a serial
-omitted, a rate substituted in column (4). Everything else is **recorded, not
-applied**: an inserted serial or a substituted row carries new text only a
-person can read, a corrigendum edits a printed page and cannot be located by
-serial at all, and one amendment revises an appended List we do not parse.
+Three forms are applied, and none of them loses the past, because a Bill of
+Entry — or an amendment to an old one — is assessed under the text in force on
+its own date. A sunset substituted in column (3) moves `validUntil`. An omitted
+serial is **kept**, ending the day before the omission takes effect. A rate
+substituted in column (4) splits the entry into **two dated versions**, the old
+rate ending the day before the new one starts. Every entry carries `validFrom`
+and `validUntil`; `bcdExemptionEntry(table, serial, date)` returns the version
+in force on a date, and `bcdExemptionLapsed` reports a serial as lapsed only when
+no later version took over.
+
+Everything else is **recorded, not applied**: an inserted serial or a
+substituted row carries new text only a person can read, a corrigendum edits a
+printed page and cannot be located by serial at all, and the appended Lists and
+condition annexures are not parsed.
 
 ```
-45/2025 amendments: 100 applied, 85 serials omitted,
-                    31 instructions left for a human (25 entries marked stale)
+45/2025 amendments: 102 applied, 86 serials omitted (kept, dated),
+                    38 instructions left for a human (33 entries marked stale)
 ```
 
-An entry those 31 touch is marked `staleBy`, and **its rate is never applied** —
+An entry those 38 touch is marked `staleBy` from `staleFrom`, the day the
+amendment takes effect — before then the text we hold is the text in force, so
+`isStale(entry, date)` is false for an earlier filing. From then on **its rate
+is never applied** —
 `enrichDraftFromNotifications` proposes it and says which amendment it has not
 caught up with. `BCD_UNAPPLIED_AMENDMENTS` publishes the whole list, because the
 gap between what CBIC has notified and what these masters hold should be visible
@@ -276,11 +312,17 @@ action it would apply the first and silently drop the second, leaving an entry
 that looks current and states the wrong conditions — so lettered clauses are
 split and classified one by one.
 
-`validUntil` is read out of the proviso as a date, because whether a concession
-has lapsed depends on the filing date, and `mergeToDraft` now drops a lapsed
-entry from the candidates rather than offering it. 02/2026 amended Table I only,
-so a few Table II provisos really did expire on 31 March 2026 — those entries
-stay in the master, and `isInForce(entry, date)` decides.
+`validUntil` is the earliest of the proviso's sunset, the day before an
+omission, and the day before a later version — because whether a concession
+applies depends on the filing date, and `mergeToDraft` drops an entry not in
+force on it rather than offering it. A few Table II provisos really did expire
+on 31 March 2026 and were never extended; those entries stay in the master, and
+`isInForce(entry, date)` decides.
+
+The printed tariff is dated the same way, more coarsely: its rows are the law as
+amended on 2 February 2026 (BDP's 60th edition incorporates the Union Budget
+2026-27), so they carry `validFrom` and a filing dated earlier is told the rate
+is not proven for its date.
 
 ### What a concession demands
 
@@ -675,6 +717,36 @@ hook in Dashboard → Authentication → Hooks**; the `config.toml` setting only
 applies locally, and without it RLS returns nothing for everyone.
 
 ## Database
+
+### The masters mirror
+
+The duty masters stay in code, and are mirrored into the database as dated rows
+by `20261003000001_masters_mirror.sql`:
+
+| Table | One row per | Rows |
+|---|---|---|
+| `tariff_lines` | 8-digit tariff item per reading, with import/export policy | 11,990 |
+| `notification_entries` | notification entry per version — 45/2025, 9/2025 and 10/2025-IT(R), 1/2017 cess, AIDC, SWS, health cess, anti-dumping/CVD/safeguard, tariff values, FTA lines | 88,863 |
+| `notification_conditions` | condition of 45/2025 | 125 |
+
+Every row has `valid_from` and `valid_to`. A code never has two tariff readings
+in force on one day — an exclusion constraint refuses it — and
+`notification_candidates(cth, date)` returns every entry that could apply to a
+code on a date, residual "all other goods" entries included at rank 0.
+
+The rows are built by `packages/core/src/masters/db-rows.ts` from the same
+generated files the duty engine reads, and loaded as one release that nobody
+can see until it is switched on:
+
+```bash
+set -a; . .env.local; set +a; cd apps/web
+./node_modules/.bin/tsx --conditions react-server scripts/masters-sync.mts --dry-run   # check, write nothing
+./node_modules/.bin/tsx --conditions react-server scripts/masters-sync.mts             # load, activate, prune the old release
+```
+
+Run it after any masters rebuild. Nothing in the app reads these tables yet.
+
+### Migrations
 
 Migrations live in `supabase/migrations`. After changing one:
 

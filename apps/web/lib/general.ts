@@ -6,6 +6,7 @@ import {
   lookupCustomHouse,
   parseWarehouseCode,
   resolveIndianStation,
+  stationKind,
   transportModeForStation,
   type CustomHouseMaster,
 } from '@checklist/core';
@@ -497,10 +498,29 @@ export async function applyGeneralResolution(
     flags: boeFlags,
   };
 
+  // ------------------------------------------------------ gateway port ----
+  //
+  // SHIPMENT.Port_of_Reporting: the sea port the vessel reported at before the
+  // goods moved inland, so it exists only when the BE is filed at an inland
+  // station. The operator's code wins; otherwise the bill of lading's port of
+  // discharge, when the station master resolves it to a sea port. A direct-port
+  // filing gets nothing here even if a code was keyed — the mapper writes the
+  // column blank on those regardless (03-shipment.md §20).
+  let gatewayPort: string | undefined;
+  if (customStation && transportModeForStation(customStation.value.code) === 'L') {
+    if (row?.gateway_port) {
+      gatewayPort = row.gateway_port;
+    } else {
+      const discharge = resolveIndianStation(draft.shipment.portOfDischarge, 'sea');
+      if (discharge && stationKind(discharge) === 'sea') gatewayPort = discharge.code;
+    }
+  }
+
   return {
     ...draft,
     // The top-level fields stay in step with the resolved header: the checklist
     // HTML and the SHIPMENT mapper read them.
+
     transportMode: transportMode.value,
     beType: beType.value,
     ...(customStation ? { customStation: customStation.value } : {}),
@@ -518,6 +538,8 @@ export async function applyGeneralResolution(
       ...(row?.gateway_igm_no ? { gatewayIgmNo: row.gateway_igm_no } : {}),
       ...(row?.gateway_igm_date ? { gatewayIgmDate: row.gateway_igm_date } : {}),
       ...(row?.gateway_inward_date ? { gatewayInwardDate: row.gateway_inward_date } : {}),
+      ...(gatewayPort ? { gatewayPort } : {}),
+
       // The two operator overrides. `document < master < mail < operator`: a
       // person's choice here is not undone by a re-read of the documents, which
       // is why they are applied last and unconditionally.

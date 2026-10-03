@@ -46,16 +46,29 @@ total wrong, and the other nine sheets are worth having meanwhile.
 
 ## 1. `IGM Sr.No`
 
-**Source:** `constant` — the row's position, 1…n, and it always warns.
+**Source:** `constant` — the row's position, 1…n.
 
 Mandatory. Leaving it blank is what made Logi-Sys reject job `dbf3530c`: four
 errors, one per container, and the whole workbook refused — so the invoice and
 the products never landed either.
 
-No document we read carries the IGM line number. Logi-Sys' own export of
-`liv_job1` numbers its four containers 1, 2, 3, 4 in B/L order, so that is what
-we write, and `containers.ts` says so out loud every time: *check them against
-the IGM before filing*.
+**It is a row serial, not an IGM line number.** All seven Logi-Sys exports that
+fill this column write exactly `1..n`, contiguous, never a value with a gap in
+it. The consignment's real IGM line is `SHIPMENT.LineNo`, and there is one of
+those per bill of lading rather than one per box — so the sea IGM enquiry has
+nothing to say about this column.
+
+What can differ is the **order**. On `ex_job28` Logi-Sys files `GCXU5831530`
+first where the arrival notice prints it last; `ex_job25` inverts B/L order too.
+It is not alphabetical, not numeric and not seal order — it is the order the
+list was keyed from the IGM, a document we do not hold. No sort is invented for
+it: any rule we picked would be right on `liv_job1` and wrong elsewhere, which
+is worse than being honestly positional.
+
+So this no longer warns as a standing disclaimer — it used to, on every job with
+containers, 24 times across the corpus, for a value that agrees with the vendor
+whenever our list does. It warns only when the list itself is in doubt, which is
+the count check in §2.
 
 ## 2. `Container No`
 
@@ -67,9 +80,29 @@ against ingest's identifiers, against a typed list) is done on the normalised
 form, `normaliseContainerNumber()` in `packages/core/src/masters/codes.ts`.
 
 Each number is checked against its **ISO 6346 check digit**
-(`isValidContainerNumber()`, same file). A number that fails it is **kept and
-flagged**, never dropped: refusing a container is a container missing from the
-Bill of Entry, which is the failure this whole path exists to stop.
+(`isValidContainerNumber()`, same file), and what happens next depends on who
+wrote it.
+
+**A number read off a document and failing the check is dropped, and named.**
+It was kept and flagged, on the reasoning that refusing a container is a
+container missing from the Bill of Entry. The corpus says the opposite: a
+failing number is almost never a missing box, it is the *same* box read twice.
+`ex_job26` read `UETU5715694` three ways — `TEIU5715694` checks to 0,
+`TETU5715694` to 3, the real one to 4 — and declared seven containers where the
+B/L states five. Six of the seven jobs that declared the wrong number of
+containers were exactly this, and in every one the number of misreadings equalled
+the surplus. Dropping them makes all six agree with the B/L, and makes all seven
+jobs with a vendor workbook declare precisely the vendor's set.
+
+A number that fails is not a container number, and putting one on a Bill of
+Entry declares a box that does not exist. So it is dropped — but never silently:
+each one is named in a warning, and where dropping them makes the count agree
+with the B/L the warning says so, because that is the evidence the reading was
+the problem.
+
+**An operator's own list is not filtered.** A person who has typed a container
+list has looked at the B/L; their typo is reported and still filed, because it
+is theirs to correct.
 
 `understanding_this_sheet.xlsx`: *As per BL*.
 

@@ -252,6 +252,18 @@ export interface TariffMaster {
    */
   variants?: TariffVariant[];
   provenance?: TariffProvenance;
+  /**
+   * The first day this reading of the row is known to be the law.
+   *
+   * The printed tariff is a snapshot, not a history: BDP's 60th edition
+   * incorporates the Union Budget 2026-27, so its rows are the First Schedule
+   * as amended on 2 February 2026 and are not evidence of what it said
+   * before. A filing dated earlier gets the row with a warning, not a refusal
+   * — most rates did not move — but nobody should read the rate as proven for
+   * that date. Absent on the hand-typed seed and on reviewer rows, which were
+   * transcribed from filed jobs and carry no such claim.
+   */
+  validFrom?: string;
 }
 
 export interface TariffNotificationRef {
@@ -464,6 +476,21 @@ export interface BcdExemptionEntry extends TariffCodeSpec {
    * amendment moves it. 02/2026 moved 93 of these from 2026 to 2028.
    */
   validUntil?: string;
+  /**
+   * The first day this version of the entry is in force: the notification's
+   * own in-force date (1 November 2025), or the day an amendment substituted
+   * its rate. With `validUntil` it makes every entry a dated version — a
+   * serial whose rate was substituted appears twice, the old rate ending the
+   * day before the new one starts — so a Bill of Entry, or an amendment to an
+   * old one, is checked against the text in force on its own date.
+   */
+  validFrom: string;
+  /**
+   * The amending notification that omitted the serial. The entry is kept, not
+   * dropped: it was in force until the day before the omission took effect
+   * (`validUntil`), and filings before then are assessed under it.
+   */
+  omittedBy?: string;
   amendedBy?: string[];
   /**
    * Amendments that touch this entry but could not be applied mechanically.
@@ -472,6 +499,11 @@ export interface BcdExemptionEntry extends TariffCodeSpec {
    * must not be applied**: it is a prompt to read the amendment, not an answer.
    */
   staleBy?: string[];
+  /**
+   * The day the earliest of `staleBy` takes effect. Before it the entry is the
+   * text in force, and is not stale for a filing dated then.
+   */
+  staleFrom?: string;
 }
 
 /**
@@ -487,9 +519,19 @@ export interface BcdAmendmentInstruction {
   notification: string;
   /** ISO date the amendment was issued. */
   date: string;
-  kind: 'insert' | 'replace' | 'column3' | 'condition' | 'list' | 'page';
+  /**
+   * ISO date the instruction takes effect — the notification's "shall come
+   * into force on", or the instruction's own "with effect from". 02/2026 was
+   * issued on 1 February 2026 and is in force from the 2nd.
+   */
+  inForce: string;
+  /** The table, annexure or list it acts on. */
+  table: 'I' | 'II' | 'III' | 'IV';
+  kind: 'insert' | 'replace' | 'column3' | 'condition' | 'list' | 'page' | 'annexure';
   /** The serial it names, where it names one. */
   serial?: string;
+  /** For `annexure`: the condition it rewrites. Absent for an inserted condition. */
+  condition?: string;
 }
 
 /** One enumerated end use within an exemption entry, with its own rate. */
@@ -538,6 +580,8 @@ export interface BcdConditionMaster {
   /** What it demands. A condition can demand several things at once. */
   kinds: ConditionKind[];
   text: string;
+  /** Amendments that rewrite this condition and are not applied to `text`. */
+  staleBy?: string[];
 }
 
 /**
@@ -552,6 +596,24 @@ export const IGST_RATE_NOTIFICATION = '009/2025';
  * code (C-140 to C-130) and is not otherwise reflected here.
  */
 export const BCD_EXEMPTION_NOTIFICATION = '045/2025';
+
+/**
+ * When each standing notification took effect, and what it superseded.
+ *
+ * A Bill of Entry is assessed under the notifications in force on the day it
+ * is presented, and the corpus holds filings from before both of these dates:
+ * ex_job21 was filed on 2025-03-13 under 1/2017-IT(R) S.No. III61B, and the
+ * masters, which only parse the current text, answered 9/2025 S.No. II68. The
+ * predecessors' schedules are not parsed; a lookup dated before the effective
+ * date names the predecessor and says the serial must be read from it.
+ */
+export const IGST_RATE_NOTIFICATION_EFFECTIVE_FROM = '2025-09-22';
+/** 1/2017-Integrated Tax (Rate), superseded by 9/2025 with effect from that date. */
+export const IGST_RATE_PREDECESSOR = '001/2017';
+export const BCD_EXEMPTION_EFFECTIVE_FROM = '2025-11-01';
+/** 50/2017-Customs, the effective-rate notification 45/2025 supersedes. */
+export const BCD_EXEMPTION_PREDECESSOR = '050/2017';
+
 
 /** Every entry of the seven IGST schedules, in notification order. */
 export const IGST_SCHEDULE: IgstScheduleEntry[] = GENERATED_IGST_SCHEDULE;

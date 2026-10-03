@@ -14,7 +14,9 @@ import { statementRows } from './map/statement.js';
 import { supportingDocsRows } from './map/supporting-docs.js';
 import { swAddlInfoRows } from './map/sw-addl-info.js';
 import { swProductionRows } from './map/sw-production.js';
+import { enforceCellLimits } from './limits.js';
 import { fillTemplate, type SheetRow } from './sheet-writer.js';
+
 import { loadTemplate, templateHash } from './template.js';
 import { validateIces } from './validate/index.js';
 import type { LogisysExportInput, LogisysExportResult } from './types.js';
@@ -133,7 +135,13 @@ export async function buildLogisysWorkbook(
     );
   }
 
+  // No cell longer than MAX_CELL_CHARS, whatever the mapper wrote. Runs after
+  // the blockers so a refused job is not also told about its long cells, and
+  // before the ICES rules so they judge what will actually be written.
+  enforceCellLimits(data, (path, message) => collector.warnings.push({ path, message }));
+
   // What ICES would reject about this workbook. Reported, never blocking: the
+
   // point of the first pass is to be able to say how wrong we are, and a
   // validator that starts by refusing exports cannot be measured against a
   // corpus it has stopped exporting. See src/validate/index.ts.

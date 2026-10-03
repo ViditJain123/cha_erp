@@ -129,10 +129,33 @@ describe('SHIPMENT: the gateway manifest belongs to inland filings', () => {
     };
     const { row, warnings } = await build(draft);
 
-    expect(row['Port_of_Reporting']).toBe('INTKD6');
     expect(row['Gateway_IGM_No'] ?? '').toBe('');
     expect(warnsAbout(warnings, 'SHIPMENT.Gateway_IGM_No')).toBe(true);
+    // The port of reporting is the gateway port, and nobody has said which.
+    expect(row['Port_of_Reporting'] ?? '').toBe('');
+    expect(warnsAbout(warnings, 'SHIPMENT.Port_of_Reporting')).toBe(true);
   });
+
+  it('reports at the gateway port once it is known', async () => {
+    const draft: ChecklistDraft = {
+      ...EP061126_1_DRAFT,
+      customStation: { code: 'INTKD6', name: 'Tughlakabad' },
+      shipment: { ...EP061126_1_DRAFT.shipment, gatewayPort: 'INNSA1' },
+    };
+    const { row, warnings } = await build(draft);
+    expect(row['Port_of_Reporting']).toBe('INNSA1');
+    expect(warnsAbout(warnings, 'SHIPMENT.Port_of_Reporting')).toBe(false);
+  });
+
+  it('leaves the port of reporting empty on a direct-port filing, even with a gateway keyed', async () => {
+    // ex_job6 is filed at Nhava Sheva, where the vessel itself reported. There
+    // is no intermediary port, so there is nothing to report — the vendor's own
+    // exports leave the column empty on every sea-port job.
+    const { row, warnings } = await build(withShipment({ gatewayPort: 'INMUN1' }));
+    expect(row['Port_of_Reporting'] ?? '').toBe('');
+    expect(warnsAbout(warnings, 'SHIPMENT.Port_of_Reporting')).toBe(false);
+  });
+
 
   it('writes the gateway values once an operator has keyed them', async () => {
     const draft: ChecklistDraft = {
@@ -273,10 +296,13 @@ describe('SHIPMENT: an air job', () => {
     expect(row['Marks_&_Nos']).toBe('05779606800 ................ BOS0121016');
   });
 
-  it('reports at the air custom house, not a sea port', async () => {
+  it('has no port of reporting at an air cargo complex', async () => {
     const { row, warnings } = await build(AIR);
-    expect(row['Port_of_Reporting']).toBe('INBOM4');
-    // INBOM4 is an air cargo complex, not an inland station: no gateway.
+    // INBOM4 is an air cargo complex, not an inland station: no gateway, and
+    // so no port of reporting either.
+    expect(row['Port_of_Reporting'] ?? '').toBe('');
     expect(warnsAbout(warnings, 'Gateway')).toBe(false);
+    expect(warnsAbout(warnings, 'Port_of_Reporting')).toBe(false);
   });
+
 });

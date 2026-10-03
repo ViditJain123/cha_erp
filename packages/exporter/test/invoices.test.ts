@@ -351,13 +351,13 @@ describe('columns that are constants, and the evidence for them', () => {
     expect(row!['Valuation_Method']).toBe('RULE 4 (TRANSACTION VALUE)');
   });
 
-  it('writes the terms place only when the invoice named one', async () => {
-    const [without] = await invoiceRows(withInvoices([invoice()]));
-    expect(without!['TOI_Place']).toBeUndefined();
-
-    const [with_] = await invoiceRows(withInvoices([invoice({ termsPlace: 'NHAVA SHEVA' })]));
-    expect(with_!['TOI_Place']).toBe('NHAVA SHEVA');
+  it('never writes the terms place', async () => {
+    // The place after the Incoterm is not declared. Every vendor workbook
+    // leaves the cell empty, including the ones whose invoice names a place.
+    const [row] = await invoiceRows(withInvoices([invoice()]));
+    expect(row!['TOI_Place']).toBeUndefined();
   });
+
 
   it('refuses a Bill of Entry with no invoice at all', async () => {
     await expect(build(withInvoices([]))).rejects.toThrow(/nothing to declare/);

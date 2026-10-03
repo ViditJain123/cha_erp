@@ -1199,6 +1199,48 @@ export function eximSchemeForNotification(notification: string | undefined | nul
 }
 
 /**
+ * What a licence claim files beside the scheme code.
+ *
+ * `Exim_Notn` / `Exim_NotnSrNo` are the scheme notification and its serial,
+ * and the IGST exemption line repeats the same pair when the scheme exempts
+ * IGST along with BCD. Each of these notifications is a single-entry
+ * exemption, so the serial is `1` throughout.
+ */
+export interface EximSchemeEntry {
+  notification: string;
+  serial: string;
+  /** `IGST_ExemptionNotn` / `SrNo`, or null when the scheme does not exempt IGST. */
+  igstExemption: { notification: string; serial: string } | null;
+}
+
+/**
+ * Pinned against Logi-Sys' own exports: ex_job25 files `021/2023` `1` in the
+ * Exim slot and again as the IGST exemption; ex_job26 files `026/2023` `1`
+ * both ways; ex_job28 files `025/2023` `1` with no IGST exemption, because a
+ * DFIA exempts basic duty only. The 2015 family follows its 2023 successor —
+ * 18/2015 and 16/2015 exempt IGST since notification 79/2017 amended them,
+ * 19/2015 never did — and 022/2023 and 023/2023 follow 021/2023, all three
+ * being advance authorisations under FTP 2023. No golden holds those four.
+ */
+export const EXIM_SCHEME_ENTRIES: Record<string, EximSchemeEntry> = {
+  '021/2023': { notification: '021/2023', serial: '1', igstExemption: { notification: '021/2023', serial: '1' } },
+  '022/2023': { notification: '022/2023', serial: '1', igstExemption: { notification: '022/2023', serial: '1' } },
+  '023/2023': { notification: '023/2023', serial: '1', igstExemption: { notification: '023/2023', serial: '1' } },
+  '025/2023': { notification: '025/2023', serial: '1', igstExemption: null },
+  '026/2023': { notification: '026/2023', serial: '1', igstExemption: { notification: '026/2023', serial: '1' } },
+  '018/2015': { notification: '018/2015', serial: '1', igstExemption: { notification: '018/2015', serial: '1' } },
+  '019/2015': { notification: '019/2015', serial: '1', igstExemption: null },
+  '016/2015': { notification: '016/2015', serial: '1', igstExemption: { notification: '016/2015', serial: '1' } },
+};
+
+/** The Exim entry a scheme notification files, in any spelling. */
+export function eximSchemeEntry(notification: string | undefined | null): EximSchemeEntry | undefined {
+  const key = logisysNotn(notification) ?? notification?.trim();
+  return key ? EXIM_SCHEME_ENTRIES[key] : undefined;
+}
+
+
+/**
  * The scheme codes that are an advance authorisation.
  *
  * 11/2021-Customs S.No. 18 is "all goods on which exemption from basic customs

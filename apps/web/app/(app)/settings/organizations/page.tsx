@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { COMPANY_MANAGER_ROLES } from '@checklist/config/app';
-import { listOrganizations } from '../actions';
+import { listOrganizations, listPartyBindings } from '../actions';
 import { OrgRow } from './org-row';
+import { PartyBindings } from './party-bindings';
 import { UploadForm } from './upload-form';
 
 export const metadata: Metadata = { title: 'Organizations' };
@@ -14,7 +15,8 @@ export default async function OrganizationsPage({
 }) {
   const { q } = await searchParams;
   const query = (q ?? '').slice(0, 120);
-  const { ctx, organizations, activeCount, lastImport, pageSize } = await listOrganizations(query);
+  const [{ ctx, organizations, adCodesByOrg, activeCount, lastImport, pageSize }, { bindings }] =
+    await Promise.all([listOrganizations(query), listPartyBindings()]);
   const canManage = COMPANY_MANAGER_ROLES.includes(ctx.role);
 
   return (
@@ -29,6 +31,8 @@ export default async function OrganizationsPage({
       </div>
 
       {canManage && <UploadForm />}
+
+      <PartyBindings bindings={bindings} canManage={canManage} />
 
       {lastImport && (
         <div className="rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm shadow-sm">
@@ -116,6 +120,13 @@ export default async function OrganizationsPage({
                     marinePolicySumInsuredInr={org.marine_policy_sum_insured_inr}
                     marinePolicyPerSendingLimitInr={org.marine_policy_per_sending_limit_inr}
                     marinePolicyValidTill={org.marine_policy_valid_till}
+                    adCodes={(adCodesByOrg[org.id] ?? []).map((c) => ({
+                      id: c.id,
+                      adCode: c.ad_code,
+                      bankName: c.bank_name,
+                      bankBranch: c.bank_branch,
+                      isDefault: c.is_default,
+                    }))}
                     canManage={canManage}
                   />
                 ))}

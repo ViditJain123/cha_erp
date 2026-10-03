@@ -350,20 +350,41 @@ once set it survives a re-read of the documents.
 
 ## 20. `Port_of_Reporting`
 
-**Source:** mirrors `GENERAL.CustomsHouseCode`. Never the B/L's discharge port.
+**Source:** `document` < `operator` — **on an inland filing only**. Blank on
+every other filing, as a decision.
 
-On an ICD job this is the **ICD**, not the sea port the vessel reported at. The
-gateway appears only in columns 21–23.
+The port of reporting is the **gateway sea port**: where the vessel reported
+before the goods moved on by road or rail to the ICD the Bill of Entry is filed
+at. That situation only arises when the filing station is inland (sixth
+character of the site code `6`, `2` or `B` — see §21–23). On a direct-port
+filing the vessel reported where the BE is filed, there is no intermediary
+port, and the cell is **empty** — which is what seven of the nine vendor
+`JobData` exports show, every one of them filed at a sea port.
 
 ```
-GENERAL.CustomsHouseCode = INTKD6      (ICD Tughlakabad)
-SHIPMENT.Port_of_Reporting = INTKD6
+GENERAL.CustomsHouseCode   = INTKD6      (ICD Tughlakabad)
+SHIPMENT.Port_of_Reporting = INNSA1      (the vessel reported at Nhava Sheva)
 SHIPMENT.IGM_No            = the ICD's manifest
 SHIPMENT.Gateway_IGM_No    = Nhava Sheva's manifest
+
+GENERAL.CustomsHouseCode   = INNSA1      (filed at the sea port itself)
+SHIPMENT.Port_of_Reporting =             (empty)
 ```
 
-**Failure mode.** None of its own. GENERAL blocks the export when no station has
-been chosen, so this cannot ship blank on its own.
+The value is `shipment.gatewayPort`, an ICES station code. `apps/web/lib/
+general.ts` fills it from the bill of lading's port of discharge when the
+station master resolves that to a sea port; `job_boe_header.gateway_port`,
+keyed beside the gateway IGM on the job screen, overrides it and is refused
+unless it resolves to a sea port. A code keyed on a direct-port job is ignored:
+the mapper writes the column blank there regardless.
+
+This column used to mirror `CustomsHouseCode` on every job, which put a port of
+reporting on filings that have none and, on an ICD job, named the ICD where the
+gateway port belongs.
+
+**Failure mode.** On an inland filing with no resolvable gateway port, warns,
+naming the station. Silent everywhere else.
+
 
 ---
 

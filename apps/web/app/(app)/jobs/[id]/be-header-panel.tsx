@@ -32,7 +32,9 @@ export interface BeHeaderState {
     gatewayIgmNo: string;
     gatewayIgmDate: string;
     gatewayInwardDate: string;
+    gatewayPort: string;
     packageUnitCode: string;
+
     marksAndNos: string;
     beFilingDate: string;
     igmChecked: boolean;
@@ -225,9 +227,24 @@ export function BeHeaderPanel({ jobId, header, entries }: BeHeaderState) {
           </legend>
           <p className="mb-2 text-xs text-slate-400">
             When the BE is filed at an ICD, the IGM above is the ICD&rsquo;s. The sea port the
-            vessel actually arrived at files its own manifest, and that one goes here.
+            vessel actually arrived at files its own manifest, and that one goes here. The port
+            itself is the BE&rsquo;s port of reporting; it is read off the bill of lading&rsquo;s
+            port of discharge, and only needs keying when that could not be resolved.
           </p>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-4 gap-3">
+            <div>
+              <label className={LABEL} htmlFor="gatewayPort">
+                Gateway port (ICES code)
+              </label>
+              <input
+                className={FIELD}
+                id="gatewayPort"
+                name="gatewayPort"
+                placeholder="INNSA1"
+                defaultValue={entries.gatewayPort}
+              />
+            </div>
+
             <div>
               <label className={LABEL} htmlFor="gatewayIgmNo">
                 Gateway IGM no

@@ -11,7 +11,6 @@ import {
   suggestRequestMatches,
 } from '@checklist/ingest';
 import {
-  VALID_UQC,
   describeWarehouseCodeError,
   isBondCode,
   isValidContainerNumber,
@@ -21,6 +20,10 @@ import {
   normalizePackageUnit,
   pad8,
   parseWarehouseCodeResult,
+  partyNameKey,
+  resolveIndianStation,
+  stationKind,
+  VALID_UQC,
 } from '@checklist/core';
 import {
   ReauthRequiredError,
@@ -939,6 +942,14 @@ export async function setJobParty(
   jobId: string,
   slot: 'importer' | 'supplier',
   organizationId: string,
+  /**
+   * Keep the choice for every future job that reads this name.
+   *
+   * Off by default, because the caller has to mean it: a remembered binding
+   * answers a question nobody will be asked again, so it must not be a side
+   * effect of fixing one job.
+   */
+  remember = false,
 ): Promise<JobActionState> {
   const { ctx, db } = await ownedJob(jobId);
 
@@ -959,8 +970,12 @@ export async function setJobParty(
   const draft = latest.draft as unknown as ChecklistDraft;
   const updated: ChecklistDraft =
     slot === 'importer'
-      ? { ...draft, importer: importerFrom(org, 'manual') }
-      : { ...draft, supplier: supplierFrom(org, 'manual') };
+      // Spread over the extracted party, not in place of it: the repository is
+      // a party master and routinely holds no city or postcode, and picking a
+      // party by hand must not throw away what the documents said. Same rule as
+      // applyPartyResolution.
+      ? { ...draft, importer: { ...draft.importer, ...importerFrom(org, 'manual') } }
+      : { ...draft, supplier: { ...draft.supplier, ...supplierFrom(org, 'manual') } };
 
   // The stale warning for this party is the one thing the choice invalidates.
   updated.flags = draft.flags.filter((f) => f.path !== slot);
@@ -999,8 +1014,48 @@ export async function setJobParty(
       .eq('company_id', ctx.companyId);
   }
 
+  // The binding is keyed on the name the *documents* carried, not on the name
+  // of the row just chosen — the whole point is that the next job will read the
+  // same document spelling and need the same answer.
+  const documentName = slot === 'importer' ? draft.importer.name : draft.supplier.name;
+  let remembered = false;
+  if (remember) {
+    const key = partyNameKey(documentName);
+    if (key) {
+      const { error: bindError } = await db.from('party_bindings').upsert(
+        {
+          company_id: ctx.companyId,
+          role: slot === 'importer' ? 'consignee' : 'shipper',
+          name_key: key,
+          source_name: documentName,
+          organization_id: org.id,
+          decided_by: ctx.userId,
+          decided_at: new Date().toISOString(),
+          source_job_id: jobId,
+        },
+        { onConflict: 'company_id,role,name_key' },
+      );
+      // A binding that would not save must not fail the party choice: this job
+      // is already correct, and the person can try remembering it again.
+      remembered = !bindError;
+    }
+  }
+
   revalidatePath(`/jobs/${jobId}`);
-  return { ok: true, message: `${slot === 'importer' ? 'Importer' : 'Supplier'} set to ${org.name}.` };
+  if (remember && !remembered) {
+    return {
+      ok: true,
+      message:
+        `${slot === 'importer' ? 'Importer' : 'Supplier'} set to ${org.name} on this job, ` +
+        'but it could not be remembered for future jobs. Try again from the party panel.',
+    };
+  }
+  return {
+    ok: true,
+    message:
+      `${slot === 'importer' ? 'Importer' : 'Supplier'} set to ${org.name}` +
+      (remembered ? `, and "${documentName}" will mean it from now on.` : '.'),
+  };
 }
 
 // --------------------------------------------------- BE header (GENERAL) --
@@ -1052,11 +1107,25 @@ export async function saveBeHeader(
     return { error: `"${packageUnitCode}" is not a package kind the Bill of Entry accepts.` };
   }
 
+  // The gateway port is a station code, and a name typed here would reach the
+  // Bill of Entry as one. Resolved through the same master as the custom house,
+  // and refused when it is not a sea port — an ICD cannot be a port of reporting.
+  const gatewayPortRaw = textOrNull(formData, 'gatewayPort');
+  let gatewayPort: string | null = null;
+  if (gatewayPortRaw) {
+    const port = resolveIndianStation(gatewayPortRaw, 'sea');
+    if (!port || stationKind(port) !== 'sea') {
+      return { error: `"${gatewayPortRaw}" is not a sea port the station master knows. Key its ICES code, such as INNSA1.` };
+    }
+    gatewayPort = port.code;
+  }
+
   const { error } = await db.from('job_boe_header').upsert(
     {
       job_id: jobId,
       company_id: ctx.companyId,
       customs_house_code: customsHouseCode
+
         ? (lookupCustomHouse(customsHouseCode)?.code ?? customsHouseCode)
         : null,
       be_type: (textOrNull(formData, 'beType') as 'home_consumption' | 'warehousing' | 'ex_bond' | null),
@@ -1072,6 +1141,8 @@ export async function saveBeHeader(
       gateway_igm_no: textOrNull(formData, 'gatewayIgmNo'),
       gateway_igm_date: dateOrNull(formData, 'gatewayIgmDate'),
       gateway_inward_date: dateOrNull(formData, 'gatewayInwardDate'),
+      gateway_port: gatewayPort,
+
       package_unit_code: packageUnitCode ? normalizePackageUnit(packageUnitCode)! : null,
       marks_and_nos: textOrNull(formData, 'marksAndNos'),
       is_first_check: flag('isFirstCheck'),

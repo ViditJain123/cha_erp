@@ -136,10 +136,26 @@ and re-binds the party to that branch's row.
 **Source:** master, operator when ambiguous.
 
 The bound organization's `ad_code`. An importer may bank through more than one
-AD code; the extras live in `organization_ad_codes`. When the importer has more
-than one and the operator has not chosen, that is a **blocker** — an AD code is
-how the bank realises the remittance, and picking one by coin toss is worse
-than not exporting.
+AD code; the extras live in `organization_ad_codes`, maintained per party under
+Settings → Organizations → Defaults. When the importer has more than one and the
+operator has not chosen, that is a **blocker** — an AD code is how the bank
+realises the remittance, and picking one by coin toss is worse than not
+exporting.
+
+**Binding the party does not answer this, and that is worth stating because the
+opposite is the natural assumption.** In Logi-Sys the branch and the AD code are
+independent selections. Only two of the seven AD codes in the corpus sit on the
+row whose branch Logi-Sys filed: FUCHS files `6550001` against AMBERNATH while
+the repository holds that code on KARNATAKA; no RAJSHREE row carries the
+`0510146` it filed, nor any AD code at all; ELITE POLYPLUS files `0510226`
+where its row says `0410002`. Only 188 of 4,010 consignee rows carry one. So
+`organization_ad_codes` is the real source and the repository's column is a
+starting point.
+
+`job_boe_header.ad_code` stays a free string rather than a reference to the
+chosen row, deliberately. A foreign key would make RAJSHREE's actual filing
+impossible to record, and a code retired in Logi-Sys would change what a filed
+BE says it was remitted against. The copy is the honest record.
 
 Also surfaced on the checklist verification mail to the customer: *"AD code
 0510226 — confirm."*

@@ -209,13 +209,12 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     }
 
     // ---- Brand ----
-    if (item.sources?.brand === 'default') {
-      flags.push({
-        severity: 'warning',
-        path: at('brand'),
-        message: `${label}: the invoice prints no brand; filed as UNBRANDED. Confirm, or enter the brand.`,
-      });
-    }
+    //
+    // Nothing to flag. `UNBRANDED` is the convention rather than a guess, and
+    // Logi-Sys writes it on every item row of every workbook we can compare
+    // against. The brand field on the item row is still there for a line that
+    // has one; it is the standing "confirm this" that was noise. See the §8
+    // note in packages/exporter/src/map/items.ts.
 
     // ---- Classification confirmation ----
     if (item.sources?.ritc && item.sources.ritc !== 'master' && item.sources.ritc !== 'operator') {
@@ -439,8 +438,45 @@ export function resolveItems(draft: ChecklistDraft, opts: ResolveItemsOptions): 
     // Advance Authorisation Scheme, so `03`) rather than from the operator
     // spelling a code; an explicit code still wins, because a licence can say
     // something the notification alone does not.
+    // A licence's notification is never a BCD exemption. 021/2023 (Advance
+    // Authorisation), 026/2023 (EPCG), 025/2023 (DFIA) and the 2015 family are
+    // the notifications an authorisation is *issued under*, printed on its
+    // face, and they belong in the Exim slot beside the scheme code — never in
+    // Basic_Notn, which is empty on all four licence goldens. They reached the
+    // basic slot anyway: an operator keying the number off the licence, and a
+    // product master that remembered a licence job as if the exemption were a
+    // property of the goods. Moved rather than dropped, so the claim survives
+    // in the slot ICES reads it from, and said out loud.
+    for (const slot of ['bcdNotification', 'bcdExemption'] as const) {
+      const claimed = slot === 'bcdNotification' ? item.bcdNotification : item.bcdExemption?.notification;
+      const scheme = eximSchemeForNotification(claimed);
+      if (!scheme) continue;
+      const serial = slot === 'bcdNotification' ? item.notificationSerials?.basic : item.bcdExemption?.serial;
+      if (!item.eximScheme?.notification) {
+        item.eximScheme = { ...item.eximScheme, code: item.eximScheme?.code ?? scheme, notification: claimed!, ...(serial && { serial }) };
+      }
+
+      if (slot === 'bcdNotification') {
+        delete item.bcdNotification;
+        if (item.notificationSerials?.basic) {
+          const { basic: _basic, ...rest } = item.notificationSerials;
+          item.notificationSerials = rest;
+        }
+      } else {
+        delete item.bcdExemption;
+      }
+      flags.push({
+        severity: 'warning',
+        path: at('eximScheme'),
+        message:
+          `${label}: ${claimed} is the notification a licence is issued under (scheme ${scheme}), not a basic-duty exemption. ` +
+          'It has been moved from Basic_Notn to the Exim slot; a scheme claim is filed there alone.',
+      });
+    }
+
     const schemeNotn = item.eximScheme?.notification;
     const keyed = item.eximScheme?.code?.trim() ? eximSchemeCode(item.eximScheme.code) : undefined;
+
     // A code the operator keyed wins — a licence can say something the
     // notification alone does not — and one they did not is derived. An
     // unrecognised code is left alone for the mapper to refuse, because

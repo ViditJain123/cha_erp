@@ -106,6 +106,7 @@ export async function applyContainerResolution(
   const info = (message: string) =>
     flags.push({ severity: 'info', path: 'shipment.containers', message });
 
+  const stated = draft.shipment.containerCountStated;
   let containers: DraftContainer[];
 
   if (operator.length > 0) {
@@ -126,9 +127,43 @@ export async function applyContainerResolution(
           'reading of the bill of lading. Added without a size or seal — check them against the B/L.',
       );
     }
+
+    // A scan read twice is a scan misread twice. Both sources above are
+    // readings of the same paper, and a misreading of a box already in the list
+    // arrives looking like another box: ex_job26 read UETU5715694 three ways
+    // and would have declared seven containers against the B/L's five. Six of
+    // the seven corpus jobs that declared the wrong number of containers were
+    // this, and in every one the number of misreadings equalled the surplus.
+    //
+    // ISO 6346 settles it without guessing: the real number passes its check
+    // digit and the variants do not. UETU5715694 checks to 4, TEIU5715694 to 0,
+    // TETU5715694 to 3. A number that fails cannot be declared — it is not a
+    // container number, and putting it on a Bill of Entry states a box that
+    // does not exist — so it is dropped here rather than filed with a warning
+    // beside it, which is what used to happen.
+    //
+    // Dropped, but never silently: each one is named, because the box may be
+    // real and only the reading wrong, and then it is keyed on the job. The
+    // operator's own list is not filtered at all — see above, a person who has
+    // typed a container list has looked at the B/L.
+    const misread = containers.filter((c) => !isValidContainerNumber(c.number));
+    if (misread.length) {
+      containers = containers.filter((c) => isValidContainerNumber(c.number));
+      const numbers = misread.map((c) => c.number).join(', ');
+      const agrees = stated != null && stated === containers.length;
+      warn(
+        `${misread.length} number${misread.length === 1 ? '' : 's'} read off the documents ` +
+          `(${numbers}) ${misread.length === 1 ? 'fails its' : 'fail their'} ISO 6346 check digit, ` +
+          `so ${misread.length === 1 ? 'it is' : 'they are'} not declared. ` +
+          (agrees
+            ? `The ${containers.length} that remain are exactly what the B/L states, so ` +
+              `${misread.length === 1 ? 'it was' : 'they were'} a misreading of a box already on ` +
+              'the list. Check them if you disagree.'
+            : 'Check them against the B/L and key the right numbers on the job.'),
+      );
+    }
   }
 
-  const stated = draft.shipment.containerCountStated;
   if (containers.length === 0) {
     if (draft.transportMode === 'Sea') {
       warn(
@@ -142,6 +177,9 @@ export async function applyContainerResolution(
     );
   }
 
+  // Only an operator's list can still hold one of these: the document path
+  // above drops them. A person's typo is theirs to correct, so it is reported
+  // and still filed rather than quietly removed from what they typed.
   for (const c of containers) {
     if (!isValidContainerNumber(c.number)) {
       warn(

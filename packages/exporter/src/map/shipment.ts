@@ -170,8 +170,9 @@ export function shipmentRows(ctx: MapContext): SheetRow[] {
   // manifests go on the BE: the ICD's in IGM_No, the gateway port's here. On a
   // direct-port filing there is no gateway and these stay blank without comment.
   const stationCode = ctx.draft.customStation?.code;
-  if (isInlandStation(stationCode) && !shipment.gatewayIgmNo) {
-    const station = stationCode ? resolveIndianStation(stationCode) : undefined;
+  const inland = isInlandStation(stationCode);
+  const station = inland && stationCode ? resolveIndianStation(stationCode) : undefined;
+  if (inland && !shipment.gatewayIgmNo) {
     ctx.warn(
       'SHIPMENT.Gateway_IGM_No',
       `This BE is filed at ${station?.name ?? stationCode}, an inland station, so the goods ` +
@@ -179,6 +180,23 @@ export function shipmentRows(ctx: MapContext): SheetRow[] {
         'date on the job screen — IGM_No carries the ICD’s own manifest.',
     );
   }
+
+  // ---- Port of reporting ----
+  //
+  // Only an inland filing has one: the sea port the vessel reported at before
+  // the goods moved on by land to the ICD. On a direct-port filing the vessel
+  // reported where the BE is filed, there is no intermediary port, and the
+  // column stays empty — which is what seven of the nine vendor exports show.
+  // It used to mirror CustomsHouseCode on every job.
+  if (inland && !shipment.gatewayPort) {
+    ctx.warn(
+      'SHIPMENT.Port_of_Reporting',
+      `This BE is filed at ${station?.name ?? stationCode}, an inland station, and the gateway ` +
+        'port the vessel reported at could not be read off the bill of lading’s port of ' +
+        'discharge. Key its ICES code (INNSA1, INMUN1 …) on the job screen.',
+    );
+  }
+
 
   if (!shipment.marksAndNos) {
     ctx.warn('SHIPMENT.Marks_&_Nos', 'Marks & numbers empty — the BE never leaves this cell blank.');
@@ -216,13 +234,11 @@ export function shipmentRows(ctx: MapContext): SheetRow[] {
       NtWt: weight(shipment.netWeightKg),
       NtWtUnitCode: code(shipment.netWeightKg != null ? weightUnit : undefined),
       'Marks_&_Nos': text(shipment.marksAndNos),
-      // The same station as GENERAL's CustomsHouseCode, and unset for the same
-      // reason when nobody has chosen one — GENERAL blocks the export in that
-      // case, so this never ships blank on its own.
-      //
-      // On an ICD job this is the ICD, not the gateway sea port the vessel
-      // reported at. The gateway appears only in the three columns below.
-      Port_of_Reporting: code(stationCode),
+      // The gateway sea port, on an inland filing only. Blank everywhere else,
+      // even when a gateway port has been keyed: a sea-port or air filing has
+      // no intermediary port to report.
+      Port_of_Reporting: inland ? code(shipment.gatewayPort) : BLANK,
+
       Gateway_IGM_No: code(shipment.gatewayIgmNo),
       Gateway_IGM_Date: isoDate(shipment.gatewayIgmDate),
       Gateway_Inward_Date: isoDate(shipment.gatewayInwardDate),

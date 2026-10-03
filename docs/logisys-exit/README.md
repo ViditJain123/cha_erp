@@ -22,12 +22,19 @@ on the one thing we do not control.
 |---|---|---|---|
 | [0](phase-0-correctness.md) | Correctness debts | — | ✅ a live wrong-duty bug; the safety net |
 | [1](phase-1-ices-conventions.md) | ICES encoding conventions | 0 | ✅ ICES rejections 8 → 2; the screen defaults removed |
-| [2](phase-2-operator-data.md) | Operator data + IGM enquiry | — | ~270 warnings across 7 fields |
+| [2](phase-2-operator-data.md) | Operator data + IGM enquiry | — | 🚧 −118 warnings; 8 phantom containers gone; 3,000 parties un-retired |
 | [3](phase-3-esanchit.md) | eSANCHIT | 0 | SUPPORTING_DOCS off 0% |
 | [4](phase-4-licence-ledger.md) | Licence ledger | 0 | LICENSE off 0% |
 | [5](phase-5-bonds-warehouse.md) | Bonds, BGs, warehouses | 0 | BONDS_CERTIFICATES off 0%; 3 blocked jobs |
 | [6](phase-6-filing-channel.md) | The filing channel | 0–5 | removes Logi-Sys from the loop |
 | [7](phase-7-cutover.md) | Parallel run and cutover | 6 | switches the handoff off |
+
+## Read this first
+
+[Where the duty numbers come from](where-the-numbers-come-from.md) — there is no
+API that returns a duty breakdown, the checklist is ours to compute, and what
+Customs sends back is a pointer to a document. It explains why several phases
+are shaped the way they are.
 
 ## The baseline every phase is measured against
 
