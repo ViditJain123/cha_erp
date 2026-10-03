@@ -98,6 +98,68 @@ describe('the tool loop', () => {
     expect((calls[1]!.tools as unknown[]).length).toBe(0);
   });
 
+  it('runs only as many calls as the budget has left when one response asks for more', async () => {
+    let ran = 0;
+    const counted = { ...echo, handler: async (args: { text: string }) => (ran++, `echo:${args.text}`) };
+    const many = Array.from({ length: 5 }, (_, i) => ({ type: 'function_call', call_id: `c${i}`, name: 'echo', arguments: `{"text":"${i}"}` }));
+    const { client, calls } = scripted([
+      response({ id: 'r1', output: many }),
+      response({ id: 'r2', output_parsed: { answer: 'x' } }),
+    ]);
+    const out = await runToolLoop({ client, model: 'm', instructions: 'i', input: [], tools: [counted], webSearch: false, finalSchema: Final, finalSchemaName: 'final', budget: { maxToolCalls: 3 } });
+    expect(ran).toBe(3);
+    // Every call is answered, in order, the refused ones without running.
+    // The final nudge follows them, because the budget is now spent.
+    const outputs = (calls[1]!.input as { type?: string; call_id: string; output: string }[]).filter((o) => o.type === 'function_call_output');
+    expect(outputs.map((o) => o.call_id)).toEqual(['c0', 'c1', 'c2', 'c3', 'c4']);
+    expect(outputs.slice(0, 3).map((o) => o.output)).toEqual(['echo:0', 'echo:1', 'echo:2']);
+    for (const o of outputs.slice(3)) expect(o.output).toMatch(/not run: the run's tool-call budget \(3\) is spent/);
+    expect(out.turns[0]!.toolCalls.filter((t) => t.error)).toHaveLength(2);
+    // The budget is spent, so the next turn is the forced final one.
+    expect(calls[1]!.tools).toEqual([]);
+  });
+
+  it('holds a tool to its own cap within a single response', async () => {
+    let ran = 0;
+    const once = { ...echo, maxCalls: 1, handler: async (args: { text: string }) => (ran++, `echo:${args.text}`) };
+    const { client, calls } = scripted([
+      response({
+        id: 'r1',
+        output: [
+          { type: 'function_call', call_id: 'c1', name: 'echo', arguments: '{"text":"a"}' },
+          { type: 'function_call', call_id: 'c2', name: 'echo', arguments: '{"text":"b"}' },
+        ],
+      }),
+      response({ id: 'r2', output_parsed: { answer: 'x' } }),
+    ]);
+    await runToolLoop({ client, model: 'm', instructions: 'i', input: [], tools: [once], webSearch: false, finalSchema: Final, finalSchemaName: 'final' });
+    expect(ran).toBe(1);
+    const outputs = calls[1]!.input as { output: string }[];
+    expect(outputs[1]!.output).toMatch(/"echo" has used its 1 calls/);
+  });
+
+  it('caps the searches a single response may run at what the budget has left', async () => {
+    const search = { type: 'web_search_call', action: { type: 'search', query: 'q', sources: [] } };
+    const { client, calls } = scripted([
+      response({ id: 'r1', output: [search, { type: 'function_call', call_id: 'c1', name: 'echo', arguments: '{"text":"a"}' }] }),
+      response({ id: 'r2', output: [search, search, { type: 'function_call', call_id: 'c2', name: 'echo', arguments: '{"text":"b"}' }] }),
+      response({ id: 'r3', output_parsed: { answer: 'x' } }),
+    ]);
+    const out = await runToolLoop({ client, model: 'm', instructions: 'i', input: [], tools: [echo], webSearch: true, finalSchema: Final, finalSchemaName: 'final', budget: { maxWebSearches: 2 } });
+    expect(calls[0]!.max_tool_calls).toBe(2);
+    expect(calls[1]!.max_tool_calls).toBe(1);
+    // A response that searched past the cap anyway is recorded, and search is withdrawn.
+    expect(out.turns[1]!.overBudget).toBe('web searches 3 of 2');
+    expect(calls[2]!.max_tool_calls).toBeUndefined();
+    expect((calls[2]!.tools as { type: string }[]).some((t) => t.type === 'web_search')).toBe(false);
+  });
+
+  it('sends no search cap when the run has no web search', async () => {
+    const { client, calls } = scripted([response({ id: 'r1', output_parsed: { answer: 'x' } })]);
+    await runToolLoop({ client, model: 'm', instructions: 'i', input: [], tools: [echo], webSearch: false, finalSchema: Final, finalSchemaName: 'final' });
+    expect(calls[0]!.max_tool_calls).toBeUndefined();
+  });
+
   it('forces a final turn with no tools when the turns are spent, and fails on budget if none comes', async () => {
     const call = (id: string) => response({ id, output: [{ type: 'function_call', call_id: `c${id}`, name: 'echo', arguments: '{"text":"a"}' }] });
     const { client, calls } = scripted([call('r1'), call('r2'), response({ id: 'r3', output: [] })]);

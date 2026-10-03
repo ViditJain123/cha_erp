@@ -92,6 +92,8 @@ export interface TurnTrace {
   toolCalls: ToolCallTrace[];
   webSearches: WebSearchTrace[];
   usage: LoopUsage;
+  /** Set when the response went past a cap the loop could not enforce in advance. */
+  overBudget?: string;
 }
 
 export type LoopStatus = 'ok' | 'budget' | 'invalid' | 'error';
@@ -255,6 +257,12 @@ export async function runToolLoop<T>(opts: ToolLoopOptions<T>): Promise<LoopResu
     return [...fns, ...web];
   };
 
+  // Web searches run on OpenAI's side, inside one response, so counting them
+  // afterwards cannot stop a response that issues ten. `max_tool_calls` caps
+  // the built-in tool calls a single response may make — web search is the
+  // only built-in tool here — at what the budget has left.
+  const searchesLeft = () => Math.max(0, budget.maxWebSearches - webSearches);
+
   const done = (status: LoopStatus, result: T | null, error?: string): LoopResult<T> => ({
     status,
     result,
@@ -283,6 +291,7 @@ export async function runToolLoop<T>(opts: ToolLoopOptions<T>): Promise<LoopResu
         input,
         ...(previous && { previous_response_id: previous }),
         tools: toolsFor(final),
+        ...(!final && opts.webSearch && searchesLeft() > 0 && { max_tool_calls: searchesLeft() }),
         text: { format },
         reasoning: { effort: budget.reasoningEffort },
         max_output_tokens: final ? budget.finalMaxOutputTokens : budget.maxOutputTokens,
@@ -311,17 +320,54 @@ export async function runToolLoop<T>(opts: ToolLoopOptions<T>): Promise<LoopResu
         });
       }
     }
+    // Counted inside the turn: a response that searched past the cap (a model
+    // or API that ignored max_tool_calls) is recorded as having done so, and
+    // the tool is withdrawn from the next turn by toolsFor.
+    if (webSearches > budget.maxWebSearches) {
+      trace.overBudget = `web searches ${webSearches} of ${budget.maxWebSearches}`;
+    }
 
-    const outputs: InputItem[] = [];
-    if (pending.length) {
-      const results = await Promise.all(pending.map((call) => runCall(opts.tools, turn, call)));
-      for (const [i, call] of pending.entries()) {
-        const { output, trace: callTrace } = results[i]!;
-        calls.set(call.name, (calls.get(call.name) ?? 0) + 1);
-        toolCallsTotal++;
-        trace.toolCalls.push(callTrace);
-        outputs.push({ type: 'function_call_output', call_id: call.call_id, output });
+    // One response can ask for any number of function calls at once, so the
+    // caps are applied per call here, not only at the top of the turn: the
+    // calls the budget still allows run, in the order asked, and the rest are
+    // answered — every call_id must be — without running.
+    const admitted: FunctionCallItem[] = [];
+    const refused: { call: FunctionCallItem; reason: string }[] = [];
+    let allowance = Math.max(0, budget.maxToolCalls - toolCallsTotal);
+    const perTool = new Map(calls);
+    for (const call of pending) {
+      const cap = opts.tools.find((t) => t.name === call.name)?.maxCalls ?? Number.POSITIVE_INFINITY;
+      const used = perTool.get(call.name) ?? 0;
+      if (allowance <= 0) refused.push({ call, reason: `the run's tool-call budget (${budget.maxToolCalls}) is spent` });
+      else if (used >= cap) refused.push({ call, reason: `"${call.name}" has used its ${cap} calls` });
+      else {
+        admitted.push(call);
+        perTool.set(call.name, used + 1);
+        allowance--;
       }
+    }
+
+    const results = await Promise.all(admitted.map((call) => runCall(opts.tools, turn, call)));
+    const answered = new Map<string, { output: ToolOutput; trace: ToolCallTrace }>();
+    for (const [i, call] of admitted.entries()) {
+      answered.set(call.call_id, results[i]!);
+      calls.set(call.name, (calls.get(call.name) ?? 0) + 1);
+      toolCallsTotal++;
+    }
+    for (const { call, reason } of refused) {
+      const error = `not run: ${reason}`;
+      answered.set(call.call_id, {
+        output: `Error: ${error}. Work with what you have.`,
+        trace: { turn, name: call.name, args: call.parsed_arguments ?? call.arguments, resultDigest: error, ms: 0, error },
+      });
+    }
+
+    // Answered in the order the model asked, admitted or not.
+    const outputs: InputItem[] = [];
+    for (const call of pending) {
+      const { output, trace: callTrace } = answered.get(call.call_id)!;
+      trace.toolCalls.push(callTrace);
+      outputs.push({ type: 'function_call_output', call_id: call.call_id, output });
     }
     turns.push(trace);
 
