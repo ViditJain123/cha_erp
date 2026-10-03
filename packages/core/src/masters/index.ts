@@ -221,7 +221,7 @@ export interface IgstRateResult {
  * by Schedule II's residual entry, which is the notification's own rule rather
  * than a default of ours. `alternatives` is non-empty when equally specific
  * entries disagree, which means the description decides and the answer here is
- * only the first candidate.
+ * only the highest-rate candidate.
  */
 export function igstRateForCth(cth: string, opts?: { onIsoDate?: string }): IgstRateResult | undefined {
   const code = cth.replace(/\D/g, '');
@@ -248,13 +248,22 @@ export function igstRateForCth(cth: string, opts?: { onIsoDate?: string }): Igst
   }
   const best = specMatch(named[0]!, code);
   const equal = named.filter((e) => specMatch(e, code) === best);
-  const entry = equal[0]!;
+  // Equally specific entries that disagree are told apart by the goods'
+  // description, which a code lookup cannot read. Until something does, the
+  // answer is the higher rate: the lower one is a concession for narrower
+  // goods — "Gibberellic acid" at 5% beside "All organic chemicals other than
+  // giberellic acid" at 18%, both written against chapter 29 — and a
+  // concession is earned by the description, never assumed. Notification
+  // order used to decide, which put 5% on every organic chemical (ex_job15,
+  // ex_job17, ex_job23 were all assessed at II36, 18%). The concession stays
+  // in `alternatives` for whoever can read the goods.
+  const entry = equal.reduce((top, e) => (e.rate > top.rate ? e : top), equal[0]!);
   return {
     rate: entry.rate,
     notification,
     entry,
     residual: false,
-    alternatives: equal.slice(1).filter((e) => e.rate !== entry.rate),
+    alternatives: equal.filter((e) => e !== entry && e.rate !== entry.rate),
     scheduleKnown,
   };
 }

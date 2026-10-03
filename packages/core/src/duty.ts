@@ -19,6 +19,10 @@ const pct = (rate: number) => D(rate).div(100);
 function round2(d: Decimal): number {
   return d.toDecimalPlaces(2, Decimal.ROUND_HALF_UP).toNumber();
 }
+/** To ten paise — how ICES prints a duty amount on the assessed Bill of Entry. */
+function round1(d: Decimal): number {
+  return d.toDecimalPlaces(1, Decimal.ROUND_HALF_UP).toNumber();
+}
 function round0(d: Decimal): number {
   return d.toDecimalPlaces(0, Decimal.ROUND_HALF_UP).toNumber();
 }
@@ -72,16 +76,29 @@ function computeValuation(
     );
   }
 
+  // ICES prices an invoice-level addition once, to the paisa, and gives each
+  // item its share of that, again to the paisa — the last item taking the
+  // balance, so the shares add up to the addition exactly. ex_job12's 2%
+  // high-sea-sale loading is ₹1,09,846.3553, assessed as 1,09,846.36; item 1's
+  // share is 37,154.0456, so 37,154.05 and an assessable value of 18,94,856.25
+  // rather than the 18,94,856.244 an unrounded share gives; item 3, last,
+  // takes 36,286.33 where its own share would round to .34.
+  additions = additions.toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
+  const shares = itemValues.map((value) => additions.mul(value.div(goodsValue)).toDecimalPlaces(2, Decimal.ROUND_HALF_UP));
+  if (shares.length) {
+    const others = shares.slice(0, -1).reduce((a, b) => a.plus(b), D(0));
+    shares[shares.length - 1] = additions.minus(others);
+  }
+
   const items = invoice.items.map((item, i) => {
     const value = itemValues[i]!;
-    const share = value.div(goodsValue);
     // A fixed tariff value displaces the transaction value outright — price,
     // freight, insurance and all (Customs Act s.14(2)).
     const avRaw = item.tariffValue
       ? D(item.tariffValue.amountPerUnit)
           .mul(item.tariffValue.quantity)
           .mul(rateFor(rates, item.tariffValue.currency))
-      : value.mul(invRate).plus(additions.mul(share));
+      : value.mul(invRate).plus(shares[i]!);
     return { item, avRaw };
   });
   const totalAvRaw = items.reduce((a, v) => a.plus(v.avRaw), D(0));
@@ -213,6 +230,19 @@ function computeItemDuty(v: ItemValuation, rates: ExchangeRateTable): ItemDutyRa
       .plus(rounded.cvd),
   );
 
+  const assessed = {
+    bcd: round1(bcd),
+    aidc: round1(aidc),
+    healthCess: round1(healthCess),
+    sws: round1(sws),
+    igst: round1(igst),
+    compCess: round1(compCess),
+    antiDumping: round1(antiDumping),
+    safeguard: round1(safeguard),
+    cvd: round1(cvd),
+  };
+  const assessedTotal = Object.values(assessed).reduce((a, n) => a.plus(n), D(0)).toNumber();
+
   return {
     result: {
       slNo: item.slNo,
@@ -220,6 +250,7 @@ function computeItemDuty(v: ItemValuation, rates: ExchangeRateTable): ItemDutyRa
       ...rounded,
       totalDuty,
       effectiveBcdRate: D(item.bcdRate).mul(exemptionFactor).toNumber(),
+      assessed: { ...assessed, totalDuty: assessedTotal },
     },
     raw: { bcd, aidc, healthCess, sws, igst, compCess, antiDumping, safeguard, cvd },
   };

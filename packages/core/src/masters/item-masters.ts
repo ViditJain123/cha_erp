@@ -282,20 +282,37 @@ export function aidcLevyFor(cth: string, onIsoDate: string, claim?: BcdClaim): L
   if (!file) return undefined;
   const { aidc } = file;
   const live = aidc.entries.filter((e) => inForce(e, onIsoDate));
+  const claimNotn = claim ? logisysNotn(claim.notification) : undefined;
+  // A claim's serial may carry its table, as ICES prints it: "I342".
+  const claimSerial = claim?.serial?.replace(/^(?:IV|I{1,3})(?=\d)/, '');
+  const refMatches = (e: LevyEntry) =>
+    (e.refs ?? []).some(
+      (r) => logisysNotn(r.notification) === claimNotn && (!r.serials?.length || (claimSerial !== undefined && r.serials.includes(claimSerial))),
+    );
 
-  const specific = best(live.filter((e) => (e.kind ?? 'specific') === 'specific' && e.include.length), cth, onIsoDate);
+  // A code-specific entry can still be tied to a claim, two ways. "only":
+  // S.No. 16A covers aircraft only as "goods covered under S. No. 344 of
+  // TABLE I" of 45/2025, so aircraft claimed under S.No. 342 (ex_job31) are
+  // not those goods and fall to the residual S.No. 17. "except": S.No. 16F
+  // covers toys "other than goods covered under S. No. 396", so it applies
+  // unless that claim is made.
+  const claimAllows = (e: LevyEntry) => {
+    const refs = e.refs ?? [];
+    if (!refs.length) return true;
+    const matched = refs.some((r) =>
+      logisysNotn(r.notification) === claimNotn && (!r.serials?.length || (claimSerial !== undefined && r.serials.includes(claimSerial))),
+    );
+    return refs.every((r) => r.relation === 'except') ? !matched : matched;
+  };
+  const specific = best(
+    live.filter((e) => (e.kind ?? 'specific') === 'specific' && e.include.length && claimAllows(e)),
+    cth,
+    onIsoDate,
+  );
   if (specific) return lineFrom(aidc.notification, specific);
 
-  const claimNotn = claim ? logisysNotn(claim.notification) : undefined;
   if (claimNotn) {
-    const named = live.find(
-      (e) =>
-        e.kind === 'claim-based' &&
-        coverRank(e, cth) !== null &&
-        (e.refs ?? []).some(
-          (r) => logisysNotn(r.notification) === claimNotn && (!r.serials?.length || (claim?.serial !== undefined && r.serials.includes(claim.serial))),
-        ),
-    );
+    const named = live.find((e) => e.kind === 'claim-based' && coverRank(e, cth) !== null && refMatches(e));
     if (named) return lineFrom(aidc.notification, { entry: named, rivals: [] });
 
     const annexed = aidc.annexure.some(

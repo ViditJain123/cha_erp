@@ -702,6 +702,31 @@ node apps/web/e2e-phase-e.mjs       # clearance: noting → duty variance → ou
 
 `*` makes real OpenAI calls — a handful per run.
 
+### The duty engine against assessed Bills of Entry
+
+`packages/core/test/processed-be.test.ts` runs the duty engine against the
+eight processed BEs in the corpus — ICES' own assessed copies — and must
+reproduce, per item, the assessable value to the paisa and every duty as ICES
+printed it. They cover a high-sea sale, EPCG, Advance Authorisation, an EOU,
+RoDTEP scrip debits, anti-dumping duty, a warehousing and an ex-bond BE, and a
+four-invoice filing. A second block checks the masters name the IGST, cess and
+AIDC serials ICES applied.
+
+What it settled about ICES' arithmetic:
+
+- An invoice-level addition (HSS loading, freight, insurance) is rounded to the
+  paisa once, then shared to the items by value, each share to the paisa, the
+  last item taking the balance.
+- Each duty amount is rounded to **ten paise** from the exact figure, and an
+  item's total is the sum of those. `ItemDutyResult.assessed` carries these;
+  the paisa-level fields beside it are unchanged.
+- RoDTEP pays BCD by scrip debit: BCD is charged in full and SWS and IGST are
+  levied on it; only the cash total leaves it out.
+
+The fixture is rebuilt from the PDFs, which live beside the repo, with
+`python3 packages/core/scripts/build-processed-be-fixtures.py`. It keeps codes,
+quantities, values, rates and amounts — no names, addresses, IEC or GSTIN.
+
 `db:test:rls` is the regression net for the tenancy model: it creates two
 throwaway companies and asserts that neither can read, rename, or re-parent the
 other's rows, that a user cannot promote themselves to platform admin, and that

@@ -165,6 +165,25 @@ export interface ItemDutyResult {
   totalDuty: number;
   /** Effective BCD rate after exemption, for display. */
   effectiveBcdRate: number;
+  /**
+   * The same duties as ICES prints them on the assessed Bill of Entry: each
+   * rounded from the exact figure to ten paise, and the item's total duty the
+   * sum of those. 10% of ₹18,94,856.25 is 1,89,485.625 — `bcd` above says
+   * 189485.63, the assessed copy says 189485.6. Pinned against eight processed
+   * BEs in test/processed-be.test.ts.
+   */
+  assessed: {
+    bcd: number;
+    aidc: number;
+    healthCess: number;
+    sws: number;
+    igst: number;
+    compCess: number;
+    antiDumping: number;
+    safeguard: number;
+    cvd: number;
+    totalDuty: number;
+  };
 }
 
 export interface JobDutyResult {

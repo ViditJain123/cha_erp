@@ -1,0 +1,921 @@
+{
+ "_generated": "python3 packages/core/scripts/build-processed-be-fixtures.py",
+ "bills": [
+  {
+   "folder": "ex_job12",
+   "job": "I-14214",
+   "exchangeRates": {
+    "USD": 96.5
+   },
+   "be": {
+    "port": "INNSA1",
+    "number": "3373718",
+    "date": "2026-08-26",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "48042100",
+       "unitPrice": 0.76,
+       "quantity": 25330.0,
+       "uqc": "KGS",
+       "amount": 19250.8
+      },
+      {
+       "sno": 2,
+       "cth": "48042100",
+       "unitPrice": 0.76,
+       "quantity": 24820.0,
+       "uqc": "KGS",
+       "amount": 18863.2
+      },
+      {
+       "sno": 3,
+       "cth": "48042100",
+       "unitPrice": 0.79,
+       "quantity": 23799.0,
+       "uqc": "KGS",
+       "amount": 18801.21
+      }
+     ],
+     "invoiceValue": 56915.21,
+     "hss": "2%",
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 5602164.13
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "48042100",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II169",
+       "rate": 18.0,
+       "amount": 378592.3,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 10.0,
+       "amount": 189485.6
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 18948.6
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 189485.62
+      }
+     },
+     "unitPrice": 0.76,
+     "origin": "RU",
+     "quantity": 25330.0,
+     "uqc": "KGS",
+     "endUse": "GNX100",
+     "assessableValue": 1894856.25,
+     "totalDuty": 587026.5
+    },
+    {
+     "invoice": 1,
+     "item": 2,
+     "cth": "48042100",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II169",
+       "rate": 18.0,
+       "amount": 370969.6,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 10.0,
+       "amount": 185670.5
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 18567.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 185670.48
+      }
+     },
+     "unitPrice": 0.76,
+     "origin": "RU",
+     "quantity": 24820.0,
+     "uqc": "KGS",
+     "endUse": "GNX100",
+     "assessableValue": 1856704.78,
+     "totalDuty": 575207.1
+    },
+    {
+     "invoice": 1,
+     "item": 3,
+     "cth": "48042100",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II169",
+       "rate": 18.0,
+       "amount": 369750.5,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 10.0,
+       "amount": 185060.3
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 18506.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 185060.31
+      }
+     },
+     "unitPrice": 0.79,
+     "origin": "RU",
+     "quantity": 23799.0,
+     "uqc": "KGS",
+     "endUse": "GNX100",
+     "assessableValue": 1850603.1,
+     "totalDuty": 573316.8
+    }
+   ]
+  },
+  {
+   "folder": "ex_job13",
+   "job": "I-60133",
+   "exchangeRates": {
+    "USD": 96.05
+   },
+   "be": {
+    "port": "INCCU1",
+    "number": "3144105",
+    "date": "2026-08-14",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "84051090",
+       "unitPrice": 550000.0,
+       "quantity": 1.0,
+       "uqc": "SET",
+       "amount": 550000.0
+      }
+     ],
+     "invoiceValue": 550000.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 52827500.0
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "84051090",
+     "duties": {
+      "IGST": {
+       "notification": "026/2023",
+       "serial": "1",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 7.5,
+       "amount": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 3962062.5
+      }
+     },
+     "unitPrice": 550000.0,
+     "origin": "CN",
+     "quantity": 1.0,
+     "uqc": "SET",
+     "endUse": "GNX200",
+     "assessableValue": 52827500.0,
+     "totalDuty": 0.0
+    }
+   ]
+  },
+  {
+   "folder": "ex_job14",
+   "job": "I-30290",
+   "exchangeRates": {
+    "USD": 96.05
+   },
+   "be": {
+    "port": "INSAJ6",
+    "number": "3139318",
+    "date": "2026-08-14",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "39021000",
+       "unitPrice": 1.25,
+       "quantity": 24750.0,
+       "uqc": "KGS",
+       "amount": 30937.5
+      }
+     ],
+     "invoiceValue": 30937.5,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 2971546.88
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "39021000",
+     "duties": {
+      "IGST": {
+       "notification": "021/2023",
+       "serial": "1",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 7.5,
+       "amount": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "18",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 222866.02
+      }
+     },
+     "unitPrice": 1.25,
+     "origin": "AE",
+     "quantity": 24750.0,
+     "uqc": "KGS",
+     "endUse": "GNX200",
+     "assessableValue": 2971546.88,
+     "totalDuty": 0.0
+    }
+   ]
+  },
+  {
+   "folder": "ex_job15",
+   "job": "I-14313",
+   "exchangeRates": {
+    "USD": 96.5
+   },
+   "be": {
+    "port": "INNSA1",
+    "number": "3486235",
+    "date": "2026-09-01",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "29091990",
+       "unitPrice": 69.5,
+       "quantity": 4800.0,
+       "uqc": "KGS",
+       "amount": 333600.0
+      }
+     ],
+     "invoiceValue": 333600.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 32192400.0
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "29091990",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II36",
+       "rate": 18.0,
+       "amount": 6272689.1,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 7.5,
+       "amount": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 241443.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 2414430.0
+      }
+     },
+     "unitPrice": 69.5,
+     "origin": "CN",
+     "quantity": 4800.0,
+     "uqc": "KGS",
+     "endUse": "GNX200",
+     "assessableValue": 32192400.0,
+     "totalDuty": 6514132.1
+    }
+   ]
+  },
+  {
+   "folder": "ex_job16",
+   "job": "I-14168",
+   "exchangeRates": {
+    "USD": 96.05
+   },
+   "be": {
+    "port": "INNSA1",
+    "number": "2997720",
+    "date": "2026-08-07",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "54022090",
+       "unitPrice": 1.48,
+       "quantity": 24000.0,
+       "uqc": "KGS",
+       "amount": 35520.0
+      }
+     ],
+     "invoiceValue": 35520.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 3411696.0
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "54022090",
+     "duties": {
+      "IGST": {
+       "notification": "052/2003",
+       "serial": "I341",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 5.0,
+       "amount": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "19",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 170584.8
+      }
+     },
+     "unitPrice": 1.48,
+     "origin": "CN",
+     "quantity": 24000.0,
+     "uqc": "KGS",
+     "endUse": "GNX200",
+     "assessableValue": 3411696.0,
+     "totalDuty": 0.0
+    }
+   ]
+  },
+  {
+   "folder": "ex_job17",
+   "job": "I-14149",
+   "exchangeRates": {
+    "USD": 96.05
+   },
+   "be": {
+    "port": "INNSA1",
+    "number": "3108519",
+    "date": "2026-08-13",
+    "type": "W"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "29269090",
+       "unitPrice": 1.51,
+       "quantity": 23040.0,
+       "uqc": "KGS",
+       "amount": 34790.4
+      }
+     ],
+     "invoiceValue": 34790.4,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 3341617.92
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "29269090",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II36",
+       "rate": 18.0,
+       "amount": 731578.6,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "ADD": {
+       "notification": "016/2025",
+       "serial": "1",
+       "amount": 447024.4
+      },
+      "BCD": {
+       "rate": 7.5,
+       "amount": 250621.3
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 25062.1
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 250621.34
+      }
+     },
+     "unitPrice": 1.51,
+     "origin": "CN",
+     "quantity": 23040.0,
+     "uqc": "KGS",
+     "endUse": "GNX200",
+     "assessableValue": 3341617.92,
+     "totalDuty": 1454286.4
+    }
+   ]
+  },
+  {
+   "folder": "ex_job23",
+   "job": "I-14399",
+   "exchangeRates": {
+    "USD": 97.05
+   },
+   "be": {
+    "port": "INNSA1",
+    "number": "3610195",
+    "date": "2026-09-07",
+    "type": "X"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "29321100",
+       "unitPrice": 2.0,
+       "quantity": 4500.0,
+       "uqc": "KGS",
+       "amount": 9000.0
+      }
+     ],
+     "invoiceValue": 100800.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 873450.0
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "29321100",
+     "duties": {
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "II36",
+       "rate": 18.0,
+       "amount": 170191.7,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "BCD": {
+       "rate": 7.5,
+       "amount": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 6550.9
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 65508.75
+      }
+     },
+     "unitPrice": 2.0,
+     "origin": "CN",
+     "quantity": 4500.0,
+     "uqc": "KGS",
+     "endUse": "GNX200",
+     "assessableValue": 873450.0,
+     "totalDuty": 176742.6
+    }
+   ]
+  },
+  {
+   "folder": "ex_job31",
+   "job": "I-20271",
+   "exchangeRates": {
+    "USD": 95.25
+   },
+   "be": {
+    "port": "INMUN1",
+    "number": "3705271",
+    "date": "2026-09-11",
+    "type": "H"
+   },
+   "invoices": [
+    {
+     "sno": 1,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "88022000",
+       "unitPrice": 638274.0,
+       "quantity": 1.0,
+       "uqc": "UNT",
+       "amount": 638274.0
+      }
+     ],
+     "invoiceValue": 638274.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 60795598.5
+    },
+    {
+     "sno": 2,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "88022000",
+       "unitPrice": 638274.0,
+       "quantity": 1.0,
+       "uqc": "UNT",
+       "amount": 638274.0
+      }
+     ],
+     "invoiceValue": 638274.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 60795598.5
+    },
+    {
+     "sno": 3,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "88022000",
+       "unitPrice": 638274.0,
+       "quantity": 1.0,
+       "uqc": "UNT",
+       "amount": 638274.0
+      }
+     ],
+     "invoiceValue": 638274.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 60795598.5
+    },
+    {
+     "sno": 4,
+     "items": [
+      {
+       "sno": 1,
+       "cth": "88022000",
+       "unitPrice": 638274.0,
+       "quantity": 1.0,
+       "uqc": "UNT",
+       "amount": 638274.0
+      }
+     ],
+     "invoiceValue": 638274.0,
+     "currency": "USD",
+     "terms": "CIF",
+     "assessableValue": 60795598.5
+    }
+   ],
+   "items": [
+    {
+     "invoice": 1,
+     "item": 1,
+     "cth": "88022000",
+     "duties": {
+      "BCD": {
+       "notification": "045/2025",
+       "serial": "I342",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1755473.0
+      },
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "I463",
+       "rate": 5.0,
+       "amount": 3039779.9,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1519889.96
+      }
+     },
+     "unitPrice": 638274.0,
+     "origin": "US",
+     "quantity": 1.0,
+     "uqc": "UNT",
+     "endUse": "GNX200",
+     "assessableValue": 60795598.5,
+     "totalDuty": 3039779.9
+    },
+    {
+     "invoice": 2,
+     "item": 1,
+     "cth": "88022000",
+     "duties": {
+      "BCD": {
+       "notification": "045/2025",
+       "serial": "I342",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1755473.0
+      },
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "I463",
+       "rate": 5.0,
+       "amount": 3039779.9,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1519889.96
+      }
+     },
+     "unitPrice": 638274.0,
+     "origin": "US",
+     "quantity": 1.0,
+     "uqc": "UNT",
+     "endUse": "GNX200",
+     "assessableValue": 60795598.5,
+     "totalDuty": 3039779.9
+    },
+    {
+     "invoice": 3,
+     "item": 1,
+     "cth": "88022000",
+     "duties": {
+      "BCD": {
+       "notification": "045/2025",
+       "serial": "I342",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1755473.0
+      },
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "I463",
+       "rate": 5.0,
+       "amount": 3039779.9,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1519889.96
+      }
+     },
+     "unitPrice": 638274.0,
+     "origin": "US",
+     "quantity": 1.0,
+     "uqc": "UNT",
+     "endUse": "GNX200",
+     "assessableValue": 60795598.5,
+     "totalDuty": 3039779.9
+    },
+    {
+     "invoice": 4,
+     "item": 1,
+     "cth": "88022000",
+     "duties": {
+      "BCD": {
+       "notification": "045/2025",
+       "serial": "I342",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1755473.0
+      },
+      "IGST": {
+       "notification": "009/2025",
+       "serial": "I463",
+       "rate": 5.0,
+       "amount": 3039779.9,
+       "foregone": 0.0
+      },
+      "G. CESS": {
+       "notification": "001/2017",
+       "serial": "56",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 0.0
+      },
+      "SWS": {
+       "rate": 10.0,
+       "amount": 0.0
+      },
+      "CAIDC": {
+       "notification": "011/2021",
+       "serial": "17",
+       "rate": 0.0,
+       "amount": 0.0,
+       "foregone": 1519889.96
+      }
+     },
+     "unitPrice": 638274.0,
+     "origin": "US",
+     "quantity": 1.0,
+     "uqc": "UNT",
+     "endUse": "GNX200",
+     "assessableValue": 60795598.5,
+     "totalDuty": 3039779.9
+    }
+   ]
+  }
+ ]
+}
